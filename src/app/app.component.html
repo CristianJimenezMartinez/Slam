@@ -1,9 +1,17 @@
 <header class="global-header">
   <div class="logo" routerLink="/">SLAM.</div>
-  <nav>
-    <a routerLink="/admin" routerLinkActive="active">Admin</a>
-    <a routerLink="/votar" routerLinkActive="active">Votar</a>
-    <a routerLink="/resultados" routerLinkActive="active">Resultados</a>
+  
+  <button class="mobile-toggle" (click)="toggleMenu()">
+    <span *ngIf="!isMenuOpen">☰</span>
+    <span *ngIf="isMenuOpen">✕</span>
+  </button>
+
+  <nav [class.open]="isMenuOpen">
+    <a routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" (click)="closeMenu()">Inicio</a>
+    <a routerLink="/votar" routerLinkActive="active" (click)="closeMenu()">Votar</a>
+    <a routerLink="/resultados" routerLinkActive="active" (click)="closeMenu()">Resultados</a>
+    <a routerLink="/admin" routerLinkActive="active" (click)="closeMenu()">Admin</a>
+    <a *ngIf="auth.session$ | async" (click)="logout()" class="btn-logout">Salir</a>
   </nav>
 </header>
 

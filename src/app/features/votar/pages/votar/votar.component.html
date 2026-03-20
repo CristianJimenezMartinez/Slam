@@ -1,10 +1,19 @@
 <div class="votar-container" *ngIf="!submitted; else success">
-  <div class="loading-state" *ngIf="loading && !evento">Cargando evento...</div>
+  <div class="error-banner" *ngIf="error">
+    <span>⚠️</span> {{ error }}
+  </div>
+
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Buscando evento activo...</p>
+  </div>
   
   <div class="no-event" *ngIf="!loading && !evento">
-    <h1>Votación Cerrada</h1>
-    <p>No hay ningún evento activo en este momento. Escanea el QR cuando comience el evento.</p>
-    <button routerLink="/admin">Soy Admin</button>
+    <div class="empty-icon">📢</div>
+    <h1>¡Aún no hay micros abiertos!</h1>
+    <p>Parece que el evento no ha empezado o la votación está cerrada.</p>
+    <p class="hint">Si eres el administrador, activa un evento desde el panel.</p>
+    <button routerLink="/admin" class="btn-primary">Panel de Control</button>
   </div>
 
   <div class="voting-form" *ngIf="evento">
@@ -28,7 +37,6 @@
       </div>
 
       <div class="form-footer">
-        <p class="error" *ngIf="error">{{ error }}</p>
         <button type="submit" class="btn-primary" [disabled]="loading || voteForm.invalid">
           {{ loading ? 'Enviando...' : 'Enviar Mis Votos' }}
         </button>

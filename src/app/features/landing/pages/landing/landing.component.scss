@@ -1,12 +1,12 @@
 .landing-hero {
-  min-height: 90vh;
+  min-height: 95vh;
   background: var(--carbon-black);
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
+  padding: 4rem 0;
   
-  // Background effect
   &::before {
     content: '';
     position: absolute;
@@ -18,22 +18,79 @@
     z-index: 1;
   }
 
-  .container { position: relative; z-index: 2; padding: 0 2rem; }
-  
-  .badge { display: inline-block; background: var(--neon-green); color: var(--carbon-black); padding: 0.3rem 0.8rem; font-family: 'Bebas Neue', cursive; font-size: 1.2rem; margin-bottom: 2rem; }
-  
-  h1 { font-size: clamp(3rem, 10vw, 7rem); line-height: 0.9; margin: 0; 
-    .highlight { color: var(--neon-green); text-shadow: 0 0 20px rgba(146, 211, 66, 0.3); }
+  .hero-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
-  
-  .tagline { font-size: 1.5rem; color: #888; max-width: 600px; margin: 2rem 0; border-left: 4px solid var(--neon-green); padding-left: 1.5rem; }
-  
-  .actions { display: flex; gap: 1.5rem; margin-top: 3rem; 
-    .btn-outline { background: transparent; border: 2px solid var(--neon-green); color: var(--neon-green); padding: 0.8rem 2rem; font-family: 'Bebas Neue', cursive; font-size: 1.5rem; cursor: pointer; &:hover { background: var(--neon-green); color: var(--carbon-black); } }
+
+  .hero-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 4rem;
+    margin-bottom: 4rem;
+
+    @media (max-width: 992px) {
+      flex-direction: column;
+      text-align: center;
+      .hero-text { align-items: center; text-align: center; }
+    }
+  }
+
+  .hero-text {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    
+    .badge { display: inline-block; background: var(--neon-green); color: var(--carbon-black); padding: 0.3rem 0.8rem; font-family: 'Bebas Neue', cursive; font-size: 1.2rem; margin-bottom: 2rem; }
+    
+    h1 { font-size: clamp(3rem, 8vw, 6rem); line-height: 0.9; margin: 0; 
+      .highlight { color: var(--neon-green); text-shadow: 0 0 20px rgba(146, 211, 66, 0.3); }
+    }
+    
+    .tagline { font-size: 1.5rem; color: #888; max-width: 500px; margin: 2rem 0; border-left: 4px solid var(--neon-green); padding-left: 1.5rem; }
+  }
+
+  .hero-image {
+    flex: 0.8;
+    position: relative;
+    border: 3px solid var(--neon-green);
+    padding: 1rem;
+    background: #000;
+    box-shadow: 20px 20px 0px rgba(146, 211, 66, 0.1);
+    transform: rotate(2deg);
+    
+    img { width: 100%; display: block; filter: grayscale(0.5) contrast(1.2); transition: all 0.5s; }
+    &:hover img { filter: grayscale(0) contrast(1); transform: scale(1.02); }
+  }
+
+  .actions {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    width: 100%;
+    
+    .btn-outline { 
+      background: transparent; 
+      border: 2px solid var(--neon-green); 
+      color: var(--neon-green); 
+      padding: 0.8rem 2rem; 
+      font-family: 'Bebas Neue', cursive; 
+      font-size: 1.5rem; 
+      cursor: pointer; 
+      &:hover { background: var(--neon-green); color: var(--carbon-black); } 
+    }
   }
 }
 
-.container { max-width: 1200px; margin: 0 auto; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 
 section { padding: 6rem 2rem; }
 
@@ -45,13 +102,14 @@ section { padding: 6rem 2rem; }
   @media (max-width: 768px) { grid-template-columns: 1fr; }
   
   .text-block { font-size: 1.2rem; line-height: 1.8; color: #ccc; p { margin-bottom: 1.5rem; } }
-  .image-placeholder { border: 2px solid var(--neon-green); padding: 1rem; transform: rotate(2deg); img { width: 100%; display: block; filter: grayscale(1); transition: filter 0.3s; } &:hover img { filter: grayscale(0); } }
+  .image-placeholder { border: 2px solid var(--neon-green); padding: 1rem; transform: rotate(-1deg); img { width: 100%; display: block; filter: grayscale(1); transition: filter 0.3s; } &:hover img { filter: grayscale(0); } }
 }
 
 .artists-section {
   background: #111;
   border-top: 1px solid #222;
   border-bottom: 1px solid #222;
+  text-align: center;
   
   h2 { font-size: 4rem; margin-bottom: 0.5rem; }
   .presenter { font-size: 1.5rem; color: var(--neon-green); margin-bottom: 3rem; }

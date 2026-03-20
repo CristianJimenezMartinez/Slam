@@ -9,10 +9,19 @@ export class SupabaseService {
   private supabase: SupabaseClient;
 
   constructor() {
-    this.supabase = createClient(
-      environment.supabaseUrl,
-      environment.supabaseAnonKey
-    );
+    const isValidUrl = environment.supabaseUrl && environment.supabaseUrl.startsWith('http');
+    
+    if (isValidUrl) {
+      this.supabase = createClient(
+        environment.supabaseUrl,
+        environment.supabaseAnonKey
+      );
+    } else {
+      console.error('⚠️ [SupabaseService] No se ha configurado una URL válida de Supabase.');
+      console.warn('Por favor, configura SUPABASE_URL y SUPABASE_ANON_KEY en tus variables de entorno.');
+      // Initialize with empty client to avoid absolute null pointer, but it will fail on calls gracefully
+      this.supabase = {} as any;
+    }
   }
 
   get client(): SupabaseClient {

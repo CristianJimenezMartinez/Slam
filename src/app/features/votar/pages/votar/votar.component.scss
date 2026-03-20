@@ -3,7 +3,45 @@
   margin: 0 auto;
   padding: 3rem 1.5rem;
   background: var(--carbon-black);
-  min-height: 100vh;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .error-banner {
+    background: #ff5555;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    border-radius: 4px;
+    box-shadow: 0 0 15px rgba(255, 85, 85, 0.4);
+  }
+
+  .loading-state {
+    text-align: center;
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(146, 211, 66, 0.1);
+      border-top-color: var(--neon-green);
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      animation: spin 1s linear infinite;
+    }
+    p { font-family: 'Bebas Neue', cursive; font-size: 1.5rem; color: var(--neon-green); }
+  }
+
+  .no-event {
+    text-align: center;
+    padding: 4rem 2rem;
+    .empty-icon { font-size: 5rem; margin-bottom: 2rem; }
+    h1 { font-size: 3rem; margin-bottom: 1rem; color: var(--neon-green); }
+    p { color: #888; margin-bottom: 2rem; }
+    .hint { font-size: 0.9rem; margin-top: -1rem; margin-bottom: 2rem; font-style: italic; }
+  }
 
   header { text-align: left; margin-bottom: 3rem; border-left: 5px solid var(--neon-green); padding-left: 1.5rem; h1 { font-size: 3.5rem; line-height: 1; } p { color: #888; font-size: 1.2rem; } }
 
@@ -28,3 +66,6 @@
 }
 
 .success-card { text-align: center; background: #242424; padding: 4rem 2rem; border: 3px solid var(--neon-green); .icon { font-size: 4rem; margin-bottom: 1rem; } h1 { font-size: 3rem; } button { margin-top: 2rem; } }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes bounce { from { transform: scale(1); } to { transform: scale(1.3); } }

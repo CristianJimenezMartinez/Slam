@@ -33,7 +33,7 @@ export class LoginComponent {
     if (error) {
       this.errorMessage = error.message;
     } else {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/admin']);
     }
     this.loading = false;
   }
