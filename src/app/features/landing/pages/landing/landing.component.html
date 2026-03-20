@@ -1,0 +1,68 @@
+<div class="landing-hero">
+  <div class="hero-overlay">
+    <div class="container">
+      <div class="badge">ESTA TARDE — 20 MARZO</div>
+      <h1>Exhibición <br><span class="highlight">Poetry Slam</span><br> Alicante 2026</h1>
+      <p class="tagline">La poesía sale del esternón y sube al escenario.</p>
+      <div class="actions">
+        <a [href]="eventUrl" target="_blank" class="btn-primary">Reservar Entrada</a>
+        <button routerLink="/votar" class="btn-outline">Ir a Votaciones</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="info-section">
+  <div class="container">
+    <h2>El Evento</h2>
+    <div class="info-grid">
+      <div class="text-block">
+        <p>El próximo 20 de marzo el <strong>Centro Municipal de las Artes de Alicante</strong> acoge una exhibición de Poetry Slam Alicante, un encuentro de poesía oral donde diferentes poetas compartirán sus textos en directo en una velada dedicada a la palabra viva.</p>
+        <p>Mezcla interpretación, emoción y cercanía con el público. Cada artista sube al escenario para compartir su voz, su estilo y su forma de entender la poesía.</p>
+      </div>
+      <div class="image-placeholder">
+        <img src="assets/images/evento-hero.jpg" alt="Poetry Slam Alicante" onerror="this.src='https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1000&auto=format&fit=crop'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="artists-section">
+  <div class="container">
+    <h2>Participantes</h2>
+    <p class="presenter">Presentado por <strong>Ágora Reix</strong></p>
+    <div class="artists-list">
+      <div class="artist">✦ Rosita Estomba</div>
+      <div class="artist">✦ Nando Arroyo</div>
+      <div class="artist">✦ Marina Maciá</div>
+      <div class="artist">✦ Lucía Ros</div>
+      <div class="artist">✦ Juan Góngora</div>
+      <div class="artist">✦ Francisca Ossa</div>
+      <div class="artist">✦ Alex Carmona</div>
+    </div>
+    <div class="guest-star">
+      <span class="star">⭐</span> Artista invitado: <strong>Juanmi Silvestre</strong>
+    </div>
+  </div>
+</section>
+
+<section class="reservas-section">
+  <div class="container">
+    <div class="reservas-card">
+      <h2>Reservas</h2>
+      <p>Entrada gratuita con reserva previa debido al aforo limitado.</p>
+      <ul class="details">
+        <li>Centro Municipal de las Artes de Alicante.</li>
+        <li>Se recomienda llegar 10–15 minutos antes.</li>
+        <li>Las plazas no ocupadas podrán liberarse una vez comenzada la actividad.</li>
+      </ul>
+      <a [href]="eventUrl" target="_blank" class="btn-primary large">Realizar Reserva en Eventbrite</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Impulsado por la Concejalía de Cultura de Alicante | Programa <strong>Cultura en Barrios</strong></p>
+  </div>
+</footer>

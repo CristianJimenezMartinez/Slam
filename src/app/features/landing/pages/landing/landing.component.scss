@@ -1,0 +1,86 @@
+.landing-hero {
+  min-height: 90vh;
+  background: var(--carbon-black);
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  
+  // Background effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 60%;
+    height: 140%;
+    background: radial-gradient(circle, rgba(146, 211, 66, 0.15) 0%, transparent 70%);
+    z-index: 1;
+  }
+
+  .container { position: relative; z-index: 2; padding: 0 2rem; }
+  
+  .badge { display: inline-block; background: var(--neon-green); color: var(--carbon-black); padding: 0.3rem 0.8rem; font-family: 'Bebas Neue', cursive; font-size: 1.2rem; margin-bottom: 2rem; }
+  
+  h1 { font-size: clamp(3rem, 10vw, 7rem); line-height: 0.9; margin: 0; 
+    .highlight { color: var(--neon-green); text-shadow: 0 0 20px rgba(146, 211, 66, 0.3); }
+  }
+  
+  .tagline { font-size: 1.5rem; color: #888; max-width: 600px; margin: 2rem 0; border-left: 4px solid var(--neon-green); padding-left: 1.5rem; }
+  
+  .actions { display: flex; gap: 1.5rem; margin-top: 3rem; 
+    .btn-outline { background: transparent; border: 2px solid var(--neon-green); color: var(--neon-green); padding: 0.8rem 2rem; font-family: 'Bebas Neue', cursive; font-size: 1.5rem; cursor: pointer; &:hover { background: var(--neon-green); color: var(--carbon-black); } }
+  }
+}
+
+.container { max-width: 1200px; margin: 0 auto; }
+
+section { padding: 6rem 2rem; }
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  @media (max-width: 768px) { grid-template-columns: 1fr; }
+  
+  .text-block { font-size: 1.2rem; line-height: 1.8; color: #ccc; p { margin-bottom: 1.5rem; } }
+  .image-placeholder { border: 2px solid var(--neon-green); padding: 1rem; transform: rotate(2deg); img { width: 100%; display: block; filter: grayscale(1); transition: filter 0.3s; } &:hover img { filter: grayscale(0); } }
+}
+
+.artists-section {
+  background: #111;
+  border-top: 1px solid #222;
+  border-bottom: 1px solid #222;
+  
+  h2 { font-size: 4rem; margin-bottom: 0.5rem; }
+  .presenter { font-size: 1.5rem; color: var(--neon-green); margin-bottom: 3rem; }
+}
+
+.artists-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  .artist { font-family: 'Bebas Neue', cursive; font-size: 2.2rem; color: var(--off-white); transition: color 0.3s; &:hover { color: var(--neon-green); } }
+}
+
+.guest-star { margin-top: 4rem; font-size: 1.8rem; background: var(--neon-green); color: var(--carbon-black); padding: 1rem 2rem; display: inline-block; font-family: 'Bebas Neue', cursive; .star { animation: bounce 1s infinite alternate; display: inline-block; } }
+
+.reservas-card {
+  background: var(--card-bg);
+  padding: 4rem;
+  border: 4px solid var(--neon-green);
+  text-align: center;
+  box-shadow: 15px 15px 0px #000;
+  
+  h2 { font-size: 4rem; }
+  p { font-size: 1.5rem; margin-bottom: 2rem; }
+  
+  .details { list-style: none; padding: 0; margin-bottom: 3rem; color: #888; li { margin-bottom: 0.5rem; } }
+  
+  .btn-primary.large { font-size: 2rem; padding: 1.5rem 3rem; }
+}
+
+footer { padding: 4rem 2rem; border-top: 1px solid #222; text-align: center; color: #555; }
+
+@keyframes bounce { from { transform: scale(1); } to { transform: scale(1.3); } }

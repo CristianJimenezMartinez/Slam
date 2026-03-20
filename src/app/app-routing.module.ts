@@ -6,8 +6,8 @@ import { GuestGuard } from './core/guards/guest.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'votar',
-    pathMatch: 'full',
+    loadChildren: () =>
+      import('./features/landing/landing.module').then((m) => m.LandingModule),
   },
   {
     path: 'auth',
