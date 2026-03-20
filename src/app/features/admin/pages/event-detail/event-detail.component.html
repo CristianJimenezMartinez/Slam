@@ -1,0 +1,52 @@
+<div class="admin-detail">
+  <div class="header">
+    <button routerLink="/admin">← Volver</button>
+    <h1>{{ eventId ? 'Editar Evento' : 'Nuevo Evento' }}</h1>
+  </div>
+
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+    <div class="section">
+      <h2>Datos del Evento</h2>
+      <div class="form-group">
+        <label>Nombre del Evento</label>
+        <input formControlName="nombre" placeholder="Slam de Poesía #1" />
+      </div>
+      <div class="form-group">
+        <label>Descripción</label>
+        <textarea formControlName="descripcion"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Fecha y Hora</label>
+        <input type="datetime-local" formControlName="fecha" />
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h2>Participantes</h2>
+        <button type="button" (click)="addParticipante()">+ Añadir</button>
+      </div>
+      
+      <div formArrayName="participantes">
+        <div class="participant-row" *ngFor="let p of participantes.controls; let i=index" [formGroupName]="i">
+          <span class="order">{{ i + 1 }}</span>
+          <input formControlName="nombre" placeholder="Nombre completo" />
+          <button type="button" class="btn-icon" (click)="removeParticipante(i)">✕</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" [disabled]="loading || eventForm.invalid">
+        {{ loading ? 'Guardando...' : 'Guardar Evento' }}
+      </button>
+    </div>
+  </form>
+
+  <div class="section qr-section" *ngIf="qrCodeUrl">
+    <h2>Código QR de Votación</h2>
+    <p>Escanea este código para ir directamente a la votación del evento activo.</p>
+    <img [src]="qrCodeUrl" alt="QR Code" />
+    <button (click)="loadEvent()">Descargar QR</button>
+  </div>
+</div>

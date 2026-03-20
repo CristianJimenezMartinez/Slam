@@ -1,0 +1,34 @@
+<div class="results-container">
+  <div class="header">
+    <div class="badge" *ngIf="evento?.activo">EN DIRECTO 🔴</div>
+    <h1>{{ evento ? evento.nombre : 'Resultados' }}</h1>
+    <p>Ranking actualizado en tiempo real.</p>
+  </div>
+
+  <div class="loading" *ngIf="loading && !resultados.length">Cargando resultados...</div>
+  
+  <div class="no-results" *ngIf="!loading && !resultados.length">
+    <p>Aún no hay votos registrados para este evento.</p>
+  </div>
+
+  <div class="ranking-list" *ngIf="resultados.length">
+    <div class="ranking-item" *ngFor="let r of resultados; let i=index" [class.top]="r.posicion === 1">
+      <div class="rank">#{{ r.posicion }}</div>
+      <div class="p-info">
+        <span class="name">{{ r.participante }}</span>
+        <span class="votes">{{ r.num_votos }} votos</span>
+      </div>
+      <div class="score">
+        <span class="total">{{ r.puntuacion_total }} pts</span>
+        <span class="avg">{{ r.puntuacion_media | number:'1.1-1' }} media</span>
+      </div>
+      <div class="bar-container">
+        <div class="bar" [style.width.%]="(r.puntuacion_total / (resultados[0].puntuacion_total || 1)) * 100"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button routerLink="/votar">Volver a votar</button>
+  </div>
+</div>

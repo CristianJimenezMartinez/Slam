@@ -1,27 +1,50 @@
-# Slam
+# Slam — Angular + Supabase
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.0.
+Proyecto Angular con backend en Supabase.
 
-## Development server
+## Configuración inicial
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+1. Crea un proyecto en [supabase.com](https://supabase.com)
+2. Copia las credenciales en `src/environments/environment.ts`:
 
-## Code scaffolding
+```ts
+export const environment = {
+  production: false,
+  supabaseUrl: 'https://xxxx.supabase.co',
+  supabaseAnonKey: 'tu-anon-key',
+};
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+3. Instala dependencias y arranca:
 
-## Build
+```bash
+npm install
+ng serve
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Estructura
 
-## Running unit tests
+```
+src/app/
+├── core/                  # Singleton services, guards, interceptors
+│   ├── services/
+│   │   ├── supabase.service.ts   # Cliente Supabase
+│   │   └── auth.service.ts       # Autenticación reactiva
+│   ├── guards/
+│   │   ├── auth.guard.ts         # Protege rutas privadas
+│   │   └── guest.guard.ts        # Protege rutas de invitado
+│   └── interceptors/
+│       └── auth.interceptor.ts   # Inyecta JWT en peticiones HTTP
+├── features/
+│   ├── auth/              # Login, Register, Forgot Password
+│   └── dashboard/         # Shell principal (requiere auth)
+└── shared/                # Módulos y componentes reutilizables
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Stack
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+| Capa | Tecnología |
+|------|-----------|
+| Frontend | Angular |
+| Backend | Supabase (DB, Auth, Storage, Edge Functions) |
+| Estilos | SCSS |

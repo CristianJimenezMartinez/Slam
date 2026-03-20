@@ -1,0 +1,23 @@
+<div class="admin-header">
+  <h1>Eventos</h1>
+  <button class="btn-primary" routerLink="new">Nuevo Evento</button>
+</div>
+
+<div class="event-grid" *ngIf="eventos$ | async as res">
+  <div class="event-card" *ngFor="let evento of res.data">
+    <div class="event-info">
+      <h3>{{ evento.nombre }}</h3>
+      <p>{{ evento.fecha | date:'short' }}</p>
+      <span class="status-badge" [class.active]="evento.activo">
+        {{ evento.activo ? 'ACTIVO (Recibiendo votos)' : 'Inactivo' }}
+      </span>
+    </div>
+    <div class="event-actions">
+      <button (click)="toggleActivo(evento)">
+        {{ evento.activo ? 'Desactivar' : 'Activar QR' }}
+      </button>
+      <button [routerLink]="['edit', evento.id]">Editar</button>
+      <button class="btn-danger" (click)="deleteEvento(evento.id)">Eliminar</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+.admin-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    button { background: none; border: none; cursor: pointer; color: #4f46e5; }
+    h1 { margin: 0; }
+  }
+
+  .section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    margin-bottom: 1.5rem;
+
+    h2 { margin-top: 0; font-size: 1.1rem; border-bottom: 1px solid #f3f4f6; padding-bottom: 0.5rem; }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      button { background: #4f46e5; color: white; border: none; padding: 0.3rem 0.8rem; border-radius: 4px; cursor: pointer; }
+    }
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+    label { display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.9rem; }
+    input, textarea {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    textarea { height: 80px; resize: vertical; }
+  }
+
+  .participant-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    
+    .order { font-weight: bold; min-width: 20px; color: #9ca3af; }
+    input { flex: 1; padding: 0.5rem; border: 1px solid #e5e7eb; border-radius: 4px; }
+    .btn-icon { background: none; border: none; color: #9ca3af; cursor: pointer; &:hover { color: #ef4444; } }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+  }
+
+  .qr-section {
+    text-align: center;
+    img { margin: 1rem 0; max-width: 200px; }
+    p { font-size: 0.9rem; color: #666; }
+    button { display: block; margin: 0 auto; color: #4f46e5; background: none; border: none; cursor: pointer; font-size: 0.9rem; text-decoration: underline; }
+  }
+}

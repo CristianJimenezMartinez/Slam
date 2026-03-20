@@ -1,0 +1,49 @@
+<div class="votar-container" *ngIf="!submitted; else success">
+  <div class="loading-state" *ngIf="loading && !evento">Cargando evento...</div>
+  
+  <div class="no-event" *ngIf="!loading && !evento">
+    <h1>Votación Cerrada</h1>
+    <p>No hay ningún evento activo en este momento. Escanea el QR cuando comience el evento.</p>
+    <button routerLink="/admin">Soy Admin</button>
+  </div>
+
+  <div class="voting-form" *ngIf="evento">
+    <header>
+      <h1>{{ evento.nombre }}</h1>
+      <p>Puntúa a cada participante del 1 al 10.</p>
+    </header>
+
+    <form [formGroup]="voteForm" (ngSubmit)="onSubmit()">
+      <div class="participant-vote-list" formArrayName="puntuaciones">
+        <div class="vote-item" *ngFor="let p of participantes; let i=index">
+          <div class="p-info">
+            <span class="p-order">{{ p.orden }}</span>
+            <span class="p-name">{{ p.nombre }}</span>
+          </div>
+          <div class="score-selector">
+            <input type="range" min="1" max="10" step="1" [formControlName]="i" />
+            <span class="current-score">{{ puntuaciones.at(i).value }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <p class="error" *ngIf="error">{{ error }}</p>
+        <button type="submit" class="btn-primary" [disabled]="loading || voteForm.invalid">
+          {{ loading ? 'Enviando...' : 'Enviar Mis Votos' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<ng-template #success>
+  <div class="votar-container success-msg">
+    <div class="success-card">
+      <div class="icon">✨</div>
+      <h1>¡Voto guardado!</h1>
+      <p>Gracias por participar en el Slam.</p>
+      <button routerLink="/resultados">Ver Resultados</button>
+    </div>
+  </div>
+</ng-template>

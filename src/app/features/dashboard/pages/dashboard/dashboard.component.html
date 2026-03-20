@@ -1,0 +1,9 @@
+<div class="dashboard">
+  <header>
+    <h1>Dashboard</h1>
+    <button (click)="logout()">Cerrar sesión</button>
+  </header>
+  <main>
+    <p *ngIf="user$ | async as session">Hola, {{ session.user.email }}</p>
+  </main>
+</div>
