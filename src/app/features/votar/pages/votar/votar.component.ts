@@ -28,11 +28,11 @@ export class VotarComponent implements OnInit {
       puntuaciones: this.fb.array([])
     });
     
-    // Simple voter token per device session
-    let token = sessionStorage.getItem('voter_token');
+    // Device-based voter token (doesn't block others on the same IP/WiFi)
+    let token = localStorage.getItem('voter_token');
     if (!token) {
       token = Math.random().toString(36).substring(2) + Date.now().toString(36);
-      sessionStorage.setItem('voter_token', token);
+      localStorage.setItem('voter_token', token);
     }
     this.voterToken = token;
   }
