@@ -14,7 +14,15 @@ export class SupabaseService {
     if (isValidUrl) {
       this.supabase = createClient(
         environment.supabaseUrl,
-        environment.supabaseAnonKey
+        environment.supabaseAnonKey,
+        {
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true,
+            storageKey: 'slam-auth-token'
+          }
+        }
       );
     } else {
       console.error('⚠️ [SupabaseService] No se ha configurado una URL válida de Supabase.');

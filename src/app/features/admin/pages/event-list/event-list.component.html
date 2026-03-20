@@ -13,8 +13,14 @@
       </span>
     </div>
     <div class="event-actions">
-      <button (click)="toggleActivo(evento)">
-        {{ evento.activo ? 'Desactivar' : 'Activar QR' }}
+      <button
+        class="btn-icon"
+        [class.active]="evento.activo"
+        (click)="toggleActivo(evento)"
+        [title]="evento.activo ? 'Cerrar Votación' : 'Activar QR'"
+      >
+        <span class="material-icons">{{ evento.activo ? 'lock' : 'qr_code' }}</span>
+        {{ evento.activo ? 'Cerrar' : 'Votar' }}
       </button>
       <button [routerLink]="['edit', evento.id]">Editar</button>
       <button class="btn-danger" (click)="deleteEvento(evento.id)">Eliminar</button>

@@ -25,8 +25,18 @@ export class ResultadosComponent implements OnInit, OnDestroy {
 
   async loadEventAndResults() {
     this.loading = true;
-    const res = await this.eventosService.getEventoActivo().toPromise();
+    let res = await this.eventosService.getEventoActivo().toPromise();
     this.evento = res || null;
+
+    if (!this.evento) {
+      // If no active, try to get the most recent one
+      const resAll = await this.eventosService.getEventos().toPromise();
+      const list = resAll?.data as any[] || [];
+      if (list.length > 0) {
+        this.evento = list[0]; // Most recent by date
+      }
+    }
+
     if (this.evento) {
       await this.refreshResults();
       

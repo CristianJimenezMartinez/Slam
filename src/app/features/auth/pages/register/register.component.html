@@ -2,7 +2,7 @@
   <div class="auth-card">
     <h1>Crear cuenta</h1>
     <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!successMessage">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="email">Email</label>
         <input id="email" type="email" formControlName="email" placeholder="tu@email.com" />
@@ -12,8 +12,9 @@
         <input id="password" type="password" formControlName="password" placeholder="Mínimo 6 caracteres" />
       </div>
       <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
       <button type="submit" [disabled]="loading">
-        {{ loading ? 'Cargando...' : 'Registrarse' }}
+        {{ loading ? 'Cargando...' : 'Crear Cuenta' }}
       </button>
     </form>
     <div class="auth-links">

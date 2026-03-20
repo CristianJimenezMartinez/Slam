@@ -1,32 +1,120 @@
-// Login styles
 .auth-container {
+  min-height: 90vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  justify-content: center;
   background: var(--carbon-black);
+  padding: 2rem;
 }
 
 .auth-card {
   width: 100%;
-  max-width: 400px;
-  padding: 2.5rem;
-  background: var(--card-bg);
-  border: 2px solid var(--neon-green);
-  border-radius: 0px; // Industrial look
-  box-shadow: 10px 10px 0px var(--neon-green);
-  
-  h1 { font-size: 2.5rem; margin-bottom: 2rem; }
+  max-width: 450px;
+  background: #111;
+  border: 3px solid var(--neon-green);
+  padding: 3rem;
+  box-shadow: 15px 15px 0px rgba(146, 211, 66, 0.1);
+  animation: fadeIn 0.5s ease-out;
+
+  h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 3.5rem;
+    color: var(--neon-green);
+    margin-bottom: 2rem;
+    text-align: center;
+    letter-spacing: 2px;
+  }
+
+  .form-group {
+    margin-bottom: 2rem;
+    
+    label {
+      display: block;
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.2rem;
+      color: #888;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    input {
+      width: 100%;
+      background: #000;
+      border: 1px solid #333;
+      padding: 1rem;
+      color: var(--off-white);
+      font-size: 1.1rem;
+      transition: border-color 0.3s;
+      
+      &:focus {
+        outline: none;
+        border-color: var(--neon-green);
+      }
+    }
+  }
+
+  .error {
+    color: #ff4444;
+    background: rgba(255, 68, 68, 0.1);
+    padding: 0.8rem;
+    border-left: 4px solid #ff4444;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .success {
+    color: var(--neon-green);
+    background: rgba(146, 211, 66, 0.1);
+    padding: 0.8rem;
+    border-left: 4px solid var(--neon-green);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  button {
+    width: 100%;
+    background: var(--neon-green);
+    color: var(--carbon-black);
+    border: none;
+    padding: 1.2rem;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 1.5rem;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(146, 211, 66, 0.4);
+    }
+
+    &:disabled {
+      background: #444;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  .auth-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    
+    a {
+      color: #666;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: color 0.3s;
+      
+      &:hover {
+        color: var(--neon-green);
+      }
+    }
+  }
 }
 
-.auth-links {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 2rem;
-  text-align: center;
-  a { color: var(--off-white); text-decoration: underline; font-size: 0.9rem; &:hover { color: var(--neon-green); } }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-.error { color: #ff5555; font-weight: bold; margin: 1rem 0; }
-.success { color: var(--neon-green); font-weight: bold; }

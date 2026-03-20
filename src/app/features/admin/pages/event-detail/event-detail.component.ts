@@ -102,15 +102,21 @@ export class EventDetailComponent implements OnInit {
     }
     
     if (this.eventId) {
-      // Direct approach for brevity: delete and re-insert for updates is risky, 
-      // but simpler for a "Slam" rapid app. 
-      // Better: diff participants. For now, let's just insert new ones if no ID.
-      const newParts = participantes.filter((p: any) => !p.id).map((p: any) => ({
-        ...p,
-        evento_id: this.eventId
-      }));
+      const newParts = participantes
+        .filter((p: any) => !p.id || p.id === null)
+        .map((p: any) => {
+          const { id, ...data } = p;
+          return {
+            ...data,
+            evento_id: this.eventId
+          };
+        });
+
       if (newParts.length > 0) {
-        await this.participantesService.addParticipantes(newParts);
+        const { error: partError } = await this.participantesService.addParticipantes(newParts);
+        if (partError) {
+          alert('Error al guardar participantes: ' + partError.message);
+        }
       }
     }
     
