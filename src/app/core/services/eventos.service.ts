@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
-import { from } from 'rxjs';
+import { from as fromRxjs } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface Evento {
@@ -19,11 +19,11 @@ export class EventosService {
   constructor(private supa: SupabaseService) {}
 
   getEventos() {
-    return from(this.supa.client.from('eventos').select('*').order('fecha', { ascending: false }));
+    return fromRxjs(this.supa.client.from('eventos').select('*').order('fecha', { ascending: false }));
   }
 
   getEventoActivo() {
-    return from(this.supa.client.from('eventos').select('*').eq('activo', true).single()).pipe(
+    return fromRxjs(this.supa.client.from('eventos').select('*').eq('activo', true).single()).pipe(
       map(res => res.data as Evento | null)
     );
   }

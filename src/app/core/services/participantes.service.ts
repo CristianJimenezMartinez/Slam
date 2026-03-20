@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
-import { from } from 'rxjs';
+import { from as fromRxjs } from 'rxjs';
 
 export interface Participante {
   id: string;
@@ -16,7 +16,7 @@ export class ParticipantesService {
   constructor(private supa: SupabaseService) {}
 
   getParticipantesByEvento(eventoId: string) {
-    return from(
+    return fromRxjs(
       this.supa.client
         .from('participantes')
         .select('*')
