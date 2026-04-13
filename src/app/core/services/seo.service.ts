@@ -37,6 +37,7 @@ export interface EventSeo {
   fecha: string;
   descripcion?: string;
   url_entradas?: string;
+  ubicacion?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -87,10 +88,10 @@ export class SeoService {
       '@type': 'Event',
       'name': event.nombre,
       'startDate': event.fecha,
-      'description': event.descripcion || `${event.nombre} – Poetry Slam en vivo en Las Cigarreras, Alicante.`,
+      'description': event.descripcion || `${event.nombre} – Poetry Slam en vivo en ${event.ubicacion || 'Las Cigarreras'}, Alicante.`,
       'eventStatus': 'https://schema.org/EventScheduled',
       'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
-      'location': LOCATION_SCHEMA,
+      'location': this.buildLocation(event.ubicacion),
       'organizer': ORGANIZER_SCHEMA,
       'image': DEFAULT_IMAGE,
       ...(event.url_entradas ? {
@@ -118,7 +119,7 @@ export class SeoService {
         'startDate': ev.fecha,
         'eventStatus': 'https://schema.org/EventScheduled',
         'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
-        'location': LOCATION_SCHEMA,
+        'location': this.buildLocation(ev.ubicacion),
         'organizer': ORGANIZER_SCHEMA,
         'image': DEFAULT_IMAGE,
         ...(ev.url_entradas ? {
@@ -142,6 +143,21 @@ export class SeoService {
   }
 
   // ── Privados ──────────────────────────────────────────
+
+  private buildLocation(ubicacion?: string): object {
+    const name = ubicacion || LOCATION_SCHEMA.name;
+    return {
+      '@type': 'Place',
+      'name': name,
+      'address': {
+        '@type': 'PostalAddress',
+        'addressLocality': 'Alicante',
+        'postalCode': '03001',
+        'addressRegion': 'Comunidad Valenciana',
+        'addressCountry': 'ES'
+      }
+    };
+  }
 
   private setJsonLd(data: object, id: string): void {
     this.removeJsonLd(id);

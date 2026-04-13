@@ -40,15 +40,23 @@
           <div class="season-flex">
             <!-- Izquierda: Textos -->
             <div class="season-content">
-              <div class="season-badge">Temporada {{ currentYear }}</div>
+              <div class="season-badge">{{ edicionTexto }} · Temporada {{ currentYear }}</div>
               <h1>Poetry Slam Alicante</h1>
-              <p class="season-tagline">La competición poética donde el jurado eres tú.</p>
+              <p class="season-tagline">Sin filtros, sin artificios. La palabra se hace cuerpo y Alicante elige su voz.</p>
               
               <div class="hero-actions">
-                <button (click)="scrollToSlider()" class="btn-primary large pulse-btn">
-                  <span>🎟️ Comprar Entradas</span>
-                </button>
-                <p class="hero-subtext">Selecciona tu cita y asegura tu sitio</p>
+                <div class="actions-row">
+                  <button (click)="scrollToSlider()" class="btn-primary large pulse-btn">
+                    <span>🎟️ Comprar Entradas</span>
+                  </button>
+                  <div class="season-pass-wrapper" *ngIf="urlPaseTemporada">
+                    <div class="pass-badge">🔥 SOLO 30 PASES</div>
+                    <a [href]="urlPaseTemporada" target="_blank" class="btn-secondary large">
+                      <span>🎤 Pase Completo</span>
+                    </a>
+                  </div>
+                </div>
+                <p class="hero-subtext">Los jueves a las 20h · El público vota, la ciudad elige</p>
               </div>
             </div>
 
@@ -85,7 +93,7 @@
                 <div class="card-body">
                   <div class="event-info">
                     <h3>{{ ev.nombre }}</h3>
-                    <p class="location"><span class="icon">📍</span> Las Cigarreras</p>
+                    <p class="location"><span class="icon">📍</span> {{ ev.ubicacion || 'Las Cigarreras' }}</p>
                   </div>
                   <a *ngIf="ev.url_entradas" [href]="ev.url_entradas" target="_blank" class="btn-buy-massive">
                     <span>Comprar Ticket</span>

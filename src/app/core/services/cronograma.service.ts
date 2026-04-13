@@ -9,6 +9,9 @@ export interface Cronograma {
   nombre: string;
   url_entradas?: string;
   url_foto?: string;
+  ubicacion?: string;
+  edicion?: string;
+  url_pase_temporada?: string;
   created_at: string;
 }
 
@@ -35,9 +38,9 @@ export class CronogramaService {
     return this.supa.client.from('cronograma').update(updates).eq('id', id);
   }
 
-  async updateSeasonPhoto(url: string) {
-    // Actualizamos todas las filas con la misma foto
-    return this.supa.client.from('cronograma').update({ url_foto: url }).not('id', 'is', null);
+  async updateGlobalSettings(updates: { url_foto?: string; edicion?: string; url_pase_temporada?: string }) {
+    // Actualizamos todas las filas con los campos globales
+    return this.supa.client.from('cronograma').update(updates).not('id', 'is', null);
   }
 
   async deleteCronograma(id: string) {

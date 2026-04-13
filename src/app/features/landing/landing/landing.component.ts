@@ -19,6 +19,8 @@ export class LandingComponent implements OnInit {
   loading = true;
   currentYear = new Date().getFullYear();
   fotoTemporada: string | null = null;
+  edicionTexto = '';
+  urlPaseTemporada: string | null = null;
   
   // El Interruptor Inteligente
   esEventoInminente = false;
@@ -84,9 +86,11 @@ export class LandingComponent implements OnInit {
       
       this.proximosCronograma = allCrono.filter(ev => new Date(ev.fecha) >= today);
       
-      // Extraemos la foto de la temporada del primer registro
+      // Extraemos la foto, la edición y el pase de temporada del primer registro
       if (allCrono.length > 0) {
         this.fotoTemporada = allCrono[0].url_foto || null;
+        this.edicionTexto = allCrono[0].edicion || '';
+        this.urlPaseTemporada = allCrono[0].url_pase_temporada || null;
       }
 
       // Si no hay evento inmimente, necesitamos saber cuál es el primer item del cronograma para el Hero

@@ -143,6 +143,44 @@
     .season-tagline { font-size: 1.5rem; color: #888; margin-bottom: 2rem; max-width: 450px; }
 
     .hero-actions {
+      display: block; // Removed flex from the wrapper to ensure subtext sits correctly below
+      
+      .actions-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .btn-secondary.large {
+        font-size: 1.5rem;
+        padding: 1rem 2.5rem;
+      }
+
+      .season-pass-wrapper {
+        position: relative;
+        display: inline-block;
+
+        .pass-badge {
+          position: absolute;
+          top: -15px;
+          right: -10px;
+          background: #ef4444; // Rojo vibrante
+          color: white;
+          font-family: 'Bebas Neue', cursive;
+          font-size: 0.9rem;
+          padding: 0.2rem 0.6rem;
+          border-radius: 20px;
+          letter-spacing: 1px;
+          box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
+          transform: rotate(5deg);
+          animation: floatBadge 3s ease-in-out infinite;
+          z-index: 2;
+          pointer-events: none;
+        }
+      }
+
       .pulse-btn {
         font-size: 1.5rem;
         padding: 1rem 2.5rem;
@@ -155,7 +193,8 @@
         span { vertical-align: middle; }
       }
       .hero-subtext {
-        margin-top: 0.8rem;
+        width: 100%;
+        margin-top: 0.5rem;
         color: #444;
         font-size: 0.9rem;
         font-family: 'Bebas Neue', cursive;
@@ -168,6 +207,12 @@
     0% { transform: scale(1); box-shadow: 0 0 20px rgba(146, 211, 66, 0.4); }
     50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(146, 211, 66, 0.6); }
     100% { transform: scale(1); box-shadow: 0 0 20px rgba(146, 211, 66, 0.4); }
+  }
+
+  @keyframes floatBadge {
+    0% { transform: translateY(0px) rotate(5deg); }
+    50% { transform: translateY(-3px) rotate(3deg); }
+    100% { transform: translateY(0px) rotate(5deg); }
   }
 
   .season-visual {

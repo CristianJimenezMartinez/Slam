@@ -43,6 +43,31 @@ h1, h2, h3, .logo {
   &:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 }
 
+.btn-secondary {
+  background: transparent;
+  color: var(--off-white);
+  border: 2px solid var(--off-white);
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  &:hover { 
+    background: rgba(255, 255, 255, 0.1); 
+    transform: skewX(-10deg); 
+    color: white; 
+    border-color: white; 
+  }
+  &:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+}
+
 .btn-danger {
   background: transparent;
   color: #ef4444;

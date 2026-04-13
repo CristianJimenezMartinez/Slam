@@ -28,6 +28,24 @@
     </div>
   </div>
 
+  <div class="global-season-config card mb-4">
+    <div class="config-text">
+      <h3>Textos de Temporada</h3>
+      <p>Aplica a toda la temporada: el nombre de la edición actual y el enlace opcional para comprar el pase de temporada.</p>
+    </div>
+    <div class="config-inputs">
+      <div class="input-group">
+        <label>Edición Actual (Ej: VII Edición)</label>
+        <input type="text" [(ngModel)]="edicionTexto" placeholder="VII Edición" class="editable-field">
+      </div>
+      <div class="input-group">
+        <label>URL Pase de Temporada</label>
+        <input type="text" [(ngModel)]="urlPaseTemporada" placeholder="https://entradium.com/..." class="editable-field link">
+      </div>
+      <button class="btn-primary small mt-3" (click)="saveGlobalSettings()">Guardar Textos</button>
+    </div>
+  </div>
+
   <!-- SECCIÓN DE NUEVOS EVENTOS (LOTE) -->
   <div class="cronograma-section">
     <div class="section-title">
@@ -40,6 +58,7 @@
         <span>Nombre del Slam</span>
         <span>Fecha y Hora</span>
         <span>Link de Entradas (Entradium)</span>
+        <span>Sede / Ubicación</span>
         <span></span>
       </div>
       
@@ -47,6 +66,7 @@
         <input type="text" [(ngModel)]="item.nombre" placeholder="Ej: Slam Mayo">
         <input type="datetime-local" [(ngModel)]="item.fecha">
         <input type="text" [(ngModel)]="item.url_entradas" placeholder="https://entradium.com/...">
+        <input type="text" [(ngModel)]="item.ubicacion" placeholder="Ej: Las Cigarreras">
         <button class="btn-remove" (click)="newItems.splice(i, 1)" *ngIf="newItems.length > 1">✕</button>
       </div>
 
@@ -70,6 +90,9 @@
         </div>
         <div class="item-link">
           <input type="text" [(ngModel)]="item.url_entradas" (change)="updateItem(item)" placeholder="Sin link" class="editable-field link">
+        </div>
+        <div class="item-link">
+          <input type="text" [(ngModel)]="item.ubicacion" (change)="updateItem(item)" placeholder="Ubicación" class="editable-field link">
         </div>
         <div class="item-actions">
           <button class="btn-danger-icon" (click)="deleteItem(item.id)">🗑️</button>

@@ -30,7 +30,7 @@
                 <span class="status-badge" *ngIf="isEventToday(ev.fecha)">HOY 🔥</span>
                 <span class="status-badge inminent" *ngIf="!isEventToday(ev.fecha)">PRÓXIMAMENTE</span>
               </div>
-              <p>Tres minutos, tú y el micro. El jurado es el público.</p>
+              <p><span class="icon">📍</span> {{ ev.ubicacion || 'Las Cigarreras' }}</p>
               <div class="actions" *ngIf="ev.url_entradas">
                 <a [href]="ev.url_entradas" target="_blank" class="btn-primary small">Comprar Entrada</a>
               </div>
@@ -50,7 +50,7 @@
             </div>
             <div class="info-box">
               <h3>{{ ev.nombre }}</h3>
-              <p>Finalizado. Consulta los resultados en la sección correspondiente.</p>
+              <p><span class="icon">📍</span> {{ ev.ubicacion || 'Las Cigarreras' }}</p>
             </div>
           </div>
         </div>

@@ -25,8 +25,26 @@
   margin-bottom: 3rem;
 
   .config-text {
+    flex: 1;
     h3 { font-size: 2rem; color: #fff; margin: 0 0 0.5rem 0; }
-    p { color: #666; margin: 0; }
+    p { color: #666; margin: 0 0 1.5rem 0; }
+  }
+
+  .config-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex: 1;
+    min-width: 300px;
+    margin-right: 2rem;
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      label { font-size: 0.9rem; color: #888; margin-bottom: 0.3rem; text-transform: uppercase; font-family: 'Bebas Neue', cursive; }
+      input { background: #151515; border: 1px solid #333; padding: 0.6rem; color: white; border-radius: 4px; }
+      input:focus { border-color: var(--neon-green); outline: none; }
+    }
   }
 }
 
@@ -100,7 +118,7 @@
 .bulk-form {
   .form-row {
     display: grid;
-    grid-template-columns: 2fr 1fr 2fr 40px;
+    grid-template-columns: 2fr 1fr 2fr 1fr 40px;
     gap: 1rem;
     margin-bottom: 0.8rem;
     align-items: center;
@@ -160,7 +178,7 @@
 
   .item-row {
     display: grid;
-    grid-template-columns: 2fr 2fr 60px;
+    grid-template-columns: 2fr 1.5fr 1.5fr 60px;
     gap: 1rem;
     padding: 1rem;
     border-bottom: 1px solid #1a1a1a;

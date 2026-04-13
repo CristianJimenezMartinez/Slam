@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { from as fromRxjs } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -9,27 +9,28 @@ import { environment } from '../../../environments/environment';
 export class SupabaseService {
   private supabase!: SupabaseClient;
 
-  constructor(private ngZone: NgZone) {
+  constructor() {
     const isValidUrl = environment.supabaseUrl && environment.supabaseUrl.startsWith('http');
     
     if (isValidUrl) {
-      // Inicializamos FUERA de la zona de Angular para que zone.js
-      // no intercepte las promesas del Navigator LockManager.
-      this.ngZone.runOutsideAngular(() => {
-        this.supabase = createClient(
-          environment.supabaseUrl,
-          environment.supabaseAnonKey,
-          {
-            auth: {
-              persistSession: true,
-              autoRefreshToken: true,
-              detectSessionInUrl: true,
-              flowType: 'pkce',
-              storageKey: 'slam-session-v1'
+      this.supabase = createClient(
+        environment.supabaseUrl,
+        environment.supabaseAnonKey,
+        {
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true,
+            flowType: 'pkce',
+            storageKey: 'slam-session-v1',
+            // Lock propio para evitar el conflicto zone.js + navigator.locks
+            lock: async (name: string, acquireTimeout: number, fn: () => Promise<any>) => {
+              return await fn();
             }
           }
-        );
-      });
+        }
+      );
+
     } else {
       console.error('⚠️ [SupabaseService] No se ha configurado una URL válida de Supabase.');
       console.warn('Por favor, configura SUPABASE_URL y SUPABASE_ANON_KEY en tus variables de entorno o en environment.ts.');

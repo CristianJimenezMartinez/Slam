@@ -12,10 +12,12 @@ export class CronogramaListComponent implements OnInit {
   loading = true;
   currentYear = new Date().getFullYear();
   fotoTemporada: string | null = null;
+  edicionTexto: string = '';
+  urlPaseTemporada: string = '';
   
   // Para añadir nuevos en lote
   newItems: Partial<Cronograma>[] = [
-    { nombre: '', fecha: '', url_entradas: '' }
+    { nombre: '', fecha: '', url_entradas: '', ubicacion: '' }
   ];
 
   constructor(
@@ -31,16 +33,18 @@ export class CronogramaListComponent implements OnInit {
     this.loading = true;
     this.cronogramaService.getCronograma().subscribe(res => {
       this.items = res.data || [];
-      // La foto de temporada es la misma para todos, cogemos la de la primera fila si existe
+      // Extraemos parámetros globales de la primera fila si existe
       if (this.items.length > 0) {
         this.fotoTemporada = this.items[0].url_foto || null;
+        this.edicionTexto = this.items[0].edicion || '';
+        this.urlPaseTemporada = this.items[0].url_pase_temporada || '';
       }
       this.loading = false;
     });
   }
 
   addMoreRows() {
-    this.newItems.push({ nombre: '', fecha: '', url_entradas: '' });
+    this.newItems.push({ nombre: '', fecha: '', url_entradas: '', ubicacion: '' });
   }
 
   async saveNewItems() {
@@ -52,14 +56,25 @@ export class CronogramaListComponent implements OnInit {
 
     this.loading = true;
     for (const item of validItems) {
-      // Aplicamos la foto de temporada actual a los nuevos
+      // Aplicamos la configuración global a los nuevos
       item.url_foto = this.fotoTemporada || '';
+      item.edicion = this.edicionTexto;
+      item.url_pase_temporada = this.urlPaseTemporada;
+      item.ubicacion = item.ubicacion || 'Caja Negra, Las Cigarreras'; // Valor por defecto
       await this.cronogramaService.createCronograma(item);
     }
     
-    this.newItems = [{ nombre: '', fecha: '', url_entradas: '' }];
+    this.newItems = [{ nombre: '', fecha: '', url_entradas: '', ubicacion: '' }];
     this.loadItems();
     alert('¡Cronograma actualizado!');
+  }
+
+  async saveGlobalSettings() {
+    this.loading = true;
+    const updates = { edicion: this.edicionTexto, url_pase_temporada: this.urlPaseTemporada };
+    await this.cronogramaService.updateGlobalSettings(updates);
+    this.loadItems();
+    alert('Configuración global actualizada para toda la temporada.');
   }
 
   async updateItem(item: Cronograma) {
@@ -73,7 +88,7 @@ export class CronogramaListComponent implements OnInit {
       const url = await this.eventosService.uploadCartel(file);
       if (url) {
         this.fotoTemporada = url;
-        await this.cronogramaService.updateSeasonPhoto(url);
+        await this.cronogramaService.updateGlobalSettings({ url_foto: url });
         this.loadItems(); // Recargamos para que todo el listado se vea igual
         alert('Foto de temporada actualizada globalmente.');
       }
