@@ -1,72 +1,149 @@
-<div class="landing-hero" *ngIf="evento">
-  <div class="hero-overlay">
-    <div class="container hero-container">
-      <div class="hero-main">
-        <div class="hero-text">
-          <div class="badge">{{ evento.fecha | date:'d MMMM yyyy, HH:mm' }}H</div>
-          <h1>{{ evento.nombre }}</h1>
-          <p class="tagline">{{ evento.descripcion || 'La poesía sale del esternón y sube al escenario.' }}</p>
-        </div>
+<main class="landing-main">
+  
+  <!-- MODO CARGANDO -->
+  <div *ngIf="loading" class="hero-loading">
+    <div class="spinner"></div>
+    <p>Preparando el escenario...</p>
+  </div>
 
-        <div class="hero-center-actions">
-          <a *ngIf="evento.url_entradas" [href]="evento.url_entradas" target="_blank" class="btn-primary large">Reservar Entrada</a>
-          <button *ngIf="evento.votacion_activa" routerLink="/votar" class="btn-outline">Entrar a Votar</button>
-        </div>
+  <ng-container *ngIf="!loading">
+    
+    <!-- MODO EVENTO INMINENTE (<= 7 días) -->
+    <section class="landing-hero" *ngIf="esEventoInminente && evento" [style.background-image]="'url(' + (evento.url_cartel || 'assets/hero-bg.jpg') + ')'">
+      <div class="hero-overlay">
+        <div class="container hero-container">
+          <div class="hero-main">
+            <div class="hero-text">
+              <div class="badge">PRÓXIMA CITA: {{ evento.fecha | date:'dd MMMM yyyy, HH:mm' }}H</div>
+              <h1>{{ evento.nombre }}</h1>
+              <p class="tagline">{{ evento.descripcion || 'La poesía nace en las tripas y se deshace en el micro.' }}</p>
+            </div>
+            
+            <div class="hero-center-actions">
+              <a *ngIf="evento.url_entradas" [href]="evento.url_entradas" target="_blank" class="btn-primary large">Reservar Entrada</a>
+            </div>
 
-        <div class="hero-image-right">
-          <img [src]="evento.url_cartel || 'assets/images/evento.jpeg'" alt="Cartel del Evento" onerror="this.src='assets/images/evento.jpeg'">
-        </div>
-
-        <div class="hero-qr" *ngIf="qrCodeUrl && evento.votacion_activa">
-          <img [src]="qrCodeUrl" alt="Escanear para votar">
-          <span>ESCANEA PARA VOTAR</span>
+            <div class="hero-impact-stats">
+              <div class="stat"><span class="value">10</span><span class="label">Poetas</span></div>
+              <div class="stat"><span class="value">3</span><span class="label">Minutos</span></div>
+              <div class="stat"><span class="value">1</span><span class="label">Ganador</span></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </section>
 
-<section class="info-section">
-  <div class="container">
-    <h2>El Movimiento</h2>
-    <div class="text-block">
-      <p><strong>Poetry Slam</strong> es mucho más que un recital, es un encuentro de poesía oral contemporánea en el que diferentes voces comparten sus textos originales en directo ante el público, en una velada dedicada a la palabra viva.</p>
-      <p>Interpretación, emoción y una conexión brutal con los asistentes. Cada artista dispone solo de un escenario, un micrófono y tres minutos para compartir su voz, su visión del mundo y su estilo, intentando llegar directo al esternón de quien escucha.</p>
-    </div>
-    <div class="image-placeholder">
-      <img src="assets/images/evento.jpeg" alt="Slam Alicante" onerror="this.src='https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1000&auto=format&fit=crop'">
-    </div>
-  </div>
-</section>
+    <!-- MODO TEMPORADA / ESPERA (> 7 días) -->
+    <section class="season-hero" *ngIf="!esEventoInminente">
+      <div class="hero-overlay">
+        <div class="container hero-container">
+          <div class="season-flex">
+            <!-- Izquierda: Textos -->
+            <div class="season-content">
+              <div class="season-badge">Temporada {{ currentYear }}</div>
+              <h1>Poetry Slam Alicante</h1>
+              <p class="season-tagline">La competición poética donde el jurado eres tú.</p>
+              
+              <div class="hero-actions">
+                <button (click)="scrollToSlider()" class="btn-primary large pulse-btn">
+                  <span>🎟️ Comprar Entradas</span>
+                </button>
+                <p class="hero-subtext">Selecciona tu cita y asegura tu sitio</p>
+              </div>
+            </div>
 
-<section class="artists-section" *ngIf="evento">
-  <div class="container">
-    <h2>Participantes</h2>
-    <p class="presenter" *ngIf="evento.presentador">Presentado por <strong>{{ evento.presentador }}</strong></p>
-    
-    <div class="artists-list" [ngStyle]="{'display': participantes.length === 0 ? 'block' : ''}">
-      <div class="artist" *ngFor="let p of participantes">✦ {{ p.nombre }}</div>
-      <div class="artist" *ngIf="participantes.length === 0" style="text-align: center; color: #888; padding: 2rem 0;"><em>Listado de participantes en proceso de cierre...</em></div>
-    </div>
-    
-    <div class="guest-star" *ngIf="evento.artista_invitado">
-      <span class="star">⭐</span> Artista invitado: <strong>{{ evento.artista_invitado }}</strong>
-    </div>
-  </div>
-</section>
+            <!-- Derecha: Imagen de Temporada -->
+            <div class="season-visual" *ngIf="fotoTemporada">
+              <div class="poster-container">
+                <img [src]="fotoTemporada" alt="Poster Temporada">
+                <div class="glow"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<section class="reservas-section" *ngIf="evento">
-  <div class="container">
-    <div class="reservas-card">
-      <h2>Reservas</h2>
-      <p>Entrada gratuita con reserva previa debido al aforo limitado.</p>
-      <ul class="details">
-        <li>Recomendamos llegar 10–15 minutos antes.</li>
-        <li>Las plazas no ocupadas podrán liberarse una vez comenzada la actividad.</li>
-      </ul>
-      <a *ngIf="evento.url_entradas" [href]="evento.url_entradas" target="_blank" class="btn-primary large">Realizar Reserva</a>
-    </div>
-  </div>
-</section>
+    <!-- NUEVO CONTENEDOR DEL SLIDER (FUERA DEL HERO) -->
+    <section class="upcoming-events-section highlight" *ngIf="!esEventoInminente && proximosCronograma.length > 0" id="season-slider">
+      <div class="container">
+        <div class="season-slider-wrapper">
+          <div class="slider-header">
+            <h2>Próximas Entradas</h2>
+            <button routerLink="/calendario" class="btn-text">Calendario Completo →</button>
+          </div>
+          
+          <div class="season-slider">
+            <div class="slider-item" *ngFor="let ev of proximosCronograma">
+              <div class="event-card ticket-style">
+                <div class="card-date" [style.background-image]="fotoTemporada ? 'url(' + fotoTemporada + ')' : 'none'">
+                  <div class="overlay"></div>
+                  <div class="ticket-cut"></div>
+                  <span class="d">{{ ev.fecha | date:'dd' }}</span>
+                  <span class="m">{{ ev.fecha | date:'MMM' | uppercase }}</span>
+                </div>
+                <div class="card-body">
+                  <div class="event-info">
+                    <h3>{{ ev.nombre }}</h3>
+                    <p><span class="icon">📍</span> Las Cigarreras</p>
+                  </div>
+                  <a *ngIf="ev.url_entradas" [href]="ev.url_entradas" target="_blank" class="btn-buy-massive">
+                    <span>Comprar Ticket</span>
+                    <small>Sede Alicante</small>
+                  </a>
+                </div>
+              </div>
+            </div>
 
+            <div class="slider-item">
+              <div class="event-card view-more" routerLink="/calendario">
+                <div class="card-body">
+                  <span class="icon">📅</span>
+                  <h3>Calendario Completo</h3>
+                  <p>Ver todas las fechas</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <!-- SECCIÓN DE PARTICIPANTES (Solo en Modo Evento) -->
+    <section class="section participants-section" *ngIf="esEventoInminente && participantes.length > 0">
+      <div class="container">
+        <h2 class="section-title">Los Valientes</h2>
+        <div class="poetas-grid">
+          <div class="poeta-card" *ngFor="let p of participantes">
+            <div class="poeta-img">
+              <img [src]="p.foto_url || 'assets/default-avatar.jpg'" [alt]="p.nombre">
+            </div>
+            <h3>{{ p.nombre }}</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OTRAS CITAS (Solo visible si hay evento inminente, sino el slider de arriba manda) -->
+    <section class="section secondary-events" *ngIf="esEventoInminente && proximosCronograma.length > 1">
+      <div class="container">
+        <h2 class="section-title">Otras Citas</h2>
+        <div class="mini-timeline">
+           <div class="timeline-item" *ngFor="let ev of proximosCronograma.slice(1)">
+            <div class="date">
+              <span class="day">{{ ev.fecha | date:'dd' }}</span>
+              <span class="month">{{ ev.fecha | date:'MMM' }}</span>
+            </div>
+            <div class="info">
+              <h3>{{ ev.nombre }}</h3>
+            </div>
+            <div class="action" *ngIf="ev.url_entradas">
+              <a [href]="ev.url_entradas" target="_blank" class="btn-primary">Entradas</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </ng-container>
+</main>

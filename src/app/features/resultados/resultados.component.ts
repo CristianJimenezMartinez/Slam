@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EventosService, Evento } from '../../core/services/eventos.service';
 import { VotacionesService, Resultado } from '../../core/services/votaciones.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-resultados',
@@ -10,6 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class ResultadosComponent implements OnInit, OnDestroy {
   evento: Evento | null = null;
+  listaEventos: Evento[] = [];
   resultados: Resultado[] = [];
   loading = true;
   private channelSub: any;
@@ -20,31 +20,44 @@ export class ResultadosComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.loadEventAndResults();
+    this.initialLoad();
   }
 
-  async loadEventAndResults() {
+  async initialLoad() {
     this.loading = true;
-    let res = await this.eventosService.getEventoActivo().toPromise();
-    this.evento = res || null;
+    
+    // 1. Cargar todos los eventos para el selector
+    const resAll = await this.eventosService.getEventos().toPromise();
+    this.listaEventos = resAll?.data as Evento[] || [];
 
-    if (!this.evento) {
-      // If no active, try to get the most recent one
-      const resAll = await this.eventosService.getEventos().toPromise();
-      const list = resAll?.data as any[] || [];
-      if (list.length > 0) {
-        this.evento = list[0]; // Most recent by date
-      }
+    // 2. Por defecto, cargar el primero (el más reciente/activo)
+    if (this.listaEventos.length > 0) {
+      // Intentamos buscar el que esté activo manualmente
+      const activo = this.listaEventos.find(e => e.activo);
+      await this.seleccionarEvento(activo || this.listaEventos[0]);
+    }
+    
+    this.loading = false;
+  }
+
+  async seleccionarEvento(evento: Evento) {
+    this.loading = true;
+    this.evento = evento;
+    
+    // Limpiar suscripción anterior si existe
+    if (this.channelSub) {
+      this.channelSub.unsubscribe();
     }
 
-    if (this.evento) {
-      await this.refreshResults();
+    await this.refreshResults();
 
-      // Listen for real-time votes to trigger a refresh
+    // Solo escuchamos en tiempo real si el evento es "reciente" o tiene votación abierta
+    if (this.evento.votacion_activa) {
       this.channelSub = this.votacionesService.listenToVotaciones(this.evento.id, () => {
         this.refreshResults();
       });
     }
+
     this.loading = false;
   }
 

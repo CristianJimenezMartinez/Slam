@@ -20,6 +20,7 @@ export interface Resultado {
   puntuacion_total: number;
   puntuacion_media: number;
   posicion: number;
+  foto_url?: string;
 }
 
 @Injectable({

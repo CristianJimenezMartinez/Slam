@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EventosService, Evento } from '../../../core/services/eventos.service';
+import { CronogramaService, Cronograma } from '../../../core/services/cronograma.service';
 
 @Component({
   selector: 'app-historia',
@@ -7,21 +7,32 @@ import { EventosService, Evento } from '../../../core/services/eventos.service';
   styleUrls: ['./historia.component.scss']
 })
 export class HistoriaComponent implements OnInit {
-  eventos: Evento[] = [];
+  proximos: Cronograma[] = [];
+  pasados: Cronograma[] = [];
   loading = true;
+  currentYear = new Date().getFullYear();
 
-  constructor(private eventosService: EventosService) { }
+  constructor(private cronogramaService: CronogramaService) { }
 
   ngOnInit(): void {
-    this.eventosService.getEventos().subscribe(res => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    this.cronogramaService.getCronograma().subscribe(res => {
       this.loading = false;
       if (res && res.data) {
-        // Filtrar para mostrar solo los eventos pasados (inactivos)
-        const allEventos = res.data as Evento[];
-        // TODO: Restaurar el filtro una vez revisado en producción:
-        // this.eventos = allEventos.filter(ev => !ev.activo);
-        this.eventos = allEventos;
+        const all = res.data as Cronograma[];
+        
+        // El cronograma ya viene ordenado por fecha desde el servicio
+        this.proximos = all.filter(ev => new Date(ev.fecha) >= today);
+        this.pasados = all.filter(ev => new Date(ev.fecha) < today).reverse();
       }
     });
+  }
+
+  isEventToday(fecha: string): boolean {
+    const eventDate = new Date(fecha).toDateString();
+    const today = new Date().toDateString();
+    return eventDate === today;
   }
 }

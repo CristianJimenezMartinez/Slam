@@ -1,5 +1,7 @@
 <header class="global-header">
-  <div class="logo" routerLink="/">SLAM.</div>
+  <div class="logo-container" routerLink="/">
+    <img src="assets/images/logo.png" alt="Slam Logo" class="brand-logo">
+  </div>
   
   <button class="mobile-toggle" (click)="toggleMenu()">
     <span *ngIf="!isMenuOpen">☰</span>
@@ -12,9 +14,9 @@
     <a routerLink="/resultados" routerLinkActive="active" (click)="closeMenu()">Resultados</a>
     <a routerLink="/cantera" routerLinkActive="active" (click)="closeMenu()">Cantera</a>
     <a routerLink="/normas" routerLinkActive="active" (click)="closeMenu()">Normas</a>
-    <a routerLink="/eventos" routerLinkActive="active" (click)="closeMenu()">Historial</a>
-    <a routerLink="/admin" routerLinkActive="active" (click)="closeMenu()">Admin</a>
-    <a *ngIf="auth.session$ | async" (click)="logout()" class="btn-logout">Salir</a>
+    <a routerLink="/calendario" routerLinkActive="active" (click)="closeMenu()">Calendario</a>
+    <a routerLink="/admin" routerLinkActive="active" (click)="closeMenu()" class="desktop-only">Admin</a>
+    <a *ngIf="auth.session$ | async" (click)="logout()" class="btn-logout desktop-only">Salir</a>
   </nav>
 </header>
 

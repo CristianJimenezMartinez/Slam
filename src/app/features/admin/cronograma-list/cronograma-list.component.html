@@ -1,0 +1,81 @@
+<div class="admin-wrapper">
+  <div class="admin-header">
+    <div class="header-text">
+      <h1>Temporada {{ currentYear }}</h1>
+      <p>Configura las fechas del año y la estética global de la temporada.</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-outline" routerLink="/admin">← Volver a Eventos</button>
+    </div>
+  </div>
+
+  <!-- CONFIGURACIÓN GLOBAL DE IMAGEN -->
+  <div class="global-season-config card mb-4">
+    <div class="config-text">
+      <h3>Imagen de Temporada</h3>
+      <p>Esta imagen se usará como fondo en el calendario y la home para todas las fechas de la temporada.</p>
+    </div>
+    <div class="config-upload">
+      <label class="season-photo-btn">
+        <input type="file" (change)="onSeasonFileSelected($event)" hidden>
+        <img *ngIf="fotoTemporada" [src]="fotoTemporada" class="season-preview">
+        <div class="upload-placeholder" *ngIf="!fotoTemporada">
+          <span>📷</span>
+          Subir Foto Global
+        </div>
+        <div class="hover-overlay">Cambiar Imagen</div>
+      </label>
+    </div>
+  </div>
+
+  <!-- SECCIÓN DE NUEVOS EVENTOS (LOTE) -->
+  <div class="cronograma-section">
+    <div class="section-title">
+      <h2>Añadir Próximos Slams</h2>
+      <button class="btn-row" (click)='addMoreRows()'>+ Añadir otra fila</button>
+    </div>
+    
+    <div class="bulk-form">
+      <div class="form-row header">
+        <span>Nombre del Slam</span>
+        <span>Fecha y Hora</span>
+        <span>Link de Entradas (Entradium)</span>
+        <span></span>
+      </div>
+      
+      <div class="form-row" *ngFor="let item of newItems; let i = index">
+        <input type="text" [(ngModel)]="item.nombre" placeholder="Ej: Slam Mayo">
+        <input type="datetime-local" [(ngModel)]="item.fecha">
+        <input type="text" [(ngModel)]="item.url_entradas" placeholder="https://entradium.com/...">
+        <button class="btn-remove" (click)="newItems.splice(i, 1)" *ngIf="newItems.length > 1">✕</button>
+      </div>
+
+      <div class="bulk-actions" style="margin-top: 2rem;">
+        <button class="btn-primary" (click)="saveNewItems()">Guardar Nuevas Fechas</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LISTADO EXISTENTE -->
+  <div class="cronograma-section mt-5" *ngIf="items.length > 0">
+    <div class="section-title">
+      <h2>Cronograma Actual</h2>
+    </div>
+    
+    <div class="items-grid">
+      <div class="item-row" *ngFor="let item of items">
+        <div class="item-main">
+          <input type="text" [(ngModel)]="item.nombre" (change)="updateItem(item)" class="editable-field">
+          <input type="datetime-local" [ngModel]="formatDateForInput(item.fecha)" (ngModelChange)="item.fecha = $event; updateItem(item)" class="editable-field">
+        </div>
+        <div class="item-link">
+          <input type="text" [(ngModel)]="item.url_entradas" (change)="updateItem(item)" placeholder="Sin link" class="editable-field link">
+        </div>
+        <div class="item-actions">
+          <button class="btn-danger-icon" (click)="deleteItem(item.id)">🗑️</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -21,6 +21,7 @@ import { ForgotPasswordComponent } from './features/auth/forgot-password/forgot-
 // Admin
 import { EventListComponent } from './features/admin/event-list/event-list.component';
 import { EventDetailComponent } from './features/admin/event-detail/event-detail.component';
+import { CronogramaListComponent } from './features/admin/cronograma-list/cronograma-list.component';
 
 // Votar
 import { VotarComponent } from './features/votar/votar.component';
@@ -42,6 +43,7 @@ import { FooterComponent } from './core/footer/footer.component';
     ForgotPasswordComponent,
     EventListComponent,
     EventDetailComponent,
+    CronogramaListComponent,
     VotarComponent,
     ResultadosComponent,
     DashboardComponent,

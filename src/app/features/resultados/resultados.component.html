@@ -1,32 +1,76 @@
-<div class="results-container">
+<div class="resultados-container">
+  
   <header class="page-header">
-    <div class="live-badge" *ngIf="evento?.votacion_activa">EN DIRECTO 🔴</div>
-    <h1>Resultados {{ evento?.nombre }}</h1>
-    <p>Ranking actualizado en tiempo real según la votación del público.</p>
+    <div class="badge neon" *ngIf="evento?.votacion_activa">Votación en Directo 🔥</div>
+    <h1>Rankings & Votos</h1>
+    <p>La voz del público en números. Selecciona un evento para ver su archivo.</p>
   </header>
 
-  <div class="loading" *ngIf="loading && !resultados.length">Cargando resultados...</div>
-  
-  <div class="no-results" *ngIf="!loading && !resultados.length">
-    <p>Aún no hay votos registrados para este evento.</p>
-  </div>
-
-  <div class="ranking-list" *ngIf="resultados.length">
-    <div class="ranking-item" *ngFor="let r of resultados; let i=index" [class.top]="r.posicion === 1">
-      <div class="rank">#{{ r.posicion }}</div>
-      <div class="p-info">
-        <span class="name">{{ r.participante }}</span>
-        <span class="votes">{{ r.num_votos }} votos</span>
-      </div>
-      <div class="score">
-        <span class="total">{{ r.puntuacion_total }} pts</span>
-        <span class="avg">{{ r.puntuacion_media | number:'1.1-1' }} media</span>
-      </div>
-      <div class="bar-container">
-        <div class="bar" [style.width.%]="(r.puntuacion_total / (resultados[0].puntuacion_total || 1)) * 100"></div>
-      </div>
+  <!-- SELECTOR DE EVENTOS -->
+  <div class="event-selector" *ngIf="listaEventos.length > 1">
+    <label>Consultar Archivo:</label>
+    <div class="selector-pills">
+      <button 
+        *ngFor="let ev of listaEventos" 
+        (click)="seleccionarEvento(ev)"
+        [class.active]="evento?.id === ev.id"
+        class="pill">
+        {{ ev.nombre }} ({{ ev.fecha | date:'MMM yy' }})
+      </button>
     </div>
   </div>
 
-  <!-- Actions removed as per user request -->
+  <div class="content-wrapper">
+    <!-- Cargando -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Calculando puntuaciones...</p>
+    </div>
+
+    <!-- Resultados -->
+    <div class="results-layout" *ngIf="!loading && resultados.length > 0">
+      
+      <!-- Podio / Top 3 -->
+      <div class="podium-section">
+        <div class="podium-item" *ngFor="let res of resultados.slice(0, 3); let i = index" [class]="'rank-' + (i + 1)">
+          <div class="rank-number">#{{ i + 1 }}</div>
+          <div class="avatar" [style.background-image]="'url(' + (res.foto_url || 'assets/default-avatar.jpg') + ')'"></div>
+          <div class="info">
+            <h3>{{ res.participante }}</h3>
+            <div class="points">{{ res.puntuacion_total }} <small>puntos</small></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resto del Ranking -->
+      <div class="ranking-table card" *ngIf="resultados.length > 3">
+        <table class="minimal-table">
+          <thead>
+            <tr>
+              <th>Pos.</th>
+              <th>Poeta</th>
+              <th>Votos</th>
+              <th>Puntos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let res of resultados.slice(3); let i = index">
+              <td>#{{ i + 4 }}</td>
+              <td>{{ res.participante }}</td>
+              <td>{{ res.num_votos }}</td>
+              <td class="highlight">{{ res.puntuacion_total }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- No hay resultados aún -->
+    <div *ngIf="!loading && resultados.length === 0" class="no-results card">
+      <p>Todavía no hay votos registrados para {{ evento?.nombre }}.</p>
+      <div class="empty-icon">🗳️</div>
+    </div>
+  </div>
+
 </div>

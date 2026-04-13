@@ -7,6 +7,7 @@ export interface Participante {
   evento_id: string;
   nombre: string;
   orden: number;
+  foto_url?: string;
 }
 
 @Injectable({

@@ -16,6 +16,7 @@ import { EventDetailComponent } from './features/admin/event-detail/event-detail
 import { VotarComponent } from './features/votar/votar.component';
 import { ResultadosComponent } from './features/resultados/resultados.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
+import { CronogramaListComponent } from './features/admin/cronograma-list/cronograma-list.component';
 
 const routes: Routes = [
   {
@@ -32,8 +33,12 @@ const routes: Routes = [
     component: NormasComponent
   },
   {
-    path: 'eventos',
+    path: 'calendario',
     component: HistoriaComponent
+  },
+  {
+    path: 'eventos',
+    redirectTo: 'calendario'
   },
   {
     path: 'auth',
@@ -51,7 +56,8 @@ const routes: Routes = [
     children: [
       { path: '', component: EventListComponent },
       { path: 'new', component: EventDetailComponent },
-      { path: 'edit/:id', component: EventDetailComponent }
+      { path: 'edit/:id', component: EventDetailComponent },
+      { path: 'temporada', component: CronogramaListComponent }
     ]
   },
   {

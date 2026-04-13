@@ -1,6 +1,9 @@
 <div class="admin-header">
   <h1>Eventos</h1>
-  <button class="btn-primary" routerLink="new">Nuevo Evento</button>
+  <div class="actions">
+    <button class="btn-outline" routerLink="temporada">Gestión de Temporada</button>
+    <button class="btn-primary" routerLink="new">Nuevo Evento</button>
+  </div>
 </div>
 
 <div class="event-grid" *ngIf="eventos$ | async as res">
@@ -8,12 +11,18 @@
     <div class="event-info">
       <h3>{{ evento.nombre }}</h3>
       <p>{{ evento.fecha | date:'short' }}</p>
-      <div style="display: flex; gap: 10px; margin-top: 5px;">
-        <span class="status-badge" [class.active]="evento.activo" style="font-size: 0.8rem; padding: 2px 8px;">
-          {{ evento.activo ? '⭐ PORTADA' : 'Oculto' }}
+      <div style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap;">
+        <span class="status-badge" [class.active]="evento.activo" style="font-size: 0.75rem; padding: 3px 10px; border-radius: 20px;">
+          {{ evento.activo ? '⭐ EN PORTADA' : 'Oculto' }}
         </span>
-        <span class="status-badge" [ngStyle]="{'background': evento.votacion_activa ? '#ff0055' : '#333', 'color': 'white'}" style="font-size: 0.8rem; padding: 2px 8px;">
-          {{ evento.votacion_activa ? '🔥 VOTOS ABIERTOS' : '🔒 Votos Cerrados' }}
+        <span class="status-badge" *ngIf="isEventLocked(evento)" style="background: #222; color: #888; border: 1px solid #444; font-size: 0.75rem; padding: 3px 10px; border-radius: 20px;">
+          📁 HISTORIAL
+        </span>
+        <span class="status-badge" *ngIf="!isEventLocked(evento)" style="background: rgba(146, 211, 66, 0.2); color: var(--neon-green); border: 1px solid var(--neon-green); font-size: 0.75rem; padding: 3px 10px; border-radius: 20px;">
+          📅 PRÓXIMO
+        </span>
+        <span class="status-badge" *ngIf="evento.votacion_activa" style="background: #ff0055; color: white; font-size: 0.75rem; padding: 3px 10px; border-radius: 20px;">
+          🔥 VOTOS ABIERTOS
         </span>
       </div>
     </div>

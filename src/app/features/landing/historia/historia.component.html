@@ -1,33 +1,67 @@
 <div class="historia-container">
   <header class="page-header">
-    <h1>Historial del Slam</h1>
-    <p>Revive las noches de gloria. Todos los eventos pasados de Poetry Slam Alicante.</p>
+    <h1>Calendario {{ currentYear }}</h1>
+    <p>La hoja de ruta del Poetry Slam Alicante. No te pierdas ninguna cita.</p>
   </header>
 
   <div class="historia-content">
-    <div *ngIf="loading" style="text-align: center; font-size: 2rem; color: var(--neon-green); padding: 4rem;">
-      Cargando archivo...
+    
+    <!-- Cargando -->
+    <div *ngIf="loading" class="status-msg">
+      <div class="spinner"></div>
+      <p>Consultando el cronograma...</p>
     </div>
 
-    <div class="eventos-grid" *ngIf="!loading">
-      <div class="evento-card" *ngFor="let evento of eventos" [routerLink]="['/eventos', evento.id]">
-        <div class="cartel-box">
-          <img [src]="evento.url_cartel || 'assets/default-cartel.jpg'" [alt]="evento.nombre">
-        </div>
-        <div class="evento-info">
-          <h3>{{ evento.nombre }}</h3>
-          <p class="fecha">{{ evento.fecha | date:'longDate' }}</p>
-          <p>{{ evento.descripcion | slice:0:120 }}...</p>
+    <div class="timeline" *ngIf="!loading">
+      
+      <!-- PRÓXIMOS EVENTOS -->
+      <div class="timeline-section" *ngIf="proximos.length > 0">
+        <h2 class="section-title">Próximas Citas</h2>
+        <div class="timeline-items">
+          <div class="timeline-item upcoming" *ngFor="let ev of proximos" [class.today]="isEventToday(ev.fecha)">
+            <div class="date-box" [style.background-image]="ev.url_foto ? 'url(' + ev.url_foto + ')' : 'none'" [class.with-photo]="ev.url_foto">
+              <div class="date-overlay" *ngIf="ev.url_foto"></div>
+              <span class="day">{{ ev.fecha | date:'dd' }}</span>
+              <span class="month">{{ ev.fecha | date:'MMM' | uppercase }}</span>
+            </div>
+            <div class="info-box">
+              <div class="item-header">
+                <h3>{{ ev.nombre }}</h3>
+                <span class="status-badge" *ngIf="isEventToday(ev.fecha)">HOY 🔥</span>
+                <span class="status-badge inminent" *ngIf="!isEventToday(ev.fecha)">PRÓXIMAMENTE</span>
+              </div>
+              <p>Tres minutos, tú y el micro. El jurado es el público.</p>
+              <div class="actions" *ngIf="ev.url_entradas">
+                <a [href]="ev.url_entradas" target="_blank" class="btn-primary small">Comprar Entrada</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- ARCHIVO / PASADOS -->
+      <div class="timeline-section secondary" *ngIf="pasados.length > 0">
+        <h2 class="section-title">Archivo Temporada</h2>
+        <div class="timeline-items">
+          <div class="timeline-item past" *ngFor="let ev of pasados">
+            <div class="date-box">
+              <span class="day">{{ ev.fecha | date:'dd' }}</span>
+              <span class="month">{{ ev.fecha | date:'MMM' | uppercase }}</span>
+            </div>
+            <div class="info-box">
+              <h3>{{ ev.nombre }}</h3>
+              <p>Finalizado. Consulta los resultados en la sección correspondiente.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <div *ngIf="!loading && eventos.length === 0" style="text-align: center; color: #888; padding: 4rem;">
-      Aún no hay eventos registrados en el historial.
+    <!-- Vacío -->
+    <div *ngIf="!loading && proximos.length === 0 && pasados.length === 0" class="status-msg">
+      <p>Aún no hay fechas programadas para la temporada.</p>
     </div>
-    
-    <div style="text-align: center; margin-top: 4rem;">
-      <button routerLink="/" class="btn-primary large">Volver a la Portada</button>
-    </div>
+
   </div>
 </div>

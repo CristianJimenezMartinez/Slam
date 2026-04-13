@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { from as fromRxjs } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 export interface Evento {
   id: string;
@@ -28,8 +28,26 @@ export class EventosService {
   }
 
   getEventoActivo() {
-    return fromRxjs(this.supa.client.from('eventos').select('*').eq('activo', true).single()).pipe(
-      map(res => res.data as Evento | null)
+    // 1. Intentamos obtener el evento marcado manualmente como activo
+    return fromRxjs(this.supa.client.from('eventos').select('*').eq('activo', true).maybeSingle()).pipe(
+      map(res => res.data as Evento | null),
+      switchMap(manualActive => {
+        if (manualActive) return [manualActive];
+        
+        // 2. Si no hay ninguno activo manualmente, buscamos el más próximo en el futuro
+        const today = new Date().toISOString();
+        return fromRxjs(
+          this.supa.client
+            .from('eventos')
+            .select('*')
+            .gte('fecha', today)
+            .order('fecha', { ascending: true })
+            .limit(1)
+            .maybeSingle()
+        ).pipe(
+          map(res => res.data as Evento | null)
+        );
+      })
     );
   }
 
