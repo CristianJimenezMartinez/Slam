@@ -1,0 +1,40 @@
+<div class="admin-header">
+  <h1>Eventos</h1>
+  <button class="btn-primary" routerLink="new">Nuevo Evento</button>
+</div>
+
+<div class="event-grid" *ngIf="eventos$ | async as res">
+  <div class="event-card" *ngFor="let evento of res.data">
+    <div class="event-info">
+      <h3>{{ evento.nombre }}</h3>
+      <p>{{ evento.fecha | date:'short' }}</p>
+      <div style="display: flex; gap: 10px; margin-top: 5px;">
+        <span class="status-badge" [class.active]="evento.activo" style="font-size: 0.8rem; padding: 2px 8px;">
+          {{ evento.activo ? '⭐ PORTADA' : 'Oculto' }}
+        </span>
+        <span class="status-badge" [ngStyle]="{'background': evento.votacion_activa ? '#ff0055' : '#333', 'color': 'white'}" style="font-size: 0.8rem; padding: 2px 8px;">
+          {{ evento.votacion_activa ? '🔥 VOTOS ABIERTOS' : '🔒 Votos Cerrados' }}
+        </span>
+      </div>
+    </div>
+    <div class="event-actions" style="display: flex; flex-direction: column; gap: 5px;">
+      <button class="btn-icon" [class.active]="evento.activo" (click)="toggleActivo(evento)" style="width: 100%; border-radius: 4px; padding: 5px; font-size: 0.9rem;">
+        {{ evento.activo ? 'Quitar Portada' : 'Poner en Portada' }}
+      </button>
+      
+      <ng-container *ngIf="!isEventLocked(evento)">
+        <button class="btn-icon" [ngStyle]="{'background': evento.votacion_activa ? '#ff0055' : 'transparent', 'color': evento.votacion_activa ? 'white' : '#ff0055', 'border': '1px solid #ff0055'}" (click)="toggleVotacion(evento)" style="width: 100%; border-radius: 4px; padding: 5px; font-size: 0.9rem;">
+          {{ evento.votacion_activa ? 'Cerrar Votos' : 'Abrir Votos' }}
+        </button>
+        <div style="display: flex; gap: 5px; margin-top: 5px;">
+          <button [routerLink]="['edit', evento.id]" style="flex: 1; padding: 5px; font-size: 0.9rem;">Editar</button>
+          <button class="btn-danger" (click)="deleteEvento(evento.id)" style="flex: 1; padding: 5px; font-size: 0.9rem;">Eliminar</button>
+        </div>
+      </ng-container>
+
+      <div *ngIf="isEventLocked(evento)" style="text-align: center; color: #888; font-size: 0.85rem; padding: 10px 0; border: 1px dashed #444; border-radius: 4px; margin-top: 5px;">
+        🔒 Evento finalizado. Modificaciones bloqueadas para proteger el archivo.
+      </div>
+    </div>
+  </div>
+</div>

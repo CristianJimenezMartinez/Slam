@@ -10,6 +10,9 @@
     <a routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" (click)="closeMenu()">Inicio</a>
     <a routerLink="/votar" routerLinkActive="active" (click)="closeMenu()">Votar</a>
     <a routerLink="/resultados" routerLinkActive="active" (click)="closeMenu()">Resultados</a>
+    <a routerLink="/cantera" routerLinkActive="active" (click)="closeMenu()">Cantera</a>
+    <a routerLink="/normas" routerLinkActive="active" (click)="closeMenu()">Normas</a>
+    <a routerLink="/eventos" routerLinkActive="active" (click)="closeMenu()">Historial</a>
     <a routerLink="/admin" routerLinkActive="active" (click)="closeMenu()">Admin</a>
     <a *ngIf="auth.session$ | async" (click)="logout()" class="btn-logout">Salir</a>
   </nav>
@@ -18,3 +21,5 @@
 <main>
   <router-outlet></router-outlet>
 </main>
+
+<app-footer></app-footer>

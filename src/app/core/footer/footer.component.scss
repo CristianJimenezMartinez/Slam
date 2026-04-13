@@ -1,0 +1,110 @@
+footer {
+  padding: 1.5rem 2rem 0.5rem;
+  border-top: 1px solid #222;
+  background: #0a0a0a;
+  color: #888;
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer-col {
+    h3 {
+      color: var(--off-white);
+      font-size: 1.2rem;
+      margin: 0 0 1.5rem 0;
+      position: relative;
+      padding-bottom: 0.5rem;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 30px;
+        height: 2px;
+        background: var(--neon-green);
+      }
+    }
+
+    p {
+      font-size: 0.95rem;
+      line-height: 1.1;
+      margin-bottom: 0.3rem;
+      strong { color: var(--off-white); }
+    }
+
+    a {
+      color: var(--neon-green);
+      text-decoration: none;
+      font-size: 0.95rem;
+      &:hover { text-decoration: underline; }
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.2rem;
+      margin-top: 1.2rem;
+      
+      a {
+        color: #555;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        
+        svg {
+          width: 24px;
+          height: 24px;
+          fill: currentColor;
+        }
+
+        &:hover {
+          color: var(--neon-green);
+          transform: translateY(-3px);
+          filter: drop-shadow(0 0 5px var(--neon-green));
+        }
+      }
+    }
+  }
+
+  .branding {
+    .logo {
+      font-size: 2.2rem;
+      color: var(--neon-green);
+      margin: 0 0 1rem 0;
+    }
+    p {
+      font-size: 0.85rem;
+    }
+  }
+
+  .footer-bottom {
+    border-top: 1px solid #1a1a1a;
+    padding-top: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+    .history-link {
+      color: var(--neon-green);
+      text-decoration: none;
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+      &:hover { transform: translateX(-5px); text-shadow: 0 0 10px var(--neon-green); }
+    }
+
+    p { font-size: 0.75rem; color: #444; margin: 0; }
+  }
+
+  @media (max-width: 768px) {
+    .footer-grid { gap: 2rem; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+}

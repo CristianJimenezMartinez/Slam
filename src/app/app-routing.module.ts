@@ -3,48 +3,73 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { GuestGuard } from './core/guards/guest.guard';
 
+// Componentes
+import { LandingComponent } from './features/landing/landing/landing.component';
+import { HistoriaComponent } from './features/landing/historia/historia.component';
+import { CanteraComponent } from './features/landing/cantera/cantera.component';
+import { NormasComponent } from './features/landing/normas/normas.component';
+import { LoginComponent } from './features/auth/login/login.component';
+import { RegisterComponent } from './features/auth/register/register.component';
+import { ForgotPasswordComponent } from './features/auth/forgot-password/forgot-password.component';
+import { EventListComponent } from './features/admin/event-list/event-list.component';
+import { EventDetailComponent } from './features/admin/event-detail/event-detail.component';
+import { VotarComponent } from './features/votar/votar.component';
+import { ResultadosComponent } from './features/resultados/resultados.component';
+import { DashboardComponent } from './features/dashboard/dashboard.component';
+
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    loadChildren: () =>
-      import('./features/landing/landing.module').then((m) => m.LandingModule),
+    component: LandingComponent
+  },
+  {
+    path: 'cantera',
+    component: CanteraComponent
+  },
+  {
+    path: 'normas',
+    component: NormasComponent
+  },
+  {
+    path: 'eventos',
+    component: HistoriaComponent
   },
   {
     path: 'auth',
     canActivate: [GuestGuard],
-    loadChildren: () =>
-      import('./features/auth/auth.module').then((m) => m.AuthModule),
+    children: [
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
+      { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: '', redirectTo: 'login', pathMatch: 'full' }
+    ]
   },
   {
     path: 'admin',
     canActivate: [AuthGuard],
-    loadChildren: () =>
-      import('./features/admin/admin.module').then((m) => m.AdminModule),
+    children: [
+      { path: '', component: EventListComponent },
+      { path: 'new', component: EventDetailComponent },
+      { path: 'edit/:id', component: EventDetailComponent }
+    ]
   },
   {
     path: 'votar',
-    loadChildren: () =>
-      import('./features/votar/votar.module').then((m) => m.VotarModule),
+    component: VotarComponent
   },
   {
     path: 'resultados',
-    loadChildren: () =>
-      import('./features/resultados/resultados.module').then(
-        (m) => m.ResultadosModule
-      ),
+    component: ResultadosComponent
   },
   {
     path: 'dashboard',
     canActivate: [AuthGuard],
-    loadChildren: () =>
-      import('./features/dashboard/dashboard.module').then(
-        (m) => m.DashboardModule
-      ),
+    component: DashboardComponent
   },
   {
     path: '**',
-    redirectTo: 'votar',
+    redirectTo: '',
   },
 ];
 
@@ -52,4 +77,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

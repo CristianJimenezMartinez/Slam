@@ -1,0 +1,74 @@
+<div class="votar-container">
+  
+  <header class="page-header">
+    <h1>Voto del Público</h1>
+    <p>La palabra hecha espectáculo. Dicta sentencia con tu puntuación.</p>
+  </header>
+
+  <div class="error-banner" *ngIf="error">
+    <span>⚠️</span> {{ error }}
+  </div>
+
+  <div class="state-content" *ngIf="!submitted; else success">
+    <!-- Cargando -->
+    <div class="status-box" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Buscando evento activo...</p>
+    </div>
+    
+    <!-- No hay evento -->
+    <div class="status-box" *ngIf="!loading && !evento">
+      <div class="empty-icon">📢</div>
+      <h2>¡NO HAY MICROS ABIERTOS!</h2>
+      <p>Parece que no hay ningún evento programado actualmente.</p>
+      <button routerLink="/" class="btn-primary">Volver a la Portada</button>
+    </div>
+
+    <!-- Evento bloqueado (Votación cerrada) -->
+    <div class="status-box locked" *ngIf="!loading && evento && !evento.votacion_activa">
+      <div class="empty-icon">⏳</div>
+      <h2 class="purple-glow">¡Votaciones cerradas!</h2>
+      <p>La poesía está a punto de empezar. <br> El evento <strong>{{ evento.nombre }}</strong> está activo, pero los votos aún están cerrados.</p>
+      <p class="hint">Espera a que el presentador dé el aviso desde el escenario.</p>
+      <button routerLink="/" class="btn-primary">Volver a la Portada</button>
+    </div>
+
+    <!-- Formulario de votación -->
+    <div class="voting-form-body" *ngIf="evento && evento.votacion_activa && !loading">
+      <div class="event-info-bar">
+        <h3>{{ evento.nombre }}</h3>
+        <span>Puntúa del 1 al 10</span>
+      </div>
+
+      <form [formGroup]="voteForm" (ngSubmit)="onSubmit()">
+        <div class="participant-vote-list" formArrayName="puntuaciones">
+          <div class="vote-item" *ngFor="let p of participantes; let i=index">
+            <div class="p-info">
+              <span class="p-order">{{ p.id }}</span>
+              <span class="p-name">{{ p.nombre }}</span>
+            </div>
+            <div class="score-selector">
+              <input type="range" min="1" max="10" step="1" [formControlName]="i" />
+              <span class="current-score">{{ puntuaciones.at(i).value }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-footer">
+          <button type="submit" class="btn-primary" [disabled]="loading || voteForm.invalid">
+            {{ loading ? 'Enviando...' : 'Enviar Mis Votos' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<ng-template #success>
+  <div class="status-box success">
+    <div class="icon">✨</div>
+    <h1>¡Voto guardado!</h1>
+    <p>Gracias por participar en el Slam.</p>
+    <button routerLink="/resultados" class="btn-primary">Ver Resultados</button>
+  </div>
+</ng-template>

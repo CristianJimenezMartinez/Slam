@@ -1,0 +1,33 @@
+<div class="historia-container">
+  <header class="page-header">
+    <h1>Historial del Slam</h1>
+    <p>Revive las noches de gloria. Todos los eventos pasados de Poetry Slam Alicante.</p>
+  </header>
+
+  <div class="historia-content">
+    <div *ngIf="loading" style="text-align: center; font-size: 2rem; color: var(--neon-green); padding: 4rem;">
+      Cargando archivo...
+    </div>
+
+    <div class="eventos-grid" *ngIf="!loading">
+      <div class="evento-card" *ngFor="let evento of eventos" [routerLink]="['/eventos', evento.id]">
+        <div class="cartel-box">
+          <img [src]="evento.url_cartel || 'assets/default-cartel.jpg'" [alt]="evento.nombre">
+        </div>
+        <div class="evento-info">
+          <h3>{{ evento.nombre }}</h3>
+          <p class="fecha">{{ evento.fecha | date:'longDate' }}</p>
+          <p>{{ evento.descripcion | slice:0:120 }}...</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!loading && eventos.length === 0" style="text-align: center; color: #888; padding: 4rem;">
+      Aún no hay eventos registrados en el historial.
+    </div>
+    
+    <div style="text-align: center; margin-top: 4rem;">
+      <button routerLink="/" class="btn-primary large">Volver a la Portada</button>
+    </div>
+  </div>
+</div>

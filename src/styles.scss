@@ -52,7 +52,14 @@ h1, h2, h3, .logo {
 }
 
 main {
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - 80px);
+  display: flow-root;
+}
+
+@media (max-width: 868px) {
+  main {
+    min-height: calc(100vh - 70px);
+  }
 }
 
 header.global-header {

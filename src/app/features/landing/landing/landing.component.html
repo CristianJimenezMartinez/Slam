@@ -1,0 +1,72 @@
+<div class="landing-hero" *ngIf="evento">
+  <div class="hero-overlay">
+    <div class="container hero-container">
+      <div class="hero-main">
+        <div class="hero-text">
+          <div class="badge">{{ evento.fecha | date:'d MMMM yyyy, HH:mm' }}H</div>
+          <h1>{{ evento.nombre }}</h1>
+          <p class="tagline">{{ evento.descripcion || 'La poesía sale del esternón y sube al escenario.' }}</p>
+        </div>
+
+        <div class="hero-center-actions">
+          <a *ngIf="evento.url_entradas" [href]="evento.url_entradas" target="_blank" class="btn-primary large">Reservar Entrada</a>
+          <button *ngIf="evento.votacion_activa" routerLink="/votar" class="btn-outline">Entrar a Votar</button>
+        </div>
+
+        <div class="hero-image-right">
+          <img [src]="evento.url_cartel || 'assets/images/evento.jpeg'" alt="Cartel del Evento" onerror="this.src='assets/images/evento.jpeg'">
+        </div>
+
+        <div class="hero-qr" *ngIf="qrCodeUrl && evento.votacion_activa">
+          <img [src]="qrCodeUrl" alt="Escanear para votar">
+          <span>ESCANEA PARA VOTAR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="info-section">
+  <div class="container">
+    <h2>El Movimiento</h2>
+    <div class="text-block">
+      <p><strong>Poetry Slam</strong> es mucho más que un recital, es un encuentro de poesía oral contemporánea en el que diferentes voces comparten sus textos originales en directo ante el público, en una velada dedicada a la palabra viva.</p>
+      <p>Interpretación, emoción y una conexión brutal con los asistentes. Cada artista dispone solo de un escenario, un micrófono y tres minutos para compartir su voz, su visión del mundo y su estilo, intentando llegar directo al esternón de quien escucha.</p>
+    </div>
+    <div class="image-placeholder">
+      <img src="assets/images/evento.jpeg" alt="Slam Alicante" onerror="this.src='https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1000&auto=format&fit=crop'">
+    </div>
+  </div>
+</section>
+
+<section class="artists-section" *ngIf="evento">
+  <div class="container">
+    <h2>Participantes</h2>
+    <p class="presenter" *ngIf="evento.presentador">Presentado por <strong>{{ evento.presentador }}</strong></p>
+    
+    <div class="artists-list" [ngStyle]="{'display': participantes.length === 0 ? 'block' : ''}">
+      <div class="artist" *ngFor="let p of participantes">✦ {{ p.nombre }}</div>
+      <div class="artist" *ngIf="participantes.length === 0" style="text-align: center; color: #888; padding: 2rem 0;"><em>Listado de participantes en proceso de cierre...</em></div>
+    </div>
+    
+    <div class="guest-star" *ngIf="evento.artista_invitado">
+      <span class="star">⭐</span> Artista invitado: <strong>{{ evento.artista_invitado }}</strong>
+    </div>
+  </div>
+</section>
+
+<section class="reservas-section" *ngIf="evento">
+  <div class="container">
+    <div class="reservas-card">
+      <h2>Reservas</h2>
+      <p>Entrada gratuita con reserva previa debido al aforo limitado.</p>
+      <ul class="details">
+        <li>Recomendamos llegar 10–15 minutos antes.</li>
+        <li>Las plazas no ocupadas podrán liberarse una vez comenzada la actividad.</li>
+      </ul>
+      <a *ngIf="evento.url_entradas" [href]="evento.url_entradas" target="_blank" class="btn-primary large">Realizar Reserva</a>
+    </div>
+  </div>
+</section>
+
+

@@ -1,0 +1,95 @@
+.normas-container {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 3rem 2.5rem;
+  background: #0d0d0d;
+  border: 1px solid #333;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  position: relative;
+  background-image: radial-gradient(circle at top left, rgba(146, 66, 211, 0.05) 0%, transparent 50%);
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #222;
+    
+    h1 { font-family: 'Bebas Neue', cursive; font-size: 4rem; color: var(--neon-green); margin-bottom: 0.5rem; line-height: 1; }
+    p { color: #888; font-size: 1.1rem; }
+  }
+
+  .normas-content {
+    .rules-header {
+      margin-bottom: 2.5rem;
+      text-align: left;
+      
+      h2 { font-family: 'Bebas Neue', cursive; font-size: 2.5rem; color: var(--neon-purple); margin-bottom: 0.5rem; }
+      
+      .info-badges {
+        display: flex;
+        gap: 1rem;
+        span { background: #1a1a1a; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.8rem; color: #888; border: 1px solid #333; }
+      }
+    }
+
+    .rules-body {
+      section {
+        margin-bottom: 2.5rem;
+        
+        h3 { 
+          font-family: 'Bebas Neue', cursive; 
+          font-size: 1.8rem; 
+          color: var(--off-white); 
+          margin-bottom: 1rem; 
+          border-left: 3px solid var(--neon-green);
+          padding-left: 1rem;
+        }
+        
+        p { color: #aaa; line-height: 1.6; font-size: 1rem; }
+        
+        ul, ol {
+          list-style: none;
+          padding: 0;
+          li {
+            color: #aaa;
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 2rem;
+            &::before { content: '→'; position: absolute; left: 0; color: var(--neon-green); font-weight: bold; }
+            strong { color: var(--off-white); }
+          }
+        }
+        ol {
+          counter-reset: item;
+          li {
+            &::before {
+              content: counter(item) ".";
+              counter-increment: item;
+              color: var(--neon-green);
+              font-family: 'Bebas Neue', cursive;
+              font-size: 1.2rem;
+            }
+          }
+        }
+      }
+    }
+
+    .rules-footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid #222;
+      text-align: center;
+      p { color: #555; font-size: 0.9rem; font-style: italic; }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .normas-container {
+    margin: 1rem;
+    padding: 2rem 1.5rem;
+    .page-header h1 { font-size: 3rem; }
+    .rules-header h2 { font-size: 2rem; }
+  }
+}
