@@ -69,7 +69,7 @@
       <div class="container">
         <div class="season-slider-wrapper">
           <div class="slider-header">
-            <h2>Próximas Entradas</h2>
+            <h2>Entradas a la Venta</h2>
             <button routerLink="/calendario" class="btn-text">Calendario Completo →</button>
           </div>
           
@@ -85,7 +85,7 @@
                 <div class="card-body">
                   <div class="event-info">
                     <h3>{{ ev.nombre }}</h3>
-                    <p><span class="icon">📍</span> Las Cigarreras</p>
+                    <p class="location"><span class="icon">📍</span> Las Cigarreras</p>
                   </div>
                   <a *ngIf="ev.url_entradas" [href]="ev.url_entradas" target="_blank" class="btn-buy-massive">
                     <span>Comprar Ticket</span>

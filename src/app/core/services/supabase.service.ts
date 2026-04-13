@@ -21,7 +21,8 @@ export class SupabaseService {
             persistSession: true,
             autoRefreshToken: true,
             detectSessionInUrl: true,
-            storageKey: 'slam-auth-token'
+            flowType: 'pkce',
+            storageKey: 'slam-session-v1' // Cambiamos el nombre para resetear posibles bloqueos antiguos
           }
         }
       );

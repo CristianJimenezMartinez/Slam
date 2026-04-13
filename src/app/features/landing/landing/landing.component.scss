@@ -303,7 +303,7 @@
         border-left: 4px solid var(--neon-green);
         
         .card-date {
-          height: 140px;
+          height: 220px; // Aumentado para dar mucho más protagonismo al cartel
           background-size: cover;
           background-position: center;
           position: relative;
@@ -345,9 +345,28 @@
         justify-content: space-between;
 
         .event-info {
-          padding: 1.5rem;
-          h3 { font-family: 'Bebas Neue', cursive; font-size: 2rem; color: #fff; margin-bottom: 0.5rem; }
-          p { color: #666; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+          padding: 1.5rem 1.5rem 1rem; // Ajustamos padding inferior
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          
+          h3 { 
+            font-family: 'Bebas Neue', cursive; 
+            font-size: 1.8rem; // Reducimos un pelín para que no agobie con la imagen más grande
+            color: #fff; 
+            margin-bottom: 0.8rem;
+            min-height: auto;
+          }
+          
+          .location { 
+            color: #666; 
+            font-size: 1rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 0.5rem;
+            margin-top: auto; // ¡Clave! Empuja la ubicación al fondo del área de texto
+            padding-top: 1rem;
+          }
         }
         
         .btn-buy-massive {

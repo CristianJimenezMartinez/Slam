@@ -63,7 +63,7 @@
     &::before {
       content: '';
       position: absolute;
-      left: -21px; // Centro exacto 20px padding + 1px eje línea
+      left: -31px; // Ajustado visualmente según captura para centrado perfecto
       top: 15px;
       width: 14px;
       height: 14px;
@@ -71,7 +71,6 @@
       border-radius: 50%;
       border: 3px solid #0d0d0d;
       z-index: 2;
-      transform: translateX(-50%); // Fuerza el centrado sobre el eje
     }
 
     &.upcoming {
