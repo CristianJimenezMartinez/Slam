@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventosService, Evento } from '../../core/services/eventos.service';
 import { ParticipantesService, Participante } from '../../core/services/participantes.service';
 import { VotacionesService } from '../../core/services/votaciones.service';
+import { SeoService } from '../../core/services/seo.service';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 
 @Component({
@@ -22,7 +23,8 @@ export class VotarComponent implements OnInit {
     private fb: FormBuilder,
     private eventosService: EventosService,
     private participantesService: ParticipantesService,
-    private votacionesService: VotacionesService
+    private votacionesService: VotacionesService,
+    private seo: SeoService
   ) {
     this.voteForm = this.fb.group({
       puntuaciones: this.fb.array([])
@@ -51,11 +53,25 @@ export class VotarComponent implements OnInit {
       const res = await this.eventosService.getEventoActivo().toPromise();
       this.evento = res || null;
       if (this.evento) {
+        // SEO dinámico con el nombre del evento activo
+        this.seo.setPage({
+          title: `Votar – ${this.evento.nombre}`,
+          description: `Vota por tu poeta favorito en ${this.evento.nombre}. Poetry Slam Alicante – El jurado eres tú.`,
+          path: '/votar'
+        });
+
         const resParts = await this.participantesService.getParticipantesByEvento(this.evento.id).toPromise();
         this.participantes = resParts?.data || [];
         
         this.participantes.forEach(() => {
           this.puntuaciones.push(this.fb.control(5, [Validators.required, Validators.min(1), Validators.max(10)]));
+        });
+      } else {
+        // Sin evento activo
+        this.seo.setPage({
+          title: 'Votar',
+          description: 'Vota por tu poeta favorito en el Poetry Slam Alicante. El jurado eres tú.',
+          path: '/votar'
         });
       }
     } catch (e) {

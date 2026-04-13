@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EventosService, Evento } from '../../core/services/eventos.service';
 import { VotacionesService, Resultado } from '../../core/services/votaciones.service';
+import { SeoService } from '../../core/services/seo.service';
 
 @Component({
   selector: 'app-resultados',
@@ -16,10 +17,18 @@ export class ResultadosComponent implements OnInit, OnDestroy {
 
   constructor(
     private eventosService: EventosService,
-    private votacionesService: VotacionesService
+    private votacionesService: VotacionesService,
+    private seo: SeoService
   ) { }
 
   ngOnInit(): void {
+    // SEO base
+    this.seo.setPage({
+      title: 'Resultados',
+      description: 'Rankings y resultados de las sesiones del Poetry Slam Alicante. Consulta las puntuaciones del público.',
+      path: '/resultados'
+    });
+
     this.initialLoad();
   }
 
@@ -48,6 +57,13 @@ export class ResultadosComponent implements OnInit, OnDestroy {
     if (this.channelSub) {
       this.channelSub.unsubscribe();
     }
+
+    // Actualiza el SEO con el nombre del evento seleccionado
+    this.seo.setPage({
+      title: `Resultados – ${evento.nombre}`,
+      description: `Resultados y puntuaciones de ${evento.nombre}. Poetry Slam Alicante.`,
+      path: '/resultados'
+    });
 
     await this.refreshResults();
 

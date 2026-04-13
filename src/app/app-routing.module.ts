@@ -26,11 +26,23 @@ const routes: Routes = [
   },
   {
     path: 'cantera',
-    component: CanteraComponent
+    component: CanteraComponent,
+    data: {
+      seo: {
+        title: 'Cantera - Nuevas Voces',
+        description: 'La Cantera es el espacio para nuevas voces del Poetry Slam Alicante. Jóvenes y artistas emergentes suben al escenario por primera vez.'
+      }
+    }
   },
   {
     path: 'normas',
-    component: NormasComponent
+    component: NormasComponent,
+    data: {
+      seo: {
+        title: 'Reglamento Oficial',
+        description: 'Consulta las reglas oficiales del Poetry Slam Alicante 2026. Requisitos de participación, tiempo, votación pública y procedimiento.'
+      }
+    }
   },
   {
     path: 'calendario',

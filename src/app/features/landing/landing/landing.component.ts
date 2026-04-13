@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventosService, Evento } from '../../../core/services/eventos.service';
 import { CronogramaService, Cronograma } from '../../../core/services/cronograma.service';
 import { ParticipantesService, Participante } from '../../../core/services/participantes.service';
+import { SeoService } from '../../../core/services/seo.service';
 import * as QRCode from 'qrcode';
 
 @Component({
@@ -25,7 +26,8 @@ export class LandingComponent implements OnInit {
   constructor(
     private eventosService: EventosService,
     private cronogramaService: CronogramaService,
-    private participantesService: ParticipantesService
+    private participantesService: ParticipantesService,
+    private seo: SeoService
   ) { }
 
   ngOnInit(): void {
@@ -92,7 +94,31 @@ export class LandingComponent implements OnInit {
         this.proximoEnCronograma = this.proximosCronograma[0];
       }
     }
+
+    // 3. SEO dinámico según el estado de la landing
+    this.updateSeo();
     
     this.loading = false;
+  }
+
+  private updateSeo(): void {
+    if (this.esEventoInminente && this.evento) {
+      this.seo.setPage({
+        title: this.evento.nombre,
+        description: this.evento.descripcion
+          || `${this.evento.nombre} – Poetry Slam en vivo en Las Cigarreras, Alicante. ¡Reserva tu entrada!`,
+        path: '/'
+      });
+      this.seo.setEventJsonLd(this.evento);
+    } else {
+      this.seo.setPage({
+        title: `Temporada ${this.currentYear}`,
+        description: `Poetry Slam Alicante – Temporada ${this.currentYear}. Competición de poesía en vivo en Las Cigarreras. Consulta el calendario y compra tus entradas.`,
+        path: '/'
+      });
+      if (this.proximosCronograma.length > 0) {
+        this.seo.setEventsJsonLd(this.proximosCronograma);
+      }
+    }
   }
 }

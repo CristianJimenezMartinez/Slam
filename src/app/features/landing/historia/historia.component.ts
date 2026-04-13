@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CronogramaService, Cronograma } from '../../../core/services/cronograma.service';
+import { SeoService } from '../../../core/services/seo.service';
 
 @Component({
   selector: 'app-historia',
@@ -12,9 +13,19 @@ export class HistoriaComponent implements OnInit {
   loading = true;
   currentYear = new Date().getFullYear();
 
-  constructor(private cronogramaService: CronogramaService) { }
+  constructor(
+    private cronogramaService: CronogramaService,
+    private seo: SeoService
+  ) { }
 
   ngOnInit(): void {
+    // SEO base (se muestra mientras cargan los datos)
+    this.seo.setPage({
+      title: `Calendario ${this.currentYear}`,
+      description: `Todas las fechas del Poetry Slam Alicante ${this.currentYear}. Próximas citas y archivo de la temporada en Las Cigarreras.`,
+      path: '/calendario'
+    });
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -26,6 +37,11 @@ export class HistoriaComponent implements OnInit {
         // El cronograma ya viene ordenado por fecha desde el servicio
         this.proximos = all.filter(ev => new Date(ev.fecha) >= today);
         this.pasados = all.filter(ev => new Date(ev.fecha) < today).reverse();
+
+        // JSON-LD con todos los eventos próximos
+        if (this.proximos.length > 0) {
+          this.seo.setEventsJsonLd(this.proximos);
+        }
       }
     });
   }
