@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class SupabaseService {
-  private supabase: SupabaseClient;
+  private supabase!: SupabaseClient;
 
   constructor(private ngZone: NgZone) {
     const isValidUrl = environment.supabaseUrl && environment.supabaseUrl.startsWith('http');
