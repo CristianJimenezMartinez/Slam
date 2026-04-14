@@ -1,7 +1,7 @@
 <div class="historia-container">
   <header class="page-header">
     <h1>Calendario {{ currentYear }}</h1>
-    <p>La hoja de ruta del Poetry Slam Alicante. No te pierdas ninguna cita.</p>
+    <p>La hoja de ruta del Poetry Slam Alicante.</p>
   </header>
 
   <div class="historia-content">
@@ -32,7 +32,7 @@
               </div>
               <p><span class="icon">📍</span> {{ ev.ubicacion || 'Las Cigarreras' }}</p>
               <div class="actions" *ngIf="ev.url_entradas">
-                <a [href]="ev.url_entradas" target="_blank" class="btn-primary small">Comprar Entrada</a>
+                <a [href]="ev.url_entradas" target="_blank" class="btn-primary small">Entradas</a>
               </div>
             </div>
           </div>
