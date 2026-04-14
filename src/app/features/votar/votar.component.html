@@ -2,7 +2,7 @@
   
   <header class="page-header">
     <h1>Voto del Público</h1>
-    <p>La palabra hecha espectáculo. Dicta sentencia con tu puntuación.</p>
+    <p>gozo poético, diversión poética</p>
   </header>
 
   <div class="error-banner" *ngIf="error">
@@ -28,7 +28,7 @@
     <div class="status-box locked" *ngIf="!loading && evento && !evento.votacion_activa">
       <div class="empty-icon">⏳</div>
       <h2 class="purple-glow">¡Votaciones cerradas!</h2>
-      <p>La poesía está a punto de empezar. <br> El evento <strong>{{ evento.nombre }}</strong> está activo, pero los votos aún están cerrados.</p>
+      <p>El evento <strong>{{ evento.nombre }}</strong> está activo, pero los votos aún están cerrados.</p>
       <p class="hint">Espera a que el presentador dé el aviso desde el escenario.</p>
       <button routerLink="/" class="btn-primary">Volver a la Portada</button>
     </div>

@@ -117,7 +117,7 @@ export class LandingComponent implements OnInit {
     } else {
       this.seo.setPage({
         title: `Temporada ${this.currentYear}`,
-        description: `Poetry Slam Alicante – Temporada ${this.currentYear}. Competición de poesía en vivo en Las Cigarreras. Consulta el calendario y compra tus entradas.`,
+        description: `Poetry Slam Alicante – Temporada ${this.currentYear}. Encuentro de poesía en vivo en Las Cigarreras. Consulta el calendario y compra tus entradas.`,
         path: '/'
       });
       if (this.proximosCronograma.length > 0) {

@@ -56,7 +56,7 @@ export class VotarComponent implements OnInit {
         // SEO dinámico con el nombre del evento activo
         this.seo.setPage({
           title: `Votar – ${this.evento.nombre}`,
-          description: `Vota por tu poeta favorito en ${this.evento.nombre}. Poetry Slam Alicante – El jurado eres tú.`,
+          description: `Participa con tu voto en ${this.evento.nombre}. Poetry Slam Alicante – Tu voz cuenta.`,
           path: '/votar'
         });
 
@@ -70,7 +70,7 @@ export class VotarComponent implements OnInit {
         // Sin evento activo
         this.seo.setPage({
           title: 'Votar',
-          description: 'Vota por tu poeta favorito en el Poetry Slam Alicante. El jurado eres tú.',
+          description: 'Participa con tu voto en el Poetry Slam Alicante. Tu voz cuenta.',
           path: '/votar'
         });
       }

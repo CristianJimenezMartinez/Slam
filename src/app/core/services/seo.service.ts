@@ -5,7 +5,7 @@ import { DOCUMENT } from '@angular/common';
 const SITE_NAME = 'Poetry Slam Alicante';
 const SITE_URL = 'https://poetryslamalicante.com';
 const DEFAULT_IMAGE = `${SITE_URL}/assets/images/logo.png`;
-const DEFAULT_DESC = 'Competición de poesía en vivo en el Centro Cultural Las Cigarreras, Alicante. El jurado eres tú. Calendario, entradas y resultados.';
+const DEFAULT_DESC = 'Encuentro de poesía en vivo en el Centro Cultural Las Cigarreras, Alicante. Tu voz cuenta. Calendario, entradas y resultados.';
 
 const LOCATION_SCHEMA = {
   '@type': 'Place',
