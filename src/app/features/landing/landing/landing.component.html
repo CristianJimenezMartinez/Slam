@@ -47,8 +47,13 @@
               <div class="hero-actions">
                 <div class="actions-row">
                   <button (click)="scrollToSlider()" class="btn-primary large pulse-btn">
-                    <span>🎟️ Conseguir Entradas</span>
+                    <span>🎟️ Entradas</span>
                   </button>
+                  <div class="season-pass-wrapper" *ngIf="urlPaseTemporada">
+                    <a [href]="urlPaseTemporada" target="_blank" class="btn-secondary large">
+                      <span>🎤 Pase de Temporada</span>
+                    </a>
+                  </div>
                 </div>
                 <p class="hero-subtext">Los jueves a las 20h · El público vota, la ciudad elige</p>
               </div>
@@ -90,7 +95,7 @@
                     <p class="location"><span class="icon">📍</span> {{ ev.ubicacion || 'Las Cigarreras' }}</p>
                   </div>
                   <a *ngIf="ev.url_entradas" [href]="ev.url_entradas" target="_blank" class="btn-buy-massive">
-                    <span>Ver Entradas</span>
+                    <span>Entradas</span>
                     <small>Sede Alicante</small>
                   </a>
                 </div>
