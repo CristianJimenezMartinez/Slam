@@ -39,4 +39,6 @@ testem.log
 
 # System files
 .DS_Store
-Thumbs.db
+
+# Secrets
+.github_token

@@ -30,6 +30,7 @@ export interface PageSeo {
   title?: string;
   description?: string;
   path?: string;
+  robots?: string;
 }
 
 export interface EventSeo {
@@ -65,6 +66,12 @@ export class SeoService {
 
     // Meta estándar
     this.meta.updateTag({ name: 'description', content: desc });
+    
+    if (data.robots) {
+      this.meta.updateTag({ name: 'robots', content: data.robots });
+    } else {
+      this.meta.updateTag({ name: 'robots', content: 'index, follow' });
+    }
 
     // Canonical
     this.updateCanonical(url);

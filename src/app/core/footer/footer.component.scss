@@ -50,6 +50,26 @@ footer {
       }
     }
 
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+
+      a {
+        color: #888;
+        font-family: 'Bebas Neue', cursive;
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+        transition: all 0.2s;
+
+        &:hover {
+          color: var(--neon-green);
+          text-decoration: none;
+          transform: translateX(5px);
+        }
+      }
+    }
+
     .social-links {
       display: flex;
       gap: 1.2rem;

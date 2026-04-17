@@ -40,6 +40,7 @@ export class AppComponent implements OnInit {
         this.seo.setPage({
           title: data['seo'].title,
           description: data['seo'].description,
+          robots: data['seo'].robots,
           path: event.urlAfterRedirects
         });
       }

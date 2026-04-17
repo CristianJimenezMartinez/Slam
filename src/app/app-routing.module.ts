@@ -46,7 +46,13 @@ const routes: Routes = [
   },
   {
     path: 'calendario',
-    component: HistoriaComponent
+    component: HistoriaComponent,
+    data: {
+      seo: {
+        title: 'Calendario de Eventos',
+        description: 'Próximas fechas, horarios y ubicaciones de los encuentros de poesía en vivo en Alicante.'
+      }
+    }
   },
   {
     path: 'eventos',
@@ -74,11 +80,24 @@ const routes: Routes = [
   },
   {
     path: 'votar',
-    component: VotarComponent
+    component: VotarComponent,
+    data: {
+      seo: {
+        title: 'Votar en el Slam',
+        description: 'Participa como jurado en el próximo Slam. Tu voto decide quién gana el encuentro.'
+      }
+    }
   },
   {
     path: 'resultados',
-    component: ResultadosComponent
+    component: ResultadosComponent,
+    data: {
+      seo: {
+        title: 'Resultados (Privado)',
+        description: 'Puntuaciones y clasificación detallada del Poetry Slam Alicante.',
+        robots: 'noindex, nofollow'
+      }
+    }
   },
   {
     path: 'dashboard',

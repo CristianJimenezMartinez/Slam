@@ -28,27 +28,54 @@
   <meta name="twitter:description" content="Encuentro de poesía en vivo en el Centro Cultural Las Cigarreras, Alicante. Tu voz cuenta.">
   <meta name="twitter:image" content="https://poetryslamalicante.com/assets/images/logo.png">
 
-  <!-- JSON-LD: Organización (estático, no cambia) -->
+  <!-- JSON-LD: Organización y Sitio Web (Sitelinks) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Poetry Slam Alicante",
-    "url": "https://poetryslamalicante.com",
-    "logo": "https://poetryslamalicante.com/assets/images/logo.png",
-    "description": "Encuentro de poesía en vivo en Alicante donde el público participa.",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Calle San Carlos, 78",
-      "addressLocality": "Alicante",
-      "postalCode": "03001",
-      "addressRegion": "Comunidad Valenciana",
-      "addressCountry": "ES"
-    },
-    "sameAs": [
-      "https://www.instagram.com/poetryslamalicante/",
-      "https://www.facebook.com/poetryslamalicante/",
-      "https://www.youtube.com/@poetryslamalicante"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://poetryslamalicante.com/#website",
+        "url": "https://poetryslamalicante.com",
+        "name": "Poetry Slam Alicante",
+        "description": "Encuentro de poesía en vivo en Alicante",
+        "publisher": { "@id": "https://poetryslamalicante.com/#organization" },
+        "potentialAction": [{
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://poetryslamalicante.com/?s={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }],
+        "inLanguage": "es"
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://poetryslamalicante.com/#organization",
+        "name": "Poetry Slam Alicante",
+        "url": "https://poetryslamalicante.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://poetryslamalicante.com/assets/images/logo.png",
+          "width": 600,
+          "height": 600
+        },
+        "description": "Encuentro de poesía en vivo en Alicante donde el público participa.",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Calle San Carlos, 78",
+          "addressLocality": "Alicante",
+          "postalCode": "03001",
+          "addressRegion": "Comunidad Valenciana",
+          "addressCountry": "ES"
+        },
+        "sameAs": [
+          "https://www.instagram.com/poetryslamalicante/",
+          "https://www.facebook.com/poetryslamalicante/",
+          "https://www.youtube.com/@poetryslamalicante"
+        ]
+      }
     ]
   }
   </script>
