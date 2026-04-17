@@ -11,9 +11,7 @@
   <nav [class.open]="isMenuOpen">
     <a routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" (click)="closeMenu()">Inicio</a>
     <a routerLink="/votar" routerLinkActive="active" (click)="closeMenu()">Votar</a>
-    <a routerLink="/resultados" routerLinkActive="active" (click)="closeMenu()">Resultados</a>
     <a routerLink="/cantera" routerLinkActive="active" (click)="closeMenu()">Cantera</a>
-    <a routerLink="/normas" routerLinkActive="active" (click)="closeMenu()">Normas</a>
     <a routerLink="/calendario" routerLinkActive="active" (click)="closeMenu()">Calendario</a>
     <a routerLink="/admin" routerLinkActive="active" (click)="closeMenu()" class="desktop-only">Admin</a>
     <a *ngIf="auth.session$ | async" (click)="logout()" class="btn-logout desktop-only">Salir</a>
