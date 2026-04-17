@@ -40,7 +40,8 @@ const routes: Routes = [
     data: {
       seo: {
         title: 'Reglamento Oficial',
-        description: 'Consulta las reglas oficiales del Poetry Slam Alicante 2026. Requisitos de participación, tiempo, votación pública y procedimiento.'
+        description: 'Consulta las reglas oficiales del Poetry Slam Alicante 2026.',
+        robots: 'noindex, nofollow'
       }
     }
   },
