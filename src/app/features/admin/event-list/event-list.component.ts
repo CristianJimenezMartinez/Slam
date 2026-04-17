@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EventosService, Evento } from '../../../core/services/eventos.service';
 import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-list',
@@ -8,16 +9,38 @@ import { Observable } from 'rxjs';
   styleUrls: ['./event-list.component.scss']
 })
 export class EventListComponent implements OnInit {
+  @Input() set mode(value: 'active' | 'past') {
+    this._mode = value;
+    if (this._isInitialized) {
+      this.loadEventos();
+    }
+  }
+  get mode() { return this._mode; }
+  private _mode: 'active' | 'past' = 'active';
+  private _isInitialized = false;
+
+  @Output() edit = new EventEmitter<Evento>();
   eventos$: Observable<any> = new Observable();
+  loading = false;
 
   constructor(private eventosService: EventosService) { }
 
   ngOnInit(): void {
+    this._isInitialized = true;
     this.loadEventos();
   }
 
   loadEventos() {
-    this.eventos$ = this.eventosService.getEventos();
+    this.loading = true;
+    this.eventos$ = this.eventosService.getEventos().pipe(
+      map(res => ({
+        ...res,
+        data: (res?.data || []).filter((ev: Evento) => 
+          this.mode === 'past' ? this.isEventLocked(ev) : !this.isEventLocked(ev)
+        )
+      })),
+      tap(() => this.loading = false)
+    );
   }
 
   isEventLocked(evento: Evento): boolean {

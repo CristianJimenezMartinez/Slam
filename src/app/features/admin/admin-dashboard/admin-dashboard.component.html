@@ -1,0 +1,72 @@
+<div class="dashboard-wrapper">
+  <div class="dashboard-container">
+    <header class="dashboard-header">
+      <div class="brand">
+        <h1>Panel de Control</h1>
+        <p>Administración del Poetry Slam Alicante</p>
+      </div>
+      <div class="user-meta">
+        <span class="user-email" *ngIf="auth.session$ | async as session">{{ session.user.email }}</span>
+        <button class="btn-logout" (click)="logout()">Salir</button>
+      </div>
+    </header>
+
+    <nav class="dashboard-tabs">
+      <div class="tabs-group">
+        <button 
+          [class.active]="activeTab === 'live'" 
+          (click)="setTab('live')">
+          <span class="dot"></span> Slam Live
+        </button>
+        <button 
+          [class.active]="activeTab === 'eventos'" 
+          (click)="setTab('eventos')">
+          Eventos
+        </button>
+        <button 
+          [class.active]="activeTab === 'anteriores'" 
+          (click)="setTab('anteriores')">
+          Anteriores
+        </button>
+        <button 
+          [class.active]="activeTab === 'temporada'" 
+          (click)="setTab('temporada')">
+          Temporada
+        </button>
+      </div>
+
+      <div class="tabs-actions" *ngIf="activeTab === 'eventos'">
+        <button class="btn-primary-small" (click)="openModal()">+ Nuevo Evento</button>
+      </div>
+    </nav>
+
+    <main class="dashboard-content">
+      <!-- VISTA EN VIVO (FASE 4) -->
+      <section *ngIf="activeTab === 'live'" class="tab-view fade-in">
+        <div class="placeholder-view">
+          <h2>Próximamente: Control de Votación en Vivo</h2>
+          <p>Aquí podrás gestionar el PIN, el sellado de la audiencia y activar poetas uno a uno.</p>
+        </div>
+      </section>
+
+      <!-- VISTA DE EVENTOS (PROXIMOS Y ANTERIORES) -->
+      <section *ngIf="activeTab === 'eventos' || activeTab === 'anteriores'" class="tab-view fade-in">
+        <app-event-list #eventList [mode]="listMode" (edit)="openModal($event)"></app-event-list>
+      </section>
+
+      <!-- VISTA DE TEMPORADA -->
+      <section *ngIf="activeTab === 'temporada'" class="tab-view fade-in">
+        <app-cronograma-list></app-cronograma-list>
+      </section>
+    </main>
+  </div>
+</div>
+
+<!-- MODAL DE EVENTO -->
+<app-modal *ngIf="isModalOpen" [title]="selectedEventId ? 'Editar Evento' : 'Nuevo Evento'" (close)="closeModal()">
+  <app-event-detail 
+    [eventId]="selectedEventId" 
+    (saved)="closeModal(); eventList.loadEventos()" 
+    (cancel)="closeModal()">
+  </app-event-detail>
+</app-modal>

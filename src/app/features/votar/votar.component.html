@@ -11,10 +11,7 @@
 
   <div class="state-content" *ngIf="!submitted; else success">
     <!-- Cargando -->
-    <div class="status-box" *ngIf="loading">
-      <div class="spinner"></div>
-      <p>Buscando evento activo...</p>
-    </div>
+    <app-loading-spinner *ngIf="loading"></app-loading-spinner>
     
     <!-- No hay evento -->
     <div class="status-box" *ngIf="!loading && !evento">

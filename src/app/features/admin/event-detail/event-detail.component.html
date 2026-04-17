@@ -1,10 +1,7 @@
-<div class="admin-detail">
-  <div class="header">
-    <button routerLink="/admin">← Volver</button>
-    <h1>{{ eventId ? 'Editar Evento' : 'Nuevo Evento' }}</h1>
-  </div>
+<div class="event-form-modal">
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 
-  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+  <form *ngIf="!loading" [formGroup]="eventForm" (ngSubmit)="onSubmit()">
     <div class="form-grid">
       <div class="section">
         <h2>Datos del Evento</h2>

@@ -21,10 +21,7 @@
 
   <div class="content-wrapper">
     <!-- Cargando -->
-    <div *ngIf="loading" class="loading-state">
-      <div class="spinner"></div>
-      <p>Calculando puntuaciones...</p>
-    </div>
+    <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 
     <!-- Resultados -->
     <div class="results-layout" *ngIf="!loading && resultados.length > 0">

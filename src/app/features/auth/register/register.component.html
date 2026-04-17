@@ -1,8 +1,9 @@
 <div class="auth-container">
   <div class="auth-card">
-    <h1>Crear cuenta</h1>
-    <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+    <h1 *ngIf="!loading">Crear cuenta</h1>
+    <p class="success" *ngIf="successMessage && !loading">{{ successMessage }}</p>
+    <form *ngIf="!loading" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="email">Email</label>
         <input id="email" type="email" formControlName="email" placeholder="tu@email.com" />

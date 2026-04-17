@@ -17,6 +17,7 @@ import { VotarComponent } from './features/votar/votar.component';
 import { ResultadosComponent } from './features/resultados/resultados.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { CronogramaListComponent } from './features/admin/cronograma-list/cronograma-list.component';
+import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
   {
@@ -72,12 +73,7 @@ const routes: Routes = [
   {
     path: 'admin',
     canActivate: [AuthGuard],
-    children: [
-      { path: '', component: EventListComponent },
-      { path: 'new', component: EventDetailComponent },
-      { path: 'edit/:id', component: EventDetailComponent },
-      { path: 'temporada', component: CronogramaListComponent }
-    ]
+    component: AdminDashboardComponent
   },
   {
     path: 'votar',

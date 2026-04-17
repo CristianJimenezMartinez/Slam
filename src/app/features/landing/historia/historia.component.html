@@ -7,10 +7,7 @@
   <div class="historia-content">
     
     <!-- Cargando -->
-    <div *ngIf="loading" class="status-msg">
-      <div class="spinner"></div>
-      <p>Consultando el cronograma...</p>
-    </div>
+    <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 
     <div class="timeline" *ngIf="!loading">
       

@@ -1,10 +1,7 @@
 <main class="landing-main">
   
   <!-- MODO CARGANDO -->
-  <div *ngIf="loading" class="hero-loading">
-    <div class="spinner"></div>
-    <p>Preparando el escenario...</p>
-  </div>
+  <app-loading-spinner *ngIf="loading" [fullScreen]="true"></app-loading-spinner>
 
   <ng-container *ngIf="!loading">
     

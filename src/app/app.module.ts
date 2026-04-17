@@ -22,6 +22,7 @@ import { ForgotPasswordComponent } from './features/auth/forgot-password/forgot-
 import { EventListComponent } from './features/admin/event-list/event-list.component';
 import { EventDetailComponent } from './features/admin/event-detail/event-detail.component';
 import { CronogramaListComponent } from './features/admin/cronograma-list/cronograma-list.component';
+import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-dashboard.component';
 
 // Votar
 import { VotarComponent } from './features/votar/votar.component';
@@ -30,6 +31,8 @@ import { VotarComponent } from './features/votar/votar.component';
 import { ResultadosComponent } from './features/resultados/resultados.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { FooterComponent } from './core/footer/footer.component';
+import { ModalComponent } from './shared/components/modal/modal.component';
+import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -44,10 +47,13 @@ import { FooterComponent } from './core/footer/footer.component';
     EventListComponent,
     EventDetailComponent,
     CronogramaListComponent,
+    AdminDashboardComponent,
     VotarComponent,
     ResultadosComponent,
     DashboardComponent,
-    FooterComponent
+    FooterComponent,
+    ModalComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

@@ -1,13 +1,5 @@
 <div class="admin-wrapper">
-  <div class="admin-header">
-    <div class="header-text">
-      <h1>Temporada {{ currentYear }}</h1>
-      <p>Configura las fechas del año y la estética global de la temporada.</p>
-    </div>
-    <div class="header-actions">
-      <button class="btn-outline" routerLink="/admin">← Volver a Eventos</button>
-    </div>
-  </div>
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 
   <!-- CONFIGURACIÓN GLOBAL DE IMAGEN -->
   <div class="global-season-config card mb-4">

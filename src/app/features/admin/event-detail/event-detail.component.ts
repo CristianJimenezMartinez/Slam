@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventosService } from '../../../core/services/eventos.service';
@@ -12,7 +12,9 @@ import * as QRCode from 'qrcode';
 })
 export class EventDetailComponent implements OnInit {
   eventForm: FormGroup;
-  eventId: string | null = null;
+  @Input() eventId: string | null = null;
+  @Output() saved = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
   loading = false;
   cartelFile: File | null = null;
   cartelPreview: string | null = null;
@@ -50,7 +52,6 @@ export class EventDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.eventId = this.route.snapshot.paramMap.get('id');
     if (this.eventId) {
       this.loadEvent();
     }
@@ -185,6 +186,6 @@ export class EventDetailComponent implements OnInit {
       }
     }
 
-    this.router.navigate(['/admin']);
+    this.saved.emit();
   }
 }
