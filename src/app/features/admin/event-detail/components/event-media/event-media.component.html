@@ -1,0 +1,26 @@
+<div class="form-group media-manager">
+  <label>Cartel del Evento</label>
+  
+  <div class="upload-area" *ngIf="!cartelPreview">
+    <input type="file" accept="image/*" (change)="onFileSelected($event)" id="cartelInput" />
+    <label for="cartelInput" class="upload-label">
+      <span>📁 Seleccionar imagen</span>
+      <small>PNG, JPG o WebP</small>
+    </label>
+  </div>
+
+  <div *ngIf="!cartelPreview && existingCarteles.length > 0" class="gallery-picker">
+    <p class="picker-label">O selecciona uno existente:</p>
+    <div class="gallery-grid">
+      <div *ngFor="let c of existingCarteles" class="gallery-item" (click)="onSelectExisting(c.url)">
+        <img [src]="c.url" [alt]="c.name">
+        <div class="overlay"><span class="icon">✅</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="cartelPreview" class="preview-container">
+    <img [src]="cartelPreview" alt="Vista previa del cartel" class="cartel-preview" />
+    <button type="button" class="btn-remove" (click)="onRemoveCartel()" title="Eliminar cartel">✕</button>
+  </div>
+</div>

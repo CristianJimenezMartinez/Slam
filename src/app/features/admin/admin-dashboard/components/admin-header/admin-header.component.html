@@ -1,0 +1,10 @@
+<header class="dashboard-header">
+  <div class="brand">
+    <h1>Panel de Control</h1>
+    <p>Administración del Poetry Slam Alicante</p>
+  </div>
+  <div class="user-meta">
+    <span class="user-email" *ngIf="userEmail">{{ userEmail }}</span>
+    <button class="btn-logout" (click)="onLogout()">Salir</button>
+  </div>
+</header>

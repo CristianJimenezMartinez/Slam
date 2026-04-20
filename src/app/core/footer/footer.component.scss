@@ -1,7 +1,7 @@
 footer {
   padding: 1.5rem 2rem 0.5rem;
-  border-top: 1px solid #222;
-  background: #0a0a0a;
+  border-top: 1px solid rgba(var(--text-rgb, 255, 255, 255), 0.1);
+  background: var(--header-bg);
   color: #888;
 
   .footer-grid {
@@ -26,7 +26,7 @@ footer {
         left: 0;
         width: 30px;
         height: 2px;
-        background: var(--neon-green);
+        background: var(--primary);
       }
     }
 
@@ -41,7 +41,7 @@ footer {
     }
 
     a {
-      color: var(--neon-green);
+      color: var(--primary);
       text-decoration: none;
       font-size: 0.95rem;
 
@@ -63,7 +63,7 @@ footer {
         transition: all 0.2s;
 
         &:hover {
-          color: var(--neon-green);
+          color: var(--primary);
           text-decoration: none;
           transform: translateX(5px);
         }
@@ -88,9 +88,9 @@ footer {
         }
 
         &:hover {
-          color: var(--neon-green);
+          color: var(--primary);
           transform: translateY(-3px);
-          filter: drop-shadow(0 0 5px var(--neon-green));
+          filter: drop-shadow(0 0 5px var(--primary));
         }
       }
     }

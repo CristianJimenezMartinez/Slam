@@ -1,44 +1,15 @@
 <div class="dashboard-wrapper">
   <div class="dashboard-container">
-    <header class="dashboard-header">
-      <div class="brand">
-        <h1>Panel de Control</h1>
-        <p>Administración del Poetry Slam Alicante</p>
-      </div>
-      <div class="user-meta">
-        <span class="user-email" *ngIf="auth.session$ | async as session">{{ session.user.email }}</span>
-        <button class="btn-logout" (click)="logout()">Salir</button>
-      </div>
-    </header>
+    <app-admin-header 
+      [userEmail]="(auth.session$ | async)?.user?.email || null" 
+      (logout)="logout()">
+    </app-admin-header>
 
-    <nav class="dashboard-tabs">
-      <div class="tabs-group">
-        <button 
-          [class.active]="activeTab === 'live'" 
-          (click)="setTab('live')">
-          <span class="dot"></span> Slam Live
-        </button>
-        <button 
-          [class.active]="activeTab === 'eventos'" 
-          (click)="setTab('eventos')">
-          Eventos
-        </button>
-        <button 
-          [class.active]="activeTab === 'anteriores'" 
-          (click)="setTab('anteriores')">
-          Anteriores
-        </button>
-        <button 
-          [class.active]="activeTab === 'temporada'" 
-          (click)="setTab('temporada')">
-          Temporada
-        </button>
-      </div>
-
-      <div class="tabs-actions" *ngIf="activeTab === 'eventos'">
-        <button class="btn-primary-small" (click)="openModal()">+ Nuevo Evento</button>
-      </div>
-    </nav>
+    <app-admin-tabs 
+      [activeTab]="activeTab" 
+      (tabChange)="setTab($event)" 
+      (newEvent)="openModal()">
+    </app-admin-tabs>
 
     <main class="dashboard-content">
       <!-- VISTA EN VIVO (FASE 4) -->

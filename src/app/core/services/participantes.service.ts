@@ -8,6 +8,7 @@ export interface Participante {
   nombre: string;
   orden: number;
   foto_url?: string;
+  esta_votando?: boolean;
 }
 
 @Injectable({

@@ -13,6 +13,13 @@ import { HistoriaComponent } from './features/landing/historia/historia.componen
 import { CanteraComponent } from './features/landing/cantera/cantera.component';
 import { NormasComponent } from './features/landing/normas/normas.component';
 
+// Landing Sub-components
+import { HeroEventComponent } from './features/landing/landing/components/hero-event/hero-event.component';
+import { HeroSeasonComponent } from './features/landing/landing/components/hero-season/hero-season.component';
+import { UpcomingSliderComponent } from './features/landing/landing/components/upcoming-slider/upcoming-slider.component';
+import { ParticipantsGridComponent } from './features/landing/landing/components/participants-grid/participants-grid.component';
+import { SecondaryEventsComponent } from './features/landing/landing/components/secondary-events/secondary-events.component';
+
 // Auth
 import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
@@ -23,6 +30,16 @@ import { EventListComponent } from './features/admin/event-list/event-list.compo
 import { EventDetailComponent } from './features/admin/event-detail/event-detail.component';
 import { CronogramaListComponent } from './features/admin/cronograma-list/cronograma-list.component';
 import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-dashboard.component';
+
+// Admin Sub-components
+import { AdminHeaderComponent } from './features/admin/admin-dashboard/components/admin-header/admin-header.component';
+import { AdminTabsComponent } from './features/admin/admin-dashboard/components/admin-tabs/admin-tabs.component';
+
+// EventDetail Sub-components
+import { EventBasicInfoComponent } from './features/admin/event-detail/components/event-basic-info/event-basic-info.component';
+import { EventMediaComponent } from './features/admin/event-detail/components/event-media/event-media.component';
+import { EventThemeComponent } from './features/admin/event-detail/components/event-theme/event-theme.component';
+import { EventParticipantsComponent } from './features/admin/event-detail/components/event-participants/event-participants.component';
 
 // Votar
 import { VotarComponent } from './features/votar/votar.component';
@@ -53,7 +70,18 @@ import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loa
     DashboardComponent,
     FooterComponent,
     ModalComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    HeroEventComponent,
+    HeroSeasonComponent,
+    UpcomingSliderComponent,
+    ParticipantsGridComponent,
+    SecondaryEventsComponent,
+    AdminHeaderComponent,
+    AdminTabsComponent,
+    EventBasicInfoComponent,
+    EventMediaComponent,
+    EventThemeComponent,
+    EventParticipantsComponent
   ],
   imports: [
     BrowserModule,

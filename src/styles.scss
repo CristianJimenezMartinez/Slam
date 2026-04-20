@@ -5,9 +5,14 @@
   --carbon-black: #1A1A1A;
   --off-white: #F2F2F2;
   
-  --primary: var(--neon-green);
-  --bg: var(--carbon-black);
-  --text: var(--off-white);
+  --primary: #92D342;
+  --primary-rgb: 146, 211, 66;
+  --secondary: #368475;
+  --bg: #1A1A1A;
+  --bg-rgb: 26, 26, 26;
+  --text: #F2F2F2;
+  --header-bg: rgba(26, 26, 26, 0.95);
+  --header-bg-rgb: 26, 26, 26;
   --card-bg: #242424;
 }
 
@@ -39,7 +44,7 @@ h1, h2, h3, .logo {
   cursor: pointer;
   transition: all 0.2s;
   text-transform: uppercase;
-  &:hover { background: #a5e05a; transform: skewX(-10deg); box-shadow: 0 0 15px var(--neon-green); }
+  &:hover { background: var(--secondary); color: white; transform: skewX(-10deg); box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.6); }
   &:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 }
 
@@ -60,7 +65,7 @@ h1, h2, h3, .logo {
   align-items: center;
   justify-content: center;
   &:hover { 
-    background: rgba(255, 255, 255, 0.1); 
+    background: rgba(var(--text-rgb, 255, 255, 255), 0.1); 
     transform: skewX(-10deg); 
     color: white; 
     border-color: white; 
@@ -82,8 +87,8 @@ h1, h2, h3, .logo {
 
 .btn-outline {
   background: transparent;
-  color: var(--neon-green);
-  border: 2px solid var(--neon-green);
+  color: var(--primary);
+  border: 2px solid var(--primary);
   padding: 0.6rem 1.2rem;
   border-radius: 4px;
   font-family: 'Bebas Neue', cursive;
@@ -91,7 +96,7 @@ h1, h2, h3, .logo {
   cursor: pointer;
   transition: all 0.2s;
   text-transform: uppercase;
-  &:hover { background: var(--neon-green); color: var(--carbon-black); box-shadow: 0 0 10px var(--neon-green); }
+  &:hover { background: var(--primary); color: #000; box-shadow: 0 0 10px var(--primary); }
 }
 
 main {
@@ -106,7 +111,7 @@ main {
 }
 
 header.global-header {
-  background: rgba(26, 26, 26, 0.95);
+  background: var(--header-bg);
   backdrop-filter: blur(10px);
   height: 80px;
   display: flex;
@@ -204,7 +209,7 @@ header.global-header {
       border-bottom: 0 solid var(--neon-green);
 
       &.open {
-        height: 100vh; // Full screen overlay
+        height: 100vh;
         padding: 2rem 0;
         border-bottom-width: 3px;
       }
@@ -245,6 +250,12 @@ header.global-header {
   }
 }
 
+footer {
+  background: var(--header-bg);
+  padding: 4rem 0 2rem;
+  border-top: 2px solid rgba(255, 255, 255, 0.05);
+}
+
 // Global form styles
 .form-group {
   margin-bottom: 1.5rem;
@@ -262,7 +273,34 @@ header.global-header {
 
 .card {
   background: var(--card-bg);
-  border: 1px solid #333;
+  border: 1px solid rgba(var(--text-rgb, 255, 255, 255), 0.1);
   border-radius: 8px;
   padding: 1.5rem;
+}
+
+// Global Layout Utility
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+// Custom Scrollbar - Totalmente Tematizada
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--primary-rgb), 0.3);
+  border: 2px solid var(--bg);
+  border-radius: 10px;
+  
+  &:hover {
+    background: var(--primary);
+  }
 }

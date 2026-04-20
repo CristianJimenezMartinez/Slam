@@ -1,0 +1,93 @@
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  
+  h3 { margin: 0; color: var(--off-white); font-family: 'Bebas Neue', cursive; font-size: 1.5rem; letter-spacing: 1px; }
+  
+  .btn-add {
+    background: rgba(var(--primary-rgb), 0.1);
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    
+    &:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.3); }
+  }
+}
+
+.participants-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  
+  .participant-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255,255,255,0.02);
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.2s;
+    
+    &:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+    
+    .order-badge {
+      font-family: 'Bebas Neue', cursive;
+      color: var(--primary);
+      width: 30px;
+      font-size: 1.3rem;
+      text-align: center;
+    }
+    
+    .input-wrapper { 
+      flex: 1;
+      input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #333;
+        color: white;
+        padding: 0.5rem 0;
+        font-size: 1rem;
+        
+        &:focus { outline: none; border-color: var(--primary); }
+      }
+    }
+    
+    .btn-remove-icon {
+      background: rgba(239, 68, 68, 0.1);
+      border: none;
+      color: #ef4444;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      
+      &:hover { background: #ef4444; color: white; }
+    }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #444;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  background: rgba(255,255,255,0.01);
+  border: 1px dashed #222;
+  border-radius: 12px;
+}

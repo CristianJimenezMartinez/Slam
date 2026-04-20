@@ -1,0 +1,13 @@
+<section class="section participants-section">
+  <div class="container">
+    <h2 class="section-title">Los Valientes</h2>
+    <div class="poetas-grid">
+      <div class="poeta-card" *ngFor="let p of participantes">
+        <div class="poeta-img">
+          <img [src]="p.foto_url || 'assets/default-avatar.jpg'" [alt]="p.nombre">
+        </div>
+        <h3>{{ p.nombre }}</h3>
+      </div>
+    </div>
+  </div>
+</section>

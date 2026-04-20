@@ -21,7 +21,7 @@
   position: relative;
   transition: all 0.3s;
 
-  &:hover { border-color: var(--neon-green); transform: translateY(-5px); }
+  &:hover { border-color: var(--primary); transform: translateY(-5px); }
 
   .event-info {
     h3 { margin: 0; font-size: 1.8rem; color: var(--off-white); }
@@ -37,7 +37,7 @@
     color: #888;
 
     &.active {
-      background: var(--neon-green);
+      background: var(--primary);
       color: var(--carbon-black);
     }
   }
@@ -57,7 +57,7 @@
       background: transparent;
       color: white;
 
-      &:first-child { background: var(--neon-green); color: var(--carbon-black); border: none; }
+      &:first-child { background: var(--primary); color: var(--carbon-black); border: none; }
       &.btn-danger { color: #ff5555; border-color: #ff5555; }
     }
   }

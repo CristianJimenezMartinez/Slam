@@ -15,6 +15,14 @@ export interface Evento {
   presentador?: string;
   artista_invitado?: string;
   votacion_activa?: boolean;
+  color_primario?: string;
+  color_secundario?: string;
+  color_fondo?: string;
+  color_texto?: string;
+  color_cabecera?: string;
+  pin_sesion?: string;
+  registro_pin_abierto?: boolean;
+  votos_totales_registrados?: number;
 }
 
 @Injectable({

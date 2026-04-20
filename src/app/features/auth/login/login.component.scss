@@ -3,23 +3,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--carbon-black);
+  background: var(--bg);
   padding: 2rem;
 }
 
 .auth-card {
   width: 100%;
   max-width: 450px;
-  background: #111;
-  border: 3px solid var(--neon-green);
+  background: var(--card-bg);
+  border: 3px solid var(--primary);
   padding: 3rem;
-  box-shadow: 15px 15px 0px rgba(146, 211, 66, 0.1);
+  box-shadow: 15px 15px 0px rgba(var(--primary-rgb), 0.1);
   animation: fadeIn 0.5s ease-out;
 
   h1 {
     font-family: 'Bebas Neue', cursive;
     font-size: 3.5rem;
-    color: var(--neon-green);
+    color: var(--primary);
     margin-bottom: 2rem;
     text-align: center;
     letter-spacing: 2px;
@@ -39,8 +39,8 @@
 
     input {
       width: 100%;
-      background: #000;
-      border: 1px solid #333;
+      background: var(--bg);
+      border: 1px solid rgba(var(--text-rgb, 255, 255, 255), 0.1);
       padding: 1rem;
       color: var(--off-white);
       font-size: 1.1rem;
@@ -48,7 +48,7 @@
       
       &:focus {
         outline: none;
-        border-color: var(--neon-green);
+        border-color: var(--primary);
       }
     }
   }
@@ -63,18 +63,18 @@
   }
 
   .success {
-    color: var(--neon-green);
-    background: rgba(146, 211, 66, 0.1);
+    color: var(--primary);
+    background: rgba(var(--primary-rgb), 0.1);
     padding: 0.8rem;
-    border-left: 4px solid var(--neon-green);
+    border-left: 4px solid var(--primary);
     margin-bottom: 1.5rem;
     font-size: 0.9rem;
   }
 
   button {
     width: 100%;
-    background: var(--neon-green);
-    color: var(--carbon-black);
+    background: var(--primary);
+    color: var(--bg);
     border: none;
     padding: 1.2rem;
     font-family: 'Bebas Neue', cursive;
@@ -85,11 +85,12 @@
 
     &:hover {
       transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(146, 211, 66, 0.4);
+      box-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.4);
     }
 
     &:disabled {
-      background: #444;
+      background: rgba(var(--text-rgb, 255, 255, 255), 0.1);
+      color: #555;
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
@@ -108,7 +109,7 @@
       transition: color 0.3s;
       
       &:hover {
-        color: var(--neon-green);
+        color: var(--primary);
       }
     }
   }

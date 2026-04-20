@@ -2,12 +2,12 @@
   max-width: 800px;
   margin: 3rem auto;
   padding: 3rem 2rem;
-  background: #0d0d0d;
-  border: 1px solid #333;
+  background: var(--bg);
+  border: 1px solid rgba(var(--text-rgb, 255, 255, 255), 0.1);
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   position: relative;
-  background-image: radial-gradient(circle at top left, rgba(146, 211, 66, 0.05) 0%, transparent 50%);
+  background-image: radial-gradient(circle at top left, rgba(var(--primary-rgb), 0.05) 0%, transparent 50%);
 
   .page-header {
     text-align: center;
@@ -15,7 +15,7 @@
     padding-bottom: 2rem;
     border-bottom: 1px solid #222;
     
-    h1 { font-family: 'Bebas Neue', cursive; font-size: 4rem; color: var(--neon-green); margin-bottom: 0.5rem; line-height: 1; }
+    h1 { font-family: 'Bebas Neue', cursive; font-size: 4rem; color: var(--primary); margin-bottom: 0.5rem; line-height: 1; }
     p { color: #888; font-size: 1.1rem; }
   }
 

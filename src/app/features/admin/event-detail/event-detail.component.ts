@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventosService } from '../../../core/services/eventos.service';
 import { ParticipantesService } from '../../../core/services/participantes.service';
-import * as QRCode from 'qrcode';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-event-detail',
@@ -43,6 +43,11 @@ export class EventDetailComponent implements OnInit {
       url_cartel: [''],
       presentador: ['Ágora Reix'],
       artista_invitado: [''],
+      color_primario: ['#92D342'],
+      color_secundario: ['#368475'],
+      color_fondo: ['#1A1A1A'],
+      color_texto: ['#F2F2F2'],
+      color_cabecera: ['#1A1A1A'],
       participantes: this.fb.array([])
     });
   }
@@ -64,7 +69,7 @@ export class EventDetailComponent implements OnInit {
 
   async loadEvent() {
     this.loading = true;
-    const res = await this.eventosService.getEventos().toPromise();
+    const res = await lastValueFrom(this.eventosService.getEventos());
     const evento = res?.data;
     const ev = (evento as any[] | null)?.find(e => e.id === this.eventId);
     if (ev) {
@@ -75,14 +80,19 @@ export class EventDetailComponent implements OnInit {
         url_entradas: ev.url_entradas || '',
         url_cartel: ev.url_cartel || '',
         presentador: ev.presentador || 'Ágora Reix',
-        artista_invitado: ev.artista_invitado || ''
+        artista_invitado: ev.artista_invitado || '',
+        color_primario: ev.color_primario || '#92D342',
+        color_secundario: ev.color_secundario || '#368475',
+        color_fondo: ev.color_fondo || '#1A1A1A',
+        color_texto: ev.color_texto || '#F2F2F2',
+        color_cabecera: ev.color_cabecera || '#1A1A1A'
       });
       if (ev.url_cartel) {
         this.oldCartelUrl = ev.url_cartel;
         this.cartelPreview = ev.url_cartel;
       }
 
-      const resParts = await this.participantesService.getParticipantesByEvento(this.eventId!).toPromise();
+      const resParts = await lastValueFrom(this.participantesService.getParticipantesByEvento(this.eventId!));
       const parts = resParts?.data;
       (parts as any[] | null)?.forEach(p => {
         this.participantes.push(this.fb.group({
@@ -152,12 +162,12 @@ export class EventDetailComponent implements OnInit {
       this.eventForm.patchValue({ url_cartel: '' });
     }
 
-    const { nombre, descripcion, fecha, url_entradas, url_cartel, presentador, artista_invitado, participantes } = this.eventForm.value;
+    const { nombre, descripcion, fecha, url_entradas, url_cartel, presentador, artista_invitado, participantes, color_primario, color_secundario, color_fondo, color_texto, color_cabecera } = this.eventForm.value;
     
     // Convertir el string local a una fecha ISO real con su zona horaria antes de enviar a Supabase
     const fechaISO = new Date(fecha).toISOString();
 
-    const eventoData = { nombre, descripcion, fecha: fechaISO, url_entradas, url_cartel, presentador, artista_invitado };
+    const eventoData = { nombre, descripcion, fecha: fechaISO, url_entradas, url_cartel, presentador, artista_invitado, color_primario, color_secundario, color_fondo, color_texto, color_cabecera };
 
     let res;
     if (this.eventId) {

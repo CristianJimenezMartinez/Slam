@@ -20,7 +20,7 @@ import { Component, Input } from '@angular/core';
       
       &.full-screen {
         height: 100vh;
-        background: #0d0d0d;
+        background: var(--bg);
         position: fixed;
         top: 0;
         left: 0;
@@ -29,8 +29,8 @@ import { Component, Input } from '@angular/core';
     }
 
     .spinner {
-      border: 4px solid rgba(146, 211, 66, 0.1);
-      border-top-color: var(--neon-green);
+      border: 4px solid rgba(var(--primary-rgb), 0.1);
+      border-top-color: var(--primary);
       border-radius: 50%;
       width: 50px;
       height: 50px;
@@ -42,7 +42,7 @@ import { Component, Input } from '@angular/core';
       font-family: 'Bebas Neue', cursive;
       font-size: 1.5rem;
       letter-spacing: 2px;
-      color: #444;
+      color: rgba(var(--text-rgb, 255, 255, 255), 0.4);
     }
 
     @keyframes spin {

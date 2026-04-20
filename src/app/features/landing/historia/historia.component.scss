@@ -2,12 +2,12 @@
   max-width: 900px;
   margin: 2rem auto;
   padding: 3rem 2rem;
-  background: #0d0d0d;
-  border: 1px solid #333;
+  background: var(--bg);
+  border: 1px solid rgba(var(--text-rgb, 255, 255, 255), 0.1);
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   position: relative;
-  background-image: radial-gradient(circle at bottom left, rgba(146, 211, 66, 0.05) 0%, transparent 50%);
+  background-image: radial-gradient(circle at bottom left, rgba(var(--primary-rgb), 0.05) 0%, transparent 50%);
 
   .page-header {
     text-align: center;
@@ -15,7 +15,7 @@
     padding-bottom: 2rem;
     border-bottom: 1px solid #222;
     
-    h1 { font-family: 'Bebas Neue', cursive; font-size: 4.5rem; color: var(--neon-green); margin-bottom: 0.5rem; line-height: 1; }
+    h1 { font-family: 'Bebas Neue', cursive; font-size: 4.5rem; color: var(--primary); margin-bottom: 0.5rem; line-height: 1; }
     p { color: #888; font-size: 1.1rem; }
   }
 
@@ -67,17 +67,17 @@
       top: 15px;
       width: 14px;
       height: 14px;
-      background: #222;
+      background: rgba(var(--text-rgb, 255, 255, 255), 0.2);
       border-radius: 50%;
-      border: 3px solid #0d0d0d;
+      border: 3px solid var(--bg);
       z-index: 2;
     }
 
     &.upcoming {
-      &::before { background: var(--neon-green); box-shadow: 0 0 10px var(--neon-green); }
+      &::before { background: var(--primary); box-shadow: 0 0 10px rgba(var(--primary-rgb), 0.4); }
       &.today {
-        background: rgba(146, 211, 66, 0.03);
-        border: 1px solid rgba(146, 211, 66, 0.1);
+        background: rgba(var(--primary-rgb), 0.03);
+        border: 1px solid rgba(var(--primary-rgb), 0.1);
         padding: 1.5rem;
         border-radius: 8px;
         margin-left: -1rem; // Usamos margin en lugar de left absoluto para no romper pseudos
@@ -106,9 +106,9 @@
       background-position: center;
       
       &.with-photo {
-        border: 2px solid var(--neon-green);
+        border: 2px solid var(--primary);
         .day { color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.8); }
-        .month { color: var(--neon-green); text-shadow: 0 0 10px rgba(0,0,0,0.8); }
+        .month { color: var(--primary); text-shadow: 0 0 10px rgba(0,0,0,0.8); }
       }
 
       .date-overlay {
@@ -121,7 +121,7 @@
       .day, .month { position: relative; z-index: 2; }
       
       .day { font-size: 2.2rem; color: var(--off-white); }
-      .month { font-size: 1.1rem; color: var(--neon-green); opacity: 0.7; }
+      .month { font-size: 1.1rem; color: var(--primary); opacity: 0.7; }
     }
 
     .info-box {
@@ -143,7 +143,7 @@
           border-radius: 4px;
           font-weight: bold;
           
-          &.inminent { background: #333; color: var(--neon-green); border: 1px solid var(--neon-green); }
+          &.inminent { background: #333; color: var(--primary); border: 1px solid var(--primary); }
         }
       }
 

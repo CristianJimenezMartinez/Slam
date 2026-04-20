@@ -1,0 +1,127 @@
+.landing-hero {
+  position: relative;
+  min-height: calc(100vh - 80px);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to top, var(--bg), transparent);
+  }
+
+  .hero-overlay {
+    background: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-container {
+    width: 100%;
+  }
+
+  .hero-main {
+    width: 100%;
+    z-index: 2;
+    text-align: center;
+  }
+
+  .hero-text {
+    .badge {
+      display: inline-block;
+      background: rgba(var(--primary-rgb), 0.1);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 0.5rem 1.2rem;
+      border-radius: 4px;
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-size: 6rem;
+      line-height: 1;
+      margin-bottom: 1rem;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      color: #fff;
+    }
+
+    .tagline {
+      font-size: 1.5rem;
+      color: #ccc;
+      margin-bottom: 3rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    @media (max-width: 768px) {
+      position: relative;
+      
+      .badge {
+        position: absolute;
+        top: -60px;
+        right: 0;
+        font-size: 0.9rem;
+        padding: 0.3rem 0.8rem;
+        letter-spacing: 1px;
+        margin-bottom: 0;
+      }
+
+      h1 {
+        font-size: 3.5rem;
+        margin-top: 2rem;
+      }
+    }
+  }
+
+  .hero-center-actions {
+    margin: 2rem 0;
+  }
+
+  .hero-impact-stats {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin-top: 4rem;
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .value {
+        font-family: 'Bebas Neue', cursive;
+        font-size: 3.5rem;
+        color: var(--primary);
+        line-height: 1;
+      }
+
+      .label {
+        font-family: 'Bebas Neue', cursive;
+        color: #888;
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+    }
+
+    @media (max-width: 768px) {
+      gap: 2rem;
+      .stat .value { font-size: 2.5rem; }
+      .stat .label { font-size: 0.8rem; }
+    }
+  }
+}

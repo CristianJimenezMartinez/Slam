@@ -1,0 +1,22 @@
+<div [formGroup]="parentForm">
+  <div class="section-header">
+    <h3>Poetas Participantes</h3>
+    <button type="button" class="btn-add" (click)="onAdd()">+ Añadir Poeta</button>
+  </div>
+  
+  <div formArrayName="participantes" class="participants-list">
+    <div class="participant-row" *ngFor="let p of participantes.controls; let i=index" [formGroupName]="i">
+      <div class="order-badge">{{ i + 1 }}</div>
+      <div class="input-wrapper">
+        <input formControlName="nombre" placeholder="Nombre del poeta" />
+      </div>
+      <button type="button" class="btn-remove-icon" (click)="onRemove(i)" title="Eliminar participante">
+        ✕
+      </button>
+    </div>
+
+    <div *ngIf="participantes.length === 0" class="empty-state">
+      No hay participantes registrados aún.
+    </div>
+  </div>
+</div>

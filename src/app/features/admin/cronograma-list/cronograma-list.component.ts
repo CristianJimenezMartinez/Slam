@@ -15,6 +15,13 @@ export class CronogramaListComponent implements OnInit {
   edicionTexto: string = '';
   urlPaseTemporada: string = '';
   
+  // Colores de Temporada
+  colorPrimario: string = '#92D342';
+  colorSecundario: string = '#368475';
+  colorCabecera: string = '#1A1A1A';
+  colorFondo: string = '#1A1A1A';
+  colorTexto: string = '#F2F2F2';
+  
   // Para añadir nuevos en lote
   newItems: Partial<Cronograma>[] = [
     { nombre: '', fecha: '', url_entradas: '', ubicacion: '' }
@@ -38,6 +45,13 @@ export class CronogramaListComponent implements OnInit {
         this.fotoTemporada = this.items[0].url_foto || null;
         this.edicionTexto = this.items[0].edicion || '';
         this.urlPaseTemporada = this.items[0].url_pase_temporada || '';
+        
+        // Cargar colores
+        this.colorPrimario = this.items[0].color_primario || '#92D342';
+        this.colorSecundario = this.items[0].color_secundario || '#368475';
+        this.colorCabecera = this.items[0].color_cabecera || '#1A1A1A';
+        this.colorFondo = this.items[0].color_fondo || '#1A1A1A';
+        this.colorTexto = this.items[0].color_texto || '#F2F2F2';
       }
       this.loading = false;
     });
@@ -60,6 +74,11 @@ export class CronogramaListComponent implements OnInit {
       item.url_foto = this.fotoTemporada || '';
       item.edicion = this.edicionTexto;
       item.url_pase_temporada = this.urlPaseTemporada;
+      item.color_primario = this.colorPrimario;
+      item.color_secundario = this.colorSecundario;
+      item.color_cabecera = this.colorCabecera;
+      item.color_fondo = this.colorFondo;
+      item.color_texto = this.colorTexto;
       item.ubicacion = item.ubicacion || 'Caja Negra, Las Cigarreras'; // Valor por defecto
       await this.cronogramaService.createCronograma(item);
     }
@@ -71,7 +90,15 @@ export class CronogramaListComponent implements OnInit {
 
   async saveGlobalSettings() {
     this.loading = true;
-    const updates = { edicion: this.edicionTexto, url_pase_temporada: this.urlPaseTemporada };
+    const updates = { 
+      edicion: this.edicionTexto, 
+      url_pase_temporada: this.urlPaseTemporada,
+      color_primario: this.colorPrimario,
+      color_secundario: this.colorSecundario,
+      color_cabecera: this.colorCabecera,
+      color_fondo: this.colorFondo,
+      color_texto: this.colorTexto
+    };
     await this.cronogramaService.updateGlobalSettings(updates);
     this.loadItems();
     alert('Configuración global actualizada para toda la temporada.');

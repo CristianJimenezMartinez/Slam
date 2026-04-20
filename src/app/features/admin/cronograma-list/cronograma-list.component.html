@@ -22,8 +22,8 @@
 
   <div class="global-season-config card mb-4">
     <div class="config-text">
-      <h3>Textos de Temporada</h3>
-      <p>Aplica a toda la temporada: el nombre de la edición actual y el enlace opcional para comprar el pase de temporada.</p>
+      <h3>Identidad Visual de Temporada</h3>
+      <p>Configura la paleta de colores que tendrá la web durante toda la temporada (cuando no haya un evento inminente).</p>
     </div>
     <div class="config-inputs">
       <div class="input-group">
@@ -34,7 +34,32 @@
         <label>URL Pase de Temporada</label>
         <input type="text" [(ngModel)]="urlPaseTemporada" placeholder="https://entradium.com/..." class="editable-field link">
       </div>
-      <button class="btn-primary small mt-3" (click)="saveGlobalSettings()">Guardar Textos</button>
+
+      <!-- PALETA DE COLORES DE TEMPORADA -->
+      <div class="color-grid-horizontal mt-3">
+        <div class="color-picker-item">
+          <label>Primario</label>
+          <input type="color" [(ngModel)]="colorPrimario">
+        </div>
+        <div class="color-picker-item">
+          <label>Secundario</label>
+          <input type="color" [(ngModel)]="colorSecundario">
+        </div>
+        <div class="color-picker-item">
+          <label>Cabecera</label>
+          <input type="color" [(ngModel)]="colorCabecera">
+        </div>
+        <div class="color-picker-item">
+          <label>Fondo</label>
+          <input type="color" [(ngModel)]="colorFondo">
+        </div>
+        <div class="color-picker-item">
+          <label>Texto</label>
+          <input type="color" [(ngModel)]="colorTexto">
+        </div>
+      </div>
+
+      <button class="btn-primary small mt-3" (click)="saveGlobalSettings()">Guardar Configuración de Temporada</button>
     </div>
   </div>
 

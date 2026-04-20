@@ -1,0 +1,28 @@
+<nav class="dashboard-tabs">
+  <div class="tabs-group">
+    <button 
+      [class.active]="activeTab === 'live'" 
+      (click)="setTab('live')">
+      <span class="dot"></span> Slam Live
+    </button>
+    <button 
+      [class.active]="activeTab === 'eventos'" 
+      (click)="setTab('eventos')">
+      Eventos
+    </button>
+    <button 
+      [class.active]="activeTab === 'anteriores'" 
+      (click)="setTab('anteriores')">
+      Anteriores
+    </button>
+    <button 
+      [class.active]="activeTab === 'temporada'" 
+      (click)="setTab('temporada')">
+      Temporada
+    </button>
+  </div>
+
+  <div class="tabs-actions" *ngIf="activeTab === 'eventos'">
+    <button class="btn-primary-small" (click)="onNewEvent()">+ Nuevo Evento</button>
+  </div>
+</nav>

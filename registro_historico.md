@@ -41,6 +41,24 @@ El registro histórico se convertirá en contenido de alto valor para Google:
 3. [ ] Implementar el selector de temporadas en el Dashboard Admin.
 4. [ ] Diseñar la vista pública de "Archivo Histórico".
 
+## 7. Filosofía de Privacidad y Automatización (Nuevas Reglas)
+
+Para asegurar la sostenibilidad y el respeto a la obra de los poetas, definimos estas reglas antes de la implementación:
+
+### A. Privacidad Consentida
+- Por defecto, el sistema mostrará **Título** y **Vídeo (YouTube)**.
+- El **Texto Completo** del poema solo se publicará si se marca el campo `autoriza_publicacion_texto`. 
+- Si no hay autorización, el texto se guardará de forma privada en la DB para búsquedas internas del Admin, pero se mostrará un "Fragmento de cortesía" al público para proteger la obra completa.
+
+### B. Automatización "Memoria de Poetas"
+- El sistema no requiere una tabla de "Usuarios" para los poetas inicialmente.
+- **Detección por Nombre**: Al registrar un nuevo participante, el Admin verá sugerencias basadas en participaciones pasadas (ej: "Juan Pérez ya participó en 2024, ¿usar su Instagram @juan_poesia?").
+- Este "vínculo inteligente" permite crear un perfil acumulativo de forma automática sin burocracia.
+
+### C. Sellado de Temporada
+- Un evento se considera "Cerrado" automáticamente 48h después de su fecha.
+- El Admin podrá "Sellar" la temporada completa, lo que genera un **Snapshot Estático** (para máxima velocidad y SEO) en la base de datos de historia.
+
 ---
 > [!IMPORTANT]
-> A medida que el sitio crezca, este registro funcionará como un muro de la fama, atrayendo tráfico orgánico mediante las búsquedas de los nombres de los poetas y los años de los torneos.
+> **Contrato Social**: La web prioriza la difusión del evento, pero protege la propiedad intelectual de los textos largos a menos que el poeta dé su OK explícito.

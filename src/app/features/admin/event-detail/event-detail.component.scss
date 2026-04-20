@@ -1,64 +1,95 @@
-.admin-detail {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
+.event-form-modal {
+  padding: 1rem;
+  color: var(--off-white);
+  
+  h2, h3 {
+    font-family: 'Bebas Neue', cursive;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+  }
 
-  .header {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-    button { background: none; border: 1px solid var(--neon-green); color: var(--neon-green); padding: 0.4rem 1rem; cursor: pointer; font-family: 'Bebas Neue', cursive; }
-    h1 { margin: 0; font-size: 2.5rem; }
+  h3 {
+    font-size: 1.4rem;
+    color: #888;
+    margin-top: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding-bottom: 0.5rem;
   }
 
   .form-grid {
     display: grid;
-    gap: 2rem;
-    grid-template-columns: 1fr;
-    
-    @media (min-width: 900px) {
-      grid-template-columns: 1fr 1fr;
-      align-items: start;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3rem;
+    align-items: start;
+
+    @media (max-width: 992px) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
     }
   }
 
-  .section {
-    background: var(--card-bg);
+  .section-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
     padding: 2rem;
-    border: 1px solid #333;
-    margin-bottom: 2rem;
-    box-shadow: 5px 5px 0px #111;
-
-    h2 { margin-top: 0; font-family: 'Bebas Neue', cursive; font-size: 1.5rem; color: var(--neon-green); border-bottom: 1px solid #333; padding-bottom: 0.8rem; margin-bottom: 1.5rem; }
-    
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      button { background: var(--neon-green); color: var(--carbon-black); border: none; padding: 0.4rem 1rem; font-family: 'Bebas Neue', cursive; cursor: pointer; }
-    }
   }
 
-  .participant-row {
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, rgba(var(--primary-rgb), 0.2), transparent);
+    margin: 2rem 0;
+  }
+
+  .form-actions {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #333;
-    
-    .order { font-family: 'Bebas Neue', cursive; font-size: 1.5rem; min-width: 30px; color: var(--neon-green); }
-    input { flex: 1; }
-    .btn-icon { background: none; border: none; color: #ff5555; cursor: pointer; font-size: 1.2rem; }
-  }
+    justify-content: flex-end;
+    gap: 1.5rem;
 
-  .qr-section {
-    text-align: center;
-    border: 2px dashed var(--neon-green);
-    img { margin: 2rem 0; padding: 1rem; background: white; border-radius: 8px; }
-    p { font-family: 'Bebas Neue', cursive; font-size: 1.2rem; }
-    button { color: var(--neon-green); background: none; border: none; cursor: pointer; font-family: 'Bebas Neue', cursive; text-decoration: underline; }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #333;
+      color: #888;
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        border-color: #666;
+        color: #fff;
+      }
+    }
+
+    .btn-primary-glow {
+      background: var(--primary);
+      color: #000;
+      border: none;
+      padding: 0.8rem 3rem;
+      border-radius: 8px;
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.4rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+      box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.3);
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 30px rgba(var(--primary-rgb), 0.5);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+    }
   }
 }

@@ -1,0 +1,29 @@
+<div [formGroup]="parentForm">
+  <div class="form-group">
+    <label>Nombre del Evento</label>
+    <input formControlName="nombre" placeholder="Slam de Poesía #1" />
+  </div>
+  <div class="form-group">
+    <label>Descripción</label>
+    <textarea formControlName="descripcion" placeholder="Escribe una breve descripción del evento..."></textarea>
+  </div>
+  <div class="form-group">
+    <label>Fecha y Hora</label>
+    <input type="datetime-local" formControlName="fecha" />
+  </div>
+  <div class="form-group">
+    <label>Url Reserva de Entradas (Opcional)</label>
+    <input type="url" formControlName="url_entradas" placeholder="https://entradium.com/..." />
+  </div>
+
+  <div class="guests-section">
+    <div class="form-group">
+      <label>Presentador/a del Evento</label>
+      <input formControlName="presentador" placeholder="Ágora Reix" />
+    </div>
+    <div class="form-group">
+      <label>Artista Invitado (Opcional)</label>
+      <input formControlName="artista_invitado" placeholder="Nombre del artista..." />
+    </div>
+  </div>
+</div>

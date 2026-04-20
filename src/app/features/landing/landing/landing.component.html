@@ -6,148 +6,39 @@
   <ng-container *ngIf="!loading">
     
     <!-- MODO EVENTO INMINENTE (<= 7 días) -->
-    <section class="landing-hero" *ngIf="esEventoInminente && evento" [style.background-image]="'url(' + (evento.url_cartel || 'assets/hero-bg.jpg') + ')'">
-      <div class="hero-overlay">
-        <div class="container hero-container">
-          <div class="hero-main">
-            <div class="hero-text">
-              <div class="badge">PRÓXIMA CITA: {{ evento.fecha | date:'dd MMMM yyyy, HH:mm' }}H</div>
-              <h1>{{ evento.nombre }}</h1>
-              <p class="tagline">{{ evento.descripcion || 'La poesía nace en las tripas y se deshace en el micro.' }}</p>
-            </div>
-            
-            <div class="hero-center-actions">
-              <a *ngIf="evento.url_entradas" [href]="evento.url_entradas" target="_blank" class="btn-primary large">Reservar Entrada</a>
-            </div>
-
-            <div class="hero-impact-stats">
-              <div class="stat"><span class="value">10</span><span class="label">Poetas</span></div>
-              <div class="stat"><span class="value">3</span><span class="label">Minutos</span></div>
-              <div class="stat"><span class="value">1</span><span class="label">Micrófono</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <app-hero-event 
+      *ngIf="esEventoInminente && evento"
+      [evento]="evento">
+    </app-hero-event>
 
     <!-- MODO TEMPORADA / ESPERA (> 7 días) -->
-    <section class="season-hero" *ngIf="!esEventoInminente">
-      <div class="hero-overlay">
-        <div class="container hero-container">
-          <div class="season-flex">
-            <!-- Izquierda: Textos -->
-            <div class="season-content">
-              <div class="season-badge">{{ edicionTexto }} · Temporada {{ currentYear }}</div>
-              <h1>Poetry Slam Alicante</h1>
-              <p class="season-tagline">Sin filtros, sin artificios. La palabra se hace cuerpo y Alicante elige su voz.</p>
-              
-              <div class="hero-actions">
-                <div class="actions-row">
-                  <button (click)="scrollToSlider()" class="btn-primary large pulse-btn">
-                    <span>🎟️ Entradas</span>
-                  </button>
-                  <div class="season-pass-wrapper" *ngIf="urlPaseTemporada">
-                    <a [href]="urlPaseTemporada" target="_blank" class="btn-secondary large">
-                      <span>🎤 Pase de Temporada</span>
-                    </a>
-                  </div>
-                </div>
-                <p class="hero-subtext">Los jueves a las 20h · El público vota, la ciudad elige</p>
-              </div>
-            </div>
+    <app-hero-season
+      *ngIf="!esEventoInminente"
+      [edicionTexto]="edicionTexto"
+      [currentYear]="currentYear"
+      [urlPaseTemporada]="urlPaseTemporada"
+      [fotoTemporada]="fotoTemporada"
+      (scrollRequest)="scrollToSlider()">
+    </app-hero-season>
 
-            <!-- Derecha: Imagen de Temporada -->
-            <div class="season-visual" *ngIf="fotoTemporada">
-              <div class="poster-container">
-                <img [src]="fotoTemporada" alt="Poster Temporada">
-                <div class="glow"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- NUEVO CONTENEDOR DEL SLIDER (FUERA DEL HERO) -->
-    <section class="upcoming-events-section highlight" *ngIf="!esEventoInminente && proximosCronograma.length > 0" id="season-slider">
-      <div class="container">
-        <div class="season-slider-wrapper">
-          <div class="slider-header">
-            <h2>Disponibilidad de Entradas</h2>
-            <button routerLink="/calendario" class="btn-text">Calendario Completo →</button>
-          </div>
-          
-          <div class="season-slider">
-            <div class="slider-item" *ngFor="let ev of proximosCronograma">
-              <div class="event-card ticket-style">
-                <div class="card-date" [style.background-image]="fotoTemporada ? 'url(' + fotoTemporada + ')' : 'none'">
-                  <div class="overlay"></div>
-                  <div class="ticket-cut"></div>
-                  <span class="d">{{ ev.fecha | date:'dd' }}</span>
-                  <span class="m">{{ ev.fecha | date:'MMM' | uppercase }}</span>
-                </div>
-                <div class="card-body">
-                  <div class="event-info">
-                    <h3>{{ ev.nombre }}</h3>
-                    <p class="location"><span class="icon">📍</span> {{ ev.ubicacion || 'Las Cigarreras' }}</p>
-                  </div>
-                  <a *ngIf="ev.url_entradas" [href]="ev.url_entradas" target="_blank" class="btn-buy-massive">
-                    <span>Entradas</span>
-                    <small>Sede Alicante</small>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="slider-item">
-              <div class="event-card view-more" routerLink="/calendario">
-                <div class="card-body">
-                  <span class="icon">📅</span>
-                  <h3>Calendario Completo</h3>
-                  <p>Ver todas las fechas</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- SLIDER DE ENTRADAS (Solo en Modo Temporada o si no hay evento inminente) -->
+    <app-upcoming-slider
+      *ngIf="!esEventoInminente && proximosCronograma.length > 0"
+      [eventos]="proximosCronograma"
+      [fotoTemporada]="fotoTemporada">
+    </app-upcoming-slider>
 
     <!-- SECCIÓN DE PARTICIPANTES (Solo en Modo Evento) -->
-    <section class="section participants-section" *ngIf="esEventoInminente && participantes.length > 0">
-      <div class="container">
-        <h2 class="section-title">Los Valientes</h2>
-        <div class="poetas-grid">
-          <div class="poeta-card" *ngFor="let p of participantes">
-            <div class="poeta-img">
-              <img [src]="p.foto_url || 'assets/default-avatar.jpg'" [alt]="p.nombre">
-            </div>
-            <h3>{{ p.nombre }}</h3>
-          </div>
-        </div>
-      </div>
-    </section>
+    <app-participants-grid
+      *ngIf="esEventoInminente && participantes.length > 0"
+      [participantes]="participantes">
+    </app-participants-grid>
 
-    <!-- OTRAS CITAS (Solo visible si hay evento inminente, sino el slider de arriba manda) -->
-    <section class="section secondary-events" *ngIf="esEventoInminente && proximosCronograma.length > 1">
-      <div class="container">
-        <h2 class="section-title">Otras Citas</h2>
-        <div class="mini-timeline">
-           <div class="timeline-item" *ngFor="let ev of proximosCronograma.slice(1)">
-            <div class="date">
-              <span class="day">{{ ev.fecha | date:'dd' }}</span>
-              <span class="month">{{ ev.fecha | date:'MMM' }}</span>
-            </div>
-            <div class="info">
-              <h3>{{ ev.nombre }}</h3>
-            </div>
-            <div class="action" *ngIf="ev.url_entradas">
-              <a [href]="ev.url_entradas" target="_blank" class="btn-primary">Entradas</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- OTRAS CITAS (Solo visible si hay evento inminente) -->
+    <app-secondary-events
+      *ngIf="esEventoInminente && proximosCronograma.length > 1"
+      [eventos]="proximosCronograma.slice(1)">
+    </app-secondary-events>
 
   </ng-container>
 </main>

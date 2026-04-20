@@ -11,7 +11,7 @@
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
   
-  h1 { font-size: 4rem; color: var(--neon-green); margin: 0; }
+  h1 { font-size: 4rem; color: var(--primary); margin: 0; }
   p { color: #888; margin-top: 0.5rem; font-size: 1.1rem; }
 }
 
@@ -20,8 +20,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 2rem;
-  background: #0d0d0d;
-  border-left: 4px solid var(--neon-green);
+  background: var(--bg);
+  border-left: 4px solid var(--primary);
   margin-bottom: 3rem;
 
   .config-text {
@@ -43,7 +43,7 @@
       flex-direction: column;
       label { font-size: 0.9rem; color: #888; margin-bottom: 0.3rem; text-transform: uppercase; font-family: 'Bebas Neue', cursive; }
       input { background: #151515; border: 1px solid #333; padding: 0.6rem; color: white; border-radius: 4px; }
-      input:focus { border-color: var(--neon-green); outline: none; }
+      input:focus { border-color: var(--primary); outline: none; }
     }
   }
 }
@@ -73,7 +73,7 @@
   .hover-overlay {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(146, 211, 66, 0.9);
+    background: rgba(var(--primary-rgb), 0.9);
     color: #000;
     display: flex;
     align-items: center;
@@ -89,8 +89,8 @@
 
 
 .cronograma-section {
-  background: #0d0d0d;
-  border: 1px solid #222;
+  background: var(--bg);
+  border: 1px solid rgba(var(--text-rgb, 255, 255, 255), 0.1);
   padding: 2.5rem;
   border-radius: 8px;
   
@@ -100,17 +100,17 @@
     align-items: center;
     margin-bottom: 2rem;
     
-    h2 { font-size: 2rem; color: var(--off-white); margin: 0; border-left: 4px solid var(--neon-green); padding-left: 1rem; }
+    h2 { font-size: 2rem; color: var(--off-white); margin: 0; border-left: 4px solid var(--primary); padding-left: 1rem; }
     
     .btn-row {
-      background: rgba(146, 211, 66, 0.1);
-      color: var(--neon-green);
-      border: 1px dashed var(--neon-green);
+      background: rgba(var(--primary-rgb), 0.1);
+      color: var(--primary);
+      border: 1px dashed var(--primary);
       padding: 0.5rem 1rem;
       border-radius: 4px;
       cursor: pointer;
       font-family: 'Bebas Neue', cursive;
-      &:hover { background: var(--neon-green); color: #000; }
+      &:hover { background: var(--primary); color: #000; }
     }
   }
 }
@@ -137,7 +137,7 @@
       padding: 0.8rem;
       color: white;
       border-radius: 4px;
-      &:focus { border-color: var(--neon-green); outline: none; }
+      &:focus { border-color: var(--primary); outline: none; }
     }
 
     .btn-remove {
@@ -166,9 +166,48 @@
   span { font-size: 0.7rem; color: #555; text-transform: uppercase; }
   .preview { width: 100%; height: 100%; object-fit: cover; }
   
-  &:hover { border-color: var(--neon-green); span { color: var(--neon-green); } }
+  &:hover { border-color: var(--primary); span { color: var(--primary); } }
   
   &.small { width: 40px; height: 40px; }
+}
+
+.color-grid-horizontal {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  background: #151515;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #222;
+
+  .color-picker-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    label {
+      font-size: 0.75rem;
+      color: #777;
+      text-transform: uppercase;
+      font-family: 'Bebas Neue', cursive;
+      letter-spacing: 1px;
+    }
+
+    input[type="color"] {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-radius: 50%;
+      overflow: hidden;
+
+      &::-webkit-color-swatch-wrapper { padding: 0; }
+      &::-webkit-color-swatch { border: 2px solid #333; border-radius: 50%; }
+    }
+  }
 }
 
 .items-grid {
@@ -200,7 +239,7 @@
       border-radius: 4px;
       
       &:hover { border-color: #333; background: #111; }
-      &:focus { border-color: var(--neon-green); background: #000; outline: none; }
+      &:focus { border-color: var(--primary); background: #000; outline: none; }
       
       &.link { color: #888; font-size: 0.85rem; }
     }
@@ -220,6 +259,29 @@
 .btn-primary.large { width: auto; min-width: 250px; font-size: 1.5rem; padding: 1rem 2rem; }
 
 @media (max-width: 1000px) {
+  .global-header h1 { font-size: 2.5rem; }
+  
+  .global-season-config {
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 2rem;
+    
+    .config-inputs {
+      width: 100%;
+      margin-right: 0;
+      min-width: unset;
+    }
+    
+    .config-upload {
+      order: -1;
+    }
+  }
+
+  .color-grid-horizontal {
+    justify-content: center;
+    gap: 1rem;
+  }
+
   .bulk-form .form-row {
     grid-template-columns: 1fr;
     border: 1px solid #222;

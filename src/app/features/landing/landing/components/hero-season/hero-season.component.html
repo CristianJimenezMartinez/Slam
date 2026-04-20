@@ -1,0 +1,37 @@
+<section class="season-hero">
+  <div class="hero-overlay">
+    <div class="container hero-container">
+      <div class="season-flex">
+        <!-- Izquierda: Textos -->
+        <div class="season-content">
+          <div class="season-badge">{{ edicionTexto }} · Temporada {{ currentYear }}</div>
+          <h1>Poetry Slam Alicante</h1>
+          <p class="season-tagline">Sin filtros, sin artificios. La palabra se hace cuerpo y Alicante elige su voz.</p>
+          
+          <div class="hero-actions">
+            <div class="actions-row">
+              <button (click)="onScrollClick()" class="btn-primary large pulse-btn">
+                <span>🎟️ Entradas</span>
+              </button>
+              <div class="season-pass-wrapper" *ngIf="urlPaseTemporada">
+                <a [href]="urlPaseTemporada" target="_blank" class="btn-secondary large">
+                  <span>🎤 Pase de Temporada</span>
+                </a>
+                <div class="pass-badge">OFERTA</div>
+              </div>
+            </div>
+            <p class="hero-subtext">Los jueves a las 20h · El público vota, la ciudad elige</p>
+          </div>
+        </div>
+
+        <!-- Derecha: Imagen de Temporada -->
+        <div class="season-visual" *ngIf="fotoTemporada">
+          <div class="poster-container">
+            <img [src]="fotoTemporada" alt="Poster Temporada">
+            <div class="glow"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
