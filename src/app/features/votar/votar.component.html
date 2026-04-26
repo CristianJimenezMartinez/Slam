@@ -24,7 +24,7 @@
     <!-- Evento bloqueado (Votación cerrada) -->
     <div class="status-box locked" *ngIf="!loading && evento && !evento.votacion_activa">
       <div class="empty-icon">⏳</div>
-      <h2 class="purple-glow">VII Torneo PSA</h2>
+      <h2 class="purple-glow">{{ evento.nombre }}</h2>
       <p>Votaciones cerradas</p>
       <button routerLink="/" class="btn-primary">Volver a la Portada</button>
     </div>

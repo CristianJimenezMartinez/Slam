@@ -3,7 +3,8 @@ import { FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-event-participants',
-  templateUrl: './event-participants.component.html'
+  templateUrl: './event-participants.component.html',
+  styleUrls: ['./event-participants.component.scss']
 })
 export class EventParticipantsComponent {
   @Input() parentForm!: FormGroup;

@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class HeroEventComponent {
   @Input() evento: any;
+  @Input() participantCount: number = 0;
 }

@@ -1,22 +1,30 @@
-<section class="landing-hero" [style.background-image]="'url(' + (evento?.url_cartel || 'assets/hero-bg.jpg') + ')'">
+<section class="landing-hero">
+  <div class="hero-bg-blur" [style.background-image]="'url(' + (evento?.url_cartel || 'assets/hero-bg.jpg') + ')'"></div>
+  
   <div class="hero-overlay">
     <div class="container hero-container">
-      <div class="hero-main">
-        <div class="hero-text">
-          <div class="badge">PRÓXIMA CITA: {{ evento?.fecha | date:'dd MMMM yyyy, HH:mm' }}H</div>
-          <h1>{{ evento?.nombre }}</h1>
-          <p class="tagline">{{ evento?.descripcion || 'La poesía nace en las tripas y se deshace en el micro.' }}</p>
+      <div class="hero-grid">
+        
+        <div class="hero-cartel-container" *ngIf="evento?.url_cartel">
+          <img [src]="evento.url_cartel" [alt]="evento.nombre" class="hero-cartel">
         </div>
         
-        <div class="hero-center-actions" *ngIf="evento?.url_entradas">
-          <a [href]="evento.url_entradas" target="_blank" class="btn-primary large">Reservar Entrada</a>
+        <div class="hero-text-content">
+          <div class="badge">{{ evento?.fecha | date:'dd MMMM yyyy, HH:mm' }}H</div>
+          <h1>{{ evento?.nombre }}</h1>
+          <p class="tagline">{{ evento?.descripcion || 'La poesía nace en las tripas y se deshace en el micro.' }}</p>
+          
+          <div class="hero-center-actions" *ngIf="evento?.url_entradas">
+            <a [href]="evento.url_entradas" target="_blank" class="btn-primary large">Reservar Entrada</a>
+          </div>
+
+          <div class="hero-impact-stats">
+            <div class="stat"><span class="value">{{ participantCount || 10 }}</span><span class="label">Poetas</span></div>
+            <div class="stat"><span class="value">3</span><span class="label">Minutos</span></div>
+            <div class="stat"><span class="value">1</span><span class="label">Micrófono</span></div>
+          </div>
         </div>
 
-        <div class="hero-impact-stats">
-          <div class="stat"><span class="value">10</span><span class="label">Poetas</span></div>
-          <div class="stat"><span class="value">3</span><span class="label">Minutos</span></div>
-          <div class="stat"><span class="value">1</span><span class="label">Micrófono</span></div>
-        </div>
       </div>
     </div>
   </div>

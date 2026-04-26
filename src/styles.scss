@@ -34,7 +34,7 @@ h1, h2, h3, .logo {
 
 .btn-primary {
   background: var(--neon-green);
-  color: var(--carbon-black);
+  color: var(--primary-contrast);
   border: none;
   padding: 0.8rem 1.5rem;
   border-radius: 4px;
@@ -148,7 +148,7 @@ header.global-header {
 
     a { 
       text-decoration: none; 
-      color: var(--off-white); 
+      color: #FFFFFF !important; 
       font-size: 1.1rem; 
       font-family: 'Bebas Neue', cursive; 
       padding: 0.5rem 1.2rem;
@@ -171,7 +171,7 @@ header.global-header {
       &:hover { color: var(--neon-green); background: rgba(146, 211, 66, 0.05); }
 
       &.active { 
-        color: var(--carbon-black); 
+        color: var(--primary-contrast); 
         background: var(--neon-green);
         box-shadow: 0 0 15px var(--neon-green);
         &::after { width: 0; }
@@ -254,6 +254,15 @@ footer {
   background: var(--header-bg);
   padding: 4rem 0 2rem;
   border-top: 2px solid rgba(255, 255, 255, 0.05);
+  color: #FFFFFF !important;
+
+  h3, p, strong, a, span {
+    color: #FFFFFF !important;
+  }
+
+  .social-links a svg {
+    fill: #FFFFFF !important;
+  }
 }
 
 // Global form styles
@@ -302,5 +311,24 @@ footer {
   
   &:hover {
     background: var(--primary);
+  }
+}
+
+// Forzar el tamaño del cartel del evento en el admin para que no rompa el layout
+.media-manager {
+  .preview-container {
+    max-width: 120px !important;
+    max-height: 120px !important;
+    position: relative;
+    display: inline-block;
+    
+    .cartel-preview {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 120px !important;
+      max-height: 120px !important;
+      object-fit: contain !important;
+      border-radius: 8px;
+    }
   }
 }

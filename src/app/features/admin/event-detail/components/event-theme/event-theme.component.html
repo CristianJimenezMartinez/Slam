@@ -1,22 +1,37 @@
 <div [formGroup]="parentForm" class="theme-palette-grid">
   <div class="form-group color-input">
     <label>Primario (Acento)</label>
-    <input type="color" formControlName="color_primario" />
+    <div class="input-group">
+      <input type="color" formControlName="color_primario" />
+      <input type="text" formControlName="color_primario" placeholder="#000000" maxlength="7" />
+    </div>
   </div>
   <div class="form-group color-input">
     <label>Secundario</label>
-    <input type="color" formControlName="color_secundario" />
+    <div class="input-group">
+      <input type="color" formControlName="color_secundario" />
+      <input type="text" formControlName="color_secundario" placeholder="#000000" maxlength="7" />
+    </div>
   </div>
   <div class="form-group color-input">
     <label>Cabecera/Footer</label>
-    <input type="color" formControlName="color_cabecera" />
+    <div class="input-group">
+      <input type="color" formControlName="color_cabecera" />
+      <input type="text" formControlName="color_cabecera" placeholder="#000000" maxlength="7" />
+    </div>
   </div>
   <div class="form-group color-input">
     <label>Fondo Web</label>
-    <input type="color" formControlName="color_fondo" />
+    <div class="input-group">
+      <input type="color" formControlName="color_fondo" />
+      <input type="text" formControlName="color_fondo" placeholder="#000000" maxlength="7" />
+    </div>
   </div>
   <div class="form-group color-input">
     <label>Texto</label>
-    <input type="color" formControlName="color_texto" />
+    <div class="input-group">
+      <input type="color" formControlName="color_texto" />
+      <input type="text" formControlName="color_texto" placeholder="#000000" maxlength="7" />
+    </div>
   </div>
 </div>

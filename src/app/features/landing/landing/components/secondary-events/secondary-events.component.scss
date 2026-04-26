@@ -22,16 +22,17 @@
     display: flex;
     align-items: center;
     gap: 2rem;
-    background: var(--card-bg);
+    background: var(--secondary);
     padding: 1.5rem 2rem;
-    border: 1px solid rgba(var(--text-rgb, 255, 255, 255), 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     transition: all 0.3s;
 
     &:hover {
       border-color: var(--primary);
       transform: translateX(10px);
-      background: rgba(var(--text-rgb, 255, 255, 255), 0.03);
+      background: var(--secondary);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     }
 
     .date {

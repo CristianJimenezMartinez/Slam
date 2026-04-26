@@ -43,11 +43,11 @@ export class EventDetailComponent implements OnInit {
       url_cartel: [''],
       presentador: ['Ágora Reix'],
       artista_invitado: [''],
-      color_primario: ['#92D342'],
-      color_secundario: ['#368475'],
-      color_fondo: ['#1A1A1A'],
-      color_texto: ['#F2F2F2'],
-      color_cabecera: ['#1A1A1A'],
+      color_primario: ['#92D342', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
+      color_secundario: ['#368475', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
+      color_fondo: ['#1A1A1A', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
+      color_texto: ['#F2F2F2', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
+      color_cabecera: ['#1A1A1A', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
       participantes: this.fb.array([])
     });
   }

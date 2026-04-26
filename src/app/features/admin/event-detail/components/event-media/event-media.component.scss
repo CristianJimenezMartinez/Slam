@@ -1,13 +1,13 @@
 .media-manager {
   .upload-area {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     input { display: none; }
     .upload-label {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 2.5rem;
+      padding: 1.2rem;
       border: 2px dashed #333;
       border-radius: 12px;
       cursor: pointer;
@@ -65,11 +65,14 @@
   .preview-container {
     position: relative;
     display: inline-block;
+    max-width: 100%;
     
     .cartel-preview {
-      max-height: 280px;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      max-height: 100px;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
       border: 1px solid rgba(255,255,255,0.1);
     }
     

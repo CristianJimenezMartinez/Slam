@@ -1,12 +1,21 @@
 .landing-hero {
   position: relative;
   min-height: calc(100vh - 80px);
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+
+  .hero-bg-blur {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(80px);
+    opacity: 0.15;
+    z-index: 1;
+  }
 
   &::after {
     content: '';
@@ -16,28 +25,58 @@
     width: 100%;
     height: 30%;
     background: linear-gradient(to top, var(--bg), transparent);
+    z-index: 2;
   }
 
   .hero-overlay {
-    background: rgba(0, 0, 0, 0.4);
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 3;
   }
 
   .hero-container {
     width: 100%;
   }
 
-  .hero-main {
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    align-items: center;
     width: 100%;
-    z-index: 2;
-    text-align: center;
+    text-align: left;
+
+    @media (max-width: 992px) {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: 2.5rem;
+    }
   }
 
-  .hero-text {
+  .hero-cartel-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .hero-cartel {
+      max-height: 550px;
+      width: auto;
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      
+      @media (max-width: 992px) {
+        max-height: 380px;
+      }
+    }
+  }
+
+  .hero-text-content {
+    width: 100%;
     .badge {
       display: inline-block;
       background: rgba(var(--primary-rgb), 0.1);

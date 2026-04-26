@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class ParticipantsGridComponent {
   @Input() participantes: any[] = [];
+  @Input() evento: any = null;
 }

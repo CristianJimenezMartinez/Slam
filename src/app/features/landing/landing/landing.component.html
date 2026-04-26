@@ -8,7 +8,8 @@
     <!-- MODO EVENTO INMINENTE (<= 7 días) -->
     <app-hero-event 
       *ngIf="esEventoInminente && evento"
-      [evento]="evento">
+      [evento]="evento"
+      [participantCount]="participantes.length">
     </app-hero-event>
 
     <!-- MODO TEMPORADA / ESPERA (> 7 días) -->
@@ -31,7 +32,8 @@
     <!-- SECCIÓN DE PARTICIPANTES (Solo en Modo Evento) -->
     <app-participants-grid
       *ngIf="esEventoInminente && participantes.length > 0"
-      [participantes]="participantes">
+      [participantes]="participantes"
+      [evento]="evento">
     </app-participants-grid>
 
     <!-- OTRAS CITAS (Solo visible si hay evento inminente) -->

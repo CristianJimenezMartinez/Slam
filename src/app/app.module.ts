@@ -51,6 +51,12 @@ import { FooterComponent } from './core/footer/footer.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
 import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
 
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+import { LOCALE_ID } from '@angular/core';
+
+registerLocaleData(localeEs, 'es');
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -92,7 +98,9 @@ import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loa
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'es' }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
