@@ -1,0 +1,26 @@
+<section class="section secondary-events">
+  <div class="container">
+    <h2 class="section-title">Próximas Fechas</h2>
+    <div class="dates-grid">
+      <div class="date-card" *ngFor="let ev of eventos">
+        
+        <div class="card-media">
+          <img [src]="ev.url_foto || 'assets/hero-bg.jpg'" [alt]="ev.nombre" class="card-img">
+        </div>
+
+        <div class="card-body">
+          <div class="date-badge">
+            <span class="day">{{ ev.fecha | date:'dd' }}</span>
+            <span class="month">{{ ev.fecha | date:'MMM' }}</span>
+          </div>
+          <h3>{{ ev.nombre }}</h3>
+          
+          <div class="action" *ngIf="ev.url_entradas">
+            <a [href]="ev.url_entradas" target="_blank" class="btn-primary">Entradas</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

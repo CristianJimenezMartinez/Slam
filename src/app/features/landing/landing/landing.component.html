@@ -36,11 +36,11 @@
       [evento]="evento">
     </app-participants-grid>
 
-    <!-- OTRAS CITAS (Solo visible si hay evento inminente) -->
-    <app-secondary-events
+    <!-- PRÓXIMAS FECHAS (Solo visible si hay evento inminente) -->
+    <app-upcoming-dates
       *ngIf="esEventoInminente && proximosCronograma.length > 1"
       [eventos]="proximosCronograma.slice(1)">
-    </app-secondary-events>
+    </app-upcoming-dates>
 
   </ng-container>
 </main>

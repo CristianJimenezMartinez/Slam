@@ -1,0 +1,68 @@
+<div class="historia-container">
+  <div class="historia-content">
+    
+    <!-- Cargando -->
+    <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+    <div class="timeline" *ngIf="!loading">
+      
+      <!-- PRÓXIMOS EVENTOS -->
+      <div class="timeline-section" *ngIf="proximos.length > 0">
+        <h2 class="section-title">Próximos Encuentros</h2>
+        
+        <div class="dates-grid">
+          <div class="date-card" *ngFor="let ev of proximos" [class.today]="isEventToday(ev.fecha)">
+            <div class="card-media">
+              <img [src]="ev.url_foto || 'assets/hero-bg.jpg'" [alt]="ev.nombre" class="card-img">
+              <span class="status-badge" *ngIf="isEventToday(ev.fecha)">HOY 🔥</span>
+            </div>
+            
+            <div class="card-body">
+              <div class="date-badge">
+                <span class="day">{{ ev.fecha | date:'dd' }}</span>
+                <span class="month">{{ ev.fecha | date:'MMM' }}</span>
+              </div>
+              <h3>{{ ev.nombre }}</h3>
+              <p class="location"><span class="icon">📍</span> {{ ev.ubicacion || 'Las Cigarreras' }}</p>
+              
+              <div class="action" *ngIf="ev.url_entradas">
+                <a [href]="ev.url_entradas" target="_blank" class="btn-primary">Entradas</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ARCHIVO / PASADOS -->
+      <div class="timeline-section secondary" *ngIf="pasados.length > 0">
+        <h2 class="section-title">Archivo Temporada</h2>
+        
+        <div class="dates-grid">
+          <div class="date-card past-card" *ngFor="let ev of pasados">
+            <div class="card-media">
+              <img [src]="ev.url_foto || 'assets/hero-bg.jpg'" [alt]="ev.nombre" class="card-img">
+            </div>
+            
+            <div class="card-body">
+              <div class="date-badge">
+                <span class="day">{{ ev.fecha | date:'dd' }}</span>
+                <span class="month">{{ ev.fecha | date:'MMM' }}</span>
+              </div>
+              <h3>{{ ev.nombre }}</h3>
+              <p class="location"><span class="icon">📍</span> {{ ev.ubicacion || 'Las Cigarreras' }}</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Vacío -->
+    <div *ngIf="!loading && proximos.length === 0 && pasados.length === 0" class="status-msg">
+      <p>Aún no hay fechas programadas para la temporada.</p>
+    </div>
+
+  </div>
+</div>

@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
 
 // Landing
 import { LandingComponent } from './features/landing/landing/landing.component';
-import { HistoriaComponent } from './features/landing/historia/historia.component';
+import { CalendarComponent } from './features/landing/calendar/calendar.component';
 import { CanteraComponent } from './features/landing/cantera/cantera.component';
 import { NormasComponent } from './features/landing/normas/normas.component';
 
@@ -18,7 +18,7 @@ import { HeroEventComponent } from './features/landing/landing/components/hero-e
 import { HeroSeasonComponent } from './features/landing/landing/components/hero-season/hero-season.component';
 import { UpcomingSliderComponent } from './features/landing/landing/components/upcoming-slider/upcoming-slider.component';
 import { ParticipantsGridComponent } from './features/landing/landing/components/participants-grid/participants-grid.component';
-import { SecondaryEventsComponent } from './features/landing/landing/components/secondary-events/secondary-events.component';
+import { UpcomingDatesComponent } from './features/landing/landing/components/upcoming-dates/upcoming-dates.component';
 
 // Auth
 import { LoginComponent } from './features/auth/login/login.component';
@@ -61,7 +61,7 @@ registerLocaleData(localeEs, 'es');
   declarations: [
     AppComponent,
     LandingComponent,
-    HistoriaComponent,
+    CalendarComponent,
     CanteraComponent,
     NormasComponent,
     LoginComponent,
@@ -81,7 +81,7 @@ registerLocaleData(localeEs, 'es');
     HeroSeasonComponent,
     UpcomingSliderComponent,
     ParticipantsGridComponent,
-    SecondaryEventsComponent,
+    UpcomingDatesComponent,
     AdminHeaderComponent,
     AdminTabsComponent,
     EventBasicInfoComponent,

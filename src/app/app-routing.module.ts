@@ -5,7 +5,7 @@ import { GuestGuard } from './core/guards/guest.guard';
 
 // Componentes
 import { LandingComponent } from './features/landing/landing/landing.component';
-import { HistoriaComponent } from './features/landing/historia/historia.component';
+import { CalendarComponent } from './features/landing/calendar/calendar.component';
 import { CanteraComponent } from './features/landing/cantera/cantera.component';
 import { NormasComponent } from './features/landing/normas/normas.component';
 import { LoginComponent } from './features/auth/login/login.component';
@@ -48,7 +48,7 @@ const routes: Routes = [
   },
   {
     path: 'calendario',
-    component: HistoriaComponent,
+    component: CalendarComponent,
     data: {
       seo: {
         title: 'Calendario de Eventos',
