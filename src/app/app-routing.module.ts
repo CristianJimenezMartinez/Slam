@@ -14,6 +14,7 @@ import { ForgotPasswordComponent } from './features/auth/forgot-password/forgot-
 import { EventListComponent } from './features/admin/event-list/event-list.component';
 import { EventDetailComponent } from './features/admin/event-detail/event-detail.component';
 import { VotarComponent } from './features/votar/votar.component';
+import { PuntuacionesComponent } from './features/puntuaciones/puntuaciones.component';
 import { ResultadosComponent } from './features/resultados/resultados.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { CronogramaListComponent } from './features/admin/cronograma-list/cronograma-list.component';
@@ -82,6 +83,17 @@ const routes: Routes = [
       seo: {
         title: 'Votar en el Slam',
         description: 'Participa como jurado en el próximo Slam. Tu voto decide quién gana el encuentro.'
+      }
+    }
+  },
+  {
+    path: 'puntuaciones',
+    component: PuntuacionesComponent,
+    data: {
+      seo: {
+        title: 'Puntuaciones - Directo',
+        description: 'Puntuaciones en directo del Poetry Slam Alicante.',
+        robots: 'noindex, nofollow'
       }
     }
   },

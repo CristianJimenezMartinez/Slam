@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, NgZone } from '@angular/core';
 import { EventosService, Evento } from '../../core/services/eventos.service';
 import { VotacionesService, Resultado } from '../../core/services/votaciones.service';
 import { SeoService } from '../../core/services/seo.service';
@@ -18,7 +18,8 @@ export class ResultadosComponent implements OnInit, OnDestroy {
   constructor(
     private eventosService: EventosService,
     private votacionesService: VotacionesService,
-    private seo: SeoService
+    private seo: SeoService,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit(): void {
@@ -70,7 +71,9 @@ export class ResultadosComponent implements OnInit, OnDestroy {
     // Solo escuchamos en tiempo real si el evento es "reciente" o tiene votación abierta
     if (this.evento.votacion_activa) {
       this.channelSub = this.votacionesService.listenToVotaciones(this.evento.id, () => {
-        this.refreshResults();
+        this.ngZone.run(() => {
+          this.refreshResults();
+        });
       });
     }
 

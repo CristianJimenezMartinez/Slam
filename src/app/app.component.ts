@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from './core/services/auth.service';
@@ -11,9 +11,13 @@ import { ThemeService } from './core/services/theme.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'slam';
   isMenuOpen = false;
+  mostrarMenuVotar = false;
+  mostrarMenuPuntuaciones = false;
+  eventoId: string | null = null;
+  private eventoActivoSub: any;
 
   constructor(
     public auth: AuthService,
@@ -21,25 +25,20 @@ export class AppComponent implements OnInit {
     private route: ActivatedRoute,
     private seo: SeoService,
     private eventosService: EventosService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-      // Limpia JSON-LD dinámico de la página anterior
       this.seo.clearJsonLd();
-
-      // Busca la ruta más profunda (hija) para obtener su data
       let currentRoute = this.route;
       while (currentRoute.firstChild) {
         currentRoute = currentRoute.firstChild;
       }
-
       const data = currentRoute.snapshot.data;
-
-      // Si la ruta tiene datos SEO estáticos, los aplica
       if (data['seo']) {
         this.seo.setPage({
           title: data['seo'].title,
@@ -50,12 +49,39 @@ export class AppComponent implements OnInit {
       }
     });
 
-    // Suscripción al tema inteligente (Temporada vs Evento)
     this.themeService.theme$.subscribe(theme => {
       if (theme) {
         this.applyTheme(theme);
       }
     });
+
+    this.checkVotacionActiva();
+
+    this.eventoActivoSub = this.eventosService.listenToAllEventosChanges((payload: any) => {
+      this.ngZone.run(() => {
+        this.checkVotacionActiva();
+      });
+    });
+  }
+
+  checkVotacionActiva() {
+    this.eventosService.getEventoActivo().subscribe(evento => {
+      if (evento) {
+        this.eventoId = evento.id;
+        this.mostrarMenuVotar = !!evento.votacion_activa;
+        this.mostrarMenuPuntuaciones = !!evento.puntuaciones_activas;
+      } else {
+        this.eventoId = null;
+        this.mostrarMenuVotar = false;
+        this.mostrarMenuPuntuaciones = false;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.eventoActivoSub) {
+      this.eventoActivoSub.unsubscribe();
+    }
   }
 
   private applyTheme(theme: any) {

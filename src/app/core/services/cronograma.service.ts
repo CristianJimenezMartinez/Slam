@@ -52,4 +52,16 @@ export class CronogramaService {
   async deleteCronograma(id: string) {
     return this.supa.client.from('cronograma').delete().eq('id', id);
   }
+
+  listenToCronogramaChanges(callback: (payload: any) => void) {
+    const channelName = `cronograma_${Math.random().toString(36).substring(7)}`;
+    return this.supa.client
+      .channel(channelName)
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'cronograma' },
+        callback
+      )
+      .subscribe();
+  }
 }

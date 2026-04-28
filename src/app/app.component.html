@@ -12,7 +12,8 @@
     <a routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" (click)="closeMenu()">Inicio</a>
     <a routerLink="/calendario" routerLinkActive="active" (click)="closeMenu()">Calendario</a>
     <a routerLink="/cantera" routerLinkActive="active" (click)="closeMenu()">Cantera</a>
-    <a routerLink="/votar" routerLinkActive="active" (click)="closeMenu()">Votar</a>
+    <a *ngIf="mostrarMenuVotar" routerLink="/votar" routerLinkActive="active" (click)="closeMenu()">Votar</a>
+    <a *ngIf="mostrarMenuPuntuaciones" routerLink="/puntuaciones" routerLinkActive="active" (click)="closeMenu()">Puntuaciones</a>
     <a routerLink="/admin" routerLinkActive="active" (click)="closeMenu()" class="desktop-only">Login</a>
     <a *ngIf="auth.session$ | async" (click)="logout()" class="btn-logout desktop-only">Salir</a>
   </nav>

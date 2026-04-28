@@ -1,6 +1,6 @@
 <div class="votar-container">
   
-  <header class="page-header">
+  <header class="page-header" *ngIf="evento && !poetaActivo">
     <h1>Voto del Público</h1>
     <p>gozo poético, diversión poética</p>
   </header>
@@ -9,9 +9,9 @@
     <span>⚠️</span> {{ error }}
   </div>
 
-  <div class="state-content" *ngIf="!submitted; else success">
+  <div class="state-content">
     <!-- Cargando -->
-    <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+    <app-loading-spinner *ngIf="loading && !evento"></app-loading-spinner>
     
     <!-- No hay evento -->
     <div class="status-box" *ngIf="!loading && !evento">
@@ -21,51 +21,70 @@
       <button routerLink="/" class="btn-primary">Volver a la Portada</button>
     </div>
 
-    <!-- Evento bloqueado (Votación cerrada) -->
+    <!-- Evento existe, pero votaciones cerradas -->
     <div class="status-box locked" *ngIf="!loading && evento && !evento.votacion_activa">
       <div class="empty-icon">⏳</div>
       <h2 class="purple-glow">{{ evento.nombre }}</h2>
-      <p>Votaciones cerradas</p>
-      <button routerLink="/" class="btn-primary">Volver a la Portada</button>
+      <p>Votaciones cerradas. Gracias por participar.</p>
+      <button routerLink="/" class="btn-primary" style="margin-top: 2rem;">Volver a la Portada</button>
     </div>
 
-    <!-- Formulario de votación -->
-    <div class="voting-form-body" *ngIf="evento && evento.votacion_activa && !loading">
-      <div class="event-info-bar">
-        <h3>{{ evento.nombre }}</h3>
-        <p class="event-credits">Dirigido y coordinado por Ágora Reix / Poetry Slam Alicante</p>
-        <span>Puntúa del 1 al 10</span>
+    <!-- Votación activa, pero sin poeta seleccionado (Esperando) -->
+    <div class="status-box waiting" *ngIf="!loading && evento && evento.votacion_activa && !poetaActivo">
+      <div class="pulse-ring">
+        <div class="icon">🎙️</div>
+      </div>
+      <h2>Esperando al poeta...</h2>
+      <p>Escucha con atención. Pronto podrás votar.</p>
+    </div>
+
+    <!-- Poeta Activo y NO Votado -->
+    <div class="voting-form-body active-poet" *ngIf="!loading && evento && evento.votacion_activa && poetaActivo && !yaVotadoAlPoetaActivo">
+      
+      <div class="poet-card">
+        <div class="poet-header">
+          <h3>Votando a:</h3>
+          <h2 class="poet-name pulse-text">{{ poetaActivo.nombre }}</h2>
+        </div>
+
+        <form [formGroup]="voteForm" (ngSubmit)="onSubmit()">
+          
+          <div class="scale-legend">
+            <span class="low">Baja</span>
+            <span class="mid">Media</span>
+            <span class="high">Alta</span>
+          </div>
+
+          <div class="word-selector">
+            <button type="button" 
+                    class="word-btn" 
+                    *ngFor="let op of opcionesVoto"
+                    [class.selected]="puntuacion.value === op.valor"
+                    (click)="puntuacion.setValue(op.valor)">
+              {{ op.texto }}
+            </button>
+          </div>
+
+          <div class="form-footer">
+            <button type="submit" class="btn-primary giant-btn" [disabled]="loading || voteForm.invalid || !puntuacion.value">
+              {{ loading ? 'Enviando...' : '¡Enviar mi Voto!' }}
+            </button>
+          </div>
+        </form>
       </div>
 
-      <form [formGroup]="voteForm" (ngSubmit)="onSubmit()">
-        <div class="participant-vote-list" formArrayName="puntuaciones">
-          <div class="vote-item" *ngFor="let p of participantes; let i=index">
-            <div class="p-info">
-              <span class="p-order">{{ p.id }}</span>
-              <span class="p-name">{{ p.nombre }}</span>
-            </div>
-            <div class="score-selector">
-              <input type="range" min="1" max="10" step="1" [formControlName]="i" />
-              <span class="current-score">{{ puntuaciones.at(i).value }}</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-footer">
-          <button type="submit" class="btn-primary" [disabled]="loading || voteForm.invalid">
-            {{ loading ? 'Enviando...' : 'Enviar Mis Votos' }}
-          </button>
-        </div>
-      </form>
     </div>
+
+    <!-- Poeta Activo pero YA Votado -->
+    <div class="status-box success" *ngIf="!loading && evento && evento.votacion_activa && poetaActivo && yaVotadoAlPoetaActivo">
+      <div class="icon bounce">✨</div>
+      <h1>¡Voto guardado para {{ poetaActivo.nombre }}!</h1>
+      <p>Tu puntuación ya ha sido enviada al jurado.</p>
+      <div class="wait-next">
+        <div class="spinner-small"></div>
+        <span>Esperando al siguiente poeta...</span>
+      </div>
+    </div>
+
   </div>
 </div>
-
-<ng-template #success>
-  <div class="status-box success">
-    <div class="icon">✨</div>
-    <h1>¡Voto guardado!</h1>
-    <p>Gracias por participar en el Slam.</p>
-    <button routerLink="/resultados" class="btn-primary">Ver Resultados</button>
-  </div>
-</ng-template>

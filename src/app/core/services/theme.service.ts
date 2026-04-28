@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
+import { map, filter, switchMap, startWith } from 'rxjs/operators';
 import { EventosService, Evento } from './eventos.service';
 import { CronogramaService, Cronograma } from './cronograma.service';
 import { Router, NavigationEnd } from '@angular/router';
@@ -20,6 +20,8 @@ export interface ThemeColors {
 export class ThemeService {
   private themeSubject = new BehaviorSubject<ThemeColors | null>(null);
   theme$ = this.themeSubject.asObservable();
+  
+  private refreshSubject = new BehaviorSubject<void>(undefined);
 
   constructor(
     private eventosService: EventosService,
@@ -31,11 +33,16 @@ export class ThemeService {
 
   private initThemeLogic() {
     combineLatest([
-      this.eventosService.getEventoActivo(),
-      this.cronogramaService.getCronograma(),
+      this.refreshSubject.pipe(
+        switchMap(() => this.eventosService.getEventoActivo())
+      ),
+      this.refreshSubject.pipe(
+        switchMap(() => this.cronogramaService.getCronograma())
+      ),
       this.router.events.pipe(
         filter(event => event instanceof NavigationEnd),
-        map(() => this.router.url)
+        map(() => this.router.url),
+        startWith(this.router.url)
       )
     ]).subscribe(([evento, cronogramaRes, currentUrl]) => {
       const cronograma = (cronogramaRes.data as Cronograma[]) || [];
@@ -45,19 +52,20 @@ export class ThemeService {
       this.themeSubject.next(theme);
     });
 
-    // Forzar emisión inicial si ya estamos en una ruta
-    this.eventosService.getEventoActivo().subscribe(evento => {
-      this.cronogramaService.getCronograma().subscribe(res => {
-        const c = res.data as Cronograma[];
-        const s = c && c.length > 0 ? c[0] : null;
-        this.themeSubject.next(this.calculateActiveTheme(evento, s, this.router.url));
-      });
+    // Suscribirse en tiempo real a cambios en Eventos
+    this.eventosService.listenToAllEventosChanges(() => {
+      this.refreshSubject.next();
+    });
+
+    // Suscribirse en tiempo real a cambios en Cronograma
+    this.cronogramaService.listenToCronogramaChanges(() => {
+      this.refreshSubject.next();
     });
   }
 
   private calculateActiveTheme(evento: Evento | null, season: Cronograma | null, url: string): ThemeColors {
     let isInminent = false;
-    const isEventSpecificPage = url.includes('/votar') || url.includes('/resultados');
+    const isEventSpecificPage = url.includes('/votar') || url.includes('/resultados') || url.includes('/puntuaciones');
 
     if (evento) {
       const fechaEvento = new Date(evento.fecha);

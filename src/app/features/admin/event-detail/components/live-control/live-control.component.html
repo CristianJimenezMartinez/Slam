@@ -1,0 +1,69 @@
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+<div class="live-control-panel" *ngIf="!loading && evento && participantes.length > 0">
+  <div class="panel-header">
+    <h3>🔴 En Directo: {{ evento.nombre }}</h3>
+    <div class="header-actions">
+      <button class="btn-projector" (click)="togglePuntuaciones()" [style.background]="mostrarPuntuaciones ? '#ff4d4f' : '#92d342'" style="color: #111; font-weight: bold;">
+        📊 {{ mostrarPuntuaciones ? 'Ocultar' : 'Publicar' }} Puntuaciones
+      </button>
+      <a class="btn-projector" routerLink="/puntuaciones" target="_blank" style="background: #222; color: #fff; border: 1px solid #444; text-decoration: none; display: flex; align-items: center; justify-content: center;">
+        🖥️ Ver Puntuaciones
+      </a>
+      <button class="btn-danger" (click)="cerrarVotaciones()" *ngIf="activoId">
+        Cerrar Votos Poeta
+      </button>
+      <button class="btn-danger" style="background: #ff4d4f; color: white;" (click)="solicitarFinalizarVotaciones()">
+        🔒 Finalizar Votaciones
+      </button>
+    </div>
+  </div>
+
+  <!-- Popup / Modal de Confirmación Premium -->
+  <app-modal *ngIf="isConfirmModalOpen" title="Finalizar Votaciones" (close)="isConfirmModalOpen = false">
+    <div class="modal-confirm-content" style="color: #eee; text-align: center; padding: 1rem;">
+      <p style="font-size: 1.2rem; margin-bottom: 2rem; line-height: 1.6;">
+        ¿Estás seguro de que deseas finalizar definitivamente las votaciones de este evento?
+        <br><br>
+        <span style="color: #ff4d4f; font-weight: bold;">Se ocultará el acceso al público.</span>
+      </p>
+      
+      <div style="display: flex; justify-content: center; gap: 1.5rem;">
+        <button (click)="confirmarFinalizarVotaciones()" style="background: #ff4d4f; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; font-family: 'Bebas Neue', cursive; font-size: 1.3rem; letter-spacing: 1px; cursor: pointer; transition: opacity 0.2s;">
+          Sí, Finalizar
+        </button>
+        <button (click)="isConfirmModalOpen = false" style="background: #333; color: white; border: 1px solid #555; padding: 0.8rem 1.5rem; border-radius: 8px; font-family: 'Bebas Neue', cursive; font-size: 1.3rem; letter-spacing: 1px; cursor: pointer; transition: background 0.2s;">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </app-modal>
+
+  <div class="poet-list">
+    <div class="poet-row" 
+         *ngFor="let p of participantes" 
+         [class.active]="activoId === p.id">
+      
+      <div class="poet-info">
+        <div class="status-indicator"></div>
+        <span class="poet-name">{{ p.nombre }}</span>
+      </div>
+
+      <div class="poet-actions">
+        <button class="btn-live" 
+                *ngIf="activoId !== p.id" 
+                (click)="abrirVotacion(p.id!)">
+          Abrir Votación
+        </button>
+        <span class="badge-active" *ngIf="activoId === p.id">VOTACIÓN ABIERTA</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="empty-state" *ngIf="!loading && (!evento || !participantes.length)">
+  <div style="text-align: center; padding: 3rem;">
+    <h2 style="color: #666; margin-bottom: 1rem;">Ningún evento en directo</h2>
+    <p>Para ver el panel de control de directo, ve a la pestaña <b>Eventos</b> y haz clic en <b>"Abrir Votos"</b> en el evento correspondiente.</p>
+  </div>
+</div>

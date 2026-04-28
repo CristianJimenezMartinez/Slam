@@ -1,103 +1,278 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  width: 100%;
+  padding: 1rem;
+}
+
 .votar-container {
-  max-width: 800px;
-  margin: 2rem auto;
+  width: 100%;
+  max-width: 1200px;
   padding: 3rem 2rem;
   background: var(--bg);
-  border: 1px solid rgba(var(--text-rgb, 255, 255, 255), 0.1);
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border: 1px solid rgba(var(--primary-rgb), 0.2);
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
   position: relative;
-  background-image: radial-gradient(circle at top right, rgba(var(--primary-rgb), 0.05) 0%, transparent 50%);
+  overflow: hidden;
+
+  // Fondo sutil con el color primario
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(var(--primary-rgb), 0.1) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 
   .page-header {
     text-align: center;
-    margin-bottom: 3rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #222;
+    margin-bottom: 2rem;
     
-    h1 { font-family: 'Bebas Neue', cursive; font-size: 4rem; color: var(--primary); margin-bottom: 0.5rem; line-height: 1; }
+    h1 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; color: var(--primary); margin-bottom: 0.5rem; line-height: 1; }
     p { color: #888; font-size: 1.1rem; }
   }
 
   .status-box {
     text-align: center;
-    padding: 2rem 0;
-    
-    
+    padding: 3rem 1rem;
     
     .empty-icon, .icon { font-size: 5rem; margin-bottom: 1.5rem; line-height: 1; }
     h2 { font-family: 'Bebas Neue', cursive; font-size: 3rem; margin-bottom: 1rem; color: var(--off-white); }
-    .purple-glow { color: var(--neon-purple); text-shadow: 0 0 10px rgba(146, 66, 211, 0.3); }
-    p { font-size: 1.1rem; margin-bottom: 1.5rem; color: #aaa; }
-    .hint { font-size: 0.9rem; color: #666; font-style: italic; }
+    .purple-glow { color: var(--primary); text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.5); }
+    p { font-size: 1.2rem; margin-bottom: 1.5rem; color: #aaa; }
     
+    &.waiting {
+      .pulse-ring {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        .icon {
+          margin: 0;
+          font-size: 4rem;
+          z-index: 2;
+        }
+
+        &::before, &::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          border: 2px solid var(--primary);
+          animation: pulse-ring 2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        &::after {
+          animation-delay: 1s;
+        }
+      }
+    }
+
     &.success {
-      h1 { color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 4rem; margin-bottom: 1rem; }
-      p { font-size: 1.3rem; margin-bottom: 2rem; }
+      h1 { color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 3.5rem; margin-bottom: 1rem; text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.4); }
+      p { font-size: 1.3rem; margin-bottom: 3rem; color: var(--off-white); }
+
+      .bounce { animation: bounce 2s infinite ease-in-out; }
+
+      .wait-next {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        color: #888;
+
+        .spinner-small {
+          width: 30px;
+          height: 30px;
+          border: 3px solid rgba(255,255,255,0.1);
+          border-top-color: var(--primary);
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+      }
     }
-  }
 
-  .event-info-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--card-bg);
-    padding: 1rem 1.5rem;
-    border-radius: 4px;
-    margin-bottom: 2rem;
-    border-left: 4px solid var(--primary);
-    
-    h3 { font-family: 'Bebas Neue', cursive; font-size: 1.8rem; color: var(--primary); margin: 0; }
-    span { color: #666; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-  }
-
-  .vote-item {
-    background: var(--card-bg);
-    padding: 1rem 1.5rem;
-    margin-bottom: 0.8rem;
-    border-radius: 4px;
-    border: 1px solid rgba(var(--text-rgb, 255, 255, 255), 0.1);
-    transition: all 0.3s;
-    
-    &:hover { border-color: var(--primary); background: rgba(var(--primary-rgb), 0.05); transform: translateX(5px); }
-
-    .p-info {
+    .results-ranking {
       display: flex;
-      align-items: baseline;
+      flex-direction: column;
       gap: 1rem;
-      margin-bottom: 0.8rem;
-      
-      .p-order { font-family: 'Bebas Neue', cursive; font-size: 1.6rem; color: var(--primary); opacity: 0.7; }
-      .p-name { font-family: 'Bebas Neue', cursive; font-size: 1.5rem; letter-spacing: 1px; color: var(--off-white); }
-    }
-    
-    .score-selector {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      
-      input[type="range"] {
-        flex: 1;
-        accent-color: var(--primary);
-        height: 6px;
-        cursor: pointer;
-      }
-      
-      .current-score {
-        font-family: 'Bebas Neue', cursive;
-        font-size: 1.8rem;
-        color: var(--primary);
-        min-width: 40px;
-        text-align: center;
-        text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+      margin: 2rem auto;
+      max-width: 600px;
+      width: 100%;
+
+      .ranking-card {
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 1rem;
+        gap: 1.5rem;
+        border: 1px solid rgba(var(--primary-rgb), 0.1);
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.08);
+          border-color: rgba(var(--primary-rgb), 0.3);
+        }
+
+        .ranking-position {
+          font-family: 'Bebas Neue', cursive;
+          font-size: 2.5rem;
+          color: var(--primary);
+          min-width: 40px;
+          text-align: center;
+        }
+
+        .ranking-details {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          text-align: left;
+
+          .poet-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--off-white);
+          }
+
+          .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+
+            .progress-bar-fill {
+              height: 100%;
+              background: var(--primary);
+              border-radius: 4px;
+              box-shadow: 0 0 10px rgba(var(--primary-rgb), 0.5);
+            }
+          }
+        }
+
+        .ranking-score {
+          font-family: 'Bebas Neue', cursive;
+          font-size: 2rem;
+          color: var(--off-white);
+        }
       }
     }
   }
 
-  .form-footer {
-    margin-top: 3rem;
+  .poet-card {
     text-align: center;
-    .btn-primary { width: 100%; max-width: 400px; font-size: 1.8rem; padding: 1.2rem; }
+
+    .poet-header {
+      margin-bottom: 3rem;
+
+      h3 { color: #888; text-transform: uppercase; letter-spacing: 2px; font-size: 1rem; margin-bottom: 0.5rem; }
+      .poet-name { 
+        font-family: 'Bebas Neue', cursive; 
+        font-size: 4.5rem; 
+        color: var(--off-white);
+        margin: 0;
+        line-height: 1;
+        text-shadow: 0 0 20px rgba(var(--primary-rgb), 0.3);
+      }
+    }
+
+    .scale-legend {
+      display: flex;
+      justify-content: space-between;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+      padding: 0 1rem;
+      
+      .low { text-align: left; }
+      .mid { text-align: center; }
+      .high { text-align: right; }
+    }
+
+    .word-selector {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2.5rem 0;
+
+      .word-btn {
+        flex: 1;
+        min-width: 120px;
+        padding: 0.6rem 0.8rem;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--off-white);
+        border: 2px solid transparent;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+        &:hover {
+          background: rgba(var(--primary-rgb), 0.1);
+          transform: translateY(-2px);
+        }
+
+        &.selected {
+          background: var(--primary);
+          color: var(--primary-contrast);
+          border-color: var(--primary);
+          box-shadow: 0 0 25px rgba(var(--primary-rgb), 0.5);
+          transform: scale(1.05);
+        }
+      }
+    }
+
+    .form-footer {
+      .giant-btn {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+        padding: 1rem;
+        font-size: 1.3rem;
+        border-radius: 8px;
+        background: var(--primary);
+        color: var(--primary-contrast);
+        box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.4);
+        transition: all 0.2s;
+
+        &:hover:not(:disabled) {
+          transform: translateY(-3px);
+          box-shadow: 0 0 30px rgba(var(--primary-rgb), 0.6);
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    }
   }
 
   .error-banner {
@@ -107,17 +282,43 @@
     margin-bottom: 2rem;
     text-align: center;
     border: 1px solid #ff4444;
-    border-radius: 4px;
+    border-radius: 8px;
   }
 }
 
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
 
 @media (max-width: 768px) {
+  :host {
+    padding: 0.5rem;
+  }
   .votar-container {
-    margin: 1rem;
     padding: 2rem 1rem;
     
-    .page-header h1 { font-size: 3rem; }
-    .event-info-bar { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .poet-card {
+      .poet-header .poet-name { font-size: 3.5rem; }
+      .scale-legend { font-size: 0.6rem; margin-top: 1rem; }
+      .word-selector {
+        gap: 0.3rem;
+        .word-btn { 
+          font-size: 0.65rem; 
+          padding: 0.6rem 0.2rem; 
+          min-width: 0; 
+          letter-spacing: 0px;
+        }
+      }
+    }
   }
 }

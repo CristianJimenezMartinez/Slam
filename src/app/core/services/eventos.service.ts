@@ -23,6 +23,8 @@ export interface Evento {
   pin_sesion?: string;
   registro_pin_abierto?: boolean;
   votos_totales_registrados?: number;
+  participante_activo_id?: string;
+  puntuaciones_activas?: boolean;
 }
 
 @Injectable({
@@ -84,6 +86,38 @@ export class EventosService {
 
   async toggleVotacion(id: string, estado: boolean) {
     return this.supa.client.from('eventos').update({ votacion_activa: estado }).eq('id', id);
+  }
+
+  async setParticipanteActivo(eventoId: string, participanteId: string | null) {
+    return this.supa.client.from('eventos').update({ participante_activo_id: participanteId }).eq('id', eventoId);
+  }
+
+  async togglePuntuacionesVisibles(id: string, estado: boolean) {
+    return this.supa.client.from('eventos').update({ puntuaciones_activas: estado }).eq('id', id);
+  }
+
+  listenToEventoChanges(eventoId: string, callback: (payload: any) => void) {
+    const channelName = `evento_${eventoId}_${Math.random().toString(36).substring(7)}`;
+    return this.supa.client
+      .channel(channelName)
+      .on(
+        'postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'eventos', filter: `id=eq.${eventoId}` },
+        callback
+      )
+      .subscribe();
+  }
+
+  listenToAllEventosChanges(callback: (payload: any) => void) {
+    const channelName = `all_eventos_${Math.random().toString(36).substring(7)}`;
+    return this.supa.client
+      .channel(channelName)
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'eventos' },
+        callback
+      )
+      .subscribe();
   }
 
   async uploadCartel(file: File): Promise<string | null> {

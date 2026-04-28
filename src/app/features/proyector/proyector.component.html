@@ -1,0 +1,42 @@
+<div class="proyector-container">
+  
+  <!-- Cargando -->
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+  <div class="content" *ngIf="!loading && evento">
+    
+    <!-- Modo Activo: Mostrar Puntuaciones -->
+    <div class="live-ranking" *ngIf="mostrarResultados">
+      <header class="proyector-header">
+        <h1 class="glow-text">{{ evento.nombre }}</h1>
+        <p class="subtitle">Puntuaciones en Tiempo Real</p>
+      </header>
+
+      <div class="ranking-list">
+        <div class="ranking-item" *ngFor="let res of resultados; let i = index">
+          <div class="position">#{{ i + 1 }}</div>
+          <div class="details">
+            <span class="poet-name">{{ res.participante }}</span>
+            <div class="bar-container">
+              <div class="bar-fill" [style.width]="(res.puntuacion_media * 10) + '%'"></div>
+            </div>
+          </div>
+          <div class="score">{{ res.puntuacion_media | number:'1.2-2' }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modo Oculto: Votaciones Cerradas -->
+    <div class="standby-screen" *ngIf="!mostrarResultados">
+      <div class="logo-placeholder">🎙️</div>
+      <h2 class="glow-text">Poetry Slam Alicante</h2>
+      <p>Votaciones pausadas o finalizadas.</p>
+    </div>
+
+  </div>
+
+  <div class="no-event" *ngIf="!loading && !evento">
+    <h2>No hay ningún evento activo en directo.</h2>
+  </div>
+
+</div>

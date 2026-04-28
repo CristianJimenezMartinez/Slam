@@ -34,7 +34,9 @@
           {{ evento.votacion_activa ? 'Cerrar Votos' : 'Abrir Votos' }}
         </button>
         <div style="display: flex; gap: 5px; margin-top: 5px;">
-          <button (click)="edit.emit(evento)" style="flex: 1; padding: 5px; font-size: 0.9rem;">Editar</button>
+          <button (click)="evento.votacion_activa ? controlLive.emit() : edit.emit(evento)" style="flex: 1; padding: 5px; font-size: 0.9rem;" [ngClass]="{'btn-primary-glow': evento.votacion_activa}">
+            {{ evento.votacion_activa ? '🔴 Controlar Directo' : 'Editar' }}
+          </button>
           <button class="btn-danger" (click)="deleteEvento(evento.id)" style="flex: 1; padding: 5px; font-size: 0.9rem;">Eliminar</button>
         </div>
       </ng-container>

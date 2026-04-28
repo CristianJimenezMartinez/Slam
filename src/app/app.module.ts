@@ -40,9 +40,11 @@ import { EventBasicInfoComponent } from './features/admin/event-detail/component
 import { EventMediaComponent } from './features/admin/event-detail/components/event-media/event-media.component';
 import { EventThemeComponent } from './features/admin/event-detail/components/event-theme/event-theme.component';
 import { EventParticipantsComponent } from './features/admin/event-detail/components/event-participants/event-participants.component';
+import { LiveControlComponent } from './features/admin/event-detail/components/live-control/live-control.component';
 
 // Votar
 import { VotarComponent } from './features/votar/votar.component';
+import { PuntuacionesComponent } from './features/puntuaciones/puntuaciones.component';
 
 // Otros
 import { ResultadosComponent } from './features/resultados/resultados.component';
@@ -72,6 +74,7 @@ registerLocaleData(localeEs, 'es');
     CronogramaListComponent,
     AdminDashboardComponent,
     VotarComponent,
+    PuntuacionesComponent,
     ResultadosComponent,
     DashboardComponent,
     FooterComponent,
@@ -87,7 +90,8 @@ registerLocaleData(localeEs, 'es');
     EventBasicInfoComponent,
     EventMediaComponent,
     EventThemeComponent,
-    EventParticipantsComponent
+    EventParticipantsComponent,
+    LiveControlComponent
   ],
   imports: [
     BrowserModule,

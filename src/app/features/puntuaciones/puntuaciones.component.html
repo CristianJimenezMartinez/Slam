@@ -1,0 +1,63 @@
+<div class="proyector-container">
+  
+  <!-- Cargando -->
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+  <div class="content" *ngIf="!loading && evento">
+    
+    <!-- Modo Activo: Mostrar Puntuaciones -->
+    <div class="live-ranking" *ngIf="mostrarResultados">
+      <header class="proyector-header">
+        <h1 class="glow-text">{{ evento.nombre }}</h1>
+        <p class="subtitle">Puntuaciones en Tiempo Real</p>
+      </header>
+
+      <!-- Podio / Top 3 -->
+      <div class="podium-section" *ngIf="resultados.length > 0">
+        <div class="podium-item" *ngFor="let res of resultados.slice(0, 3); let i = index" [class]="'rank-' + (i + 1)">
+          <div class="rank-number">#{{ i + 1 }}</div>
+          <div class="avatar" [style.background-image]="'url(' + (res.foto_url || 'assets/default-avatar.jpg') + ')'"></div>
+          <div class="info">
+            <h3>{{ res.participante }}</h3>
+            <div class="points">{{ res.puntuacion_media | number:'1.2-2' }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resto del Ranking -->
+      <div class="ranking-table" *ngIf="resultados.length > 3">
+        <table class="minimal-table">
+          <thead>
+            <tr>
+              <th>Pos.</th>
+              <th>Poeta</th>
+              <th>Votos</th>
+              <th>Media</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let res of resultados.slice(3); let i = index">
+              <td>#{{ i + 4 }}</td>
+              <td>{{ res.participante }}</td>
+              <td>{{ res.num_votos || 0 }}</td>
+              <td class="highlight">{{ res.puntuacion_media | number:'1.2-2' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Modo Oculto: Votaciones Cerradas -->
+    <div class="standby-screen" *ngIf="!mostrarResultados">
+      <div class="logo-placeholder">🎙️</div>
+      <h2 class="glow-text">Poetry Slam Alicante</h2>
+      <p>Votaciones pausadas o finalizadas.</p>
+    </div>
+
+  </div>
+
+  <div class="no-event" *ngIf="!loading && !evento">
+    <h2>No hay ningún evento activo en directo.</h2>
+  </div>
+
+</div>

@@ -14,15 +14,12 @@
     <main class="dashboard-content">
       <!-- VISTA EN VIVO (FASE 4) -->
       <section *ngIf="activeTab === 'live'" class="tab-view fade-in">
-        <div class="placeholder-view">
-          <h2>Próximamente: Control de Votación en Vivo</h2>
-          <p>Aquí podrás gestionar el PIN, el sellado de la audiencia y activar poetas uno a uno.</p>
-        </div>
+        <app-live-control></app-live-control>
       </section>
 
       <!-- VISTA DE EVENTOS (PROXIMOS Y ANTERIORES) -->
       <section *ngIf="activeTab === 'eventos' || activeTab === 'anteriores'" class="tab-view fade-in">
-        <app-event-list #eventList [mode]="listMode" (edit)="openModal($event)"></app-event-list>
+        <app-event-list #eventList [mode]="listMode" (edit)="openModal($event)" (controlLive)="setTab('live')"></app-event-list>
       </section>
 
       <!-- VISTA DE TEMPORADA -->

@@ -20,6 +20,7 @@ export class EventListComponent implements OnInit {
   private _isInitialized = false;
 
   @Output() edit = new EventEmitter<Evento>();
+  @Output() controlLive = new EventEmitter<void>();
   eventos$: Observable<any> = new Observable();
   loading = false;
 
