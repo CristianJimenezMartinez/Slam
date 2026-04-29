@@ -1,41 +1,43 @@
-<div class="votar-container">
-  
-  <header class="page-header" *ngIf="evento && !poetaActivo">
-    <h1>Voto del Público</h1>
-    <p>gozo poético, diversión poética</p>
-  </header>
-
-  <div class="error-banner" *ngIf="error">
-    <span>⚠️</span> {{ error }}
-  </div>
-
-  <div class="state-content">
-    <!-- Cargando -->
-    <app-loading-spinner *ngIf="loading && !evento"></app-loading-spinner>
+<div class="votar-wrapper">
+  <div class="votar-container" [ngClass]="{'compact-view': accesoBloqueado || !evento || !evento.votacion_activa || !poetaActivo || yaVotadoAlPoetaActivo}">
     
-    <!-- Acceso No Autorizado (QR Obligatorio) -->
-    <app-votar-lock *ngIf="!loading && evento && accesoBloqueado" [evento]="evento"></app-votar-lock>
+    <header class="page-header" *ngIf="evento && !poetaActivo && !accesoBloqueado">
+      <h1>Voto del Público</h1>
+      <p>gozo poético, diversión poética</p>
+    </header>
 
-    <!-- Estados pasivos (Standby/Locked/Waiting) -->
-    <app-votar-standby *ngIf="!loading && !accesoBloqueado && (!evento || !evento.votacion_activa || !poetaActivo)" 
-                       [evento]="evento" 
-                       [poetaActivo]="poetaActivo">
-    </app-votar-standby>
+    <div class="error-banner" *ngIf="error">
+      <span>⚠️</span> {{ error }}
+    </div>
 
-    <ng-container *ngIf="!loading && evento && !accesoBloqueado && evento.votacion_activa && poetaActivo">
-      <!-- Poeta Activo y NO Votado -->
-      <app-votar-form *ngIf="!yaVotadoAlPoetaActivo"
-                      [poetaActivo]="poetaActivo"
-                      [voteForm]="voteForm"
-                      [loading]="loading"
-                      [opcionesVoto]="opcionesVoto"
-                      (submitVote)="onSubmit()">
-      </app-votar-form>
+    <div class="state-content">
+      <!-- Cargando -->
+      <app-loading-spinner *ngIf="loading && !evento"></app-loading-spinner>
+      
+      <!-- Acceso No Autorizado (QR Obligatorio) -->
+      <app-votar-lock *ngIf="!loading && evento && accesoBloqueado" [evento]="evento"></app-votar-lock>
 
-      <!-- Poeta Activo pero YA Votado -->
-      <app-votar-success *ngIf="yaVotadoAlPoetaActivo"
+      <!-- Estados pasivos (Standby/Locked/Waiting) -->
+      <app-votar-standby *ngIf="!loading && !accesoBloqueado && (!evento || !evento.votacion_activa || !poetaActivo)" 
+                         [evento]="evento" 
                          [poetaActivo]="poetaActivo">
-      </app-votar-success>
-    </ng-container>
+      </app-votar-standby>
+
+      <ng-container *ngIf="!loading && evento && !accesoBloqueado && evento.votacion_activa && poetaActivo">
+        <!-- Poeta Activo y NO Votado -->
+        <app-votar-form *ngIf="!yaVotadoAlPoetaActivo"
+                        [poetaActivo]="poetaActivo"
+                        [voteForm]="voteForm"
+                        [loading]="loading"
+                        [opcionesVoto]="opcionesVoto"
+                        (submitVote)="onSubmit()">
+        </app-votar-form>
+
+        <!-- Poeta Activo pero YA Votado -->
+        <app-votar-success *ngIf="yaVotadoAlPoetaActivo"
+                           [poetaActivo]="poetaActivo">
+        </app-votar-success>
+      </ng-container>
+    </div>
   </div>
 </div>
