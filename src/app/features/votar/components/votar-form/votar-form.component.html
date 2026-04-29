@@ -6,25 +6,17 @@
     </div>
 
     <form [formGroup]="voteForm" (ngSubmit)="onSubmit()">
-      
-      <div class="scale-legend">
-        <span class="low">Baja</span>
-        <span class="mid">Media</span>
-        <span class="high">Alta</span>
-      </div>
 
       <div class="word-selector">
-        <button type="button" 
-                class="word-btn" 
-                *ngFor="let op of opcionesVoto"
-                [class.selected]="puntuacion.value === op.valor"
-                (click)="puntuacion.setValue(op.valor)">
+        <button type="button" class="word-btn" *ngFor="let op of opcionesVoto"
+          [class.selected]="puntuacion.value === op.valor" (click)="puntuacion.setValue(op.valor)">
           {{ op.texto }}
         </button>
       </div>
 
       <div class="form-footer">
-        <button type="submit" class="btn-primary giant-btn" [disabled]="loading || voteForm.invalid || !puntuacion.value">
+        <button type="submit" class="btn-primary giant-btn"
+          [disabled]="loading || voteForm.invalid || !puntuacion.value">
           {{ loading ? 'Enviando...' : '¡Enviar mi Voto!' }}
         </button>
       </div>
