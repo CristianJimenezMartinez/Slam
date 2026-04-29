@@ -10,6 +10,9 @@
       <a class="btn-projector" routerLink="/puntuaciones" target="_blank" style="background: #222; color: #fff; border: 1px solid #444; text-decoration: none; display: flex; align-items: center; justify-content: center;">
         🖥️ Ver Puntuaciones
       </a>
+      <button class="btn-projector" (click)="toggleRegistroQR()" [style.background]="evento.registro_pin_abierto ? '#ff4d4f' : '#92d342'" style="color: #111; font-weight: bold;">
+        📱 {{ evento.registro_pin_abierto ? 'Bloquear' : 'Habilitar' }} Admisión QR
+      </button>
       <button class="btn-danger" (click)="cerrarVotaciones()" *ngIf="activoId">
         Cerrar Votos Poeta
       </button>

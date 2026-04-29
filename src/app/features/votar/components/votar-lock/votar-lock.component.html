@@ -1,0 +1,9 @@
+<div class="status-box unauthorized">
+  <div class="lock-icon">🔒</div>
+  <h2 class="danger-glow">ACCESO RESTRINGIDO</h2>
+  <p>Debes escanear el código QR en la pantalla del proyector para poder votar en este evento.</p>
+  <div class="closed-registration" *ngIf="evento && !evento.registro_pin_abierto">
+    <span class="badge">Admisión Cerrada</span>
+    <p class="small-text">El registro de nuevos votantes ya no está disponible.</p>
+  </div>
+</div>

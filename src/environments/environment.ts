@@ -1,4 +1,4 @@
-// AUTO-GENERATED — do not edit manually (or do it for local dev)
+// AUTO-GENERATED — do not edit manually
 export const environment = {
   production: false,
   supabaseUrl: 'https://wyrzkczhtwvaylgavjaq.supabase.co',

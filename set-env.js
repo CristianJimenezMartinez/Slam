@@ -7,8 +7,8 @@
 const { writeFileSync, mkdirSync } = require('fs');
 const { join } = require('path');
 
-const supabaseUrl = process.env['SUPABASE_URL'] || 'YOUR_SUPABASE_URL';
-const supabaseAnonKey = process.env['SUPABASE_ANON_KEY'] || 'YOUR_SUPABASE_ANON_KEY';
+const supabaseUrl = process.env['SUPABASE_URL'] || 'https://wyrzkczhtwvaylgavjaq.supabase.co';
+const supabaseAnonKey = process.env['SUPABASE_ANON_KEY'] || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind5cnprY3podHd2YXlsZ2F2amFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwMTk3OTAsImV4cCI6MjA4OTU5NTc5MH0.ugGHOT198Zn1Tcucir_Ig_a4Q9OQ5Wy-mK5pLozZIeM';
 const isProd = process.env['NODE_ENV'] === 'production';
 
 const content = `// AUTO-GENERATED — do not edit manually

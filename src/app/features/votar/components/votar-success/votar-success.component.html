@@ -1,0 +1,9 @@
+<div class="status-box success" *ngIf="poetaActivo">
+  <div class="icon bounce">✨</div>
+  <h1>¡Voto guardado para {{ poetaActivo.nombre }}!</h1>
+  <p>Tu puntuación ya ha sido enviada al jurado.</p>
+  <div class="wait-next">
+    <div class="spinner-small"></div>
+    <span>Esperando al siguiente poeta...</span>
+  </div>
+</div>

@@ -14,6 +14,7 @@
     <a routerLink="/cantera" routerLinkActive="active" (click)="closeMenu()">Cantera</a>
     <a *ngIf="mostrarMenuVotar" routerLink="/votar" routerLinkActive="active" (click)="closeMenu()">Votar</a>
     <a *ngIf="mostrarMenuPuntuaciones" routerLink="/puntuaciones" routerLinkActive="active" (click)="closeMenu()">Puntuaciones</a>
+    <a *ngIf="mostrarMenuQr" routerLink="/qr" routerLinkActive="active" (click)="closeMenu()">Código QR</a>
     <a routerLink="/admin" routerLinkActive="active" (click)="closeMenu()" class="desktop-only">Login</a>
     <a *ngIf="auth.session$ | async" (click)="logout()" class="btn-logout desktop-only">Salir</a>
   </nav>

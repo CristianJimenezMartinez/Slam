@@ -45,10 +45,13 @@ export class LiveControlComponent implements OnInit, OnDestroy {
         this.eventoSub = this.eventosService.listenToEventoChanges(this.evento.id, (payload: any) => {
           this.ngZone.run(() => {
             if (payload.new) {
+              this.evento = { ...this.evento, ...payload.new } as Evento;
               if ('participante_activo_id' in payload.new) {
                 this.activoId = payload.new.participante_activo_id || null;
               }
-              // Si le apagan la votacion global
+              if ('puntuaciones_activas' in payload.new) {
+                this.mostrarPuntuaciones = !!payload.new.puntuaciones_activas;
+              }
               if ('votacion_activa' in payload.new && !payload.new.votacion_activa) {
                 this.evento = null;
               }
@@ -84,6 +87,14 @@ export class LiveControlComponent implements OnInit, OnDestroy {
     this.mostrarPuntuaciones = !this.mostrarPuntuaciones;
     const res = await this.eventosService.togglePuntuacionesVisibles(this.evento.id, this.mostrarPuntuaciones);
     if (res.error) console.error('Error togglePuntuaciones:', res.error);
+  }
+
+  async toggleRegistroQR() {
+    if (!this.evento) return;
+    const nuevoEstado = !this.evento.registro_pin_abierto;
+    this.evento.registro_pin_abierto = nuevoEstado; // Optimistic update
+    const res = await this.eventosService.updateEvento(this.evento.id, { registro_pin_abierto: nuevoEstado });
+    if (res.error) console.error('Error toggleRegistroQR:', res.error);
   }
 
   isConfirmModalOpen = false;

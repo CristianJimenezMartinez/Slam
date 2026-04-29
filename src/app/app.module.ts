@@ -44,7 +44,12 @@ import { LiveControlComponent } from './features/admin/event-detail/components/l
 
 // Votar
 import { VotarComponent } from './features/votar/votar.component';
+import { VotarLockComponent } from './features/votar/components/votar-lock/votar-lock.component';
+import { VotarStandbyComponent } from './features/votar/components/votar-standby/votar-standby.component';
+import { VotarFormComponent } from './features/votar/components/votar-form/votar-form.component';
+import { VotarSuccessComponent } from './features/votar/components/votar-success/votar-success.component';
 import { PuntuacionesComponent } from './features/puntuaciones/puntuaciones.component';
+import { QrComponent } from './features/qr/qr.component';
 
 // Otros
 import { ResultadosComponent } from './features/resultados/resultados.component';
@@ -74,7 +79,12 @@ registerLocaleData(localeEs, 'es');
     CronogramaListComponent,
     AdminDashboardComponent,
     VotarComponent,
+    VotarLockComponent,
+    VotarStandbyComponent,
+    VotarFormComponent,
+    VotarSuccessComponent,
     PuntuacionesComponent,
+    QrComponent,
     ResultadosComponent,
     DashboardComponent,
     FooterComponent,

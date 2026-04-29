@@ -16,6 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isMenuOpen = false;
   mostrarMenuVotar = false;
   mostrarMenuPuntuaciones = false;
+  mostrarMenuQr = false;
   eventoId: string | null = null;
   private eventoActivoSub: any;
 
@@ -70,10 +71,12 @@ export class AppComponent implements OnInit, OnDestroy {
         this.eventoId = evento.id;
         this.mostrarMenuVotar = !!evento.votacion_activa;
         this.mostrarMenuPuntuaciones = !!evento.puntuaciones_activas;
+        this.mostrarMenuQr = !!evento.registro_pin_abierto;
       } else {
         this.eventoId = null;
         this.mostrarMenuVotar = false;
         this.mostrarMenuPuntuaciones = false;
+        this.mostrarMenuQr = false;
       }
     });
   }

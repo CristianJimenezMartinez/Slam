@@ -15,6 +15,7 @@ import { EventListComponent } from './features/admin/event-list/event-list.compo
 import { EventDetailComponent } from './features/admin/event-detail/event-detail.component';
 import { VotarComponent } from './features/votar/votar.component';
 import { PuntuacionesComponent } from './features/puntuaciones/puntuaciones.component';
+import { QrComponent } from './features/qr/qr.component';
 import { ResultadosComponent } from './features/resultados/resultados.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { CronogramaListComponent } from './features/admin/cronograma-list/cronograma-list.component';
@@ -93,6 +94,17 @@ const routes: Routes = [
       seo: {
         title: 'Puntuaciones - Directo',
         description: 'Puntuaciones en directo del Poetry Slam Alicante.',
+        robots: 'noindex, nofollow'
+      }
+    }
+  },
+  {
+    path: 'qr',
+    component: QrComponent,
+    data: {
+      seo: {
+        title: 'Escanear QR - Participar',
+        description: 'Código QR para acceder a la votación interactiva.',
         robots: 'noindex, nofollow'
       }
     }

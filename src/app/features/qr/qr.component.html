@@ -1,0 +1,27 @@
+<div class="qr-container">
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+  <div class="qr-content" *ngIf="!loading && evento">
+    <header class="qr-header">
+      <h1 class="glow-text">{{ evento.nombre }}</h1>
+      <p class="subtitle">Acceso al Voto del Público</p>
+    </header>
+
+    <!-- Si la admisión está abierta, mostramos el QR -->
+    <div class="qr-box-center" *ngIf="evento.registro_pin_abierto && qrCodeUrl">
+      <img [src]="qrCodeUrl" alt="QR Acceso" class="qr-code-giant">
+      <p class="qr-instruction">Escanea con la cámara de tu móvil para participar</p>
+    </div>
+
+    <!-- Si la admisión está cerrada, mostramos bloqueo -->
+    <div class="qr-box-locked" *ngIf="!evento.registro_pin_abierto">
+      <div class="lock-icon">🔒</div>
+      <h2>Admisión Cerrada</h2>
+      <p>El registro de nuevos votantes ha finalizado para este evento.</p>
+    </div>
+  </div>
+
+  <div class="no-event" *ngIf="!loading && !evento">
+    <h2>No hay ningún evento activo en directo.</h2>
+  </div>
+</div>

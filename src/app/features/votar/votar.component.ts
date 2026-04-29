@@ -1,15 +1,17 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone, ViewEncapsulation } from '@angular/core';
 import { EventosService, Evento } from '../../core/services/eventos.service';
 import { ParticipantesService, Participante } from '../../core/services/participantes.service';
 import { VotacionesService } from '../../core/services/votaciones.service';
 import { SeoService } from '../../core/services/seo.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-votar',
   templateUrl: './votar.component.html',
-  styleUrls: ['./votar.component.scss']
+  styleUrls: ['./votar.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class VotarComponent implements OnInit, OnDestroy {
   evento: Evento | null = null;
@@ -19,7 +21,8 @@ export class VotarComponent implements OnInit, OnDestroy {
   voteForm: FormGroup;
   loading = true;
   error: string | null = null;
-  voterToken: string;
+  voterToken: string = '';
+  accesoBloqueado: boolean = false;
   
   votosGuardados: string[] = [];
   resultados: any[] = [];
@@ -39,19 +42,14 @@ export class VotarComponent implements OnInit, OnDestroy {
     private participantesService: ParticipantesService,
     private votacionesService: VotacionesService,
     private seo: SeoService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.voteForm = this.fb.group({
       puntuacion: [null, [Validators.required, Validators.min(1), Validators.max(10)]]
     });
     
-    let token = localStorage.getItem('voter_token');
-    if (!token) {
-      token = Math.random().toString(36).substring(2) + Date.now().toString(36);
-      localStorage.setItem('voter_token', token);
-    }
-    this.voterToken = token;
-
     const saved = localStorage.getItem('votos_guardados');
     if (saved) {
       this.votosGuardados = JSON.parse(saved);
@@ -82,6 +80,31 @@ export class VotarComponent implements OnInit, OnDestroy {
           description: `Participa con tu voto en ${this.evento.nombre}. Poetry Slam Alicante – Tu voz cuenta.`,
           path: '/votar'
         });
+
+        const tokenKey = `voter_token_${this.evento.id}`;
+        let token = localStorage.getItem(tokenKey);
+        const accessCode = this.route.snapshot.queryParamMap.get('access_code');
+
+        if (token) {
+          this.voterToken = token;
+          this.accesoBloqueado = false;
+        } else if (accessCode === this.evento.id) {
+          if (this.evento.registro_pin_abierto) {
+            token = Math.random().toString(36).substring(2) + Date.now().toString(36);
+            localStorage.setItem(tokenKey, token);
+            this.voterToken = token;
+            this.accesoBloqueado = false;
+            
+            this.router.navigate([], {
+              queryParams: { access_code: null },
+              queryParamsHandling: 'merge'
+            });
+          } else {
+            this.accesoBloqueado = true;
+          }
+        } else {
+          this.accesoBloqueado = true;
+        }
 
         const resParts = await this.participantesService.getParticipantesByEvento(this.evento.id).toPromise();
         this.participantes = (resParts?.data || []) as Participante[];

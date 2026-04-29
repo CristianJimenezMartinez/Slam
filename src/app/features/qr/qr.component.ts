@@ -1,27 +1,22 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { EventosService, Evento } from '../../core/services/eventos.service';
-import { VotacionesService, Resultado } from '../../core/services/votaciones.service';
 import { Subscription } from 'rxjs';
 import * as QRCode from 'qrcode';
 
 @Component({
-  selector: 'app-puntuaciones',
-  templateUrl: './puntuaciones.component.html',
-  styleUrls: ['./puntuaciones.component.scss']
+  selector: 'app-qr',
+  templateUrl: './qr.component.html',
+  styleUrls: ['./qr.component.scss']
 })
-export class PuntuacionesComponent implements OnInit, OnDestroy {
+export class QrComponent implements OnInit, OnDestroy {
   evento: Evento | null = null;
-  resultados: Resultado[] = [];
   loading = true;
-  mostrarResultados = false;
   qrCodeUrl: string | null = null;
   
-  private channelSub: any;
   private eventoSub: Subscription | any = null;
 
   constructor(
     private eventosService: EventosService,
-    private votacionesService: VotacionesService,
     private ngZone: NgZone
   ) { }
 
@@ -36,39 +31,23 @@ export class PuntuacionesComponent implements OnInit, OnDestroy {
       this.evento = ev || null;
 
       if (this.evento) {
-        this.mostrarResultados = !!this.evento.puntuaciones_activas;
-        await this.refreshResults();
         await this.generarQR();
-
-        // Escuchar cambios en los votos
-        this.channelSub = this.votacionesService.listenToVotaciones(this.evento.id, () => {
-          this.ngZone.run(() => {
-            this.refreshResults();
-          });
-        });
 
         // Escuchar cambios en el evento
         this.eventoSub = this.eventosService.listenToEventoChanges(this.evento.id, (payload: any) => {
           this.ngZone.run(() => {
             if (payload.new) {
               this.evento = { ...this.evento, ...payload.new } as Evento;
-              this.mostrarResultados = !!this.evento.puntuaciones_activas;
               this.generarQR();
             }
           });
         });
       }
     } catch (e) {
-      console.error('Error cargando datos de puntuaciones:', e);
+      console.error('Error cargando datos del QR:', e);
     } finally {
       this.loading = false;
     }
-  }
-
-  async refreshResults() {
-    if (!this.evento) return;
-    const { data } = await this.votacionesService.getResultados(this.evento.id).toPromise();
-    this.resultados = data || [];
   }
 
   async generarQR() {
@@ -85,7 +64,6 @@ export class PuntuacionesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.channelSub) this.channelSub.unsubscribe();
     if (this.eventoSub) this.eventoSub.unsubscribe();
   }
 }
