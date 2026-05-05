@@ -87,13 +87,12 @@
       .points { font-family: 'Bebas Neue', cursive; font-size: 2.5rem; color: var(--primary); }
 
       &.rank-1 { 
-        order: 2; height: 350px; border-color: var(--primary); background: rgba(var(--primary-rgb), 0.05);
+        order: 2; height: 280px; border-color: var(--primary); background: rgba(var(--primary-rgb), 0.05);
         .avatar { width: 140px; height: 140px; border-color: var(--primary); }
         h3 { font-size: 2.2rem; }
-        .points { font-size: 3.5rem; }
       }
-      &.rank-2 { order: 1; height: 300px; }
-      &.rank-3 { order: 3; height: 280px; }
+      &.rank-2 { order: 1; height: 240px; }
+      &.rank-3 { order: 3; height: 220px; }
       
       @media (max-width: 768px) { order: initial !important; height: auto !important; width: 100%; max-width: 350px; }
     }
