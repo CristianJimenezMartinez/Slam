@@ -79,7 +79,7 @@ export class EventDetailComponent implements OnInit {
         fecha: this.toLocalISOString(new Date(ev.fecha)),
         url_entradas: ev.url_entradas || '',
         url_cartel: ev.url_cartel || '',
-        presentador: ev.presentador || 'Ágora Reix',
+        presentador: ev.presentador || '',
         artista_invitado: ev.artista_invitado || '',
         color_primario: ev.color_primario || '#92D342',
         color_secundario: ev.color_secundario || '#368475',
@@ -163,7 +163,7 @@ export class EventDetailComponent implements OnInit {
     }
 
     const { nombre, descripcion, fecha, url_entradas, url_cartel, presentador, artista_invitado, participantes, color_primario, color_secundario, color_fondo, color_texto, color_cabecera } = this.eventForm.value;
-    
+
     // Convertir el string local a una fecha ISO real con su zona horaria antes de enviar a Supabase
     const fechaISO = new Date(fecha).toISOString();
 
