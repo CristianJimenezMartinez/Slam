@@ -50,20 +50,38 @@ export class LiveControlComponent implements OnInit, OnDestroy {
           await this.cargarFinalistas();
         }
 
-        // Suscribirse a cambios
-        if (this.eventoSub) this.eventoSub.unsubscribe();
+        // Suscribirse a cambios (Limpiando suscripción previa si existe)
+        if (this.eventoSub) {
+          this.eventoSub.unsubscribe();
+        }
+
         this.eventoSub = this.eventosService.listenToEventoChanges(this.evento.id, (payload: any) => {
           this.ngZone.run(async () => {
             if (payload.new) {
               const oldRonda = this.rondaActual;
-              this.evento = { ...this.evento, ...payload.new } as Evento;
-              this.rondaActual = payload.new.ronda_activa || 1;
-              this.activoId = payload.new.participante_activo_id || null;
-              this.mostrarPuntuaciones = !!payload.new.puntuaciones_activas;
+              const newRonda = payload.new.ronda_activa || 1;
+              const newActivoId = payload.new.participante_activo_id || null;
+              const newPuntuaciones = !!payload.new.puntuaciones_activas;
 
-              if (this.rondaActual === 2 && oldRonda === 1) {
-                await this.cargarFinalistas();
+              // Solo actualizamos si los valores han cambiado realmente
+              // Esto evita el parpadeo si llegan múltiples actualizaciones rápidas
+              if (this.activoId !== newActivoId) {
+                this.activoId = newActivoId;
               }
+              
+              if (this.rondaActual !== newRonda) {
+                this.rondaActual = newRonda;
+                if (this.rondaActual === 2 && oldRonda === 1) {
+                  await this.cargarFinalistas();
+                }
+              }
+
+              if (this.mostrarPuntuaciones !== newPuntuaciones) {
+                this.mostrarPuntuaciones = newPuntuaciones;
+              }
+
+              // Actualizamos el objeto evento manteniendo los datos que ya tenemos
+              this.evento = { ...this.evento, ...payload.new } as Evento;
             }
           });
         });
