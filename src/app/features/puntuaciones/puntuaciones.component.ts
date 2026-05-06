@@ -12,12 +12,13 @@ import * as QRCode from 'qrcode';
 export class PuntuacionesComponent implements OnInit, OnDestroy {
   evento: Evento | null = null;
   resultados: Resultado[] = [];
+  finalistas: Resultado[] = []; // Nueva variable para los clasificados
   loading = true;
   mostrarResultados = false;
+  rondaActual = 1;
   qrCodeUrl: string | null = null;
   
-  private channelSub: any;
-  private eventoSub: Subscription | any = null;
+  private subscription: Subscription | any = null;
 
   constructor(
     private eventosService: EventosService,
@@ -26,49 +27,62 @@ export class PuntuacionesComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.loadActiveEvent();
+    this.loadData();
   }
 
-  async loadActiveEvent() {
+  async loadData() {
     this.loading = true;
     try {
       const ev = await this.eventosService.getEventoActivo().toPromise();
-      this.evento = ev || null;
-
-      if (this.evento) {
-        this.mostrarResultados = !!this.evento.puntuaciones_activas;
-        await this.refreshResults();
+      if (ev) {
+        this.evento = ev;
+        this.mostrarResultados = !!ev.puntuaciones_activas;
+        this.rondaActual = Number(ev.ronda_activa) || 1;
+        
+        await this.refreshResultados();
         await this.generarQR();
 
-        // Escuchar cambios en los votos
-        this.channelSub = this.votacionesService.listenToVotaciones(this.evento.id, () => {
-          this.ngZone.run(() => {
-            this.refreshResults();
-          });
-        });
+        if (this.rondaActual === 2) {
+          await this.cargarFinalistas();
+        }
 
-        // Escuchar cambios en el evento
-        this.eventoSub = this.eventosService.listenToEventoChanges(this.evento.id, (payload: any) => {
-          this.ngZone.run(() => {
+        // Realtime
+        if (this.subscription) this.subscription.unsubscribe();
+        this.subscription = this.eventosService.listenToEventoChanges(ev.id, (payload: any) => {
+          this.ngZone.run(async () => {
             if (payload.new) {
+              const oldRonda = this.rondaActual;
               this.evento = { ...this.evento, ...payload.new } as Evento;
-              this.mostrarResultados = !!this.evento.puntuaciones_activas;
+              this.mostrarResultados = !!payload.new.puntuaciones_activas;
+              this.rondaActual = Number(payload.new.ronda_activa) || 1;
+              
+              if (this.rondaActual === 2 && oldRonda === 1) {
+                await this.cargarFinalistas();
+              }
+              await this.refreshResultados();
               this.generarQR();
             }
           });
         });
       }
     } catch (e) {
-      console.error('Error cargando datos de puntuaciones:', e);
+      console.error(e);
     } finally {
       this.loading = false;
     }
   }
 
-  async refreshResults() {
+  async refreshResultados() {
     if (!this.evento) return;
-    const { data } = await this.votacionesService.getResultados(this.evento.id).toPromise();
-    this.resultados = data || [];
+    const res = await this.votacionesService.getResultados(this.evento.id, this.rondaActual).toPromise();
+    this.resultados = (res?.data || []) as Resultado[];
+  }
+
+  async cargarFinalistas() {
+    if (!this.evento) return;
+    // Pedimos explícitamente los resultados de la Ronda 1
+    const res = await this.votacionesService.getResultados(this.evento.id, 1).toPromise();
+    this.finalistas = (res?.data || []).slice(0, 3) as Resultado[];
   }
 
   async generarQR() {

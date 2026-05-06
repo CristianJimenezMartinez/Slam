@@ -35,11 +35,28 @@
       </div>
     </div>
 
-    <!-- Modo Oculto: Votaciones Cerradas -->
+    <!-- Modo Oculto / Transición -->
     <div class="standby-screen" *ngIf="!mostrarResultados">
-      <div class="logo-placeholder">🎙️</div>
-      <h2 class="glow-text">Poetry Slam Alicante</h2>
-      <p>Votaciones pausadas o finalizadas.</p>
+      
+      <!-- Transición a la Final (Mostrar Clasificados) -->
+      <ng-container *ngIf="rondaActual === 2 && finalistas.length > 0; else regularStandby">
+        <div class="reveal-container">
+          <h2 class="reveal-title anim-fade-in">¡TENEMOS FINALISTAS!</h2>
+          <div class="finalists-reveal-grid">
+            <div class="finalist-card anim-pop-in" *ngFor="let f of finalistas; let i = index" [style.animation-delay]="(i * 0.5) + 's'">
+              <div class="f-avatar" [style.background-image]="'url(' + f.foto_url + ')'"></div>
+              <h3>{{ f.participante }}</h3>
+            </div>
+          </div>
+          <p class="final-prep-text anim-fade-in" style="animation-delay: 2s">La Gran Final comienza en unos instantes...</p>
+        </div>
+      </ng-container>
+
+      <ng-template #regularStandby>
+        <div class="logo-placeholder">🎙️</div>
+        <h2 class="glow-text">Poetry Slam Alicante</h2>
+        <p>Votaciones pausadas o finalizadas.</p>
+      </ng-template>
     </div>
 
   </div>
