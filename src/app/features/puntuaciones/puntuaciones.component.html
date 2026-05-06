@@ -23,12 +23,12 @@
         </div>
       </div>
 
-      <!-- Resto del Ranking en Grid -->
+      <!-- Resto del Ranking en Cuadrícula de Bloques -->
       <div class="ranking-grid" *ngIf="resultados.length > 3">
         <div class="ranking-card" *ngFor="let res of resultados.slice(3); let i = index">
-          <div class="card-rank">#{{ i + 4 }}</div>
           <div class="card-avatar" [style.background-image]="'url(' + res.foto_url + ')'"></div>
           <div class="card-info">
+            <div class="card-rank">#{{ i + 4 }}</div>
             <span class="poet-name">{{ res.participante }}</span>
           </div>
         </div>
