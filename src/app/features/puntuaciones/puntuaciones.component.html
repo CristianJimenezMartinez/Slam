@@ -23,25 +23,15 @@
         </div>
       </div>
 
-      <!-- Resto del Ranking -->
-      <div class="ranking-table" *ngIf="resultados.length > 3">
-        <table class="minimal-table">
-          <thead>
-            <tr>
-              <th style="width: 80px;">Pos.</th>
-              <th>Poeta</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let res of resultados.slice(3); let i = index">
-              <td>#{{ i + 4 }}</td>
-              <td class="poet-cell">
-                <div class="table-avatar" [style.background-image]="'url(' + res.foto_url + ')'"></div>
-                <span>{{ res.participante }}</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- Resto del Ranking en Grid -->
+      <div class="ranking-grid" *ngIf="resultados.length > 3">
+        <div class="ranking-card" *ngFor="let res of resultados.slice(3); let i = index">
+          <div class="card-rank">#{{ i + 4 }}</div>
+          <div class="card-avatar" [style.background-image]="'url(' + res.foto_url + ')'"></div>
+          <div class="card-info">
+            <span class="poet-name">{{ res.participante }}</span>
+          </div>
+        </div>
       </div>
     </div>
 
