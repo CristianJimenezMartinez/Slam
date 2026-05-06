@@ -31,6 +31,7 @@ export class QrComponent implements OnInit, OnDestroy {
       this.evento = ev || null;
 
       if (this.evento) {
+        this.updateTheme(this.evento.color_primario);
         await this.generarQR();
 
         // Escuchar cambios en el evento
@@ -38,6 +39,7 @@ export class QrComponent implements OnInit, OnDestroy {
           this.ngZone.run(() => {
             if (payload.new) {
               this.evento = { ...this.evento, ...payload.new } as Evento;
+              this.updateTheme(this.evento.color_primario);
               this.generarQR();
             }
           });
@@ -48,6 +50,18 @@ export class QrComponent implements OnInit, OnDestroy {
     } finally {
       this.loading = false;
     }
+  }
+
+  private updateTheme(color?: string) {
+    if (!color) return;
+    document.documentElement.style.setProperty('--primary', color);
+    
+    // También generamos el RGB para las sombras
+    const hex = color.replace('#', '');
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    document.documentElement.style.setProperty('--primary-rgb', `${r}, ${g}, ${b}`);
   }
 
   async generarQR() {

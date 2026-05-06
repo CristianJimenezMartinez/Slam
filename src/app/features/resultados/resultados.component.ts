@@ -53,6 +53,7 @@ export class ResultadosComponent implements OnInit, OnDestroy {
   async seleccionarEvento(evento: Evento) {
     this.loading = true;
     this.evento = evento;
+    this.updateTheme(this.evento.color_primario);
     
     // Limpiar suscripción anterior si existe
     if (this.channelSub) {
@@ -90,5 +91,15 @@ export class ResultadosComponent implements OnInit, OnDestroy {
     if (this.channelSub) {
       this.channelSub.unsubscribe();
     }
+  }
+
+  private updateTheme(color?: string) {
+    if (!color) return;
+    document.documentElement.style.setProperty('--primary', color);
+    const hex = color.replace('#', '');
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    document.documentElement.style.setProperty('--primary-rgb', `${r}, ${g}, ${b}`);
   }
 }

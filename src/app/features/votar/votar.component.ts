@@ -84,6 +84,8 @@ export class VotarComponent implements OnInit, OnDestroy {
           path: '/votar'
         });
 
+        this.updateTheme(this.evento.color_primario);
+        
         const tokenKey = `voter_token_${this.evento.id}`;
         let token = localStorage.getItem(tokenKey);
         const accessCode = this.route.snapshot.queryParamMap.get('access_code');
@@ -119,11 +121,11 @@ export class VotarComponent implements OnInit, OnDestroy {
           this.ngZone.run(() => {
             if (payload.new) {
               this.evento = { ...this.evento, ...payload.new } as Evento;
+              this.updateTheme(this.evento.color_primario);
               this.procesarEstadoEvento();
             }
           });
         });
-
       } else {
         this.seo.setPage({
           title: 'Votar',
@@ -136,6 +138,18 @@ export class VotarComponent implements OnInit, OnDestroy {
     } finally {
       this.loading = false;
     }
+  }
+
+  private updateTheme(color?: string) {
+    if (!color) return;
+    document.documentElement.style.setProperty('--primary', color);
+    
+    // También generamos el RGB para las sombras
+    const hex = color.replace('#', '');
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    document.documentElement.style.setProperty('--primary-rgb', `${r}, ${g}, ${b}`);
   }
 
   procesarEstadoEvento() {

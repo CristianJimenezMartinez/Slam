@@ -39,6 +39,7 @@ export class PuntuacionesComponent implements OnInit, OnDestroy {
         this.mostrarResultados = !!ev.puntuaciones_activas;
         this.rondaActual = Number(ev.ronda_activa) || 1;
         
+        this.updateTheme(ev.color_primario);
         await this.refreshResultados();
         await this.generarQR();
 
@@ -56,6 +57,8 @@ export class PuntuacionesComponent implements OnInit, OnDestroy {
               this.mostrarResultados = !!payload.new.puntuaciones_activas;
               this.rondaActual = Number(payload.new.ronda_activa) || 1;
               
+              this.updateTheme(payload.new.color_primario);
+
               if (this.rondaActual === 2 && oldRonda === 1) {
                 await this.cargarFinalistas();
               }
@@ -70,6 +73,17 @@ export class PuntuacionesComponent implements OnInit, OnDestroy {
     } finally {
       this.loading = false;
     }
+  }
+
+  private updateTheme(color?: string) {
+    if (!color) return;
+    document.documentElement.style.setProperty('--primary', color);
+    // También generamos el RGB para las sombras
+    const hex = color.replace('#', '');
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    document.documentElement.style.setProperty('--primary-rgb', `${r}, ${g}, ${b}`);
   }
 
   async refreshResultados() {
