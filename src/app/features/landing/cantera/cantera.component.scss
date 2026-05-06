@@ -1,44 +1,170 @@
-.cantera-container {
-  max-width: 800px;
-  margin: 3rem auto;
-  padding: 3rem 2rem;
-  background: var(--bg);
-  border: 1px solid rgba(var(--text-rgb, 255, 255, 255), 0.1);
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+.cantera-wrapper {
   position: relative;
-  background-image: radial-gradient(circle at top left, rgba(var(--primary-rgb), 0.05) 0%, transparent 50%);
+  min-height: calc(100vh - 80px); // Ajustado para el Nav (80px)
+  background: var(--bg);
+  color: var(--off-white);
+  font-family: 'Inter', sans-serif;
+  // Eliminamos overflow-x para evitar el doble scroll
+}
 
-  .page-header {
-    text-align: center;
-    margin-bottom: 3rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #222;
-    
-    h1 { font-family: 'Bebas Neue', cursive; font-size: 4rem; color: var(--primary); margin-bottom: 0.5rem; line-height: 1; }
-    p { color: #888; font-size: 1.1rem; }
+// BACKGROUND QUE CUBRE TODO EL CONTENIDO DE ESTA PÁGINA
+.hero-bg-container {
+  position: absolute; // Cambiado de fixed a absolute
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    opacity: 0.7;
+    filter: blur(1.5px) contrast(1.1) brightness(0.6);
+    transform: scale(1.02);
   }
+}
 
-  .info-card {
+.hero-overlay {
+  position: absolute; // Cambiado de fixed a absolute
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+    background: linear-gradient(to bottom, 
+      rgba(0,0,0,0.9) 0%, 
+      transparent 10%, 
+      transparent 95%, 
+      var(--bg) 100% // Unión perfecta con el color del footer
+    );
+  z-index: 1;
+}
+
+// CONTENEDOR DE CONTENIDO
+.cantera-content {
+  position: relative;
+  z-index: 2;
+  padding-top: 8vh; // Menos espacio arriba
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .hero-header {
     text-align: center;
-    padding: 2rem 1rem;
-    
-    h2 { font-family: 'Bebas Neue', cursive; font-size: 3rem; color: var(--off-white); margin-bottom: 1.5rem; }
-    p { color: #aaa; font-size: 1.2rem; line-height: 1.6; margin-bottom: 3rem; }
-    
-    .actions {
-      display: flex;
-      justify-content: center;
-      .btn-primary { padding: 1rem 3rem; font-size: 1.5rem; }
+    margin-bottom: 8vh; // Subimos la tarjeta
+    animation: fadeInDown 1s ease-out;
+
+    .glow-text {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 8rem;
+      color: var(--primary);
+      text-shadow: 0 0 30px rgba(var(--primary-rgb), 0.5);
+      margin: 0;
+      letter-spacing: 5px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: -1rem;
+    }
+
+    .hero-line {
+      width: 100px;
+      height: 4px;
+      background: var(--primary);
+      margin: 2rem auto;
+      border-radius: 2px;
+      box-shadow: 0 0 15px var(--primary);
     }
   }
 }
 
+.cantera-info {
+  max-width: 1200px;
+  width: 100%;
+  padding: 0 2rem 6rem; // Ajustado para unión perfecta con el footer
+  
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 28px;
+    padding: 3.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+      background: rgba(var(--primary-rgb), 0.08);
+      border-color: var(--primary);
+      transform: translateY(-12px);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
+  }
+
+  .info-card {
+    text-align: center;
+    .card-icon { font-size: 3.5rem; margin-bottom: 2rem; }
+    h2 { font-family: 'Bebas Neue', cursive; font-size: 3rem; color: var(--primary); margin-bottom: 1.5rem; }
+    p { color: #ccc; line-height: 1.9; font-size: 1.15rem; }
+  }
+
+  .cta-section {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+
+    h3 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; margin-bottom: 1.5rem; }
+    p { font-size: 1.3rem; color: #999; margin-bottom: 3rem; }
+
+    .btn-premium {
+      padding: 1.5rem 5rem;
+      font-size: 1.4rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: var(--primary);
+      color: var(--primary-contrast);
+      border: none;
+      border-radius: 60px;
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(var(--primary-rgb), 0.5);
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: scale(1.08);
+        box-shadow: 0 0 50px rgba(var(--primary-rgb), 0.7);
+      }
+    }
+  }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (max-width: 768px) {
-  .cantera-container {
-    margin: 1rem;
-    padding: 2.5rem 1.5rem;
-    .page-header h1 { font-size: 3rem; }
-    .info-card h2 { font-size: 2.5rem; }
+  .hero-bg-container { top: 60px; }
+  .hero-overlay { top: 60px; }
+  
+  .cantera-content .hero-header {
+    margin-bottom: 15vh;
+    .glow-text { font-size: 4rem; }
+    .hero-subtitle { font-size: 1rem; }
+  }
+
+  .cantera-info {
+    .glass { padding: 2rem; }
+    .info-card h2 { font-size: 2.2rem; }
   }
 }
