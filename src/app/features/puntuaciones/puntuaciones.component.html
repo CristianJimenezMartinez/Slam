@@ -35,7 +35,10 @@
           <tbody>
             <tr *ngFor="let res of resultados.slice(3); let i = index">
               <td>#{{ i + 4 }}</td>
-              <td>{{ res.participante }}</td>
+              <td class="poet-cell">
+                <div class="table-avatar" [style.background-image]="'url(' + res.foto_url + ')'"></div>
+                <span>{{ res.participante }}</span>
+              </td>
             </tr>
           </tbody>
         </table>
