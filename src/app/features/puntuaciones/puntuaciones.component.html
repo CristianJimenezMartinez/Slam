@@ -6,7 +6,7 @@
   <div class="content" *ngIf="!loading && evento">
     
     <!-- Modo Activo: Mostrar Puntuaciones -->
-    <div class="live-ranking" *ngIf="mostrarResultados">
+    <div class="live-ranking" *ngIf="mostrarResultados && resultados.length > 0">
       <header class="proyector-header">
         <h1 class="glow-text">{{ evento.nombre }}</h1>
         <p class="subtitle">Puntuaciones en Tiempo Real</p>
@@ -36,10 +36,10 @@
     </div>
 
     <!-- Modo Oculto / Transición -->
-    <div class="standby-screen" *ngIf="!mostrarResultados">
+    <div class="standby-screen" *ngIf="!mostrarResultados || resultados.length === 0">
       
-      <!-- Transición a la Final (Mostrar Clasificados) -->
-      <ng-container *ngIf="rondaActual === 2 && finalistas.length > 0; else regularStandby">
+      <!-- Transición a la Final (Solo si aún no hay votos en la Ronda 2) -->
+      <ng-container *ngIf="rondaActual === 2 && resultados.length === 0 && finalistas.length > 0; else regularStandby">
         <div class="reveal-container">
           <h2 class="reveal-title anim-fade-in">¡TENEMOS FINALISTAS!</h2>
           <div class="finalists-reveal-grid">
@@ -48,7 +48,6 @@
               <h3>{{ f.participante }}</h3>
             </div>
           </div>
-          <p class="final-prep-text anim-fade-in" style="animation-delay: 2s">La Gran Final comienza en unos instantes...</p>
         </div>
       </ng-container>
 

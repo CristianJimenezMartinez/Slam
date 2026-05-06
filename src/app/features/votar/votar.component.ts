@@ -61,8 +61,11 @@ export class VotarComponent implements OnInit, OnDestroy {
   }
 
   get yaVotadoAlPoetaActivo(): boolean {
-    if (!this.poetaActivo) return false;
-    return this.votosGuardados.includes(this.poetaActivo.id!);
+    if (!this.poetaActivo || !this.evento) return false;
+    const key = `votos_${this.evento.id}_r${this.evento.ronda_activa || 1}`;
+    const saved = localStorage.getItem(key);
+    const votos = saved ? JSON.parse(saved) : [];
+    return votos.includes(this.poetaActivo.id!);
   }
 
   ngOnInit(): void {
@@ -176,7 +179,8 @@ export class VotarComponent implements OnInit, OnDestroy {
       evento_id: this.evento.id,
       participante_id: this.poetaActivo.id!,
       puntuacion: this.puntuacion.value,
-      voter_token: this.voterToken
+      voter_token: this.voterToken,
+      ronda: Number(this.evento.ronda_activa) || 1
     }];
     
     const { error } = await this.votacionesService.submitVotaciones(vote);
@@ -194,9 +198,14 @@ export class VotarComponent implements OnInit, OnDestroy {
   }
 
   private guardarVotoLocal(participanteId: string) {
-    if (!this.votosGuardados.includes(participanteId)) {
-      this.votosGuardados.push(participanteId);
-      localStorage.setItem('votos_guardados', JSON.stringify(this.votosGuardados));
+    if (!this.evento) return;
+    const key = `votos_${this.evento.id}_r${this.evento.ronda_activa || 1}`;
+    const saved = localStorage.getItem(key);
+    const votos = saved ? JSON.parse(saved) : [];
+    
+    if (!votos.includes(participanteId)) {
+      votos.push(participanteId);
+      localStorage.setItem(key, JSON.stringify(votos));
     }
   }
 
