@@ -8,26 +8,15 @@
     <span class="ronda-label">
       {{ rondaActual === 1 ? '📍 Ronda 1: Clasificatoria' : '🏆 Ronda 2: ¡GRAN FINAL!' }}
     </span>
-    <button class="btn-next-round" 
-            *ngIf="rondaActual == 1" 
-            (click)='finalizarRonda1()'
-            [style.color]="'#fff'"
-            [style.borderColor]="'rgba(255,255,255,0.5)'">
-      Siguiente Ronda: La Final ➔
-    </button>
-    <button class="btn-next-round" 
-            *ngIf="rondaActual == 2" 
-            (click)='volverARonda1()'
-            [style.background]="'rgba(255,255,255,0.1)'"
-            [style.color]="'#fff'"
-            [style.borderColor]="'rgba(255,255,255,0.3)'">
-      ↩ Volver a Ronda 1 (Reset)
-    </button>
-  </div>
-
-  <div class="panel-header">
-    <h3>🔴 En Directo: {{ evento.nombre }}</h3>
     <div class="header-actions">
+      <!-- Botones de Ronda -->
+      <button class="btn-projector" *ngIf="rondaActual == 1" (click)="finalizarRonda1()" style="background: var(--primary); color: #111;">
+        ➔ Pasar a la Gran Final
+      </button>
+      <button class="btn-projector" *ngIf="rondaActual == 2" (click)="volverARonda1()" style="background: #444; color: #fff;">
+        ↩ Volver a Ronda 1
+      </button>
+
       <button class="btn-projector" (click)="togglePuntuaciones()" [style.background]="mostrarPuntuaciones ? '#ff4d4f' : '#92d342'" style="color: #111; font-weight: bold;">
         📊 {{ mostrarPuntuaciones ? 'Ocultar' : 'Publicar' }} Puntuaciones
       </button>
