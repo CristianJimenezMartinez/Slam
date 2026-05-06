@@ -174,32 +174,42 @@ export class VotarComponent implements OnInit, OnDestroy {
     if (this.voteForm.invalid || !this.evento || !this.poetaActivo) return;
     this.loading = true;
     this.error = null;
-    
-    const vote = [{
-      evento_id: this.evento.id,
-      participante_id: this.poetaActivo.id!,
-      puntuacion: this.puntuacion.value,
-      voter_token: this.voterToken,
-      ronda: Number(this.evento.ronda_activa) || 1
-    }];
-    
-    const { error } = await this.votacionesService.submitVotaciones(vote);
-    if (error) {
-      if (error.code === '23505') {
-        this.error = 'Ya has votado a este poeta.';
-        this.guardarVotoLocal(this.poetaActivo.id!);
+
+    try {
+      // Verificación de ronda "en caliente" antes de enviar
+      const evFresco = await this.eventosService.getEventoActivo().toPromise();
+      const rondaReal = evFresco ? (Number(evFresco.ronda_activa) || 1) : 1;
+      
+      const vote = [{
+        evento_id: this.evento.id,
+        participante_id: this.poetaActivo.id!,
+        puntuacion: this.puntuacion.value,
+        voter_token: this.voterToken,
+        ronda: rondaReal
+      }];
+      
+      const { error } = await this.votacionesService.submitVotaciones(vote);
+      
+      if (error) {
+        if (error.code === '23505') {
+          this.error = 'Ya has votado a este poeta en esta ronda.';
+          this.guardarVotoLocal(this.poetaActivo.id!, rondaReal);
+        } else {
+          this.error = 'Error al enviar tu voto. Inténtalo de nuevo.';
+        }
       } else {
-        this.error = 'Error al enviar tu voto. Inténtalo de nuevo.';
+        this.guardarVotoLocal(this.poetaActivo.id!, rondaReal);
       }
-    } else {
-      this.guardarVotoLocal(this.poetaActivo.id!);
+    } catch (e) {
+      this.error = 'Error de conexión. Inténtalo de nuevo.';
+    } finally {
+      this.loading = false;
     }
-    this.loading = false;
   }
 
-  private guardarVotoLocal(participanteId: string) {
+  private guardarVotoLocal(participanteId: string, ronda: number) {
     if (!this.evento) return;
-    const key = `votos_${this.evento.id}_r${this.evento.ronda_activa || 1}`;
+    const key = `votos_${this.evento.id}_r${ronda}`;
     const saved = localStorage.getItem(key);
     const votos = saved ? JSON.parse(saved) : [];
     
