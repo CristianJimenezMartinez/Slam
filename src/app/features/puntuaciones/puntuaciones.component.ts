@@ -99,7 +99,6 @@ export class PuntuacionesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.channelSub) this.channelSub.unsubscribe();
-    if (this.eventoSub) this.eventoSub.unsubscribe();
+    if (this.subscription) this.subscription.unsubscribe();
   }
 }

@@ -135,6 +135,18 @@ export class LiveControlComponent implements OnInit, OnDestroy {
       this.loading = false;
     }
   }
+
+  async volverARonda1() {
+    if (!this.evento || !confirm('¿Quieres volver a la Ronda 1?')) return;
+    this.loading = true;
+    try {
+      await this.eventosService.setRonda(this.evento.id, 1);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      this.loading = false;
+    }
+  }
   
   async togglePuntuaciones() {
     if (!this.evento) return;
