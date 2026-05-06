@@ -9,7 +9,7 @@
       {{ rondaActual === 1 ? '📍 Ronda 1: Clasificatoria' : '🏆 Ronda 2: ¡GRAN FINAL!' }}
     </span>
     <button class="btn-next-round" 
-            *ngIf="rondaActual === 1" 
+            *ngIf="rondaActual == 1" 
             (click)='finalizarRonda1()'
             [style.color]="'#fff'"
             [style.borderColor]="'rgba(255,255,255,0.5)'">

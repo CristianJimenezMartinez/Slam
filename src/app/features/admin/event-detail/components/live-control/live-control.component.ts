@@ -41,7 +41,7 @@ export class LiveControlComponent implements OnInit, OnDestroy {
         this.evento = ev;
         this.activoId = ev.participante_activo_id || null;
         this.mostrarPuntuaciones = !!ev.puntuaciones_activas;
-        this.rondaActual = ev.ronda_activa || 1;
+        this.rondaActual = Number(ev.ronda_activa) || 1;
 
         const resParts = await this.participantesService.getParticipantesByEvento(this.evento.id).toPromise();
         this.participantes = (resParts?.data || []) as Participante[];
@@ -59,7 +59,7 @@ export class LiveControlComponent implements OnInit, OnDestroy {
           this.ngZone.run(async () => {
             if (payload.new) {
               const oldRonda = this.rondaActual;
-              const newRonda = payload.new.ronda_activa || 1;
+              const newRonda = Number(payload.new.ronda_activa) || 1;
               const newActivoId = payload.new.participante_activo_id || null;
               const newPuntuaciones = !!payload.new.puntuaciones_activas;
 
