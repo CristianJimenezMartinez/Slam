@@ -24,6 +24,7 @@ export interface Evento {
   votos_totales_registrados?: number;
   participante_activo_id?: string;
   puntuaciones_activas?: boolean;
+  ronda_activa?: number;
 }
 
 @Injectable({
@@ -43,13 +44,16 @@ export class EventosService {
       switchMap(manualActive => {
         if (manualActive) return [manualActive];
         
-        // 2. Si no hay ninguno activo manualmente, buscamos el más próximo en el futuro
-        const today = new Date().toISOString();
+        // 2. Si no hay ninguno activo manualmente, buscamos el más próximo (incluyendo hoy hasta medianoche)
+        const startOfToday = new Date();
+        startOfToday.setHours(0, 0, 0, 0);
+        const todayStr = startOfToday.toISOString();
+
         return fromRxjs(
           this.supa.client
             .from('eventos')
             .select('*')
-            .gte('fecha', today)
+            .gte('fecha', todayStr)
             .order('fecha', { ascending: true })
             .limit(1)
             .maybeSingle()
@@ -93,6 +97,10 @@ export class EventosService {
 
   async togglePuntuacionesVisibles(id: string, estado: boolean) {
     return this.supa.client.from('eventos').update({ puntuaciones_activas: estado }).eq('id', id);
+  }
+
+  async setRonda(id: string, ronda: number) {
+    return this.supa.client.from('eventos').update({ ronda_activa: ronda }).eq('id', id);
   }
 
   listenToEventoChanges(eventoId: string, callback: (payload: any) => void) {

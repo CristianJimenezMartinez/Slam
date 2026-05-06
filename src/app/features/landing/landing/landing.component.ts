@@ -61,10 +61,12 @@ export class LandingComponent implements OnInit {
     if (this.evento) {
       const fechaEvento = new Date(this.evento.fecha);
       const hoy = new Date();
+      hoy.setHours(0, 0, 0, 0); // Normalizamos a inicio del día
+      
       const diffTime = fechaEvento.getTime() - hoy.getTime();
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       
-      // Si faltan 7 días o menos, activamos el modo evento
+      // Si hoy es el día del evento o faltan menos de 7 días, activamos modo evento
       this.esEventoInminente = diffDays <= 7 && diffDays >= 0;
 
       if (this.esEventoInminente) {

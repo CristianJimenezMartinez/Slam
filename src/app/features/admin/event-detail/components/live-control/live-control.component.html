@@ -1,6 +1,22 @@
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 
 <div class="live-control-panel" *ngIf="!loading && evento && participantes.length > 0">
+  <!-- Status Ronda -->
+  <div class="ronda-status-bar" 
+       [style.background]="rondaActual === 2 ? 'var(--primary)' : 'var(--secondary)'"
+       [style.color]="rondaActual === 2 ? 'var(--primary-contrast)' : '#fff'">
+    <span class="ronda-label">
+      {{ rondaActual === 1 ? '📍 Ronda 1: Clasificatoria' : '🏆 Ronda 2: ¡GRAN FINAL!' }}
+    </span>
+    <button class="btn-next-round" 
+            *ngIf="rondaActual === 1" 
+            (click)='finalizarRonda1()'
+            [style.color]="'#fff'"
+            [style.borderColor]="'rgba(255,255,255,0.5)'">
+      Siguiente Ronda: La Final ➔
+    </button>
+  </div>
+
   <div class="panel-header">
     <h3>🔴 En Directo: {{ evento.nombre }}</h3>
     <div class="header-actions">
@@ -44,11 +60,12 @@
 
   <div class="poet-list">
     <div class="poet-row" 
-         *ngFor="let p of participantes" 
+         *ngFor="let p of participantesFiltrados" 
          [class.active]="activoId === p.id">
       
       <div class="poet-info">
         <div class="status-indicator"></div>
+        <img [src]="p.foto_url" class="poet-avatar" alt="Avatar">
         <span class="poet-name">{{ p.nombre }}</span>
       </div>
 

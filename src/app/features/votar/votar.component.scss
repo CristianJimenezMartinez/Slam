@@ -188,6 +188,23 @@
     .poet-header {
       margin-bottom: 3rem;
 
+      .poet-avatar-large {
+        width: 140px;
+        height: 140px;
+        margin: 0 auto 1.5rem;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 4px solid var(--primary);
+        box-shadow: 0 0 30px rgba(var(--primary-rgb), 0.4);
+        background: var(--surface-300);
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
       h3 { color: #888; text-transform: uppercase; letter-spacing: 2px; font-size: 1rem; margin-bottom: 0.5rem; }
       .poet-name { 
         font-family: 'Bebas Neue', cursive; 

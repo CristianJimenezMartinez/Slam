@@ -1,6 +1,9 @@
 <div class="voting-form-body active-poet" *ngIf="poetaActivo">
   <div class="poet-card">
     <div class="poet-header">
+      <div class="poet-avatar-large">
+        <img [src]="poetaActivo.foto_url" alt="Avatar">
+      </div>
       <h3>Votando a:</h3>
       <h2 class="poet-name pulse-text">{{ poetaActivo.nombre }}</h2>
     </div>

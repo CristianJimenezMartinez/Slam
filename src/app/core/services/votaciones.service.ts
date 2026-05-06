@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface Votacion {
   id: string;
@@ -8,6 +9,7 @@ export interface Votacion {
   participante_id: string;
   puntuacion: number;
   voter_token: string;
+  ronda: number;
 }
 
 export interface Resultado {
@@ -20,6 +22,7 @@ export interface Resultado {
   puntuacion_total: number;
   puntuacion_media: number;
   posicion: number;
+  ronda: number;
   foto_url?: string;
 }
 
@@ -33,13 +36,30 @@ export class VotacionesService {
     return this.supa.client.from('votaciones').insert(votaciones);
   }
 
-  getResultados(eventoId: string): Observable<any> {
-    return from(
-      this.supa.client
-        .from('resultados' as any)
-        .select('*')
-        .eq('evento_id', eventoId)
-        .order('posicion', { ascending: true })
+  getResultados(eventoId: string, ronda?: number): Observable<any> {
+    let query = this.supa.client
+      .from('resultados' as any)
+      .select('*')
+      .eq('evento_id', eventoId);
+    
+    if (ronda) {
+      query = query.eq('ronda', ronda);
+    }
+
+    return from(query.order('posicion', { ascending: true })).pipe(
+      map(res => {
+        if (res.data) {
+          res.data = res.data.map((r: any) => {
+            if (!r.foto_url) {
+              // Misma lógica de asignación que en ParticipantesService
+              const avatarIndex = ((r.orden - 1) % 10) + 1;
+              r.foto_url = `assets/images/avatars/poeta${avatarIndex}.png`;
+            }
+            return r;
+          });
+        }
+        return res;
+      })
     );
   }
 

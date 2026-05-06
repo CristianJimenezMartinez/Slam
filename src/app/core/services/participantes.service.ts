@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { from as fromRxjs } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface Participante {
   id: string;
@@ -24,6 +25,20 @@ export class ParticipantesService {
         .select('*')
         .eq('evento_id', eventoId)
         .order('orden', { ascending: true })
+    ).pipe(
+      map(res => {
+        if (res.data) {
+          res.data = res.data.map((p: any) => {
+            if (!p.foto_url) {
+              // Asignación automática: Poeta 1 a 10 según su orden
+              const avatarIndex = ((p.orden - 1) % 10) + 1;
+              p.foto_url = `assets/images/avatars/poeta${avatarIndex}.png`;
+            }
+            return p;
+          });
+        }
+        return res;
+      })
     );
   }
 

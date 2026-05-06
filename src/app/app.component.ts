@@ -4,7 +4,7 @@ import { filter } from 'rxjs/operators';
 import { AuthService } from './core/services/auth.service';
 import { SeoService } from './core/services/seo.service';
 import { EventosService } from './core/services/eventos.service';
-import { ThemeService } from './core/services/theme.service';
+import { ThemeService, ThemeColors } from './core/services/theme.service';
 
 @Component({
   selector: 'app-root',

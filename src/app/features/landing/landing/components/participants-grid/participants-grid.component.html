@@ -15,11 +15,9 @@
     <h2 class="section-title">Poetas</h2>
     <div class="poetas-grid">
       <div class="poeta-card" *ngFor="let p of participantes">
-        <!-- Comentada la foto para el futuro
         <div class="poeta-img">
-          <img [src]="p.foto_url || 'assets/default-avatar.jpg'" [alt]="p.nombre">
+          <img [src]="p.foto_url" [alt]="p.nombre">
         </div>
-        -->
         <h3>{{ p.nombre }}</h3>
       </div>
     </div>
