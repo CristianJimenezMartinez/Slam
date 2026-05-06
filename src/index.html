@@ -8,6 +8,21 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="canonical" href="https://poetryslamalicante.com/">
 
+  <!-- Early Theme Loading -->
+  <script>
+    (function() {
+      try {
+        var theme = JSON.parse(localStorage.getItem('slam_theme'));
+        if (theme && theme.cssVars) {
+          var root = document.documentElement;
+          Object.keys(theme.cssVars).forEach(function(key) {
+            root.style.setProperty(key, theme.cssVars[key]);
+          });
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <!-- SEO -->
   <meta name="description" content="Encuentro de poesía en vivo en el Centro Cultural Las Cigarreras, Alicante. Tu voz cuenta. Calendario, entradas y resultados.">
   <meta name="keywords" content="poetry slam, alicante, poesía, spoken word, las cigarreras, eventos culturales, micro abierto, poesía oral">

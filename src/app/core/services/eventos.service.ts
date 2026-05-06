@@ -20,7 +20,6 @@ export interface Evento {
   color_fondo?: string;
   color_texto?: string;
   color_cabecera?: string;
-  pin_sesion?: string;
   registro_pin_abierto?: boolean;
   votos_totales_registrados?: number;
   participante_activo_id?: string;

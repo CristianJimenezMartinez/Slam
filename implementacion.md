@@ -6,23 +6,22 @@ Este documento es la única fuente de verdad para el desarrollo. Unifica todas l
 
 ## Fase 1: Infraestructura y Base de Datos
 Antes de construir la interfaz, debemos asegurar que el motor (Supabase) soporte la lógica.
-- [ ] **Tabla `eventos`**: Añadir campos `pin_sesion` (String), `registro_pin_abierto` (Boolean) y `votos_totales_registrados` (Integer).
-- [ ] **Tabla `participantes`**: Añadir campo `esta_votando` (Boolean) para identificar quién está en escena.
-- [ ] **Servicio de Votaciones**: Implementar método `verificarVotoUnico(token, poetaId)` para evitar votos duplicados al mismo poeta.
+- [x] **Tabla `eventos`**: Campos `registro_pin_abierto` (Boolean) y `votos_totales_registrados` (Integer) ya operativos.
+- [x] **Tabla `participantes`**: Campo `esta_votando` (Boolean) para identificar quién está en escena.
+- [x] **Servicio de Votaciones**: Método `submitVotaciones` con control de `voter_token`.
 
 ---
 
 ## Fase 2: Seguridad y Selección de Poetas (Uno a Uno)
 
-### 2.1 Sistema de Validación por PIN (Acceso Controlado)
-Para asegurar que solo el público presente pueda votar, implementaremos un sistema de "Puerta de Entrada":
-- **PIN de Sesión**: Un código de 4 dígitos generado por el Admin.
+### 2.1 Sistema de Validación por Acceso Único (Sellado)
+La seguridad se basa en la validación del dispositivo vinculada al evento:
+- **Acceso por UUID**: El `id` del evento actúa como llave única en la URL (`access_code`).
 - **Ventana de Validación (SELLADO)**: 
-    - El Admin puede **Abrir/Cerrar la entrada del PIN**.
-    - Pasados los primeros minutos del evento, el Admin "Sella" el acceso. 
-    - Aunque alguien comparta el PIN por fuera, si el Admin ha cerrado la entrada, ningún nuevo dispositivo podrá validarse.
-- **Persistencia**: Los que ya validaron su PIN mientras el acceso estaba abierto, mantienen su permiso para votar toda la noche sin problemas.
-- **Contador de Dispositivos**: Visualización en tiempo real en el Dashboard de cuántos dispositivos han sido validados con éxito.
+    - El Admin usa `registro_pin_abierto` para permitir o bloquear la entrada de nuevos dispositivos.
+    - Una vez cerrado, nadie sin un token previo puede entrar, aunque tenga el link.
+- **Persistencia**: El `voter_token` se guarda en `localStorage`, permitiendo votar durante todo el evento sin revalidar.
+- **Contador de Dispositivos**: (Pendiente) Visualización en tiempo real de cuántos dispositivos han validado su token.
 
 ### 2.2 Estado del Participante y Votación
 - **Campo `esta_votando`**: Para identificar quién está en escena.
@@ -51,10 +50,10 @@ Un diseño ancho de tarjetas moderno con navegación superior para alternar entr
 ## Fase 4: Experiencia del Público (Página /votar)
 Rediseñar la ruta `/votar` para que sea dinámica y reaccione al Admin:
 
-- [ ] **Estado 1: Acceso PIN**: Si el dispositivo no está validado, pide el código de sesión (solo si el registro está abierto).
-- [ ] **Estado 2: Cerrado**: Mensaje indicando que aún no han comenzado las votaciones del evento.
-- [ ] **Estado 3: Espera**: Pantalla de "Esperando al siguiente poeta..." con animaciones fluidas.
-- [ ] **Estado 4: Formulario de Voto**:
+- [x] **Estado 1: Acceso Bloqueado**: Si el dispositivo no tiene token y el registro está cerrado, muestra mensaje de "Acceso por invitación/QR".
+- [x] **Estado 2: Cerrado**: Mensaje indicando que aún no han comenzado las votaciones del evento.
+- [x] **Estado 3: Espera**: Pantalla de "Esperando al siguiente poeta..." con animaciones fluidas.
+- [x] **Estado 4: Formulario de Voto**:
     - Muestra Foto y Nombre del poeta activo.
     - Selector de puntos (1-10).
     - Botón "Enviar Voto".
