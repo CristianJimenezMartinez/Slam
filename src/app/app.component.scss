@@ -1,0 +1,60 @@
+.header-timer {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.4rem 0.8rem;
+  border-radius: 50px;
+  border: 1px solid rgba(var(--primary-rgb), 0.2);
+  margin-right: auto;
+  margin-left: 2rem;
+
+  .timer-display {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    color: var(--neon-green);
+    min-width: 55px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .timer-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border-radius: 50%;
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--neon-green);
+    }
+
+    .material-icons-outlined {
+      font-size: 20px;
+    }
+  }
+}
+
+@media (max-width: 868px) {
+  .header-timer {
+    margin-left: 1rem;
+    margin-right: 0;
+    padding: 0.3rem 0.6rem;
+    gap: 0.5rem;
+    
+    .timer-display {
+      font-size: 0.9rem;
+      min-width: 45px;
+    }
+
+    .timer-btn .material-icons-outlined {
+      font-size: 18px;
+    }
+  }
+}

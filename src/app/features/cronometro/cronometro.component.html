@@ -1,0 +1,27 @@
+<div class="cronometro-container">
+  <div class="glass-box">
+    <h1 class="title">Cronómetro Oficial</h1>
+    
+    <div class="display-container">
+      <div class="time-main">{{ timerDisplay }}</div>
+      <div class="pulse-indicator" [class.active]="timerRunning"></div>
+    </div>
+
+    <div class="controls">
+      <button class="btn-control start-stop" [class.running]="timerRunning" (click)="toggleTimer()">
+        <span class="material-icons-outlined">{{ timerRunning ? 'pause' : 'play_arrow' }}</span>
+        {{ timerRunning ? 'Detener' : 'Iniciar' }}
+      </button>
+
+      <button class="btn-control reset" (click)="resetTimer()">
+        <span class="material-icons-outlined">restart_alt</span>
+        Resetear
+      </button>
+    </div>
+    
+    <div class="tip">
+      <span class="material-icons-outlined">info</span>
+      Usa este cronómetro para medir el tiempo de los poemas (máximo 3 minutos).
+    </div>
+  </div>
+</div>

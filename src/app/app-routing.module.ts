@@ -20,6 +20,7 @@ import { ResultadosComponent } from './features/resultados/resultados.component'
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { CronogramaListComponent } from './features/admin/cronograma-list/cronograma-list.component';
 import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-dashboard.component';
+import { CronometroComponent } from './features/cronometro/cronometro.component';
 
 const routes: Routes = [
   {
@@ -95,6 +96,16 @@ const routes: Routes = [
         title: 'Puntuaciones - Directo',
         description: 'Puntuaciones en directo del Poetry Slam Alicante.',
         robots: 'noindex, nofollow'
+      }
+    }
+  },
+  {
+    path: 'cronometro',
+    component: CronometroComponent,
+    data: {
+      seo: {
+        title: 'Cronómetro - Control de Tiempo',
+        description: 'Cronómetro oficial para medir el tiempo de los poetas en el Poetry Slam Alicante.'
       }
     }
   },

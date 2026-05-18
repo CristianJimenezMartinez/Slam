@@ -57,6 +57,7 @@ import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
 import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
+import { CronometroComponent } from './features/cronometro/cronometro.component';
 
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
@@ -101,7 +102,8 @@ registerLocaleData(localeEs, 'es');
     EventMediaComponent,
     EventThemeComponent,
     EventParticipantsComponent,
-    LiveControlComponent
+    LiveControlComponent,
+    CronometroComponent
   ],
   imports: [
     BrowserModule,
