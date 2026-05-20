@@ -3,6 +3,7 @@ import { EventosService, Evento } from '../../core/services/eventos.service';
 import { ParticipantesService, Participante } from '../../core/services/participantes.service';
 import { VotacionesService } from '../../core/services/votaciones.service';
 import { SeoService } from '../../core/services/seo.service';
+import { CredencialesService } from '../../core/services/credenciales.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -44,7 +45,8 @@ export class VotarComponent implements OnInit, OnDestroy {
     private seo: SeoService,
     private ngZone: NgZone,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private credencialesService: CredencialesService
   ) {
     this.voteForm = this.fb.group({
       puntuacion: [null, [Validators.required, Validators.min(1), Validators.max(10)]]
@@ -89,8 +91,30 @@ export class VotarComponent implements OnInit, OnDestroy {
         const tokenKey = `voter_token_${this.evento.id}`;
         let token = localStorage.getItem(tokenKey);
         const accessCode = this.route.snapshot.queryParamMap.get('access_code');
+        const credencialId = this.route.snapshot.queryParamMap.get('credencial');
 
-        if (token) {
+        if (credencialId) {
+          if (!token) {
+            token = Math.random().toString(36).substring(2) + Date.now().toString(36);
+          }
+          const rpcRes = await this.credencialesService.activarCredencial(credencialId, token);
+          const data = rpcRes.data as any;
+
+          if (rpcRes.error || !data || !data[0]?.success) {
+            this.accesoBloqueado = true;
+            this.error = data && data[0] ? data[0].mensaje : 'No se pudo validar la credencial de votación.';
+          } else {
+            localStorage.setItem(tokenKey, token);
+            this.voterToken = token;
+            this.accesoBloqueado = false;
+            this.error = null;
+
+            this.router.navigate([], {
+              queryParams: { credencial: null },
+              queryParamsHandling: 'merge'
+            });
+          }
+        } else if (token) {
           this.voterToken = token;
           this.accesoBloqueado = false;
         } else if (accessCode === this.evento.id) {

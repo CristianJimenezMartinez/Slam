@@ -45,9 +45,11 @@ export class EventListComponent implements OnInit {
   }
 
   isEventLocked(evento: Evento): boolean {
-    // Un evento está cerrado (bloqueado) si su fecha ya pasó y no está en la portada.
-    // Esto permite seguir editando eventos futuros que aún no están en portada.
-    const isPast = new Date(evento.fecha).getTime() < new Date().getTime();
+    // Un evento está cerrado (bloqueado) si su fecha ya pasó del día de hoy (hasta medianoche) y no está en la portada.
+    // Esto permite seguir controlando y editando el evento durante todo el día del mismo.
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+    const isPast = new Date(evento.fecha).getTime() < startOfToday.getTime();
     return isPast && !evento.activo;
   }
 

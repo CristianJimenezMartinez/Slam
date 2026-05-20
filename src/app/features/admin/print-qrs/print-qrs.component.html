@@ -1,0 +1,31 @@
+<!-- Pantalla de carga mientras se generan los QR -->
+<div class="print-loading-screen" *ngIf="loading">
+  <div class="spinner"></div>
+  <p>Generando {{ credenciales.length || '' }} códigos QR únicos...</p>
+</div>
+
+<!-- Barra de acciones (solo visible en pantalla, se oculta al imprimir) -->
+<div class="print-toolbar" *ngIf="!loading && evento">
+  <div class="toolbar-info">
+    <strong>{{ evento.nombre }}</strong>
+    <span>{{ credenciales.length }} credenciales &middot; {{ pages.length }} página{{ pages.length > 1 ? 's' : '' }}</span>
+  </div>
+  <div class="toolbar-actions">
+    <button class="btn-print" (click)="print()">
+      🖨️ Imprimir / Descargar PDF
+    </button>
+  </div>
+</div>
+
+<!-- Cada página A4 con exactamente 66 QR (6×11) -->
+<div class="print-page-wrapper" *ngIf="!loading && evento">
+  <div class="qr-grid" *ngFor="let page of pages; let pi = index">
+    <div class="qr-card" *ngFor="let cred of page; let ci = index">
+      <div class="card-brand">POETRY SLAM</div>
+      <div class="card-qr">
+        <img [src]="qrUrls[cred.id]" alt="QR Voto">
+      </div>
+      <div class="card-number">VOTO #{{ getGlobalIndex(pi, ci) }}</div>
+    </div>
+  </div>
+</div>

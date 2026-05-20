@@ -2,18 +2,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   
-  h3 { margin: 0; color: var(--off-white); font-family: 'Merriweather', serif; font-weight: 700; font-size: 1.3rem; letter-spacing: 1px; }
+  h3 { margin: 0; color: var(--off-white); font-family: 'Merriweather', serif; font-weight: 700; font-size: 1.15rem; letter-spacing: 1px; }
   
   .btn-add {
     background: rgba(var(--primary-rgb), 0.1);
     color: var(--primary);
     border: 1px solid var(--primary);
-    padding: 0.5rem 1.2rem;
+    padding: 0.4rem 1rem;
     border-radius: 8px;
     font-family: 'Merriweather', serif; font-weight: 700;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     cursor: pointer;
     transition: all 0.2s;
     
@@ -24,7 +26,24 @@
 .participants-list {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.6rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(var(--primary-rgb), 0.2);
+    border-radius: 4px;
+    &:hover {
+      background: var(--primary);
+    }
+  }
   
   .participant-row {
     display: flex;

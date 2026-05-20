@@ -11,10 +11,18 @@ export class AuthService {
   private sessionSubject = new BehaviorSubject<Session | null>(null);
   session$: Observable<Session | null> = this.sessionSubject.asObservable();
 
+  initialized: Promise<void>;
+
   constructor(private supa: SupabaseService, private router: Router) {
     // Restore existing session
-    this.supa.auth.getSession().then(({ data }) => {
-      this.sessionSubject.next(data.session);
+    this.initialized = new Promise<void>((resolve) => {
+      this.supa.auth.getSession().then(({ data }) => {
+        this.sessionSubject.next(data.session);
+        resolve();
+      }).catch(err => {
+        console.error('Error restoring session:', err);
+        resolve();
+      });
     });
 
     // Listen for auth events

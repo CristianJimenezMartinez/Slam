@@ -20,6 +20,7 @@ import { ResultadosComponent } from './features/resultados/resultados.component'
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { CronogramaListComponent } from './features/admin/cronograma-list/cronograma-list.component';
 import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-dashboard.component';
+import { PrintQrsComponent } from './features/admin/print-qrs/print-qrs.component';
 import { CronometroComponent } from './features/cronometro/cronometro.component';
 
 const routes: Routes = [
@@ -77,6 +78,11 @@ const routes: Routes = [
     path: 'admin',
     canActivate: [AuthGuard],
     component: AdminDashboardComponent
+  },
+  {
+    path: 'admin/imprimir-qrs/:eventoId',
+    canActivate: [AuthGuard],
+    component: PrintQrsComponent
   },
   {
     path: 'votar',

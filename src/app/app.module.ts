@@ -41,6 +41,7 @@ import { EventMediaComponent } from './features/admin/event-detail/components/ev
 import { EventThemeComponent } from './features/admin/event-detail/components/event-theme/event-theme.component';
 import { EventParticipantsComponent } from './features/admin/event-detail/components/event-participants/event-participants.component';
 import { LiveControlComponent } from './features/admin/event-detail/components/live-control/live-control.component';
+import { PrintQrsComponent } from './features/admin/print-qrs/print-qrs.component';
 
 // Votar
 import { VotarComponent } from './features/votar/votar.component';
@@ -103,6 +104,7 @@ registerLocaleData(localeEs, 'es');
     EventThemeComponent,
     EventParticipantsComponent,
     LiveControlComponent,
+    PrintQrsComponent,
     CronometroComponent
   ],
   imports: [

@@ -1,0 +1,215 @@
+// ───────────────────────────────────────────────────
+//  PANTALLA DE CARGA
+// ───────────────────────────────────────────────────
+.print-loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #1a1a1a;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    border-top-color: #92d342;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ───────────────────────────────────────────────────
+//  BARRA DE HERRAMIENTAS (solo pantalla)
+// ───────────────────────────────────────────────────
+.print-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1a1a1a;
+  color: #fff;
+  padding: 14px 24px;
+  font-family: 'Inter', sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid #333;
+
+  .toolbar-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    strong {
+      font-size: 1rem;
+    }
+
+    span {
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+  }
+
+  .toolbar-actions {
+    display: flex;
+    gap: 10px;
+  }
+}
+
+.btn-print {
+  background: #92d342;
+  color: #111;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.2s, transform 0.1s;
+
+  &:hover {
+    background: #a4e455;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// ───────────────────────────────────────────────────
+//  PREVISUALIZACIÓN EN PANTALLA
+// ───────────────────────────────────────────────────
+@media screen {
+  .print-page-wrapper {
+    background: #111;
+    min-height: 100vh;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    box-sizing: border-box;
+  }
+
+  .qr-grid {
+    background: white;
+    width: 210mm;
+    height: 297mm;
+    padding: 10mm;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+    box-sizing: border-box;
+  }
+}
+
+// ───────────────────────────────────────────────────
+//  GRID DE TARJETAS (compartido pantalla + impresión)
+// ───────────────────────────────────────────────────
+.qr-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  box-sizing: border-box;
+}
+
+.qr-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #dcdcdc;
+  padding: 4px;
+  background: #fff;
+  color: #000;
+  text-align: center;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.card-brand {
+  font-family: 'Bebas Neue', 'Arial Narrow', sans-serif;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.8px;
+  color: #444;
+  margin-bottom: 1px;
+  text-transform: uppercase;
+}
+
+.card-qr {
+  margin: 1px 0;
+
+  img {
+    width: 58px;
+    height: 58px;
+    display: block;
+  }
+}
+
+.card-number {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 7px;
+  color: #222;
+  margin-top: 1px;
+}
+
+// ───────────────────────────────────────────────────
+//  ESTILOS DE IMPRESIÓN
+// ───────────────────────────────────────────────────
+@media print {
+  // Ocultar la barra de herramientas y la pantalla de carga
+  .print-toolbar,
+  .print-loading-screen {
+    display: none !important;
+  }
+
+  // Reset global
+  html, body, app-root {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+  }
+
+  // Ocultar cabeceras y menús de Angular
+  app-admin-header, nav, footer, header {
+    display: none !important;
+  }
+
+  .print-page-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: none !important;
+    min-height: auto !important;
+    display: block !important;
+  }
+
+  .qr-grid {
+    width: 210mm !important;
+    height: 297mm !important;
+    padding: 5mm !important;
+    box-shadow: none !important;
+    page-break-after: always;
+    page-break-inside: avoid;
+  }
+
+  // Evitar una página en blanco extra tras la última hoja
+  .qr-grid:last-child {
+    page-break-after: auto;
+  }
+
+  .qr-card {
+    border: 1px dashed #aaaaaa !important;
+    page-break-inside: avoid;
+  }
+}

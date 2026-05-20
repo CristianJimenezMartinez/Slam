@@ -10,11 +10,11 @@ import { AuthService } from '../services/auth.service';
 export class GuestGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) {}
 
-  canActivate(): Observable<boolean | UrlTree> {
-    return this.auth.session$.pipe(
-      map((session) =>
-        !session ? true : this.router.createUrlTree(['/dashboard'])
-      )
-    );
+  async canActivate(): Promise<boolean | UrlTree> {
+    await this.auth.initialized;
+    if (!this.auth.isLoggedIn) {
+      return true;
+    }
+    return this.router.createUrlTree(['/dashboard']);
   }
 }
