@@ -7,8 +7,8 @@
 .page-header {
   text-align: center;
   margin-bottom: 4rem;
-  h1 { font-size: 4.5rem; color: var(--primary); margin: 0; }
-  p { color: #666; font-size: 1.1rem; }
+  h1 { font-size: 2.8rem; color: var(--primary); margin: 0; }
+  p { color: #666; font-size: 0.95rem; }
   
   .badge.neon {
     display: inline-block;
@@ -17,7 +17,7 @@
     border: 1px solid var(--primary);
     padding: 0.3rem 1rem;
     border-radius: 20px;
-    font-family: 'Bebas Neue', cursive;
+    font-family: 'Merriweather', serif; font-weight: 700;
     margin-bottom: 1rem;
     animation: pulse 2s infinite;
   }
@@ -32,7 +32,7 @@
 .event-selector {
   margin-bottom: 4rem;
   text-align: center;
-  label { color: #444; font-family: 'Bebas Neue', cursive; display: block; margin-bottom: 1rem; text-transform: uppercase; }
+  label { color: #444; font-family: 'Merriweather', serif; font-weight: 700; display: block; margin-bottom: 1rem; text-transform: uppercase; }
   
   .selector-pills {
     display: flex;
@@ -46,8 +46,8 @@
       color: #888;
       padding: 0.5rem 1.2rem;
       border-radius: 4px;
-      font-family: 'Bebas Neue', cursive;
-      font-size: 1.1rem;
+      font-family: 'Merriweather', serif; font-weight: 700;
+      font-size: 0.95rem;
       cursor: pointer;
       transition: all 0.3s;
       
@@ -87,8 +87,8 @@
       background: var(--bg);
       border: 2px solid var(--primary);
       color: var(--primary);
-      font-family: 'Bebas Neue', cursive;
-      font-size: 1.5rem;
+      font-family: 'Merriweather', serif; font-weight: 700;
+      font-size: 0.95rem;
       padding: 0.2rem 1rem;
       border-radius: 4px;
     }
@@ -103,14 +103,14 @@
       border: 3px solid #333;
     }
 
-    h3 { font-size: 2rem; margin-bottom: 0.5rem; }
-    .points { font-family: 'Bebas Neue', cursive; font-size: 1.5rem; color: var(--primary); }
+    h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+    .points { font-family: 'Merriweather', serif; font-weight: 700; font-size: 0.95rem; color: var(--primary); }
 
     &.rank-1 { 
       order: 2; height: 350px; border-color: var(--primary); background: rgba(var(--primary-rgb), 0.03);
       .avatar { width: 140px; height: 140px; border-color: var(--primary); }
-      h3 { font-size: 2.5rem; }
-      .points { font-size: 2.5rem; }
+      h3 { font-size: 1.05rem; }
+      .points { font-size: 1.05rem; }
     }
     &.rank-2 { order: 1; height: 300px; }
     &.rank-3 { order: 3; height: 280px; }
@@ -128,14 +128,14 @@
     min-width: 500px; // Asegura que no se aplaste demasiado
     border-collapse: collapse;
     th, td { padding: 1.2rem; text-align: left; border-bottom: 1px solid #1a1a1a; }
-    th { font-family: 'Bebas Neue', cursive; color: #444; font-size: 1.2rem; }
-    .highlight { color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 1.5rem; }
+    th { font-family: 'Merriweather', serif; font-weight: 700; color: #444; font-size: 1rem; }
+    .highlight { color: var(--primary); font-family: 'Merriweather', serif; font-weight: 700; font-size: 0.95rem; }
   }
 
   @media (max-width: 768px) {
     .minimal-table {
       th, td { padding: 0.8rem; font-size: 0.9rem; }
-      .highlight { font-size: 1.2rem; }
+      .highlight { font-size: 1rem; }
     }
   }
 }
@@ -143,7 +143,7 @@
 .no-results {
   text-align: center;
   padding: 5rem;
-  p { font-size: 1.5rem; color: #666; font-family: 'Bebas Neue', cursive; }
+  p { font-size: 0.95rem; color: #666; font-family: 'Merriweather', serif; font-weight: 700; }
   .empty-icon { font-size: 5rem; margin-top: 2rem; opacity: 0.2; }
 }
 

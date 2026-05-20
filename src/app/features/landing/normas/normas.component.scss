@@ -15,8 +15,8 @@
     padding-bottom: 2rem;
     border-bottom: 1px solid #222;
     
-    h1 { font-family: 'Bebas Neue', cursive; font-size: 4rem; color: var(--primary); margin-bottom: 0.5rem; line-height: 1; }
-    p { color: #888; font-size: 1.1rem; }
+    h1 { font-family: 'Merriweather', serif; font-weight: 700; font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem; line-height: 1; }
+    p { color: #888; font-size: 0.95rem; }
   }
 
   .normas-content {
@@ -24,7 +24,7 @@
       margin-bottom: 2.5rem;
       text-align: left;
       
-      h2 { font-family: 'Bebas Neue', cursive; font-size: 2.5rem; color: var(--neon-purple); margin-bottom: 0.5rem; }
+      h2 { font-family: 'Merriweather', serif; font-weight: 700; font-size: 1.8rem; color: var(--neon-purple); margin-bottom: 0.5rem; }
       
       .info-badges {
         display: flex;
@@ -38,8 +38,8 @@
         margin-bottom: 2.5rem;
         
         h3 { 
-          font-family: 'Bebas Neue', cursive; 
-          font-size: 1.8rem; 
+          font-family: 'Merriweather', serif; font-weight: 700; 
+          font-size: 1.4rem; 
           color: var(--off-white); 
           margin-bottom: 1rem; 
           border-left: 3px solid var(--primary);
@@ -67,8 +67,8 @@
               content: counter(item) ".";
               counter-increment: item;
               color: var(--primary);
-              font-family: 'Bebas Neue', cursive;
-              font-size: 1.2rem;
+              font-family: 'Merriweather', serif; font-weight: 700;
+              font-size: 1rem;
             }
           }
         }
@@ -89,7 +89,7 @@
   .normas-container {
     margin: 1rem;
     padding: 2rem 1.5rem;
-    .page-header h1 { font-size: 3rem; }
-    .rules-header h2 { font-size: 2rem; }
+    .page-header h1 { font-size: 1.8rem; }
+    .rules-header h2 { font-size: 1.4rem; }
   }
 }

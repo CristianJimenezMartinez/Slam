@@ -53,9 +53,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
       h2 {
         margin: 0;
-        font-family: 'Bebas Neue', cursive;
+        font-family: 'Merriweather', serif;
         color: var(--neon-green);
-        font-size: 1.8rem;
+        font-size: 1.05rem;
         letter-spacing: 1px;
       }
 
@@ -63,7 +63,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
         background: transparent;
         border: none;
         color: #666;
-        font-size: 1.5rem;
+        font-size: 0.95rem;
         cursor: pointer;
         transition: color 0.2s;
         &:hover { color: white; }

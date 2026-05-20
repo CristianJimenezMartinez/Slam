@@ -45,8 +45,8 @@
     text-align: center;
     margin-bottom: 2rem;
     
-    h1 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; color: var(--primary); margin-bottom: 0.5rem; line-height: 1; }
-    p { color: #888; font-size: 1.1rem; }
+    h1 { font-family: 'Merriweather', serif; font-weight: 700; font-size: 1.6rem; color: var(--primary); margin-bottom: 0.5rem; line-height: 1; }
+    p { color: #888; font-size: 0.95rem; }
   }
 
   .status-box {
@@ -54,9 +54,9 @@
     padding: 3rem 1rem;
     
     .empty-icon, .icon { font-size: 5rem; margin-bottom: 1.5rem; line-height: 1; }
-    h2 { font-family: 'Bebas Neue', cursive; font-size: 3rem; margin-bottom: 1rem; color: var(--off-white); }
+    h2 { font-family: 'Merriweather', serif; font-weight: 700; font-size: 2rem; margin-bottom: 1rem; color: var(--off-white); }
     .purple-glow { color: var(--primary); text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.5); }
-    p { font-size: 1.2rem; margin-bottom: 1.5rem; color: #aaa; }
+    p { font-size: 1rem; margin-bottom: 1.5rem; color: #aaa; }
     
     &.waiting {
       .pulse-ring {
@@ -90,8 +90,8 @@
     }
 
     &.success {
-      h1 { color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 3.5rem; margin-bottom: 1rem; text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.4); }
-      p { font-size: 1.3rem; margin-bottom: 3rem; color: var(--off-white); }
+      h1 { color: var(--primary); font-family: 'Merriweather', serif; font-weight: 700; font-size: 1.6rem; margin-bottom: 1rem; text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.4); }
+      p { font-size: 1.05rem; margin-bottom: 3rem; color: var(--off-white); }
 
       .bounce { animation: bounce 2s infinite ease-in-out; }
 
@@ -137,8 +137,8 @@
         }
 
         .ranking-position {
-          font-family: 'Bebas Neue', cursive;
-          font-size: 2.5rem;
+          font-family: 'Merriweather', serif; font-weight: 700;
+          font-size: 1.05rem;
           color: var(--primary);
           min-width: 40px;
           text-align: center;
@@ -152,7 +152,7 @@
           text-align: left;
 
           .poet-name {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--off-white);
           }
@@ -174,8 +174,8 @@
         }
 
         .ranking-score {
-          font-family: 'Bebas Neue', cursive;
-          font-size: 2rem;
+          font-family: 'Merriweather', serif; font-weight: 700;
+          font-size: 0.95rem;
           color: var(--off-white);
         }
       }
@@ -207,8 +207,8 @@
 
       h3 { color: #888; text-transform: uppercase; letter-spacing: 2px; font-size: 1rem; margin-bottom: 0.5rem; }
       .poet-name { 
-        font-family: 'Bebas Neue', cursive; 
-        font-size: 4.5rem; 
+        font-family: 'Merriweather', serif; font-weight: 700; 
+        font-size: 2.8rem; 
         color: var(--off-white);
         margin: 0;
         line-height: 1;
@@ -244,7 +244,7 @@
         flex: 1;
         min-width: 120px;
         padding: 0.6rem 0.8rem;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Merriweather', serif;
         font-size: 0.85rem;
         font-weight: 600;
         background: rgba(255, 255, 255, 0.05);
@@ -277,7 +277,7 @@
         max-width: 300px;
         margin: 0 auto;
         padding: 1rem;
-        font-size: 1.3rem;
+        font-size: 1.05rem;
         border-radius: 8px;
         background: var(--primary);
         color: var(--primary-contrast);
@@ -330,7 +330,7 @@
     padding: 2rem 1rem;
     
     .poet-card {
-      .poet-header .poet-name { font-size: 3.5rem; }
+      .poet-header .poet-name { font-size: 1.6rem; }
       .scale-legend { font-size: 0.6rem; margin-top: 1rem; }
       .word-selector {
         gap: 0.3rem;

@@ -3,14 +3,14 @@
   color: var(--off-white);
   
   h2, h3 {
-    font-family: 'Bebas Neue', cursive;
+    font-family: 'Merriweather', serif; font-weight: 700;
     color: var(--primary);
     margin-bottom: 1rem;
     letter-spacing: 1px;
   }
 
   h3 {
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: #888;
     margin-top: 1.5rem;
     border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -56,8 +56,8 @@
       color: #888;
       padding: 0.8rem 2rem;
       border-radius: 8px;
-      font-family: 'Bebas Neue', cursive;
-      font-size: 1.2rem;
+      font-family: 'Merriweather', serif; font-weight: 700;
+      font-size: 1rem;
       cursor: pointer;
       transition: all 0.2s;
 
@@ -73,8 +73,8 @@
       border: none;
       padding: 0.8rem 3rem;
       border-radius: 8px;
-      font-family: 'Bebas Neue', cursive;
-      font-size: 1.4rem;
+      font-family: 'Merriweather', serif; font-weight: 700;
+      font-size: 0.95rem;
       cursor: pointer;
       font-weight: bold;
       transition: all 0.3s;

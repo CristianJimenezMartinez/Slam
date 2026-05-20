@@ -23,7 +23,7 @@
       border-radius: 4px;
       font-size: 0.8rem;
       cursor: pointer;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Merriweather', serif;
       transition: all 0.2s;
       
       &:hover {
@@ -48,8 +48,8 @@
       .btn-projector {
         padding: 0.6rem 1.2rem;
         border-radius: 6px;
-        font-family: 'Bebas Neue', cursive;
-        font-size: 1.1rem;
+        font-family: 'Merriweather', serif; font-weight: 700;
+        font-size: 0.95rem;
         letter-spacing: 0.5px;
         cursor: pointer;
         border: none;
@@ -65,8 +65,8 @@
         color: white;
         padding: 0.6rem 1.2rem;
         border-radius: 6px;
-        font-family: 'Bebas Neue', cursive;
-        font-size: 1.1rem;
+        font-family: 'Merriweather', serif; font-weight: 700;
+        font-size: 0.95rem;
         letter-spacing: 0.5px;
         cursor: pointer;
         border: none;
@@ -131,7 +131,7 @@
         }
 
         .poet-name {
-          font-size: 1.1rem;
+          font-size: 0.95rem;
           font-weight: 500;
         }
       }

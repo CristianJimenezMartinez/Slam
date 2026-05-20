@@ -16,34 +16,32 @@ Antes de construir la interfaz, debemos asegurar que el motor (Supabase) soporte
 
 ### 2.1 Sistema de Validación por Acceso Único (Sellado)
 La seguridad se basa en la validación del dispositivo vinculada al evento:
-- **Acceso por UUID**: El `id` del evento actúa como llave única en la URL (`access_code`).
-- **Ventana de Validación (SELLADO)**: 
+- [x] **Acceso por UUID**: El `id` del evento actúa como llave única en la URL (`access_code`).
+- [x] **Ventana de Validación (SELLADO)**: 
     - El Admin usa `registro_pin_abierto` para permitir o bloquear la entrada de nuevos dispositivos.
     - Una vez cerrado, nadie sin un token previo puede entrar, aunque tenga el link.
-- **Persistencia**: El `voter_token` se guarda en `localStorage`, permitiendo votar durante todo el evento sin revalidar.
-- **Contador de Dispositivos**: (Pendiente) Visualización en tiempo real de cuántos dispositivos han validado su token.
+- [x] **Persistencia**: El `voter_token` se guarda en `localStorage`, permitiendo votar durante todo el evento sin revalidar.
+- [ ] **Contador de Dispositivos**: (Pendiente) Visualización en tiempo real de cuántos dispositivos han validado su token.
 
 ### 2.2 Estado del Participante y Votación
-- **Campo `esta_votando`**: Para identificar quién está en escena.
-- **Unicidad**: Control para que solo un poeta pueda tener el voto abierto simultáneamente (al activar uno, se desactivan los demás).
+- [x] **Gestión 1 a 1 de Poeta Activo**: Implementado de forma robusta en la base de datos y la interfaz mediante el campo `evento.participante_activo_id`. Solo un poeta puede estar en escena en cada momento, actuando como la única fuente de verdad y asegurando la unicidad.
 
 ---
 
 ## Fase 3: Rediseño y Unificación del Panel Admin (Dashboard)
 
 ### 3.1 Interfaz de Pestañas (Tabs)
-Un diseño ancho de tarjetas moderno con navegación superior para alternar entre:
-- **Control Live**: (Gestión del PIN, Sellado, Contador y Votación 1 a 1).
-- **Eventos**: Listado de todos los slams y acciones rápidas.
-- **Temporada**: Configuración global, cartelera y cronograma masivo.
-- **Usuarios**: (Futuro) Gestión delegada de permisos y roles.
+- [x] **Navegación Superior**: Un diseño de navegación moderno con pestañas para alternar de forma fluida entre:
+    - **Control Live** (Gestión del PIN de registro, activación de poetas, control de rondas y visualización).
+    - **Eventos** (Slams activos y programados con acciones de edición rápida).
+    - **Anteriores** (Historial de Slams pasados).
+    - **Temporada** (Visualización y edición de la cartelera y cronograma global).
 
 ### 3.2 Arquitectura de Modales Reutilizables
-- Los formularios de (Crear/Editar Evento) y (Configuración de Temporada) se transformarán en **Modales independientes**.
-- Esto evita que el código sature el componente principal y facilita el mantenimiento por ramas separadas.
+- [x] **Modales independientes**: Implementado. El formulario de creación/edición de eventos (`app-event-detail`) se encapsula dentro del componente reutilizable `<app-modal>`, aislando por completo la lógica para un mantenimiento más limpio.
 
 ### 3.3 Aislamiento de Roles
-- Diseño técnico para que el flujo de "Admin" esté separado de futuros flujos de "Usuario de aplicación".
+- [x] **Separación de Vistas**: Implementado. El diseño técnico y la lógica de negocio separan el panel administrativo con cabeceras (`app-admin-header`), pestañas (`app-admin-tabs`) e inicio de sesión seguro, de la experiencia directa del usuario.
 
 ---
 
@@ -57,12 +55,12 @@ Rediseñar la ruta `/votar` para que sea dinámica y reaccione al Admin:
     - Muestra Foto y Nombre del poeta activo.
     - Selector de puntos (1-10).
     - Botón "Enviar Voto".
-- [ ] **Estado 5: Voto Registrado**: El formulario desaparece y se bloquea (no rectificable). Muestra confirmación y vuelve a estado de espera automáticamente para el siguiente poeta.
+- [x] **Estado 5: Voto Registrado**: Tras votar, se muestra la confirmación (`app-votar-success`) y el formulario queda bloqueado de forma no rectificable. En cuanto el Admin activa un nuevo poeta, el cliente detecta el cambio de ID en tiempo real, limpia el estado y vuelve a mostrar el formulario de voto para el nuevo participante de forma automática.
 
 ---
 
 ## Fase 5: Sincronización Realtime
-- [ ] **Supabase Realtime**: Implementar suscripciones para que el cambio de estado en el Dashboard (Admin) se refleje instantáneamente en los dispositivos del público sin necesidad de recargar la página.
+- [x] **Supabase Realtime**: Implementado con éxito. Se suscriben los componentes a los canales de Supabase (`listenToEventoChanges`, `listenToAllEventosChanges`) permitiendo actualizaciones instantáneas del estado del Slam (poeta activo, publicación de puntuaciones, cierre de ronda) en la vista del público sin necesidad de recargar la página.
 
 ---
 

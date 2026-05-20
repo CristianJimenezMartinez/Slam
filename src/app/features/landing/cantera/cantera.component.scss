@@ -3,43 +3,55 @@
   min-height: calc(100vh - 80px); // Ajustado para el Nav (80px)
   background: var(--bg);
   color: var(--off-white);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Merriweather', serif;
   // Eliminamos overflow-x para evitar el doble scroll
 }
 
 // BACKGROUND QUE CUBRE TODO EL CONTENIDO DE ESTA PÁGINA
 .hero-bg-container {
-  position: absolute; // Cambiado de fixed a absolute
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 0;
+  background: var(--bg); // Fondo de respaldo para zonas no cubiertas
+  overflow: hidden;
 
   .hero-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 15%;
-    opacity: 0.7;
-    filter: blur(1.5px) contrast(1.1) brightness(0.6);
-    transform: scale(1.02);
+    object-position: center center;
+    opacity: 0.65;
+    filter: contrast(1.05) brightness(0.55);
+    // Sin scale ni blur — preserva la nitidez y evita deformaciones en los bordes
   }
 }
 
 .hero-overlay {
-  position: absolute; // Cambiado de fixed a absolute
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-    background: linear-gradient(to bottom, 
-      rgba(0,0,0,0.9) 0%, 
-      transparent 10%, 
-      transparent 95%, 
-      var(--bg) 100% // Unión perfecta con el color del footer
-    );
   z-index: 1;
+
+  // Degradado vertical: integra arriba (header) y abajo (footer)
+  background:
+    linear-gradient(to bottom,
+      rgba(26, 26, 26, 0.85) 0%,
+      transparent 12%,
+      transparent 80%,
+      var(--bg) 100%
+    ),
+    // Viñeta radial: integra los bordes laterales con suavidad
+    radial-gradient(
+      ellipse at center,
+      transparent 40%,
+      rgba(26, 26, 26, 0.6) 80%,
+      var(--bg) 100%
+    );
 }
 
 // CONTENEDOR DE CONTENIDO
@@ -57,8 +69,8 @@
     animation: fadeInDown 1s ease-out;
 
     .glow-text {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 8rem;
+      font-family: 'Merriweather', serif; font-weight: 700;
+      font-size: 4rem;
       color: var(--primary);
       text-shadow: 0 0 30px rgba(var(--primary-rgb), 0.5);
       margin: 0;
@@ -66,7 +78,7 @@
     }
 
     .hero-subtitle {
-      font-size: 1.5rem;
+      font-size: 1.1rem;
       text-transform: uppercase;
       letter-spacing: 4px;
       color: rgba(255, 255, 255, 0.8);
@@ -114,9 +126,9 @@
 
   .info-card {
     text-align: center;
-    .card-icon { font-size: 3.5rem; margin-bottom: 2rem; }
-    h2 { font-family: 'Bebas Neue', cursive; font-size: 3rem; color: var(--primary); margin-bottom: 1.5rem; }
-    p { color: #ccc; line-height: 1.9; font-size: 1.15rem; }
+    .card-icon { font-size: 3rem; margin-bottom: 2rem; }
+    h2 { font-family: 'Merriweather', serif; font-weight: 700; font-size: 1.8rem; color: var(--primary); margin-bottom: 1.5rem; }
+    p { color: #ccc; line-height: 1.9; font-size: 0.95rem; }
   }
 
   .cta-section {
@@ -124,12 +136,31 @@
     max-width: 900px;
     margin: 0 auto;
 
-    h3 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; margin-bottom: 1.5rem; }
-    p { font-size: 1.3rem; color: #999; margin-bottom: 3rem; }
+    .cta-lead {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+    }
+
+    h3 {
+      font-family: 'Merriweather', serif; font-weight: 700;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    .cta-description {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
 
     .btn-premium {
       padding: 1.5rem 5rem;
-      font-size: 1.4rem;
+      font-size: 1.1rem;
       font-weight: 800;
       text-transform: uppercase;
       background: var(--primary);
@@ -159,12 +190,12 @@
   
   .cantera-content .hero-header {
     margin-bottom: 15vh;
-    .glow-text { font-size: 4rem; }
+    .glow-text { font-size: 2.5rem; }
     .hero-subtitle { font-size: 1rem; }
   }
 
   .cantera-info {
     .glass { padding: 2rem; }
-    .info-card h2 { font-size: 2.2rem; }
+    .info-card h2 { font-size: 1.6rem; }
   }
 }

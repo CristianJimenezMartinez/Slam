@@ -39,8 +39,8 @@ import { Component, Input } from '@angular/core';
     }
 
     p {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 1.5rem;
+      font-family: 'Merriweather', serif;
+      font-size: 0.95rem;
       letter-spacing: 2px;
       color: rgba(var(--text-rgb, 255, 255, 255), 0.4);
     }

@@ -4,15 +4,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Merriweather', serif;
   padding: 4rem 1.5rem;
   box-sizing: border-box;
   color: var(--primary); // Heredamos color base
 
 
   .glow-text {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 4.5rem;
+    font-family: 'Merriweather', serif; font-weight: 700;
+    font-size: 2.8rem;
     color: inherit;
     text-shadow: 0 0 25px rgba(var(--primary-rgb), 0.4);
     margin-bottom: 0.5rem;
@@ -21,7 +21,7 @@
   }
 
   .subtitle {
-    font-size: 1.5rem;
+    font-size: 0.95rem;
     color: inherit;
     text-transform: uppercase;
     letter-spacing: 4px;
@@ -70,15 +70,15 @@
     }
 
     h2 {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 2.5rem;
+      font-family: 'Merriweather', serif; font-weight: 700;
+      font-size: 1.05rem;
       color: #ff4d4f;
       margin-bottom: 1rem;
       letter-spacing: 1px;
     }
 
     p {
-      font-size: 1.15rem;
+      font-size: 0.95rem;
       color: inherit;
       line-height: 1.5;
     }
@@ -90,7 +90,7 @@
     padding: 3rem;
     border-radius: 20px;
     h2 {
-      font-size: 2rem;
+      font-size: 0.95rem;
       color: #888;
     }
   }

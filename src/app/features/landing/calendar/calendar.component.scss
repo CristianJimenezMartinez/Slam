@@ -15,15 +15,15 @@
     padding-bottom: 2rem;
     border-bottom: 1px solid #222;
     
-    h1 { font-family: 'Bebas Neue', cursive; font-size: 4.5rem; color: var(--primary); margin-bottom: 0.5rem; line-height: 1; }
-    p { color: #888; font-size: 1.1rem; }
+    h1 { font-family: 'Merriweather', serif; font-weight: 700; font-size: 2.8rem; color: var(--primary); margin-bottom: 0.5rem; line-height: 1; }
+    p { color: #888; font-size: 0.95rem; }
   }
 
   .status-msg { 
     text-align: center; 
     padding: 5rem 0; 
     color: #666; 
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 
   .timeline {
@@ -34,8 +34,8 @@
 
   .timeline-section {
     .section-title {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 2.5rem;
+      font-family: 'Merriweather', serif; font-weight: 700;
+      font-size: 1.05rem;
       color: var(--primary);
       margin-bottom: 2.5rem;
       text-transform: uppercase;
@@ -135,13 +135,13 @@
         gap: 0.3rem;
 
         .day {
-          font-family: 'Bebas Neue', cursive;
-          font-size: 1.8rem;
+          font-family: 'Merriweather', serif; font-weight: 700;
+          font-size: 1.05rem;
           color: var(--primary);
         }
 
         .month {
-          font-family: 'Bebas Neue', cursive;
+          font-family: 'Merriweather', serif; font-weight: 700;
           font-size: 1rem;
           color: var(--off-white);
           text-transform: uppercase;
@@ -149,8 +149,8 @@
       }
 
       h3 {
-        font-family: 'Bebas Neue', cursive;
-        font-size: 2rem;
+        font-family: 'Merriweather', serif; font-weight: 700;
+        font-size: 0.95rem;
         color: var(--off-white);
         margin: 0 0 0.5rem 0;
       }
@@ -163,7 +163,7 @@
         align-items: center;
         gap: 0.3rem;
         
-        .icon { font-size: 1.1rem; }
+        .icon { font-size: 0.95rem; }
       }
 
       .action {
@@ -175,7 +175,7 @@
           width: 100%;
           text-align: center;
           padding: 0.6rem;
-          font-size: 1.1rem;
+          font-size: 0.95rem;
         }
       }
     }
@@ -189,14 +189,14 @@
     
     .page-header {
       margin-bottom: 2rem;
-      h1 { font-size: 2.5rem; }
+      h1 { font-size: 1.05rem; }
       p { font-size: 1rem; }
     }
 
     .timeline { gap: 2rem; }
     
     .timeline-section .section-title {
-      font-size: 1.5rem;
+      font-size: 0.95rem;
       margin-bottom: 1.5rem;
     }
 
@@ -207,12 +207,12 @@
       .date-box {
         min-width: 60px;
         height: 60px;
-        .day { font-size: 1.5rem; }
+        .day { font-size: 0.95rem; }
         .month { font-size: 0.8rem; }
       }
 
       .info-box {
-        h3 { font-size: 1.5rem !important; }
+        h3 { font-size: 1.3rem !important; }
         p { font-size: 0.9rem; margin-bottom: 1rem; }
       }
     }

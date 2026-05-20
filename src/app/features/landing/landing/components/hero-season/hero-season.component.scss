@@ -42,15 +42,15 @@
       padding: 0.5rem 1.5rem;
       border: 1px solid var(--primary);
       color: var(--primary);
-      font-family: 'Bebas Neue', cursive;
-      font-size: 1.5rem;
+      font-family: 'Merriweather', serif; font-weight: 700;
+      font-size: 1.1rem;
       border-radius: 4px;
       margin-bottom: 1rem;
       letter-spacing: 5px;
     }
 
-    h1 { font-size: 5.5rem; line-height: 0.9; margin: 0 0 1rem 0; color: #fff; }
-    .season-tagline { font-size: 1.5rem; color: #888; margin-bottom: 2rem; max-width: 450px; }
+    h1 { font-size: 3.2rem; line-height: 0.9; margin: 0 0 1rem 0; color: #fff; }
+    .season-tagline { font-size: 1.1rem; color: #888; margin-bottom: 2rem; max-width: 450px; }
 
     .hero-actions {
       display: block;
@@ -68,7 +68,7 @@
       }
 
       .btn-secondary.large {
-        font-size: 1.5rem;
+        font-size: 1.1rem;
         padding: 1rem 2.5rem;
       }
 
@@ -82,7 +82,7 @@
           right: -10px;
           background: #ef4444; 
           color: white;
-          font-family: 'Bebas Neue', cursive;
+          font-family: 'Merriweather', serif; font-weight: 700;
           font-size: 0.9rem;
           padding: 0.2rem 0.6rem;
           border-radius: 20px;
@@ -96,7 +96,7 @@
       }
 
       .pulse-btn {
-        font-size: 1.5rem;
+        font-size: 1.1rem;
         padding: 1rem 2.5rem;
         background: var(--primary);
         color: var(--bg);
@@ -112,7 +112,7 @@
         margin-top: 0.5rem;
         color: #444;
         font-size: 0.9rem;
-        font-family: 'Bebas Neue', cursive;
+        font-family: 'Merriweather', serif; font-weight: 700;
         letter-spacing: 1px;
       }
     }
@@ -121,7 +121,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      h1 { font-size: 3.5rem; }
+      h1 { font-size: 2.2rem; }
     }
   }
 

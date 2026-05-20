@@ -13,7 +13,7 @@
       cursor: pointer;
       transition: all 0.3s;
       
-      span { font-family: 'Bebas Neue', cursive; font-size: 1.2rem; color: var(--primary); }
+      span { font-family: 'Merriweather', serif; font-weight: 700; font-size: 1rem; color: var(--primary); }
       small { color: #555; margin-top: 0.5rem; }
       
       &:hover {
@@ -51,7 +51,7 @@
           background: rgba(var(--primary-rgb), 0.6);
           display: flex; align-items: center; justify-content: center;
           opacity: 0; transition: opacity 0.2s;
-          .icon { font-size: 1.5rem; }
+          .icon { font-size: 0.95rem; }
         }
         
         &:hover {
