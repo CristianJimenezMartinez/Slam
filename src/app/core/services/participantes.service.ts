@@ -31,7 +31,7 @@ export class ParticipantesService {
           res.data = res.data.map((p: any) => {
             if (!p.foto_url) {
               // Asignación automática: Poeta 1 a 10 según su orden
-              const avatarIndex = ((p.orden - 1) % 10) + 1;
+              const avatarIndex = p.orden === 0 ? 10 : (((p.orden - 1) % 10) + 1);
               p.foto_url = `assets/images/avatars/poeta${avatarIndex}.png`;
             }
             return p;

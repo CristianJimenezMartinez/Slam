@@ -72,7 +72,7 @@ export class LandingComponent implements OnInit {
       if (this.esEventoInminente) {
         const partsRes = await this.participantesService.getParticipantesByEvento(this.evento.id).toPromise();
         if (partsRes?.data) {
-          this.participantes = partsRes.data as Participante[];
+          this.participantes = (partsRes.data as Participante[]).filter(p => p.orden > 0);
         }
         const votingUrl = `${window.location.origin}/votar`;
         this.qrCodeUrl = await QRCode.toDataURL(votingUrl);

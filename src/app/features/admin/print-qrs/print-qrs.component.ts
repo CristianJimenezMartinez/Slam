@@ -56,8 +56,12 @@ export class PrintQrsComponent implements OnInit {
         }
 
         // 4. Generar imágenes QR en base64 para cada credencial
+        const origin = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+          ? 'https://poetryslamalicante.com'
+          : window.location.origin;
+
         for (const cred of this.credenciales) {
-          const qrUrl = `${window.location.origin}/votar?credencial=${cred.id}`;
+          const qrUrl = `${origin}/votar?credencial=${cred.id}`;
           this.qrUrls[cred.id] = await QRCode.toDataURL(qrUrl, { margin: 1, width: 120 });
         }
 

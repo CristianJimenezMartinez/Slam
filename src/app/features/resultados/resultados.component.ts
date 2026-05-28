@@ -88,20 +88,20 @@ export class ResultadosComponent implements OnInit, OnDestroy {
     const { data } = await this.votacionesService.getResultados(this.evento.id).toPromise();
     const allResults = data || [];
     
-    // 2. Determinar inteligentemente qué ronda es la clasificatoria oficial
-    const tieneRonda2 = allResults.some((r: any) => r.ronda === 2);
-    const tieneRonda3 = allResults.some((r: any) => r.ronda === 3);
+    // 2. Determinar si es un evento nuevo con quema (el de demostración tiene orden === 0)
+    const tieneQuema = allResults.some((r: any) => r.orden === 0);
     
     let rondaClasificatoria = 1;
-    if (tieneRonda3 || (tieneRonda2 && this.evento.votacion_activa)) {
+    if (tieneQuema) {
       // Evento nuevo (La Quema = R1, Clasificatoria = R2, Final = R3)
+      // La clasificatoria oficial en la landing web es siempre la ronda 2
       rondaClasificatoria = 2;
-    } else if (tieneRonda2) {
-      // Evento antiguo finalizado (Clasificatoria = R1, Final = R2)
+    } else {
+      // Evento antiguo sin quema: la clasificatoria es la ronda 1
       rondaClasificatoria = 1;
     }
     
-    // Filtramos para mostrar únicamente la clasificatoria oficial
+    // Filtramos para mostrar únicamente la clasificatoria oficial (ocultando La Quema)
     this.resultados = allResults.filter((r: any) => r.ronda === rondaClasificatoria);
   }
 
