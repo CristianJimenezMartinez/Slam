@@ -1,0 +1,30 @@
+<!-- Lista del Resto de Poetas (A partir del 4º puesto) -->
+<div class="vibe-container" *ngIf="resultados.length > 0">
+  <div class="vibe-row" *ngFor="let res of resultados">
+    <div class="vibe-position" [class.top-3]="res.posicion <= 3" [class]="'pos-' + res.posicion">
+      {{ res.posicion }}
+    </div>
+    <div class="vibe-avatar" [style.background-image]="'url(' + (res.foto_url || 'assets/default-avatar.jpg') + ')'"></div>
+    <div class="vibe-info">
+      <div class="vibe-header">
+        <span class="vibe-poet-name">{{ res.participante }}</span>
+        <div class="vibe-score-wrapper">
+          <span class="vibe-badge" [class]="
+            res.puntuacion_media >= 9 ? 'vibe-magia' : 
+            res.puntuacion_media >= 7 ? 'vibe-fuego' : 
+            res.puntuacion_media >= 5 ? 'vibe-fuerte' : 
+            res.puntuacion_media >= 3 ? 'vibe-bien' : 'vibe-suave'">
+            {{ res.puntuacion_media >= 9 ? '✨ Magia' : 
+               res.puntuacion_media >= 7 ? '🔥 Fuego' : 
+               res.puntuacion_media >= 5 ? '⚡ Fuerte' : 
+               res.puntuacion_media >= 3 ? '👍 Bien' : '🌱 Suave' }}
+          </span>
+          <span class="vibe-percentage">{{ res.puntuacion_media * 10 | number:'1.2-2' }}%</span>
+        </div>
+      </div>
+      <div class="vibe-bar-track">
+        <div class="vibe-bar-fill" [style.width]="(res.puntuacion_media * 10) + '%'"></div>
+      </div>
+    </div>
+  </div>
+</div>

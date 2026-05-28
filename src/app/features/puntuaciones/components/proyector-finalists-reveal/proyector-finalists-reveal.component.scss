@@ -1,0 +1,68 @@
+.reveal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  padding: 2rem 0;
+
+  .reveal-title {
+    font-family: 'Merriweather', serif; font-weight: 700;
+    font-size: 5rem;
+    color: var(--primary);
+    text-shadow: 0 0 30px rgba(var(--primary-rgb), 0.5);
+    margin-bottom: 3rem;
+  }
+
+  .finalists-reveal-grid {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+
+    .finalist-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+
+      .f-avatar {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+        border: 4px solid var(--primary);
+        box-shadow: 0 0 40px rgba(var(--primary-rgb), 0.4);
+      }
+
+      h3 {
+        font-family: 'Merriweather', serif; font-weight: 700;
+        font-size: 1.5rem;
+        color: #fff;
+      }
+    }
+  }
+}
+
+// Animaciones de transiciones
+.anim-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.anim-pop-in {
+  opacity: 0;
+  transform: scale(0.5);
+  animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}

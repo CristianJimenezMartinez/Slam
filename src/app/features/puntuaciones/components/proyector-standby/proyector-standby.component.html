@@ -1,0 +1,12 @@
+<div class="standby-screen">
+  <div class="logo-placeholder">🎙️</div>
+  <h2 class="glow-text">Poetry Slam Alicante</h2>
+  
+  <!-- QR para unirse si está abierto -->
+  <div class="qr-admission-box" *ngIf="evento.registro_pin_abierto && qrCodeUrl">
+    <img [src]="qrCodeUrl" alt="QR Acceso" class="qr-code-display">
+    <p class="qr-helper-text">Escanea para Votar</p>
+  </div>
+
+  <p *ngIf="!evento.registro_pin_abierto">Votaciones pausadas o finalizadas.</p>
+</div>

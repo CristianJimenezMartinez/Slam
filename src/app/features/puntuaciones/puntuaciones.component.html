@@ -15,65 +15,28 @@
         <p class="vibe-title">Sintonía del Público</p>
       </header>
 
-      <!-- Lista No-Competitiva de Sintonía ordenada por orden de actuación -->
-      <div class="vibe-container">
-        <div class="vibe-row" *ngFor="let res of resultados">
-          <div class="vibe-position" [class.top-3]="res.posicion <= 3" [class]="'pos-' + res.posicion">
-            {{ res.posicion }}
-          </div>
-          <div class="vibe-avatar" [style.background-image]="'url(' + (res.foto_url || 'assets/default-avatar.jpg') + ')'"></div>
-          <div class="vibe-info">
-            <div class="vibe-header">
-              <span class="vibe-poet-name">{{ res.participante }}</span>
-              <div class="vibe-score-wrapper">
-                <span class="vibe-badge" [class]="
-                  res.puntuacion_media >= 9 ? 'vibe-magia' : 
-                  res.puntuacion_media >= 7 ? 'vibe-fuego' : 
-                  res.puntuacion_media >= 5 ? 'vibe-fuerte' : 
-                  res.puntuacion_media >= 3 ? 'vibe-bien' : 'vibe-suave'">
-                  {{ res.puntuacion_media >= 9 ? '✨ Magia' : 
-                     res.puntuacion_media >= 7 ? '🔥 Fuego' : 
-                     res.puntuacion_media >= 5 ? '⚡ Fuerte' : 
-                     res.puntuacion_media >= 3 ? '👍 Bien' : '🌱 Suave' }}
-                </span>
-                <span class="vibe-percentage">{{ res.puntuacion_media * 10 | number:'1.0-0' }}%</span>
-              </div>
-            </div>
-            <div class="vibe-bar-track">
-              <div class="vibe-bar-fill" [style.width]="(res.puntuacion_media * 10) + '%'"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- Subcomponente Podio (3 primeros) -->
+      <app-proyector-podium [resultados]="resultados"></app-proyector-podium>
+
+      <!-- Línea Divisoria Premium -->
+      <div class="divider" *ngIf="resultados.length > 3"></div>
+
+      <!-- Subcomponente Resto de Poetas en 3 columnas (recibe del 4º en adelante) -->
+      <app-proyector-vibe-list [resultados]="resultados.slice(3)"></app-proyector-vibe-list>
     </div>
 
-    <!-- Modo Oculto / Transición -->
-    <div class="standby-screen" *ngIf="!mostrarResultados || resultados.length === 0">
+    <!-- Modo Oculto / Transición / Standby -->
+    <div class="standby-wrapper" *ngIf="!mostrarResultados || resultados.length === 0">
       
-      <!-- Transición a la Final (Solo si aún no hay votos en la Ronda 3) -->
-      <ng-container *ngIf="rondaActual === 3 && resultados.length === 0 && finalistas.length > 0; else regularStandby">
-        <div class="reveal-container">
-          <h2 class="reveal-title anim-fade-in">¡TENEMOS FINALISTAS!</h2>
-          <div class="finalists-reveal-grid">
-            <div class="finalist-card anim-pop-in" *ngFor="let f of finalistas; let i = index" [style.animation-delay]="(i * 0.5) + 's'">
-              <div class="f-avatar" [style.background-image]="'url(' + f.foto_url + ')'"></div>
-              <h3>{{ f.participante }}</h3>
-            </div>
-          </div>
-        </div>
-      </ng-container>
+      <!-- Subcomponente Revelación de Finalistas (Ronda 3 sin votos aún) -->
+      <app-proyector-finalists-reveal 
+        *ngIf="rondaActual === 3 && resultados.length === 0 && finalistas.length > 0; else regularStandby"
+        [finalistas]="finalistas">
+      </app-proyector-finalists-reveal>
 
+      <!-- Subcomponente Standby Regular -->
       <ng-template #regularStandby>
-        <div class="logo-placeholder">🎙️</div>
-        <h2 class="glow-text">Poetry Slam Alicante</h2>
-        
-        <!-- QR para unirse si está abierto -->
-        <div class="qr-admission-box" *ngIf="evento.registro_pin_abierto && qrCodeUrl">
-          <img [src]="qrCodeUrl" alt="QR Acceso" class="qr-code-display">
-          <p class="qr-helper-text">Escanea para Votar</p>
-        </div>
-
-        <p *ngIf="!evento.registro_pin_abierto">Votaciones pausadas o finalizadas.</p>
+        <app-proyector-standby [evento]="evento" [qrCodeUrl]="qrCodeUrl"></app-proyector-standby>
       </ng-template>
     </div>
 

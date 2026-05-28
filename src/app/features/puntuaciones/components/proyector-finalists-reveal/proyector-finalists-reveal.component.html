@@ -1,0 +1,10 @@
+<!-- Transición a la Final (Solo si aún no hay votos en la Ronda 3) -->
+<div class="reveal-container" *ngIf="finalistas.length > 0">
+  <h2 class="reveal-title anim-fade-in">¡TENEMOS FINALISTAS!</h2>
+  <div class="finalists-reveal-grid">
+    <div class="finalist-card anim-pop-in" *ngFor="let f of finalistas; let i = index" [style.animation-delay]="(i * 0.5) + 's'">
+      <div class="f-avatar" [style.background-image]="'url(' + f.foto_url + ')'"></div>
+      <h3>{{ f.participante }}</h3>
+    </div>
+  </div>
+</div>

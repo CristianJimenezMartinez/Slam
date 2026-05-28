@@ -52,6 +52,12 @@ import { VotarSuccessComponent } from './features/votar/components/votar-success
 import { PuntuacionesComponent } from './features/puntuaciones/puntuaciones.component';
 import { QrComponent } from './features/qr/qr.component';
 
+// Proyector Sub-components
+import { ProyectorPodiumComponent } from './features/puntuaciones/components/proyector-podium/proyector-podium.component';
+import { ProyectorVibeListComponent } from './features/puntuaciones/components/proyector-vibe-list/proyector-vibe-list.component';
+import { ProyectorFinalistsRevealComponent } from './features/puntuaciones/components/proyector-finalists-reveal/proyector-finalists-reveal.component';
+import { ProyectorStandbyComponent } from './features/puntuaciones/components/proyector-standby/proyector-standby.component';
+
 // Otros
 import { ResultadosComponent } from './features/resultados/resultados.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
@@ -86,6 +92,10 @@ registerLocaleData(localeEs, 'es');
     VotarFormComponent,
     VotarSuccessComponent,
     PuntuacionesComponent,
+    ProyectorPodiumComponent,
+    ProyectorVibeListComponent,
+    ProyectorFinalistsRevealComponent,
+    ProyectorStandbyComponent,
     QrComponent,
     ResultadosComponent,
     DashboardComponent,
