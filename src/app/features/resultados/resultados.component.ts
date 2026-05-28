@@ -83,8 +83,26 @@ export class ResultadosComponent implements OnInit, OnDestroy {
 
   async refreshResults() {
     if (!this.evento) return;
+    
+    // 1. Obtener todos los resultados
     const { data } = await this.votacionesService.getResultados(this.evento.id).toPromise();
-    this.resultados = data || [];
+    const allResults = data || [];
+    
+    // 2. Determinar inteligentemente qué ronda es la clasificatoria oficial
+    const tieneRonda2 = allResults.some((r: any) => r.ronda === 2);
+    const tieneRonda3 = allResults.some((r: any) => r.ronda === 3);
+    
+    let rondaClasificatoria = 1;
+    if (tieneRonda3 || (tieneRonda2 && this.evento.votacion_activa)) {
+      // Evento nuevo (La Quema = R1, Clasificatoria = R2, Final = R3)
+      rondaClasificatoria = 2;
+    } else if (tieneRonda2) {
+      // Evento antiguo finalizado (Clasificatoria = R1, Final = R2)
+      rondaClasificatoria = 1;
+    }
+    
+    // Filtramos para mostrar únicamente la clasificatoria oficial
+    this.resultados = allResults.filter((r: any) => r.ronda === rondaClasificatoria);
   }
 
   ngOnDestroy(): void {

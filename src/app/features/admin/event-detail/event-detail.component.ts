@@ -21,6 +21,8 @@ export class EventDetailComponent implements OnInit {
   oldCartelUrl: string | null = null;
   removeCartelFlag = false;
   existingCarteles: { name: string, url: string }[] = [];
+  poetaQuemaId: string | null = null;
+  participantesAEliminar: string[] = [];
 
   private toLocalISOString(date: Date): string {
     const tzOffset = date.getTimezoneOffset() * 60000; // offset in milliseconds
@@ -43,6 +45,7 @@ export class EventDetailComponent implements OnInit {
       url_cartel: [''],
       presentador: ['Ágora Reix'],
       artista_invitado: [''],
+      poeta_quema: ['Poeta de Demostración', Validators.required],
       color_primario: ['#92D342', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
       color_secundario: ['#368475', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
       color_fondo: ['#1A1A1A', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
@@ -93,13 +96,18 @@ export class EventDetailComponent implements OnInit {
       }
 
       const resParts = await lastValueFrom(this.participantesService.getParticipantesByEvento(this.eventId!));
-      const parts = resParts?.data;
-      (parts as any[] | null)?.forEach(p => {
-        this.participantes.push(this.fb.group({
-          id: [p.id],
-          nombre: [p.nombre, Validators.required],
-          orden: [p.orden]
-        }));
+      const parts = (resParts?.data || []) as any[];
+      parts.forEach(p => {
+        if (p.orden === 0) {
+          this.poetaQuemaId = p.id;
+          this.eventForm.patchValue({ poeta_quema: p.nombre });
+        } else {
+          this.participantes.push(this.fb.group({
+            id: [p.id],
+            nombre: [p.nombre, Validators.required],
+            orden: [p.orden]
+          }));
+        }
       });
     }
 
@@ -140,6 +148,10 @@ export class EventDetailComponent implements OnInit {
   }
 
   removeParticipante(index: number) {
+    const p = this.participantes.at(index).value;
+    if (p.id) {
+      this.participantesAEliminar.push(p.id);
+    }
     this.participantes.removeAt(index);
   }
 
@@ -162,7 +174,7 @@ export class EventDetailComponent implements OnInit {
       this.eventForm.patchValue({ url_cartel: '' });
     }
 
-    const { nombre, descripcion, fecha, url_entradas, url_cartel, presentador, artista_invitado, participantes, color_primario, color_secundario, color_fondo, color_texto, color_cabecera } = this.eventForm.value;
+    const { nombre, descripcion, fecha, url_entradas, url_cartel, presentador, artista_invitado, poeta_quema, participantes, color_primario, color_secundario, color_fondo, color_texto, color_cabecera } = this.eventForm.value;
 
     // Convertir el string local a una fecha ISO real con su zona horaria antes de enviar a Supabase
     const fechaISO = new Date(fecha).toISOString();
@@ -178,6 +190,31 @@ export class EventDetailComponent implements OnInit {
     }
 
     if (this.eventId) {
+      // 1. Eliminar participantes borrados
+      if (this.participantesAEliminar.length > 0) {
+        for (const id of this.participantesAEliminar) {
+          await this.participantesService.deleteParticipante(id);
+        }
+        this.participantesAEliminar = []; // Limpiar lista
+      }
+
+      // 2. Guardar/Actualizar Poeta de la Quema (demostración)
+      if (poeta_quema) {
+        if (this.poetaQuemaId) {
+          await this.participantesService.updateParticipante(this.poetaQuemaId, { nombre: poeta_quema });
+        } else {
+          const { data: qData } = await this.participantesService.addParticipantes([{
+            evento_id: this.eventId,
+            nombre: poeta_quema,
+            orden: 0
+          }]);
+          if (qData && (qData as any).length > 0) {
+            this.poetaQuemaId = (qData as any)[0].id;
+          }
+        }
+      }
+
+      // 3. Separar participantes nuevos y existentes
       const newParts = participantes
         .filter((p: any) => !p.id || p.id === null)
         .map((p: any) => {
@@ -188,10 +225,23 @@ export class EventDetailComponent implements OnInit {
           };
         });
 
+      const existingParts = participantes.filter((p: any) => p.id && p.id !== null);
+
+      // 4. Insertar nuevos participantes
       if (newParts.length > 0) {
         const { error: partError } = await this.participantesService.addParticipantes(newParts);
         if (partError) {
-          alert('Error al guardar participantes: ' + partError.message);
+          alert('Error al guardar nuevos participantes: ' + partError.message);
+        }
+      }
+
+      // 5. Actualizar participantes existentes
+      if (existingParts.length > 0) {
+        for (const p of existingParts) {
+          await this.participantesService.updateParticipante(p.id, {
+            nombre: p.nombre,
+            orden: p.orden
+          });
         }
       }
     }

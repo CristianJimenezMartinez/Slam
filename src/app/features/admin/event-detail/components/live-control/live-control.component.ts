@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 export class LiveControlComponent implements OnInit, OnDestroy {
   evento: Evento | null = null;
   participantes: Participante[] = [];
+  poetaQuema: Participante | null = null;
   finalistasIds: string[] = [];
   activoId: string | null = null;
   loading = true;
@@ -44,9 +45,11 @@ export class LiveControlComponent implements OnInit, OnDestroy {
         this.rondaActual = Number(ev.ronda_activa) || 1;
 
         const resParts = await this.participantesService.getParticipantesByEvento(this.evento.id).toPromise();
-        this.participantes = (resParts?.data || []) as Participante[];
+        const allParts = (resParts?.data || []) as Participante[];
+        this.poetaQuema = allParts.find(p => p.orden === 0) || null;
+        this.participantes = allParts.filter(p => p.orden > 0);
         
-        if (this.rondaActual === 2) {
+        if (this.rondaActual === 3) {
           await this.cargarFinalistas();
         }
 
@@ -71,7 +74,7 @@ export class LiveControlComponent implements OnInit, OnDestroy {
               
               if (this.rondaActual !== newRonda) {
                 this.rondaActual = newRonda;
-                if (this.rondaActual === 2 && oldRonda === 1) {
+                if (this.rondaActual === 3 && oldRonda < 3) {
                   await this.cargarFinalistas();
                 }
               }
@@ -97,16 +100,26 @@ export class LiveControlComponent implements OnInit, OnDestroy {
 
   async cargarFinalistas() {
     if (!this.evento) return;
-    const res = await this.votacionesService.getResultados(this.evento.id, 1).toPromise();
+    const res = await this.votacionesService.getResultados(this.evento.id, 2).toPromise(); // Cargamos de la Ronda 2 (Clasificatoria)
     if (res?.data) {
       const resultados = res.data as Resultado[];
-      // Tomamos los 3 primeros (el ranking de la vista ya viene ordenado)
-      this.finalistasIds = resultados.slice(0, 3).map(r => r.participante_id);
+      if (resultados.length > 0) {
+        // Encontrar la puntuación del 3er participante (o el último si hay menos de 3)
+        const indexCorte = Math.min(2, resultados.length - 1);
+        const puntuacionCorte = resultados[indexCorte].puntuacion_total;
+        
+        // Incluimos a todos los que empaten o superen la puntuación del 3º para evitar dejarlos fuera
+        this.finalistasIds = resultados
+          .filter(r => r.puntuacion_total >= puntuacionCorte)
+          .map(r => r.participante_id);
+      } else {
+        this.finalistasIds = [];
+      }
     }
   }
 
   get participantesFiltrados(): Participante[] {
-    if (this.rondaActual === 1) return this.participantes;
+    if (this.rondaActual === 1 || this.rondaActual === 2) return this.participantes;
     return this.participantes.filter(p => this.finalistasIds.includes(p.id));
   }
 
@@ -122,13 +135,12 @@ export class LiveControlComponent implements OnInit, OnDestroy {
     await this.eventosService.setParticipanteActivo(this.evento.id, null);
   }
 
-  async finalizarRonda1() {
-    if (!this.evento || !confirm('¿Estás seguro de finalizar la Ronda 1? Esto calculará los 3 finalistas y pasará a la final.')) return;
+  async finalizarQuema() {
+    if (!this.evento || !confirm('¿Estás seguro de finalizar la Ronda de Demostración (La Quema)? Esto comenzará la Ronda 1: Clasificatoria.')) return;
     this.loading = true;
     try {
       await this.eventosService.setParticipanteActivo(this.evento.id, null);
       await this.eventosService.setRonda(this.evento.id, 2);
-      // El refresco vendrá por el Realtime y cargará los finalistas
     } catch (e) {
       console.error(e);
     } finally {
@@ -136,11 +148,36 @@ export class LiveControlComponent implements OnInit, OnDestroy {
     }
   }
 
-  async volverARonda1() {
-    if (!this.evento || !confirm('¿Quieres volver a la Ronda 1?')) return;
+  async volverALaQuema() {
+    if (!this.evento || !confirm('¿Quieres volver a la Ronda de Demostración (La Quema)? Se mantendrán los votos de prueba.')) return;
     this.loading = true;
     try {
       await this.eventosService.setRonda(this.evento.id, 1);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  async finalizarRondaClasificatoria() {
+    if (!this.evento || !confirm('¿Estás seguro de finalizar la Ronda 1: Clasificatoria? Esto calculará los finalistas y pasará a la gran final.')) return;
+    this.loading = true;
+    try {
+      await this.eventosService.setParticipanteActivo(this.evento.id, null);
+      await this.eventosService.setRonda(this.evento.id, 3);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  async volverARondaClasificatoria() {
+    if (!this.evento || !confirm('¿Quieres volver a la Ronda 1: Clasificatoria?')) return;
+    this.loading = true;
+    try {
+      await this.eventosService.setRonda(this.evento.id, 2);
     } catch (e) {
       console.error(e);
     } finally {

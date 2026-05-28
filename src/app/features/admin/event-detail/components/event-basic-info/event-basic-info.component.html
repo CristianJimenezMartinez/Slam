@@ -3,6 +3,18 @@
     <label>Nombre del Evento</label>
     <input formControlName="nombre" placeholder="Slam de Poesía #1" />
   </div>
+
+  <!-- Sección de la Quema -->
+  <div class="form-group burn-poet-group" style="background: rgba(208, 106, 102, 0.04); border: 1px solid rgba(208, 106, 102, 0.12); padding: 1.2rem; border-radius: 12px; margin: 1.5rem 0; box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);">
+    <label style="color: #d06a66; font-weight: bold; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; font-family: 'Merriweather', serif;">
+      🔥 Demostración (La Quema)
+    </label>
+    <p style="font-size: 0.85rem; color: #999; margin: 0 0 0.8rem 0; line-height: 1.4;">
+      Este poeta se utilizará exclusivamente para la ronda de demostración inicial, permitiendo que el público pruebe el sistema de votación QR antes del evento real sin alterar la clasificación.
+    </p>
+    <input formControlName="poeta_quema" placeholder="Poeta de Demostración" style="border: 1px solid rgba(208, 106, 102, 0.25) !important;" />
+  </div>
+
   <div class="form-group">
     <label>Descripción</label>
     <textarea formControlName="descripcion" rows="2" placeholder="Escribe una breve descripción del evento..."></textarea>

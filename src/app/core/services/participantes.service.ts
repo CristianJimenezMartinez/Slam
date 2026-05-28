@@ -49,4 +49,8 @@ export class ParticipantesService {
   async deleteParticipante(id: string) {
     return this.supa.client.from('participantes').delete().eq('id', id);
   }
+
+  async updateParticipante(id: string, data: Partial<Participante>) {
+    return this.supa.client.from('participantes').update(data).eq('id', id);
+  }
 }

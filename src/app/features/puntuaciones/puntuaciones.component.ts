@@ -43,7 +43,7 @@ export class PuntuacionesComponent implements OnInit, OnDestroy {
         await this.refreshResultados();
         await this.generarQR();
 
-        if (this.rondaActual === 2) {
+        if (this.rondaActual === 3) {
           await this.cargarFinalistas();
         }
 
@@ -59,7 +59,7 @@ export class PuntuacionesComponent implements OnInit, OnDestroy {
               
               this.updateTheme(payload.new.color_primario);
 
-              if (this.rondaActual === 2 && oldRonda === 1) {
+              if (this.rondaActual === 3 && oldRonda < 3) {
                 await this.cargarFinalistas();
               }
               await this.refreshResultados();
@@ -89,14 +89,28 @@ export class PuntuacionesComponent implements OnInit, OnDestroy {
   async refreshResultados() {
     if (!this.evento) return;
     const res = await this.votacionesService.getResultados(this.evento.id, this.rondaActual).toPromise();
-    this.resultados = (res?.data || []) as Resultado[];
+    const data = (res?.data || []) as Resultado[];
+    // Ordenamos por posicion en la clasificacion oficial
+    this.resultados = data.sort((a, b) => a.posicion - b.posicion);
   }
 
   async cargarFinalistas() {
     if (!this.evento) return;
-    // Pedimos explícitamente los resultados de la Ronda 1
-    const res = await this.votacionesService.getResultados(this.evento.id, 1).toPromise();
-    this.finalistas = (res?.data || []).slice(0, 3) as Resultado[];
+    // Pedimos los resultados de la Ronda 2 (Clasificatoria)
+    const res = await this.votacionesService.getResultados(this.evento.id, 2).toPromise();
+    if (res?.data) {
+      const resultados = res.data as Resultado[];
+      if (resultados.length > 0) {
+        // Encontrar la puntuación del 3er participante (o el último si hay menos de 3)
+        const indexCorte = Math.min(2, resultados.length - 1);
+        const puntuacionCorte = resultados[indexCorte].puntuacion_total;
+        
+        // Incluimos a todos los que empaten o superen la puntuación del 3º para evitar dejarlos fuera
+        this.finalistas = resultados.filter(r => r.puntuacion_total >= puntuacionCorte) as Resultado[];
+      } else {
+        this.finalistas = [];
+      }
+    }
   }
 
   async generarQR() {

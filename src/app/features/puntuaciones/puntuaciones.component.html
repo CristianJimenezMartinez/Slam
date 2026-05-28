@@ -5,31 +5,43 @@
 
   <div class="content" *ngIf="!loading && evento">
     
-    <!-- Modo Activo: Mostrar Puntuaciones -->
+    <!-- Modo Activo: Mostrar Puntuaciones (Vibe/Sintonía Colectiva) -->
     <div class="live-ranking" *ngIf="mostrarResultados && resultados.length > 0">
       <header class="proyector-header">
         <h1 class="glow-text">{{ evento.nombre }}</h1>
-        <p class="subtitle">Puntuaciones en Tiempo Real</p>
+        <p class="subtitle" style="margin-bottom: 0.3rem;">
+          {{ rondaActual === 1 ? '🔥 Ronda de Demostración: La Quema' : rondaActual === 2 ? '📍 Ronda 1: Clasificatoria' : '🏆 Ronda 2: ¡GRAN FINAL!' }}
+        </p>
+        <p class="vibe-title">Sintonía del Público</p>
       </header>
 
-      <!-- Podio / Top 3 -->
-      <div class="podium-section" *ngIf="resultados.length > 0">
-        <div class="podium-item" *ngFor="let res of resultados.slice(0, 3); let i = index" [class]="'rank-' + (i + 1)">
-          <div class="rank-number">#{{ i + 1 }}</div>
-          <div class="avatar" [style.background-image]="'url(' + (res.foto_url || 'assets/default-avatar.jpg') + ')'"></div>
-          <div class="info">
-            <h3>{{ res.participante }}</h3>
+      <!-- Lista No-Competitiva de Sintonía ordenada por orden de actuación -->
+      <div class="vibe-container">
+        <div class="vibe-row" *ngFor="let res of resultados">
+          <div class="vibe-position" [class.top-3]="res.posicion <= 3" [class]="'pos-' + res.posicion">
+            {{ res.posicion }}
           </div>
-        </div>
-      </div>
-
-      <!-- Resto del Ranking en Cuadrícula de Bloques -->
-      <div class="ranking-grid" *ngIf="resultados.length > 3">
-        <div class="ranking-card" *ngFor="let res of resultados.slice(3); let i = index">
-          <div class="card-avatar" [style.background-image]="'url(' + res.foto_url + ')'"></div>
-          <div class="card-info">
-            <div class="card-rank">#{{ i + 4 }}</div>
-            <span class="poet-name">{{ res.participante }}</span>
+          <div class="vibe-avatar" [style.background-image]="'url(' + (res.foto_url || 'assets/default-avatar.jpg') + ')'"></div>
+          <div class="vibe-info">
+            <div class="vibe-header">
+              <span class="vibe-poet-name">{{ res.participante }}</span>
+              <div class="vibe-score-wrapper">
+                <span class="vibe-badge" [class]="
+                  res.puntuacion_media >= 9 ? 'vibe-magia' : 
+                  res.puntuacion_media >= 7 ? 'vibe-fuego' : 
+                  res.puntuacion_media >= 5 ? 'vibe-fuerte' : 
+                  res.puntuacion_media >= 3 ? 'vibe-bien' : 'vibe-suave'">
+                  {{ res.puntuacion_media >= 9 ? '✨ Magia' : 
+                     res.puntuacion_media >= 7 ? '🔥 Fuego' : 
+                     res.puntuacion_media >= 5 ? '⚡ Fuerte' : 
+                     res.puntuacion_media >= 3 ? '👍 Bien' : '🌱 Suave' }}
+                </span>
+                <span class="vibe-percentage">{{ res.puntuacion_media * 10 | number:'1.0-0' }}%</span>
+              </div>
+            </div>
+            <div class="vibe-bar-track">
+              <div class="vibe-bar-fill" [style.width]="(res.puntuacion_media * 10) + '%'"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -38,8 +50,8 @@
     <!-- Modo Oculto / Transición -->
     <div class="standby-screen" *ngIf="!mostrarResultados || resultados.length === 0">
       
-      <!-- Transición a la Final (Solo si aún no hay votos en la Ronda 2) -->
-      <ng-container *ngIf="rondaActual === 2 && resultados.length === 0 && finalistas.length > 0; else regularStandby">
+      <!-- Transición a la Final (Solo si aún no hay votos en la Ronda 3) -->
+      <ng-container *ngIf="rondaActual === 3 && resultados.length === 0 && finalistas.length > 0; else regularStandby">
         <div class="reveal-container">
           <h2 class="reveal-title anim-fade-in">¡TENEMOS FINALISTAS!</h2>
           <div class="finalists-reveal-grid">
