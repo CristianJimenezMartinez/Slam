@@ -22,12 +22,23 @@ import { CronogramaListComponent } from './features/admin/cronograma-list/cronog
 import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-dashboard.component';
 import { PrintQrsComponent } from './features/admin/print-qrs/print-qrs.component';
 import { CronometroComponent } from './features/cronometro/cronometro.component';
+import { RuletaComponent } from './features/ruleta/ruleta.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
     component: LandingComponent
+  },
+  {
+    path: 'ruleta',
+    component: RuletaComponent,
+    data: {
+      seo: {
+        title: 'Ruleta de Nombres - Sorteo de Poetas',
+        description: 'Sorteo aleatorio interactivo para determinar el orden de los poetas en el Poetry Slam Alicante.'
+      }
+    }
   },
   {
     path: 'cantera',

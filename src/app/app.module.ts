@@ -65,6 +65,7 @@ import { FooterComponent } from './core/footer/footer.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
 import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
 import { CronometroComponent } from './features/cronometro/cronometro.component';
+import { RuletaComponent } from './features/ruleta/ruleta.component';
 
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
@@ -115,7 +116,8 @@ registerLocaleData(localeEs, 'es');
     EventParticipantsComponent,
     LiveControlComponent,
     PrintQrsComponent,
-    CronometroComponent
+    CronometroComponent,
+    RuletaComponent
   ],
   imports: [
     BrowserModule,

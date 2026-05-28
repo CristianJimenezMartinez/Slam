@@ -1,0 +1,107 @@
+<div class="ruleta-container container">
+  <!-- Cabecera del Sorteo -->
+  <header class="ruleta-header">
+    <button class="btn-back" routerLink="/">← Volver al Inicio</button>
+    <h1 class="ruleta-title">Ruleta de Nombres</h1>
+    <p class="ruleta-subtitle">Sorteo oficial del orden de participación de los poetas</p>
+  </header>
+
+  <!-- Cuerpo Principal en dos columnas -->
+  <div class="ruleta-body">
+    <!-- Columna Izquierda: La Ruleta -->
+    <div class="wheel-section">
+      <div class="canvas-wrapper">
+        <canvas #wheelCanvas></canvas>
+      </div>
+      
+      <button 
+        class="btn-spin" 
+        [disabled]="isSpinning || nombres.length === 0" 
+        (click)="girar()">
+        <span *ngIf="!isSpinning">¡GIRAR LA RUEDA!</span>
+        <span *ngIf="isSpinning">GIRANDO...</span>
+      </button>
+    </div>
+
+    <!-- Columna Derecha: Panel de Control -->
+    <div class="panel-section card">
+      <h3 class="panel-title">Participantes ({{ nombres.length }})</h3>
+
+      <!-- Integración Supabase: Cargar del evento activo -->
+      <div class="supabase-integration" *ngIf="eventoActivo">
+        <div class="event-info">
+          <span class="pulse-indicator"></span>
+          <p><strong>Evento Activo Detectado:</strong><br>{{ eventoActivo.nombre }}</p>
+        </div>
+        <button 
+          class="btn-import" 
+          [disabled]="loadingEvent || isSpinning"
+          (click)="cargarPoetasDelEvento()">
+          <span *ngIf="!loadingEvent">📥 CARGAR POETAS DEL EVENTO</span>
+          <span *ngIf="loadingEvent">CARGANDO...</span>
+        </button>
+      </div>
+
+      <!-- Cuadro de texto para añadir nombres manualmente -->
+      <div class="form-group">
+        <label for="namesTextarea">Edita los nombres (uno por línea):</label>
+        <textarea
+          id="namesTextarea"
+          rows="12"
+          [disabled]="isSpinning"
+          [(ngModel)]="listaTexto"
+          (ngModelChange)="actualizarNombresDesdeTexto()"
+          placeholder="Escribe nombres aquí...&#10;Uno por línea.">
+        </textarea>
+      </div>
+
+      <!-- Botones de Acción Rápida -->
+      <div class="panel-actions">
+        <button 
+          class="btn-action btn-shuffle" 
+          [disabled]="isSpinning || nombres.length < 2"
+          (click)="mezclarNombres()">
+          🔀 Mezclar
+        </button>
+        <button 
+          class="btn-action btn-clear" 
+          [disabled]="isSpinning || nombres.length === 0"
+          (click)="limpiarRuleta()">
+          🗑️ Limpiar
+        </button>
+        <button 
+          class="btn-action btn-reset" 
+          [disabled]="isSpinning"
+          (click)="resetearRuleta()">
+          🔄 Reiniciar
+        </button>
+      </div>
+
+      <!-- Instrucciones de Uso -->
+      <div class="instructions">
+        <p>💡 <strong>¿Cómo funciona?</strong> Escribe o pega los nombres de los poetas a la derecha. Pulsa <strong>¡GIRAR LA RUEDA!</strong>. Al detenerse, podrás eliminar al poeta elegido para que no vuelva a salir.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Celebración de Ganador -->
+  <div class="modal-overlay" *ngIf="showWinnerModal">
+    <div class="winner-modal card animated-entrance">
+      <div class="modal-glow"></div>
+      <h2 class="winner-label">¡Seleccionado!</h2>
+      
+      <div class="winner-name-box">
+        <h1 class="winner-name">{{ ganador }}</h1>
+      </div>
+
+      <div class="modal-buttons">
+        <button class="btn-remove" (click)="eliminarGanador()">
+          ❌ QUITAR DE LA RULETA
+        </button>
+        <button class="btn-keep" (click)="cerrarModalGanador()">
+          ✅ MANTENER Y CERRAR
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
