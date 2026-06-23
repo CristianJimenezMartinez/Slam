@@ -11,13 +11,30 @@
     <span>{{ credenciales.length }} credenciales &middot; {{ pages.length }} página{{ pages.length > 1 ? 's' : '' }}</span>
   </div>
   <div class="toolbar-actions">
+    <div class="generation-controls">
+      <label for="cantInput">Generar QRs:</label>
+      <input 
+        id="cantInput"
+        type="number" 
+        [(ngModel)]="cantidadPersonalizada" 
+        min="1" 
+        max="1000" 
+      />
+      <button class="btn-action-gen btn-secondary" (click)="regenerarCredenciales()" [disabled]="regenerating">
+        {{ regenerating ? 'Generando...' : 'Reemplazar cantidad' }}
+      </button>
+      <button class="btn-action-gen btn-secondary btn-add" (click)="agregarCredenciales()" [disabled]="regenerating">
+        {{ regenerating ? 'Generando...' : '➕ Añadir más' }}
+      </button>
+    </div>
+    
     <button class="btn-print" (click)="print()">
       🖨️ Imprimir / Descargar PDF
     </button>
   </div>
 </div>
 
-<!-- Cada página A4 con exactamente 66 QR (6×11) -->
+<!-- Cada página A4 con exactamente 28 QR (4×7) -->
 <div class="print-page-wrapper" *ngIf="!loading && evento">
   <div class="qr-grid" *ngFor="let page of pages; let pi = index">
     <div class="qr-card" *ngFor="let cred of page; let ci = index">

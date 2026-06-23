@@ -59,7 +59,79 @@
 
   .toolbar-actions {
     display: flex;
-    gap: 10px;
+    align-items: center;
+    gap: 20px;
+
+    .generation-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      label {
+        font-size: 0.85rem;
+        color: #ccc;
+      }
+
+      input[type="number"] {
+        width: 70px;
+        background: #222;
+        border: 1px solid #444;
+        color: #fff;
+        padding: 8px;
+        border-radius: 4px;
+        font-weight: bold;
+        text-align: center;
+        font-size: 0.9rem;
+        outline: none;
+
+        &:focus {
+          border-color: #92d342;
+        }
+
+        /* Quitar las flechitas por defecto de los inputs number */
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        &[type=number] {
+          -moz-appearance: textfield;
+        }
+      }
+
+      .btn-action-gen {
+        background: #333;
+        color: #eee;
+        border: 1px solid #555;
+        padding: 8px 14px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover:not(:disabled) {
+          background: #444;
+          border-color: #777;
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        &.btn-add {
+          background: #1b3512;
+          color: #92d342;
+          border-color: #3e6d1c;
+
+          &:hover:not(:disabled) {
+            background: #244618;
+            border-color: #92d342;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -115,8 +187,8 @@
 // ───────────────────────────────────────────────────
 .qr-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(11, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(7, 1fr);
   box-sizing: border-box;
 }
 
@@ -126,7 +198,7 @@
   align-items: center;
   justify-content: center;
   border: 1px dashed #dcdcdc;
-  padding: 4px;
+  padding: 8px;
   background: #fff;
   color: #000;
   text-align: center;
@@ -136,20 +208,20 @@
 
 .card-brand {
   font-family: 'Bebas Neue', 'Arial Narrow', sans-serif;
-  font-size: 9px;
+  font-size: 13px;
   font-weight: bold;
-  letter-spacing: 0.8px;
+  letter-spacing: 1px;
   color: #444;
-  margin-bottom: 1px;
+  margin-bottom: 3px;
   text-transform: uppercase;
 }
 
 .card-qr {
-  margin: 1px 0;
+  margin: 3px 0;
 
   img {
-    width: 58px;
-    height: 58px;
+    width: 110px;
+    height: 110px;
     display: block;
   }
 }
@@ -157,9 +229,9 @@
 .card-number {
   font-family: 'Inter', system-ui, sans-serif;
   font-weight: 800;
-  font-size: 7px;
+  font-size: 11px;
   color: #222;
-  margin-top: 1px;
+  margin-top: 3px;
 }
 
 // ───────────────────────────────────────────────────

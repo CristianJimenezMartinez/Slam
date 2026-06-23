@@ -19,11 +19,14 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
   // Entrada de texto de la lista de participantes (se sincroniza con "nombres")
   listaTexto: string = '';
 
+  // Mapa de colores por poeta (nombre -> color hex) basado en los colores del evento
+  coloresPoetas: { [nombre: string]: string } = {};
+
   // Estado del giro
   isSpinning: boolean = false;
   private angle: number = 0;
   private angularVelocity: number = 0;
-  private friction: number = 0.985; // Desaceleración suave
+  private friction: number = 0.88; // Desaceleración muy rápida (casi instantánea)
   private lastSectorIndex: number = -1;
 
   // Ganador actual
@@ -90,11 +93,12 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
     const canvas = this.wheelCanvas.nativeElement;
     const container = canvas.parentElement;
     if (container) {
-      const size = Math.min(container.clientWidth, 600);
-      canvas.width = size * window.devicePixelRatio;
-      canvas.height = size * window.devicePixelRatio;
-      canvas.style.width = `${size}px`;
-      canvas.style.height = `${size}px`;
+      const width = Math.min(container.clientWidth, 400);
+      const height = width * 1.33; // Relación de aspecto 3:4 (candado de bici)
+      canvas.width = width * window.devicePixelRatio;
+      canvas.height = height * window.devicePixelRatio;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
     }
   }
 
@@ -117,9 +121,21 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
     this.participantesService.getParticipantesByEvento(this.eventoActivo.id).subscribe({
       next: (res) => {
         if (res.data && res.data.length > 0) {
-          this.nombres = res.data.map(p => p.nombre);
-          this.sincronizarTextoDesdeNombres();
-          this.resetearRuleta();
+          // Filtrar para excluir al poeta de demostración (orden === 0)
+          const poetasCompetidores = res.data.filter((p: any) => p.orden > 0);
+          if (poetasCompetidores.length > 0) {
+            this.nombres = poetasCompetidores.map((p: any) => p.nombre);
+
+            // Generar paleta de colores basada en los colores del evento
+            const primario = this.eventoActivo!.color_primario || '#92D342';
+            const secundario = this.eventoActivo!.color_secundario || '#368475';
+            this.generarPaletaPoetas(poetasCompetidores, primario, secundario);
+
+            this.sincronizarTextoDesdeNombres();
+            this.resetearRuleta();
+          } else {
+            alert('No se encontraron poetas competidores (orden > 0) para este evento.');
+          }
         } else {
           alert('No se encontraron participantes registrados en este evento.');
         }
@@ -130,6 +146,80 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
         this.loadingEvent = false;
       }
     });
+  }
+
+  /**
+   * Genera una paleta de colores para cada poeta interpolando
+   * entre color_primario y color_secundario del evento.
+   * Cada poeta recibe un color único derivado de la temática del evento.
+   */
+  private generarPaletaPoetas(poetas: any[], primario: string, secundario: string): void {
+    this.coloresPoetas = {};
+    const hslPrimario = this.hexToHsl(primario);
+    const hslSecundario = this.hexToHsl(secundario);
+    const total = poetas.length;
+
+    poetas.forEach((p: any, index: number) => {
+      const t = total > 1 ? index / (total - 1) : 0;
+      // Interpolar en el espacio HSL entre primario y secundario
+      const h = hslPrimario.h + (hslSecundario.h - hslPrimario.h) * t;
+      const s = hslPrimario.s + (hslSecundario.s - hslPrimario.s) * t;
+      // Luminosidad fija alta para que se vean bien sobre fondo oscuro
+      const l = 60 + (t * 10); // Entre 60% y 70% para buena visibilidad
+      this.coloresPoetas[p.nombre] = this.hslToHex(h, s, l);
+    });
+  }
+
+  /** Convierte un color HEX (#RRGGBB) a HSL {h, s, l} */
+  private hexToHsl(hex: string): { h: number; s: number; l: number } {
+    hex = hex.replace('#', '');
+    const r = parseInt(hex.substring(0, 2), 16) / 255;
+    const g = parseInt(hex.substring(2, 4), 16) / 255;
+    const b = parseInt(hex.substring(4, 6), 16) / 255;
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h = 0, s = 0;
+    const l = (max + min) / 2;
+
+    if (max !== min) {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+        case g: h = ((b - r) / d + 2) / 6; break;
+        case b: h = ((r - g) / d + 4) / 6; break;
+      }
+    }
+    return { h: h * 360, s: s * 100, l: l * 100 };
+  }
+
+  /** Convierte HSL a HEX (#RRGGBB) */
+  private hslToHex(h: number, s: number, l: number): string {
+    s /= 100;
+    l /= 100;
+    const a = s * Math.min(l, 1 - l);
+    const f = (n: number) => {
+      const k = (n + h / 30) % 12;
+      const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+      return Math.round(255 * color).toString(16).padStart(2, '0');
+    };
+    return `#${f(0)}${f(8)}${f(4)}`;
+  }
+
+  /** Devuelve el color asignado al poeta por su nombre, o un gris por defecto */
+  getColorPoeta(nombre: string): string {
+    return this.coloresPoetas[nombre] || '#a0a0a0';
+  }
+
+  /** Convierte un color HEX a {r, g, b} para usar en rgba() */
+  private hexToRgb(hex: string): { r: number; g: number; b: number } {
+    hex = hex.replace('#', '');
+    return {
+      r: parseInt(hex.substring(0, 2), 16),
+      g: parseInt(hex.substring(2, 4), 16),
+      b: parseInt(hex.substring(4, 6), 16)
+    };
   }
 
   // Sincronizar el text-area con el array de nombres
@@ -185,8 +275,8 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
     this.particles = [];
     this.ganador = null;
 
-    // Velocidad de giro inicial aleatoria e intensa
-    this.angularVelocity = 0.5 + Math.random() * 0.4;
+    // Velocidad de giro inicial reducida para giro casi instantáneo
+    this.angularVelocity = 1.2 + Math.random() * 0.8;
   }
 
   private initAudioContext(): void {
@@ -274,12 +364,13 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
     // Aplicar fricción suave
     this.angularVelocity *= this.friction;
 
-    // Comprobar tick de sonido al cruzar un sector
+    // Comprobar tick de sonido al cruzar un sector (normalizado para evitar fallos de índice negativo)
     if (this.nombres.length > 0) {
       const numSectors = this.nombres.length;
       const sectorAngle = (2 * Math.PI) / numSectors;
-      // Posición del puntero en relación con el ángulo del lienzo
-      const currentSector = Math.floor(((this.angle) % (2 * Math.PI)) / sectorAngle);
+      let normalizedAngle = this.angle % (2 * Math.PI);
+      if (normalizedAngle < 0) normalizedAngle += 2 * Math.PI;
+      const currentSector = Math.floor(normalizedAngle / sectorAngle);
       
       if (currentSector !== this.lastSectorIndex) {
         // Reproducir sonido con tono ligeramente dinámico
@@ -303,15 +394,13 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
     const numSectors = this.nombres.length;
     const sectorAngle = (2 * Math.PI) / numSectors;
 
-    // El puntero está en la parte superior (1.5 * Math.PI o 270 grados en canvas)
-    // El ángulo de la ruleta gira en sentido de las agujas del reloj (positivo).
-    // Posición del puntero relativa a la ruleta: (1.5 * Math.PI - angle)
-    let relativePointerAngle = (1.5 * Math.PI - this.angle) % (2 * Math.PI);
+    // El puntero o indicador ahora está en el centro de selección (0 radianes)
+    let relativePointerAngle = -this.angle % (2 * Math.PI);
     if (relativePointerAngle < 0) {
       relativePointerAngle += 2 * Math.PI;
     }
 
-    const selectedIndex = Math.floor(relativePointerAngle / sectorAngle) % numSectors;
+    const selectedIndex = Math.round(relativePointerAngle / sectorAngle) % numSectors;
     this.ganador = this.nombres[selectedIndex];
     this.showWinnerModal = true;
 
@@ -364,32 +453,34 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const width = canvas.width;
     const height = canvas.height;
-    const size = width;
     const centerX = width / 2;
     const centerY = height / 2;
-    const radius = (size / 2) * 0.88;
 
     // Limpiar canvas
     ctx.clearRect(0, 0, width, height);
 
-    // Si no hay nombres, dibujar rueda vacía elegante
+    // Dimensiones del cilindro central
+    const cylinderWidth = width * 0.76;
+    const cylinderLeft = (width - cylinderWidth) / 2;
+    const cylinderHeight = height * 0.90;
+    const cylinderTop = (height - cylinderHeight) / 2;
+    const radius = cylinderHeight / 2; // Radio de curvatura vertical
+
+    // Si no hay nombres, dibujar panel vacío elegante
     if (this.nombres.length === 0) {
       ctx.save();
-      // Fondo negro de la rueda con borde neón
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-      ctx.fillStyle = '#222222';
-      ctx.fill();
-      ctx.lineWidth = 6 * window.devicePixelRatio;
-      ctx.strokeStyle = '#92D342';
-      ctx.shadowBlur = 15;
-      ctx.shadowColor = '#92D342';
-      ctx.stroke();
+      // Fondo oscuro
+      ctx.fillStyle = '#15171a';
+      ctx.fillRect(cylinderLeft, cylinderTop, cylinderWidth, cylinderHeight);
+      
+      // Borde del slot
+      ctx.strokeStyle = '#2d323a';
+      ctx.lineWidth = 4 * window.devicePixelRatio;
+      ctx.strokeRect(cylinderLeft, cylinderTop, cylinderWidth, cylinderHeight);
 
       // Texto de aviso
-      ctx.shadowBlur = 0;
-      ctx.fillStyle = '#888888';
-      ctx.font = `bold ${1.8 * window.devicePixelRatio}rem 'Bebas Neue', cursive`;
+      ctx.fillStyle = '#666';
+      ctx.font = `bold ${1.6 * window.devicePixelRatio}rem 'Bebas Neue', cursive`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText('AÑADE NOMBRES EN EL PANEL', centerX, centerY);
@@ -402,121 +493,163 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ctx.save();
 
-    // Dibujar sectores
+    // 1. Dibujar el fondo del cilindro (textura metálica oscura)
+    ctx.fillStyle = '#1c1f24';
+    ctx.fillRect(cylinderLeft, cylinderTop, cylinderWidth, cylinderHeight);
+
+    // 2. Dibujar las líneas divisorias y los nombres proyectados en 3D
+    const halfVisibleRange = 1.45; // Rango visible en radianes
+
+    // Dibujar nombres
     for (let i = 0; i < numSectors; i++) {
-      const startAngle = this.angle + i * sectorAngle;
-      const endAngle = startAngle + sectorAngle;
-
-      ctx.beginPath();
-      ctx.moveTo(centerX, centerY);
-      ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-      ctx.closePath();
-
-      // Colores de los sectores (Estilo Slam - alternando verde neón, carbono y gris oscuro)
-      let fillStyle = '#242424'; // Carbono
-      if (numSectors % 2 === 0) {
-        fillStyle = i % 2 === 0 ? '#92D342' : '#242424';
-      } else {
-        // Para impares, manejamos el último sector para que no choque
-        if (i === numSectors - 1) {
-          fillStyle = '#368475'; // Color de transición
-        } else {
-          fillStyle = i % 2 === 0 ? '#92D342' : '#242424';
-        }
-      }
-
-      ctx.fillStyle = fillStyle;
-      ctx.fill();
-
-      // Borde sutil del sector
-      ctx.strokeStyle = '#1A1A1A';
-      ctx.lineWidth = 2 * window.devicePixelRatio;
-      ctx.stroke();
-
-      // Dibujar texto
-      ctx.save();
-      ctx.translate(centerX, centerY);
-      // Rotar al centro del sector
-      ctx.rotate(startAngle + sectorAngle / 2);
-
-      // Determinar color de texto según el fondo para legibilidad
-      ctx.fillStyle = fillStyle === '#92D342' ? '#1A1A1A' : '#F2F2F2';
+      const nameAngle = i * sectorAngle;
+      let phi = (nameAngle + this.angle) % (2 * Math.PI);
       
-      // Adaptar tamaño de fuente según cantidad de participantes
-      let fontSize = 1.6;
-      if (numSectors > 30) fontSize = 0.7;
-      else if (numSectors > 20) fontSize = 0.9;
-      else if (numSectors > 12) fontSize = 1.2;
-      else if (numSectors > 8) fontSize = 1.4;
+      if (phi > Math.PI) phi -= 2 * Math.PI;
+      if (phi < -Math.PI) phi += 2 * Math.PI;
 
-      ctx.font = `bold ${fontSize * window.devicePixelRatio}rem 'Bebas Neue', cursive`;
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'middle';
+      if (phi >= -halfVisibleRange && phi <= halfVisibleRange) {
+        const y = centerY + radius * Math.sin(phi);
+        const scaleY = Math.cos(phi);
+        const opacity = Math.pow(Math.cos(phi), 1.8);
 
-      // Acortar nombres muy largos
-      let text = this.nombres[i];
-      if (text.length > 14) text = text.substring(0, 12) + '...';
+        ctx.save();
+        ctx.translate(centerX, y);
+        ctx.scale(1.0, scaleY);
 
-      // Dibujar texto desplazado del centro hacia el borde externo
-      ctx.fillText(text.toUpperCase(), radius - (15 * window.devicePixelRatio), 0);
-      ctx.restore();
+        const distanceToCenter = Math.abs(phi);
+        // Color del poeta basado en los colores del evento
+        const poetColor = this.getColorPoeta(this.nombres[i]);
+        const rgb = this.hexToRgb(poetColor);
+        let textColor = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${opacity})`;
+        if (distanceToCenter < sectorAngle / 2) {
+          // El seleccionado brilla más intenso (luminosidad aumentada)
+          textColor = `rgba(${Math.min(rgb.r + 40, 255)}, ${Math.min(rgb.g + 40, 255)}, ${Math.min(rgb.b + 40, 255)}, ${Math.min(opacity + 0.2, 1)})`;
+        }
+
+        ctx.fillStyle = textColor;
+
+        // Tamaño de fuente dinámico según cantidad de nombres
+        let fontSize = 2.4;
+        if (numSectors > 30) fontSize = 1.0;
+        else if (numSectors > 20) fontSize = 1.3;
+        else if (numSectors > 12) fontSize = 1.7;
+        else if (numSectors > 8) fontSize = 2.1;
+
+        ctx.font = `bold ${fontSize * window.devicePixelRatio}rem 'Bebas Neue', cursive`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        let text = this.nombres[i];
+        if (text.length > 18) text = text.substring(0, 16) + '...';
+
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+        ctx.shadowBlur = 4 * window.devicePixelRatio;
+        
+        ctx.fillText(text.toUpperCase(), 0, 0);
+        ctx.restore();
+      }
     }
 
-    // Dibujar círculo exterior decorativo (Borde neón de la ruleta)
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-    ctx.lineWidth = 8 * window.devicePixelRatio;
-    ctx.strokeStyle = '#1A1A1A';
-    ctx.stroke();
-
-    // Añadir anillo exterior neón verde
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, radius + (4 * window.devicePixelRatio), 0, 2 * Math.PI);
+    // Dibujar líneas separadoras horizontales para dar el efecto de candado/tambor
+    ctx.strokeStyle = '#24272c';
     ctx.lineWidth = 2 * window.devicePixelRatio;
-    ctx.strokeStyle = '#92D342';
-    ctx.stroke();
+    for (let i = 0; i < numSectors; i++) {
+      const lineAngle = (i + 0.5) * sectorAngle;
+      let phi = (lineAngle + this.angle) % (2 * Math.PI);
+      
+      if (phi > Math.PI) phi -= 2 * Math.PI;
+      if (phi < -Math.PI) phi += 2 * Math.PI;
 
-    // Centro decorativo (Tapa de la ruleta)
+      if (phi >= -halfVisibleRange && phi <= halfVisibleRange) {
+        const y = centerY + radius * Math.sin(phi);
+        ctx.beginPath();
+        ctx.moveTo(cylinderLeft, y);
+        ctx.lineTo(cylinderLeft + cylinderWidth, y);
+        ctx.stroke();
+      }
+    }
+
+    // 3. Gradiente de sombra 3D (para dar volumen cilíndrico)
+    const shadowGrad = ctx.createLinearGradient(0, cylinderTop, 0, cylinderTop + cylinderHeight);
+    shadowGrad.addColorStop(0, 'rgba(10, 12, 15, 0.95)');
+    shadowGrad.addColorStop(0.18, 'rgba(10, 12, 15, 0.6)');
+    shadowGrad.addColorStop(0.5, 'rgba(10, 12, 15, 0)');
+    shadowGrad.addColorStop(0.82, 'rgba(10, 12, 15, 0.6)');
+    shadowGrad.addColorStop(1, 'rgba(10, 12, 15, 0.95)');
+
+    ctx.fillStyle = shadowGrad;
+    ctx.fillRect(cylinderLeft, cylinderTop, cylinderWidth, cylinderHeight);
+
+    // 4. Dibujar el housing metálico exterior (marcos izquierdo y derecho)
+    // Marco Izquierdo
+    const frameGradL = ctx.createLinearGradient(0, 0, cylinderLeft, 0);
+    frameGradL.addColorStop(0, '#111316');
+    frameGradL.addColorStop(0.7, '#242830');
+    frameGradL.addColorStop(1, '#0e0f11');
+    ctx.fillStyle = frameGradL;
+    ctx.fillRect(0, 0, cylinderLeft, height);
+
+    // Marco Derecho
+    const frameGradR = ctx.createLinearGradient(cylinderLeft + cylinderWidth, 0, width, 0);
+    frameGradR.addColorStop(0, '#0e0f11');
+    frameGradR.addColorStop(0.3, '#242830');
+    frameGradR.addColorStop(1, '#111316');
+    ctx.fillStyle = frameGradR;
+    ctx.fillRect(cylinderLeft + cylinderWidth, 0, width - (cylinderLeft + cylinderWidth), height);
+
+    // Líneas neón en los bordes del marco
+    ctx.strokeStyle = '#2d323a';
+    ctx.lineWidth = 2 * window.devicePixelRatio;
     ctx.beginPath();
-    ctx.arc(centerX, centerY, radius * 0.18, 0, 2 * Math.PI);
-    ctx.fillStyle = '#1A1A1A';
-    ctx.fill();
-    ctx.lineWidth = 3 * window.devicePixelRatio;
-    ctx.strokeStyle = '#92D342';
+    ctx.moveTo(cylinderLeft, 0);
+    ctx.lineTo(cylinderLeft, height);
+    ctx.moveTo(cylinderLeft + cylinderWidth, 0);
+    ctx.lineTo(cylinderLeft + cylinderWidth, height);
     ctx.stroke();
-
-    // Logo del Slam o icono en el centro
-    ctx.fillStyle = '#92D342';
-    ctx.font = `bold ${1.1 * window.devicePixelRatio}rem 'Bebas Neue', cursive`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('SLAM', centerX, centerY);
 
     ctx.restore();
 
-    // Dibujar el puntero (en la parte superior apuntando hacia abajo)
+    // 5. Indicador de selección horizontal (Línea roja/verde neón del candado en el centro)
     ctx.save();
-    ctx.translate(centerX, centerY - radius - (8 * window.devicePixelRatio));
+    const indicatorHeight = 56 * window.devicePixelRatio;
     
-    // Sombra del puntero para darle profundidad
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillStyle = 'rgba(146, 211, 66, 0.04)';
+    ctx.fillRect(cylinderLeft, centerY - indicatorHeight / 2, cylinderWidth, indicatorHeight);
+
+    ctx.strokeStyle = '#92D342';
+    ctx.lineWidth = 2.5 * window.devicePixelRatio;
+    ctx.shadowColor = '#92D342';
+    ctx.shadowBlur = 10 * window.devicePixelRatio;
+    
+    ctx.beginPath();
+    ctx.moveTo(cylinderLeft - 4, centerY - indicatorHeight / 2);
+    ctx.lineTo(cylinderLeft + cylinderWidth + 4, centerY - indicatorHeight / 2);
+    ctx.moveTo(cylinderLeft - 4, centerY + indicatorHeight / 2);
+    ctx.lineTo(cylinderLeft + cylinderWidth + 4, centerY + indicatorHeight / 2);
+    ctx.stroke();
+
+    // Punteros triangulares en los extremos de la fila seleccionadora
+    ctx.fillStyle = '#92D342';
+    ctx.shadowBlur = 8 * window.devicePixelRatio;
+    
+    ctx.beginPath();
+    ctx.moveTo(cylinderLeft - 10 * window.devicePixelRatio, centerY - 6 * window.devicePixelRatio);
+    ctx.lineTo(cylinderLeft - 2 * window.devicePixelRatio, centerY);
+    ctx.lineTo(cylinderLeft - 10 * window.devicePixelRatio, centerY + 6 * window.devicePixelRatio);
+    ctx.closePath();
+    ctx.fill();
 
     ctx.beginPath();
-    ctx.moveTo(0, 24 * window.devicePixelRatio); // Punta que señala abajo
-    ctx.lineTo(-15 * window.devicePixelRatio, -10 * window.devicePixelRatio);
-    ctx.lineTo(15 * window.devicePixelRatio, -10 * window.devicePixelRatio);
+    ctx.moveTo(cylinderLeft + cylinderWidth + 10 * window.devicePixelRatio, centerY - 6 * window.devicePixelRatio);
+    ctx.lineTo(cylinderLeft + cylinderWidth + 2 * window.devicePixelRatio, centerY);
+    ctx.lineTo(cylinderLeft + cylinderWidth + 10 * window.devicePixelRatio, centerY + 6 * window.devicePixelRatio);
     ctx.closePath();
-
-    ctx.fillStyle = '#EF4444'; // Rojo neón para máxima visibilidad
     ctx.fill();
-    ctx.lineWidth = 2 * window.devicePixelRatio;
-    ctx.strokeStyle = '#FFFFFF';
-    ctx.stroke();
-    
+
     ctx.restore();
 
-    // Dibujar confeti en tiempo real si está activo
+    // 6. Confeti (si está activo)
     if (this.confettiActive && this.particles.length > 0) {
       this.dibujarConfeti(ctx, centerX, centerY);
     }

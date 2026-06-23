@@ -86,12 +86,12 @@
 
   <!-- Modal de Celebración de Ganador -->
   <div class="modal-overlay" *ngIf="showWinnerModal">
-    <div class="winner-modal card animated-entrance">
-      <div class="modal-glow"></div>
+    <div class="winner-modal card animated-entrance" [style.border-color]="ganador ? getColorPoeta(ganador) : ''">
+      <div class="modal-glow" [style.background]="ganador ? 'radial-gradient(circle, ' + getColorPoeta(ganador) + '40 0%, transparent 70%)' : ''"></div>
       <h2 class="winner-label">¡Seleccionado!</h2>
       
-      <div class="winner-name-box">
-        <h1 class="winner-name">{{ ganador }}</h1>
+      <div class="winner-name-box" [style.border-color]="ganador ? getColorPoeta(ganador) + '33' : ''" [style.background]="ganador ? 'linear-gradient(90deg, rgba(26,26,26,0.2) 0%, ' + getColorPoeta(ganador) + '14 50%, rgba(26,26,26,0.2) 100%)' : ''">
+        <h1 class="winner-name" [style.color]="ganador ? getColorPoeta(ganador) : ''" [style.text-shadow]="ganador ? '0 0 15px ' + getColorPoeta(ganador) + '99' : ''">{{ ganador }}</h1>
       </div>
 
       <div class="modal-buttons">
