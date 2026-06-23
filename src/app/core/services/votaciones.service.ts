@@ -52,7 +52,7 @@ export class VotacionesService {
           res.data = res.data.map((r: any) => {
             if (!r.foto_url) {
               // Misma lógica de asignación que en ParticipantesService
-              const avatarIndex = r.orden === 0 ? 10 : (((r.orden - 1) % 10) + 1);
+              const avatarIndex = r.orden === 0 ? 11 : (((r.orden - 1) % 11) + 1);
               r.foto_url = `assets/images/avatars/poeta${avatarIndex}.png`;
             }
             return r;

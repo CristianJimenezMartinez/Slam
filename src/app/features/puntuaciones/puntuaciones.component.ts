@@ -101,11 +101,12 @@ export class PuntuacionesComponent implements OnInit, OnDestroy {
     if (res?.data) {
       const resultados = res.data as Resultado[];
       if (resultados.length > 0) {
-        // Encontrar la puntuación del 3er participante (o el último si hay menos de 3)
-        const indexCorte = Math.min(2, resultados.length - 1);
+        // Encontrar la puntuación del N-ésimo participante (o el último si hay menos)
+        const limit = this.evento.limite_finalistas || 3;
+        const indexCorte = Math.min(limit - 1, resultados.length - 1);
         const puntuacionCorte = resultados[indexCorte].puntuacion_total;
         
-        // Incluimos a todos los que empaten o superen la puntuación del 3º para evitar dejarlos fuera
+        // Incluimos a todos los que empaten o superen la puntuación de corte para evitar dejarlos fuera
         this.finalistas = resultados.filter(r => r.puntuacion_total >= puntuacionCorte) as Resultado[];
       } else {
         this.finalistas = [];

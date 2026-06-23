@@ -25,6 +25,7 @@ export interface Evento {
   participante_activo_id?: string;
   puntuaciones_activas?: boolean;
   ronda_activa?: number;
+  limite_finalistas?: number;
 }
 
 @Injectable({

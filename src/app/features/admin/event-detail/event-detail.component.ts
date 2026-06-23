@@ -51,6 +51,7 @@ export class EventDetailComponent implements OnInit {
       color_fondo: ['#1A1A1A', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
       color_texto: ['#F2F2F2', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
       color_cabecera: ['#1A1A1A', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
+      limite_finalistas: [3, [Validators.required, Validators.min(1)]],
       participantes: this.fb.array([])
     });
   }
@@ -88,7 +89,8 @@ export class EventDetailComponent implements OnInit {
         color_secundario: ev.color_secundario || '#368475',
         color_fondo: ev.color_fondo || '#1A1A1A',
         color_texto: ev.color_texto || '#F2F2F2',
-        color_cabecera: ev.color_cabecera || '#1A1A1A'
+        color_cabecera: ev.color_cabecera || '#1A1A1A',
+        limite_finalistas: ev.limite_finalistas || 3
       });
       if (ev.url_cartel) {
         this.oldCartelUrl = ev.url_cartel;
@@ -174,12 +176,12 @@ export class EventDetailComponent implements OnInit {
       this.eventForm.patchValue({ url_cartel: '' });
     }
 
-    const { nombre, descripcion, fecha, url_entradas, url_cartel, presentador, artista_invitado, poeta_quema, participantes, color_primario, color_secundario, color_fondo, color_texto, color_cabecera } = this.eventForm.value;
+    const { nombre, descripcion, fecha, url_entradas, url_cartel, presentador, artista_invitado, poeta_quema, participantes, color_primario, color_secundario, color_fondo, color_texto, color_cabecera, limite_finalistas } = this.eventForm.value;
 
     // Convertir el string local a una fecha ISO real con su zona horaria antes de enviar a Supabase
     const fechaISO = new Date(fecha).toISOString();
 
-    const eventoData = { nombre, descripcion, fecha: fechaISO, url_entradas, url_cartel, presentador, artista_invitado, color_primario, color_secundario, color_fondo, color_texto, color_cabecera };
+    const eventoData = { nombre, descripcion, fecha: fechaISO, url_entradas, url_cartel, presentador, artista_invitado, color_primario, color_secundario, color_fondo, color_texto, color_cabecera, limite_finalistas };
 
     let res;
     if (this.eventId) {
