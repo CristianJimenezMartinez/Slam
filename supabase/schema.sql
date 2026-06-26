@@ -5,12 +5,13 @@
 
 -- 1. EVENTOS
 CREATE TABLE IF NOT EXISTS eventos (
-  id          UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  nombre      TEXT NOT NULL,
-  descripcion TEXT,
-  fecha       TIMESTAMPTZ NOT NULL,
-  activo      BOOLEAN DEFAULT FALSE,
-  created_at  TIMESTAMPTZ DEFAULT NOW()
+  id                UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  nombre            TEXT NOT NULL,
+  descripcion       TEXT,
+  fecha             TIMESTAMPTZ NOT NULL,
+  activo            BOOLEAN DEFAULT FALSE,
+  created_at        TIMESTAMPTZ DEFAULT NOW(),
+  limite_finalistas INT DEFAULT 3
 );
 
 -- Solo un evento activo a la vez
