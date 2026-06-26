@@ -30,11 +30,11 @@ export class VotarComponent implements OnInit, OnDestroy {
   private eventoSub: Subscription | any = null;
 
   opcionesVoto = [
-    { valor: 2, texto: 'Suave' },
-    { valor: 4, texto: 'Bien' },
-    { valor: 6, texto: 'Fuerte' },
-    { valor: 8, texto: 'Fuego' },
-    { valor: 10, texto: 'Magia' }
+    { valor: 2, texto: 'Suave', emoji: '🌱' },
+    { valor: 4, texto: 'Bien', emoji: '👍' },
+    { valor: 6, texto: 'Fuerte', emoji: '⚡' },
+    { valor: 8, texto: 'Fuego', emoji: '🔥' },
+    { valor: 10, texto: 'Magia', emoji: '✨' }
   ];
 
   constructor(

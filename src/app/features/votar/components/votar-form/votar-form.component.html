@@ -13,7 +13,8 @@
       <div class="word-selector">
         <button type="button" class="word-btn" *ngFor="let op of opcionesVoto"
           [class.selected]="puntuacion.value === op.valor" (click)="puntuacion.setValue(op.valor)">
-          {{ op.texto }}
+          <span class="btn-word">{{ op.emoji }} {{ op.texto }}</span>
+          <span class="btn-percentage">{{ op.valor * 10 }}%</span>
         </button>
       </div>
 
