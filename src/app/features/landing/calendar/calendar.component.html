@@ -1,67 +1,176 @@
-<div class="historia-container">
-  <div class="historia-content">
-    
-    <!-- Cargando -->
-    <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<div class="calendar-wrapper">
+  
+  <!-- FONDO CINEMATOGRÁFICO FIJO DEL ESCENARIO -->
+  <div class="hero-bg-container">
+    <img src="assets/images/calendar_hero.jpg" alt="Escenario de Las Cigarreras Poetry Slam Alicante" class="hero-bg-img">
+  </div>
+  <div class="hero-overlay"></div>
 
-    <div class="timeline" *ngIf="!loading">
+  <div class="calendar-content">
+
+    <!-- HERO HEADER DEL CALENDARIO -->
+    <header class="calendar-header">
+      <div class="calendar-badge">TEMPORADA VII FINALIZADA · PRÓXIMAMENTE TEMPORADA VIII</div>
+      <h1 class="glow-title">CALENDARIO DE ENCUENTROS</h1>
+      <p class="hero-subtitle">TEMPORADAS Y VELADAS OFICIALES</p>
+      <p class="calendar-subtitle">
+        Consulta las fechas oficiales, estado de la temporada, próximas citas y el archivo histórico del circuito.
+      </p>
+      <div class="header-laser-line"></div>
+    </header>
+
+    <div class="calendar-container">
       
-      <!-- PRÓXIMOS EVENTOS -->
-      <div class="timeline-section" *ngIf="proximos.length > 0">
-        <h2 class="section-title">Próximos Encuentros</h2>
+      <!-- SPINNER DE CARGA -->
+      <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+      <div class="calendar-sections-flow" *ngIf="!loading">
         
-        <div class="dates-grid">
-          <div class="date-card" *ngFor="let ev of proximos" [class.today]="isEventToday(ev.fecha)">
-            <div class="card-media">
-              <img [src]="ev.url_foto || 'assets/hero-bg.jpg'" [alt]="ev.nombre" class="card-img">
-              <span class="status-badge" *ngIf="isEventToday(ev.fecha)">HOY 🔥</span>
-            </div>
-            
-            <div class="card-body">
-              <div class="date-badge">
-                <span class="day">{{ ev.fecha | date:'dd' }}</span>
-                <span class="month">{{ ev.fecha | date:'MMM' }}</span>
+        <!-- ESTADO FUERA DE TEMPORADA (CUANDO NO HAY PRÓXIMOS EVENTOS ACTIVOS) -->
+        <section *ngIf="proximos.length === 0" class="offseason-banner glass">
+          <div class="offseason-badge">ESTADO DE LA TEMPORADA</div>
+          <div class="offseason-content">
+            <div class="offseason-icon">🏆</div>
+            <div class="offseason-text">
+              <h2>Temporada VII Concluida con Éxito</h2>
+              <p>
+                Las veladas oficiales y la Gran Final de la 7ª Temporada han concluido con éxito. 
+                Actualmente la organización se encuentra planificando el calendario y la apertura de inscripciones para la <strong>8ª Temporada</strong>.
+              </p>
+              <div class="offseason-actions">
+                <a href="https://www.instagram.com/poetryslamalicante/" target="_blank" class="btn-primary">
+                  <span>📸 Seguir en Instagram para Nuevas Fechas</span>
+                </a>
+                <a routerLink="/cantera" class="btn-secondary">
+                  <span>📖 Conoce el Espacio Cantera</span>
+                </a>
               </div>
-              <h3>{{ ev.nombre }}</h3>
-              <p class="location"><span class="icon">📍</span> {{ ev.ubicacion || 'Las Cigarreras' }}</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- PRÓXIMOS ENCUENTROS (SI HUBIESE EVENTOS ACTIVOS) -->
+        <section class="timeline-section" *ngIf="proximos.length > 0">
+          <div class="section-tag-wrapper">
+            <span class="section-tag">EN DIRECTO</span>
+            <h2>Próximos Encuentros en Vivo</h2>
+          </div>
+          
+          <div class="dates-grid">
+            <div class="date-card upcoming-card glass" *ngFor="let ev of proximos" [class.today]="isEventToday(ev.fecha)">
+              <div class="card-media">
+                <img [src]="ev.url_foto || defaultPoster" (error)="ev.url_foto = defaultPoster" [alt]="ev.nombre" class="card-img">
+                <span class="status-badge" *ngIf="isEventToday(ev.fecha)">HOY 🔥</span>
+              </div>
               
-              <div class="action" *ngIf="ev.url_entradas">
-                <a [href]="ev.url_entradas" target="_blank" class="btn-primary">Entradas</a>
+              <div class="card-body">
+                <div class="date-badge">
+                  <span class="day">{{ ev.fecha | date:'dd' }}</span>
+                  <span class="month">{{ ev.fecha | date:'MMM' }}</span>
+                </div>
+                <h3>{{ ev.nombre }}</h3>
+                <p class="location"><span class="icon">📍</span> {{ ev.ubicacion || 'Las Cigarreras (Caja Negra)' }}</p>
+                
+                <div class="action" *ngIf="ev.url_entradas">
+                  <a [href]="ev.url_entradas" target="_blank" class="btn-primary">
+                    <span>🎟️ Entradas</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-      </div>
-
-      <!-- ARCHIVO / PASADOS -->
-      <div class="timeline-section secondary" *ngIf="pasados.length > 0">
-        <h2 class="section-title">Archivo Temporada</h2>
-        
-        <div class="dates-grid">
-          <div class="date-card past-card" *ngFor="let ev of pasados">
-            <div class="card-media">
-              <img [src]="ev.url_foto || 'assets/hero-bg.jpg'" [alt]="ev.nombre" class="card-img">
-            </div>
-            
-            <div class="card-body">
-              <div class="date-badge">
-                <span class="day">{{ ev.fecha | date:'dd' }}</span>
-                <span class="month">{{ ev.fecha | date:'MMM' }}</span>
+        <!-- INFORMACIÓN DE LA SEDE OFICIAL -->
+        <section class="venue-info-section glass">
+          <div class="venue-badge">SEDE DE LAS VELADAS</div>
+          <div class="venue-grid">
+            <div class="venue-main">
+              <h2>Sede Oficial del Circuito en Alicante</h2>
+              <p class="venue-desc">
+                El punto de encuentro de la poesía escénica. Un espacio íntimo y vibrante donde el público rodea el micrófono para vivir la palabra en primera persona.
+              </p>
+              <div class="venue-cta">
+                <a href="https://maps.google.com/?q=Centro+Cultural+Las+Cigarreras+Alicante" target="_blank" class="btn-outline">
+                  <span>📍 Abrir en Google Maps</span>
+                </a>
               </div>
-              <h3>{{ ev.nombre }}</h3>
-              <p class="location"><span class="icon">📍</span> {{ ev.ubicacion || 'Las Cigarreras' }}</p>
+            </div>
+
+            <div class="venue-details-list">
+              <div class="venue-detail-item">
+                <div class="v-icon">
+                  <svg class="svg-icon primary" viewBox="0 0 24 24">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                </div>
+                <div>
+                  <strong>Dirección:</strong>
+                  <p>Calle San Carlos, 78, 03013 Alicante</p>
+                </div>
+              </div>
+
+              <div class="venue-detail-item">
+                <div class="v-icon">
+                  <svg class="svg-icon primary" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </div>
+                <div>
+                  <strong>Horario Habitual:</strong>
+                  <p>20:00h (Apertura de puertas a las 19:30h)</p>
+                </div>
+              </div>
+
+              <div class="venue-detail-item">
+                <div class="v-icon">
+                  <svg class="svg-icon primary" viewBox="0 0 24 24">
+                    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
+                    <line x1="9" y1="12" x2="15" y2="12"/>
+                  </svg>
+                </div>
+                <div>
+                  <strong>Acceso:</strong>
+                  <p>Entrada libre hasta completar aforo (reserva vía Entradium)</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
+
+        <!-- ARCHIVO HISTÓRICO DE VELADAS (TEMPORADA VII) -->
+        <section class="timeline-section archive-section" *ngIf="pasados.length > 0">
+          <div class="section-tag-wrapper">
+            <span class="section-tag archive-tag">HISTÓRICO</span>
+            <h2>Archivo de Encuentros (Temporada VII)</h2>
+            <p class="archive-desc">
+              Crónica de las sesiones clasificatorias y veladas celebradas durante la temporada:
+            </p>
+          </div>
+          
+          <div class="dates-grid">
+            <div class="date-card past-card glass" *ngFor="let ev of pasados">
+              <div class="card-media">
+                <img [src]="ev.url_foto || defaultPoster" (error)="ev.url_foto = defaultPoster" [alt]="ev.nombre" class="card-img">
+                <span class="past-badge">✓ Celebrado</span>
+              </div>
+              
+              <div class="card-body">
+                <div class="date-badge past-date-badge">
+                  <span class="day">{{ ev.fecha | date:'dd' }}</span>
+                  <span class="month">{{ ev.fecha | date:'MMM yyyy' }}</span>
+                </div>
+                <h3>{{ ev.nombre }}</h3>
+                <p class="location"><span class="icon">📍</span> {{ ev.ubicacion || 'Caja Negra, Las Cigarreras' }}</p>
+              </div>
+            </div>
+          </div>
+        </section>
 
       </div>
 
-    </div>
-
-    <!-- Vacío -->
-    <div *ngIf="!loading && proximos.length === 0 && pasados.length === 0" class="status-msg">
-      <p>Aún no hay fechas programadas para la temporada.</p>
     </div>
 
   </div>
