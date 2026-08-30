@@ -1,0 +1,85 @@
+<div class="radial-gauge-wrapper" [class.fullscreen-gauge]="isFullscreen">
+  <!-- SVG DIAL RADIAL 360° -->
+  <svg class="radial-svg" viewBox="0 0 360 360">
+    <defs>
+      <!-- Degradado Normal (Verde - Cian) -->
+      <linearGradient id="gradNormal" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#7AE92B"/>
+        <stop offset="100%" stop-color="#12D1AE"/>
+      </linearGradient>
+
+      <!-- Degradado Advertencia (Oro - Ámbar) -->
+      <linearGradient id="gradWarning" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#FCD34D"/>
+        <stop offset="100%" stop-color="#F59E0B"/>
+      </linearGradient>
+
+      <!-- Degradado Alerta (Ámbar - Naranja Fuego) -->
+      <linearGradient id="gradAlert" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#FB923C"/>
+        <stop offset="100%" stop-color="#EA580C"/>
+      </linearGradient>
+
+      <!-- Degradado Overtime (Carmesí - Rojo Neón) -->
+      <linearGradient id="gradOvertime" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#F87171"/>
+        <stop offset="100%" stop-color="#EF4444"/>
+      </linearGradient>
+
+      <filter id="laserGlow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="6" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+
+    <!-- Círculo Guía de Fondo -->
+    <circle class="gauge-track" 
+            cx="180" cy="180" [attr.r]="circleRadius"/>
+
+    <!-- Anillo Láser de Progreso Dinámico -->
+    <circle class="gauge-fill" 
+            cx="180" cy="180" [attr.r]="circleRadius"
+            [attr.stroke-dasharray]="circleCircumference"
+            [attr.stroke-dashoffset]="dashOffset"
+            filter="url(#laserGlow)"/>
+  </svg>
+
+  <!-- CONTENIDO CENTRAL DENTRO DEL DIAL (SLOTS CON DIMENSIONES FIJAS) -->
+  <div class="dial-center-content">
+    
+    <!-- Slot Superior: Pastilla de Estado / Fase -->
+    <div class="slot-top">
+      <div class="phase-capsule" [ngClass]="'phase-' + currentPhase">
+        <span class="phase-indicator-dot"></span>
+        <span class="phase-text">{{ phaseText }}</span>
+      </div>
+    </div>
+
+    <!-- Slot Central: DÍGITOS FIJOS MONOSPACE (SIN SALTOS NI VIBRACIONES) -->
+    <div class="slot-middle">
+      <div class="time-readout" [class.is-overtime]="currentPhase === 'overtime'">
+        <span class="digit-chunk minutes">{{ minutesDisplay }}</span>
+        <span class="digit-colon">:</span>
+        <span class="digit-chunk seconds">{{ secondsDisplay }}</span>
+        <span class="digit-dec">.{{ decimasDisplay }}</span>
+      </div>
+    </div>
+
+    <!-- Slot Inferior: Penalización o Modo -->
+    <div class="slot-bottom">
+      <div class="penalty-banner" *ngIf="currentPhase === 'overtime'">
+        <span class="penalty-tag">PENALIZACIÓN</span>
+        <span class="penalty-value">-{{ penaltyPoints.toFixed(1) }} PTS</span>
+      </div>
+
+      <div class="mode-caption" *ngIf="currentPhase !== 'overtime'">
+        <span>{{ timerMode === 'countup' ? 'Tiempo Transcurrido' : 'Tiempo Restante' }}</span>
+        <span class="target-hint">/ {{ activePresetName }}</span>
+      </div>
+    </div>
+
+  </div>
+</div>

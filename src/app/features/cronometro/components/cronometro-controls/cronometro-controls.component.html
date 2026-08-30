@@ -1,0 +1,39 @@
+<!-- AJUSTES RÁPIDOS (+/- SEGUNDOS) -->
+<div class="adjust-chips-row" *ngIf="!isFullscreen">
+  <button (click)="onAdjustSeconds(-10)" class="chip-btn">-10s</button>
+  <button (click)="onAdjustSeconds(10)" class="chip-btn">+10s</button>
+  <button (click)="onAdjustSeconds(30)" class="chip-btn">+30s</button>
+</div>
+
+<!-- BOTONES DE ACCIÓN PRINCIPAL -->
+<div class="primary-controls">
+  <button class="stage-btn-main" 
+          [class.running]="timerRunning" 
+          [class.overtime]="currentPhase === 'overtime'"
+          (click)="onToggle()">
+    <svg *ngIf="!timerRunning" class="btn-svg" viewBox="0 0 24 24">
+      <polygon points="5 3 19 12 5 21 5 3"/>
+    </svg>
+    <svg *ngIf="timerRunning" class="btn-svg" viewBox="0 0 24 24">
+      <rect x="6" y="4" width="4" height="16"/>
+      <rect x="14" y="4" width="4" height="16"/>
+    </svg>
+    <span>{{ timerRunning ? 'PAUSAR' : (elapsedMs === 0 ? 'INICIAR' : 'REANUDAR') }}</span>
+  </button>
+
+  <button class="stage-btn-reset" (click)="onReset()" title="Reiniciar cronómetro (R)">
+    <svg class="btn-svg" viewBox="0 0 24 24">
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+      <path d="M3 3v5h5"/>
+    </svg>
+    <span>RESETEAR</span>
+  </button>
+</div>
+
+<!-- ATAJOS DE TECLADO RÁPIDOS -->
+<div class="shortcuts-legend" *ngIf="!isFullscreen">
+  <div class="shortcut-item"><kbd>Espacio</kbd> Iniciar/Pausa</div>
+  <div class="shortcut-item"><kbd>R</kbd> Reset</div>
+  <div class="shortcut-item"><kbd>F</kbd> Proyector</div>
+  <div class="shortcut-item"><kbd>M</kbd> Sonido</div>
+</div>

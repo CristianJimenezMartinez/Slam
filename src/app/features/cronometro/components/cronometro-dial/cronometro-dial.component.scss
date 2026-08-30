@@ -1,0 +1,312 @@
+:host {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+// RADIAL GAUGE (MEDIDAS EXACTAS Y PERFECTAMENTE CIRCULARES)
+.radial-gauge-wrapper {
+  position: relative;
+  width: 380px;
+  height: 380px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radial-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+
+  .gauge-track {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.05);
+    stroke-width: 10px;
+  }
+
+  .gauge-fill {
+    fill: none;
+    stroke-width: 12px;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.08s linear;
+  }
+}
+
+// CONTENIDO CENTRAL: Centrado exacto absoluto en el círculo
+.dial-center-content {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.25rem;
+  pointer-events: none;
+}
+
+// Slot superior: pastilla de fase (altura fija)
+.slot-top {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+// Slot central: dígitos gigantes (altura fija, alineación matemática)
+.slot-middle {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+// Slot inferior: caption / penalización (altura fija)
+.slot-bottom {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+// PHASE CAPSULE
+.phase-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: var(--font-condensed);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  white-space: nowrap;
+
+  .phase-indicator-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  &.phase-idle, &.phase-normal {
+    background: rgba(18, 209, 174, 0.12);
+    border-color: rgba(18, 209, 174, 0.4);
+    color: #12D1AE;
+    .phase-indicator-dot { background: #12D1AE; box-shadow: 0 0 10px #12D1AE; }
+  }
+
+  &.phase-warning {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.5);
+    color: #FBBF24;
+    .phase-indicator-dot { background: #FBBF24; box-shadow: 0 0 10px #FBBF24; }
+  }
+
+  &.phase-alert {
+    background: rgba(234, 88, 12, 0.2);
+    border-color: rgba(234, 88, 12, 0.6);
+    color: #FB923C;
+    .phase-indicator-dot { background: #FB923C; box-shadow: 0 0 12px #FB923C; }
+  }
+
+  &.phase-grace {
+    background: rgba(248, 113, 113, 0.2);
+    border-color: rgba(248, 113, 113, 0.6);
+    color: #F87171;
+    .phase-indicator-dot { background: #F87171; box-shadow: 0 0 12px #F87171; }
+  }
+
+  &.phase-overtime {
+    background: rgba(239, 68, 68, 0.25);
+    border-color: #EF4444;
+    color: #FCA5A5;
+    .phase-indicator-dot { background: #EF4444; box-shadow: 0 0 15px #EF4444; }
+  }
+}
+
+// TIME READOUT (DÍGITOS OSWALD GIGANTES, TABULARES, SIN VIBRACIÓN)
+.time-readout {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  font-family: var(--font-display), 'Oswald', sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -1px;
+  line-height: 1;
+  user-select: none;
+
+  .digit-chunk {
+    font-size: 5.2rem;
+    display: inline-block;
+    width: 1.18em;
+    min-width: 1.18em;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    transition: text-shadow 0.3s ease;
+  }
+
+  .digit-colon {
+    font-size: 4.4rem;
+    display: inline-block;
+    width: 0.3em;
+    text-align: center;
+    opacity: 0.65;
+    line-height: 1;
+    margin: 0 0.05em;
+  }
+
+  .digit-dec {
+    font-family: var(--font-condensed), 'Barlow Condensed', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--secondary);
+    display: inline-block;
+    width: 1.2ch;
+    text-align: left;
+    margin-left: 0.15rem;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  &.is-overtime {
+    color: #EF4444;
+    .digit-dec {
+      color: #EF4444;
+    }
+  }
+}
+
+// Fases de color del SVG
+:host-context(.phase-normal), :host-context(.phase-idle) {
+  .gauge-fill { stroke: url(#gradNormal); }
+}
+
+:host-context(.phase-warning) {
+  .gauge-fill { stroke: url(#gradWarning); }
+  .digit-chunk { text-shadow: 0 0 25px rgba(245, 158, 11, 0.4); }
+}
+
+:host-context(.phase-alert) {
+  .gauge-fill { stroke: url(#gradAlert); }
+  .digit-chunk { text-shadow: 0 0 30px rgba(234, 88, 12, 0.5); }
+}
+
+:host-context(.phase-grace) {
+  .gauge-fill { stroke: url(#gradOvertime); }
+  .digit-chunk { color: #FCA5A5; text-shadow: 0 0 30px rgba(248, 113, 113, 0.6); }
+}
+
+:host-context(.phase-overtime) {
+  .gauge-fill { stroke: url(#gradOvertime); }
+  .time-readout {
+    color: #EF4444;
+    text-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+  }
+}
+
+.mode-caption {
+  font-family: var(--font-condensed);
+  font-size: 0.88rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #64748b;
+  white-space: nowrap;
+
+  .target-hint {
+    color: #94a3b8;
+    margin-left: 0.3rem;
+  }
+}
+
+.penalty-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid #EF4444;
+  border-radius: 8px;
+  color: #FCA5A5;
+  font-family: var(--font-condensed);
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  white-space: nowrap;
+}
+
+// FULLSCREEN STYLES
+.fullscreen-gauge {
+  width: min(60vh, 500px);
+  height: min(60vh, 500px);
+
+  .slot-top {
+    height: min(6vh, 42px);
+  }
+
+  .slot-middle {
+    height: min(18vh, 140px);
+  }
+
+  .slot-bottom {
+    height: min(5vh, 34px);
+  }
+
+  .time-readout {
+    .digit-chunk {
+      font-size: min(14vw, 7.5rem);
+    }
+    .digit-colon {
+      font-size: min(12vw, 6.5rem);
+    }
+    .digit-dec {
+      font-size: min(5vw, 3rem);
+    }
+  }
+
+  .phase-capsule {
+    font-size: 1rem;
+    padding: 0.45rem 1.4rem;
+  }
+
+  .mode-caption, .penalty-banner {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .radial-gauge-wrapper {
+    width: 290px;
+    height: 290px;
+  }
+
+  .slot-middle {
+    height: 80px;
+  }
+
+  .time-readout {
+    .digit-chunk {
+      font-size: 3.8rem;
+    }
+    .digit-colon {
+      font-size: 3.2rem;
+    }
+    .digit-dec {
+      font-size: 1.8rem;
+    }
+  }
+}
+

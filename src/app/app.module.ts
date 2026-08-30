@@ -12,6 +12,9 @@ import { LandingComponent } from './features/landing/landing/landing.component';
 import { CalendarComponent } from './features/landing/calendar/calendar.component';
 import { CanteraComponent } from './features/landing/cantera/cantera.component';
 import { NormasComponent } from './features/landing/normas/normas.component';
+import { PreviewLoadingComponent } from './features/preview-loading/preview-loading.component';
+import { CookieBannerComponent } from './shared/components/cookie-banner/cookie-banner.component';
+
 
 // Landing Sub-components
 import { HeroEventComponent } from './features/landing/landing/components/hero-event/hero-event.component';
@@ -65,6 +68,10 @@ import { FooterComponent } from './core/footer/footer.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
 import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
 import { CronometroComponent } from './features/cronometro/cronometro.component';
+import { CronometroHeaderComponent } from './features/cronometro/components/cronometro-header/cronometro-header.component';
+import { CronometroDialComponent } from './features/cronometro/components/cronometro-dial/cronometro-dial.component';
+import { CronometroControlsComponent } from './features/cronometro/components/cronometro-controls/cronometro-controls.component';
+import { CronometroRulesComponent } from './features/cronometro/components/cronometro-rules/cronometro-rules.component';
 import { RuletaComponent } from './features/ruleta/ruleta.component';
 
 import { registerLocaleData } from '@angular/common';
@@ -117,7 +124,13 @@ registerLocaleData(localeEs, 'es');
     LiveControlComponent,
     PrintQrsComponent,
     CronometroComponent,
-    RuletaComponent
+    CronometroHeaderComponent,
+    CronometroDialComponent,
+    CronometroControlsComponent,
+    CronometroRulesComponent,
+    RuletaComponent,
+    PreviewLoadingComponent,
+    CookieBannerComponent
   ],
   imports: [
     BrowserModule,

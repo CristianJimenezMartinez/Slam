@@ -1,27 +1,61 @@
-<div class="cronometro-container">
-  <div class="glass-box">
-    <h1 class="title">Cronómetro Oficial</h1>
-    
-    <div class="display-container">
-      <div class="time-main">{{ timerDisplay }}</div>
-      <div class="pulse-indicator" [class.active]="timerRunning"></div>
-    </div>
+<div #cronometroRoot class="cronometro-stage" [ngClass]="['phase-' + currentPhase, isFullscreen ? 'fullscreen-mode' : '']">
+  
+  <!-- AMBIENTE CINEMATOGRÁFICO DE FONDO -->
+  <div class="stage-ambient-glow"></div>
+  <div class="stage-vignette"></div>
 
-    <div class="controls">
-      <button class="btn-control start-stop" [class.running]="timerRunning" (click)="toggleTimer()">
-        <span class="material-icons-outlined">{{ timerRunning ? 'pause' : 'play_arrow' }}</span>
-        {{ timerRunning ? 'Detener' : 'Iniciar' }}
-      </button>
-
-      <button class="btn-control reset" (click)="resetTimer()">
-        <span class="material-icons-outlined">restart_alt</span>
-        Resetear
-      </button>
-    </div>
+  <div class="stage-container">
     
-    <div class="tip">
-      <span class="material-icons-outlined">info</span>
-      Usa este cronómetro para medir el tiempo de los poemas (máximo 3 minutos).
-    </div>
+    <!-- SUBCOMPONENTE 1: HEADER & PRESETS -->
+    <app-cronometro-header
+      [timerRunning]="timerRunning"
+      [timerMode]="timerMode"
+      [soundEnabled]="soundEnabled"
+      [isFullscreen]="isFullscreen"
+      [presets]="PRESETS"
+      [activePreset]="activePreset"
+      (modeChange)="setMode($event)"
+      (soundToggle)="toggleSound()"
+      (fullscreenToggle)="toggleFullscreen()"
+      (presetSelect)="selectPreset($event)">
+    </app-cronometro-header>
+
+    <!-- CUERPO PRINCIPAL DEL CRONÓMETRO -->
+    <main class="stage-dial-arena">
+      <div class="dial-card glass">
+        
+        <!-- SUBCOMPONENTE 2: RADIAL DIAL & DÍGITOS -->
+        <app-cronometro-dial
+          [currentPhase]="currentPhase"
+          [phaseText]="phaseText"
+          [minutesDisplay]="minutesDisplay"
+          [secondsDisplay]="secondsDisplay"
+          [decimasDisplay]="decimasDisplay"
+          [penaltyPoints]="penaltyPoints"
+          [timerMode]="timerMode"
+          [activePresetName]="activePreset.name"
+          [circleRadius]="circleRadius"
+          [circleCircumference]="circleCircumference"
+          [dashOffset]="dashOffset"
+          [isFullscreen]="isFullscreen">
+        </app-cronometro-dial>
+
+        <!-- SUBCOMPONENTE 3: BOTONES Y CONTROLES DENTRO DE LA TARJETA -->
+        <app-cronometro-controls
+          [timerRunning]="timerRunning"
+          [elapsedMs]="elapsedMs"
+          [currentPhase]="currentPhase"
+          [isFullscreen]="isFullscreen"
+          (toggle)="toggleTimer()"
+          (reset)="resetTimer()"
+          (adjustSeconds)="addSeconds($event)">
+        </app-cronometro-controls>
+
+      </div>
+    </main>
+
+    <!-- SUBCOMPONENTE 4: GUÍA DE REGLAMENTO -->
+    <app-cronometro-rules *ngIf="!isFullscreen"></app-cronometro-rules>
+
   </div>
 </div>

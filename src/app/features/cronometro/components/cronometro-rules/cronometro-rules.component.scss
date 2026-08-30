@@ -1,0 +1,51 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.rules-stage-guide {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 1.8rem;
+  background: rgba(14, 18, 23, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+
+  .rule-col {
+    display: flex;
+    gap: 0.8rem;
+
+    .rule-bullet {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--secondary);
+      line-height: 1;
+    }
+
+    strong {
+      display: block;
+      font-family: var(--font-condensed);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #ffffff;
+      margin-bottom: 0.2rem;
+    }
+
+    p {
+      font-size: 0.82rem;
+      color: #64748b;
+      line-height: 1.4;
+      margin: 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .rules-stage-guide {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
