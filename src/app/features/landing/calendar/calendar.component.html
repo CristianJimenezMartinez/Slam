@@ -30,7 +30,12 @@
         <section *ngIf="proximos.length === 0" class="offseason-banner glass">
           <div class="offseason-badge">ESTADO DE LA TEMPORADA</div>
           <div class="offseason-content">
-            <div class="offseason-icon">🏆</div>
+            <div class="offseason-icon-frame">
+              <svg class="svg-icon-trophy" viewBox="0 0 24 24">
+                <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/>
+                <circle cx="12" cy="14" r="1.5" fill="currentColor"/>
+              </svg>
+            </div>
             <div class="offseason-text">
               <h2>Temporada VII Concluida con Éxito</h2>
               <p>
@@ -38,11 +43,22 @@
                 Actualmente la organización se encuentra planificando el calendario y la apertura de inscripciones para la <strong>8ª Temporada</strong>.
               </p>
               <div class="offseason-actions">
-                <a href="https://www.instagram.com/poetryslamalicante/" target="_blank" class="btn-primary">
-                  <span>📸 Seguir en Instagram para Nuevas Fechas</span>
+                <a href="https://www.instagram.com/poetryslamalicante/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                  <svg class="btn-svg" viewBox="0 0 24 24">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  <span>Seguir en Instagram para Nuevas Fechas</span>
                 </a>
                 <a routerLink="/cantera" class="btn-secondary">
-                  <span>📖 Conoce el Espacio Cantera</span>
+                  <svg class="btn-svg" viewBox="0 0 24 24">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                    <path d="M6 6h10"/>
+                    <path d="M6 10h10"/>
+                    <path d="M6 14h6"/>
+                  </svg>
+                  <span>Conoce el Espacio Cantera</span>
                 </a>
               </div>
             </div>
@@ -60,7 +76,12 @@
             <div class="date-card upcoming-card glass" *ngFor="let ev of proximos" [class.today]="isEventToday(ev.fecha)">
               <div class="card-media">
                 <img [src]="ev.url_foto || defaultPoster" (error)="ev.url_foto = defaultPoster" [alt]="ev.nombre" class="card-img">
-                <span class="status-badge" *ngIf="isEventToday(ev.fecha)">HOY 🔥</span>
+                <span class="status-badge" *ngIf="isEventToday(ev.fecha)">
+                  <svg class="badge-svg-sm" viewBox="0 0 24 24">
+                    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+                  </svg>
+                  <span>HOY EN VIVO</span>
+                </span>
               </div>
               
               <div class="card-body">
@@ -69,11 +90,21 @@
                   <span class="month">{{ ev.fecha | date:'MMM' }}</span>
                 </div>
                 <h3>{{ ev.nombre }}</h3>
-                <p class="location"><span class="icon">📍</span> {{ ev.ubicacion || 'Las Cigarreras (Caja Negra)' }}</p>
+                <p class="location">
+                  <svg class="icon-inline" viewBox="0 0 24 24">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                  <span>{{ ev.ubicacion || 'Las Cigarreras (Caja Negra)' }}</span>
+                </p>
                 
                 <div class="action" *ngIf="ev.url_entradas">
-                  <a [href]="ev.url_entradas" target="_blank" class="btn-primary">
-                    <span>🎟️ Entradas</span>
+                  <a [href]="ev.url_entradas" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                    <svg class="btn-svg" viewBox="0 0 24 24">
+                      <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
+                      <line x1="9" y1="12" x2="15" y2="12"/>
+                    </svg>
+                    <span>Entradas</span>
                   </a>
                 </div>
               </div>
@@ -91,8 +122,11 @@
                 El punto de encuentro de la poesía escénica. Un espacio íntimo y vibrante donde el público rodea el micrófono para vivir la palabra en primera persona.
               </p>
               <div class="venue-cta">
-                <a href="https://maps.google.com/?q=Centro+Cultural+Las+Cigarreras+Alicante" target="_blank" class="btn-outline">
-                  <span>📍 Abrir en Google Maps</span>
+                <a href="https://maps.google.com/?q=Centro+Cultural+Las+Cigarreras+Alicante" target="_blank" rel="noopener noreferrer" class="btn-outline">
+                  <svg class="btn-svg" viewBox="0 0 24 24">
+                    <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                  </svg>
+                  <span>Abrir en Google Maps</span>
                 </a>
               </div>
             </div>
@@ -154,7 +188,12 @@
             <div class="date-card past-card glass" *ngFor="let ev of pasados">
               <div class="card-media">
                 <img [src]="ev.url_foto || defaultPoster" (error)="ev.url_foto = defaultPoster" [alt]="ev.nombre" class="card-img">
-                <span class="past-badge">✓ Celebrado</span>
+                <span class="past-badge">
+                  <svg class="badge-check-svg" viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span>Celebrado</span>
+                </span>
               </div>
               
               <div class="card-body">
@@ -163,7 +202,13 @@
                   <span class="month">{{ ev.fecha | date:'MMM yyyy' }}</span>
                 </div>
                 <h3>{{ ev.nombre }}</h3>
-                <p class="location"><span class="icon">📍</span> {{ ev.ubicacion || 'Caja Negra, Las Cigarreras' }}</p>
+                <p class="location">
+                  <svg class="icon-inline" viewBox="0 0 24 24">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                  <span>{{ ev.ubicacion || 'Caja Negra, Las Cigarreras' }}</span>
+                </p>
               </div>
             </div>
           </div>
