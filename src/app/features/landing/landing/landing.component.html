@@ -1,38 +1,50 @@
+
 <main class="landing-main">
   
-  <!-- MODO CARGANDO -->
-  <app-loading-spinner *ngIf="loading" [fullScreen]="true"></app-loading-spinner>
+  <!-- FONDO CINEMATOGRÁFICO FIJO DEL ESCENARIO (PARA SECCIÓN INFERIOR DE EXPLORACIÓN) -->
+  <div class="hero-bg-container">
+    <img src="assets/images/explore_hero.jpg" alt="Escenario y Auditorio Poetry Slam Alicante" class="hero-bg-img">
+  </div>
+  <div class="hero-overlay"></div>
 
-  <ng-container *ngIf="!loading">
-    
-    <!-- MODO EVENTO INMINENTE (<= 7 días) -->
-    <app-hero-event 
-      *ngIf="esEventoInminente && evento"
-      [evento]="evento"
-      [participantCount]="participantes.length">
-    </app-hero-event>
+  <div class="landing-content-layer">
+    <!-- MODO CARGANDO -->
+    <app-loading-spinner *ngIf="loading" [fullScreen]="true"></app-loading-spinner>
 
-    <!-- MODO TEMPORADA / ESPERA (> 7 días o sin evento) -->
-    <app-hero-season
-      *ngIf="!esEventoInminente"
-      [edicionTexto]="edicionTexto"
-      [currentYear]="currentYear"
-      [urlPaseTemporada]="urlPaseTemporada"
-      [fotoTemporada]="fotoTemporada"
-      [hasUpcomingEvents]="proximosCronograma.length > 0"
-      (scrollRequest)="scrollToSlider()">
-    </app-hero-season>
+    <ng-container *ngIf="!loading">
+      
+      <!-- MODO EVENTO INMINENTE (<= 7 días) -->
+      <app-hero-event 
+        *ngIf="esEventoInminente && evento"
+        [evento]="evento"
+        [participantCount]="participantes.length">
+      </app-hero-event>
 
-    <!-- SLIDER DE ENTRADAS (Solo en Modo Temporada cuando hay eventos futuros) -->
-    <app-upcoming-slider
-      *ngIf="!esEventoInminente && proximosCronograma.length > 0"
-      [eventos]="proximosCronograma"
-      [fotoTemporada]="fotoTemporada">
-    </app-upcoming-slider>
+      <!-- MODO TEMPORADA / ESPERA (> 7 días o sin evento) -->
+      <app-hero-season
+        *ngIf="!esEventoInminente"
+        [edicionTexto]="edicionTexto"
+        [currentYear]="currentYear"
+        [urlPaseTemporada]="urlPaseTemporada"
+        [fotoTemporada]="fotoTemporada"
+        [hasUpcomingEvents]="proximosCronograma.length > 0"
+        (scrollRequest)="scrollToSlider()">
+      </app-hero-season>
 
-    <!-- SECCIÓN EXPLORAR FUERA DE TEMPORADA (Cuando no hay evento ni fechas próximas) -->
-    <section class="season-closed-explore" *ngIf="!esEventoInminente && proximosCronograma.length === 0">
-      <div class="container">
+      <!-- SLIDER DE ENTRADAS (Solo en Modo Temporada cuando hay eventos futuros) -->
+      <app-upcoming-slider
+        *ngIf="!esEventoInminente && proximosCronograma.length > 0"
+        [eventos]="proximosCronograma"
+        [fotoTemporada]="fotoTemporada">
+      </app-upcoming-slider>
+
+      <!-- SECCIÓN EXPLORAR FUERA DE TEMPORADA (Cuando no hay evento ni fechas próximas) -->
+      <section class="season-closed-explore" *ngIf="!esEventoInminente && proximosCronograma.length === 0">
+        <!-- HALOS AMBIENTALES DE ESCENARIO -->
+        <div class="explore-ambient-glow"></div>
+        <div class="explore-ambient-glow-secondary"></div>
+
+        <div class="container explore-container">
         
         <!-- BLOQUE: LAS 3 REGLAS SAGRADAS DEL POETRY SLAM -->
         <div class="rules-highlight-block">
@@ -42,7 +54,7 @@
           <p class="block-subtitle">3 normas sencillas que convierten cada encuentro en una velada electrizante sobre el escenario.</p>
 
           <div class="rules-triad-grid">
-            <div class="rule-box">
+            <div class="rule-box glass">
               <div class="rule-top">
                 <span class="rule-num">01</span>
                 <div class="icon-frame">
@@ -55,7 +67,7 @@
               <p>Cada poeta dispone de 3 minutos exactos cronometrados. La tensión del reloj marca la velocidad y la emoción en el escenario.</p>
             </div>
 
-            <div class="rule-box active-rule">
+            <div class="rule-box glass active-rule">
               <div class="rule-top">
                 <span class="rule-num">02</span>
                 <div class="icon-frame primary">
@@ -71,7 +83,7 @@
               <p>Textos propios y originales. Sin atrezzo, sin disfraces y sin instrumentos. Toda la fuerza radica en el mensaje y la interpretación.</p>
             </div>
 
-            <div class="rule-box">
+            <div class="rule-box glass">
               <div class="rule-top">
                 <span class="rule-num">03</span>
                 <div class="icon-frame">
@@ -99,8 +111,8 @@
 
         <div class="explore-grid">
           <!-- Card 1: Cantera -->
-          <div class="explore-card" routerLink="/cantera">
-            <div class="card-glow"></div>
+          <div class="explore-card glass" routerLink="/cantera">
+            <div class="card-laser-beam"></div>
             <div class="icon-frame primary">
               <svg class="svg-icon primary" viewBox="0 0 24 24">
                 <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/>
@@ -115,8 +127,8 @@
           </div>
 
           <!-- Card 2: Normas -->
-          <div class="explore-card" routerLink="/normas">
-            <div class="card-glow"></div>
+          <div class="explore-card glass" routerLink="/normas">
+            <div class="card-laser-beam"></div>
             <div class="icon-frame">
               <svg class="svg-icon" viewBox="0 0 24 24">
                 <path d="M8 2h8a4 4 0 0 1 4 4v14a2 2 0 0 1-2 2H6a4 4 0 0 1-4-4V6a4 4 0 0 1 4-4h2"/>
@@ -133,8 +145,8 @@
           </div>
 
           <!-- Card 3: Archivo -->
-          <div class="explore-card" routerLink="/calendario">
-            <div class="card-glow"></div>
+          <div class="explore-card glass" routerLink="/calendario">
+            <div class="card-laser-beam"></div>
             <div class="icon-frame">
               <svg class="svg-icon" viewBox="0 0 24 24">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
@@ -168,5 +180,6 @@
       [eventos]="proximosCronograma.slice(1)">
     </app-upcoming-dates>
 
-  </ng-container>
+    </ng-container>
+  </div>
 </main>
