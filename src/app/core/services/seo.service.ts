@@ -5,7 +5,7 @@ import { DOCUMENT } from '@angular/common';
 const SITE_NAME = 'Poetry Slam Alicante';
 const SITE_URL = 'https://poetryslamalicante.com';
 const DEFAULT_IMAGE = `${SITE_URL}/assets/images/logo.png`;
-const DEFAULT_DESC = 'Encuentro de poesía en vivo en el Centro Cultural Las Cigarreras, Alicante. Tu voz cuenta. Calendario, entradas y resultados.';
+const DEFAULT_DESC = 'El escenario de la poesía en vivo y la palabra viva en Alicante. Tu voz cuenta. Calendario, entradas y resultados.';
 
 const LOCATION_SCHEMA = {
   '@type': 'Place',
@@ -56,7 +56,7 @@ export class SeoService {
   setPage(data: PageSeo): void {
     const fullTitle = data.title
       ? `${data.title} | ${SITE_NAME}`
-      : `${SITE_NAME} | Poesía en Vivo en Las Cigarreras`;
+      : `${SITE_NAME} | El Escenario de la Palabra Viva`;
 
     const desc = data.description || DEFAULT_DESC;
     const url = data.path ? `${SITE_URL}${data.path}` : SITE_URL;
@@ -142,11 +142,56 @@ export class SeoService {
   }
 
   /**
+   * Inyecta JSON-LD estructurado de Formación / Talleres Educativos de Cantera (Optimizado para Google y Motores de IA).
+   */
+  setCanteraJsonLd(): void {
+    const data = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'EducationalOrganization',
+          'name': 'Cantera Poetry Slam Alicante',
+          'url': `${SITE_URL}/cantera`,
+          'description': 'Programa educativo y formativo de poesía escénica, oratoria y expresión creativa para colegios, institutos (IES) y jóvenes en la provincia de Alicante.',
+          'areaServed': {
+            '@type': 'AdministrativeArea',
+            'name': 'Provincia de Alicante, Comunidad Valenciana'
+          },
+          'sameAs': [
+            'https://www.instagram.com/poetryslamalicante/',
+            'https://www.youtube.com/@poetryslamalicante'
+          ]
+        },
+        {
+          '@type': 'Course',
+          'name': 'Talleres Escolares de Poesía Escénica y Oratoria',
+          'description': 'Talleres prácticos de escritura poética contemporánea, declamación escénica, pérdida del miedo a hablar en público y convivencia para alumnos de ESO, Bachillerato y Formación Profesional en Alicante.',
+          'provider': {
+            '@type': 'Organization',
+            'name': 'Poetry Slam Alicante',
+            'url': SITE_URL
+          },
+          'educationalLevel': ['Educación Secundaria Obligatoria (ESO)', 'Bachillerato', 'Formación Profesional', 'Universidad'],
+          'inLanguage': 'es',
+          'isAccessibleForFree': false,
+          'hasCourseInstance': {
+            '@type': 'CourseInstance',
+            'courseMode': 'In-Person',
+            'location': 'Centros Educativos e Institutos de la Provincia de Alicante'
+          }
+        }
+      ]
+    };
+    this.setJsonLd(data, 'cantera-jsonld');
+  }
+
+  /**
    * Limpia todos los bloques JSON-LD dinámicos al navegar.
    */
   clearJsonLd(): void {
     this.removeJsonLd('dynamic-jsonld');
     this.removeJsonLd('events-jsonld');
+    this.removeJsonLd('cantera-jsonld');
   }
 
   // ── Privados ──────────────────────────────────────────

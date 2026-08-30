@@ -22,7 +22,7 @@ export class HistoriaComponent implements OnInit {
     // SEO base (se muestra mientras cargan los datos)
     this.seo.setPage({
       title: `Calendario ${this.currentYear}`,
-      description: `Todas las fechas del Poetry Slam Alicante ${this.currentYear}. Próximas citas y archivo de la temporada en Las Cigarreras.`,
+      description: `Todas las fechas del Poetry Slam Alicante ${this.currentYear}. Próximas citas y archivo de la temporada.`,
       path: '/calendario'
     });
 
