@@ -2,30 +2,442 @@
   
   <!-- BACKGROUND FIJO PARA TODA LA PÁGINA -->
   <div class="hero-bg-container">
-    <img src="/assets/images/cantera_hero.png" alt="Cantera Hero" class="hero-img">
+    <img src="/assets/images/cantera_hero.png" alt="Cantera Hero - Poetry Slam Alicante" class="hero-img">
   </div>
   <div class="hero-overlay"></div>
 
-  <!-- CONTENIDO ÚNICO SCROLLABLE -->
+  <!-- CONTENIDO PRINCIPAL -->
   <div class="cantera-content">
     
-    <!-- PARTE SUPERIOR (TITULO) -->
+    <!-- HEADER HERO -->
     <section class="hero-header">
+      <div class="cantera-badge">ESPACIO EDUCATIVO & NUEVAS VOCES</div>
       <h1 class="glow-text">CANTERA</h1>
-      <p class="hero-subtitle">El futuro de la poesía empieza aquí</p>
+      <p class="hero-subtitle">El futuro de la poesía y la oratoria empieza aquí</p>
       <div class="hero-line"></div>
     </section>
 
-    <!-- PARTE INFERIOR (CTA SOLAMENTE) -->
-    <section class="cantera-info">
+    <!-- TARJETAS DE PROPUESTA DE VALOR (ESCUELA VS POETA) -->
+    <section class="cantera-cards-grid">
 
-      <div class="cta-section glass">
-        <p class="cta-lead">La pregunta es</p>
-        <h3>¿Eres un centro escolar?</h3>
-        <p class="cta-description">Impartimos talleres y formaciones en centros escolares.<br>Escríbenos para más información.</p>
-        <button routerLink="/" class="btn-premium">Contactar ahora</button>
+      <!-- TARJETA 1: CENTROS EDUCATIVOS -->
+      <div class="value-card school-card glass">
+        <div class="card-pill">🏫 CENTROS EDUCATIVOS & IES</div>
+        <h2>Talleres de Poesía Escénica, Oratoria y Creatividad</h2>
+        <p class="card-intro">
+          Llevamos la palabra viva a los institutos y colegios de la provincia de Alicante para transformar la literatura en una experiencia vivencial y dinámica.
+        </p>
+
+        <ul class="benefits-list">
+          <li>
+            <div class="icon">
+              <svg class="svg-icon primary" viewBox="0 0 24 24">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Oratoria y Confianza Escénica:</strong>
+              <p>Pérdida del miedo a hablar en público, control de la voz, respiración y expresión corporal.</p>
+            </div>
+          </li>
+          <li>
+            <div class="icon">
+              <svg class="svg-icon primary" viewBox="0 0 24 24">
+                <path d="m18 2 4 4-12 12H6v-4L18 2z"/>
+                <path d="m14 6 4 4"/>
+                <path d="M4 22h16"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Fomento de la Creación Literaria:</strong>
+              <p>Escritura creativa contemporánea cercana a los intereses e inquietudes reales del alumnado.</p>
+            </div>
+          </li>
+          <li>
+            <div class="icon">
+              <svg class="svg-icon primary" viewBox="0 0 24 24">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Convivencia y Gestión Emocional:</strong>
+              <p>Empatía, escucha respetuosa y prevención del acoso escolar a través de la expresión libre.</p>
+            </div>
+          </li>
+          <li>
+            <div class="icon">
+              <svg class="svg-icon primary" viewBox="0 0 24 24">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+                <path d="M6 14h6"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Adaptable a la Programación Curricular:</strong>
+              <p>Diseñado para ESO, Bachillerato y FP (sesiones lectivas, semanas culturales o torneos internos).</p>
+            </div>
+          </li>
+        </ul>
+
+        <button type="button" (click)="abrirModal('escuela')" class="btn-primary large card-btn">
+          <span>🏫 Solicitar Taller para mi Centro</span>
+        </button>
+      </div>
+
+      <!-- TARJETA 2: JÓVENES POETAS -->
+      <div class="value-card poet-card glass">
+        <div class="card-pill secondary-pill">🎤 JÓVENES CREADORES</div>
+        <h2>Sube al Escenario del Slam</h2>
+        <p class="card-intro">
+          Si escribes o quieres aprender a dar voz a tus textos, la Cantera es tu espacio de despegue con mentoría y comunidad.
+        </p>
+
+        <ul class="benefits-list">
+          <li>
+            <div class="icon">
+              <svg class="svg-icon" viewBox="0 0 24 24">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Mentoría y Técnica de Slam:</strong>
+              <p>Aprende a medir tus 3 minutos, jugar con el ritmo, los silencios y la conexión con el público.</p>
+            </div>
+          </li>
+          <li>
+            <div class="icon">
+              <svg class="svg-icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8 15h8"/>
+                <circle cx="9" cy="9" r="1" fill="currentColor"/>
+                <circle cx="15" cy="9" r="1" fill="currentColor"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Comunidad Inclusiva y Segura:</strong>
+              <p>Comparte tus versos en un entorno tolerante, sin juicios y con jóvenes de tu misma pasión.</p>
+            </div>
+          </li>
+          <li>
+            <div class="icon">
+              <svg class="svg-icon" viewBox="0 0 24 24">
+                <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/>
+                <circle cx="12" cy="14" r="1.5" fill="currentColor"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Salto al Escenario Oficial:</strong>
+              <p>Acceso directo a las veladas de Poetry Slam Alicante y torneos de jóvenes promesas.</p>
+            </div>
+          </li>
+          <li>
+            <div class="icon">
+              <svg class="svg-icon" viewBox="0 0 24 24">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Talleres Abiertos y Formación:</strong>
+              <p>Encuentros periódicos con poetas consagrados del circuito nacional.</p>
+            </div>
+          </li>
+        </ul>
+
+        <button type="button" (click)="abrirModal('poeta')" class="btn-secondary large card-btn">
+          <span>🎤 Unirme a la Cantera</span>
+        </button>
+      </div>
+
+    </section>
+
+    <!-- FILA DE GARANTÍAS Y RECONOCIMIENTO REAL -->
+    <section class="trust-strip glass">
+      <div class="trust-item">
+        <span class="trust-num">VII+</span>
+        <span class="trust-label">Ediciones en Alicante</span>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <span class="trust-num">3 MIN</span>
+        <span class="trust-label">Palabra, voz y textos propios</span>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <span class="trust-num">100%</span>
+        <span class="trust-label">Voto popular en directo</span>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <span class="trust-num">OFICIAL</span>
+        <span class="trust-label">Sede de Poetry Slam España</span>
+      </div>
+    </section>
+
+    <!-- PROPUESTA METODOLÓGICA PARA CENTROS EDUCATIVOS -->
+    <section class="educational-program-section glass">
+      <div class="section-badge-center">PROGRAMA EDUCATIVO</div>
+      <h3>¿Cómo llevamos el Poetry Slam a tu Centro?</h3>
+      <p class="section-lead">
+        Una propuesta formativa estructurada para centros de toda la provincia de Alicante, adaptada al horario lectivo y diseñada para conectar con las inquietudes del alumnado:
+      </p>
+
+      <div class="program-steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <h4>Adaptación Curricular</h4>
+          <p>
+            Talleres modulares en sesiones de 50 o 100 minutos, integrables en las asignaturas de <strong>Lengua y Literatura</strong>, <strong>Valores</strong>, <strong>Filosofía</strong> o semanas culturales (ESO, Bachillerato y FP).
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <h4>Oratoria y Desinhibición</h4>
+          <p>
+            Dinámicas de respiración, modulación de la voz, expresión corporal y superación del miedo a hablar en público mediante juegos de dicción y ritmo.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <h4>Creación Literaria Contemporánea</h4>
+          <p>
+            Escritura creativa desde la verdad individual: rima, verso libre, metáfora urbana y desmitificación del canon poético tradicional hacia el <em>spoken word</em>.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">04</div>
+          <h4>Torneo Slam en el Centro</h4>
+          <p>
+            Muestra final en salón de actos o aula magna donde los propios estudiantes suben al micro y sus compañeros ejercen como jurado popular democrático.
+          </p>
+        </div>
+      </div>
+
+      <div class="program-footer-cta">
+        <p>¿Interesado en concertar una sesión o ciclo para este curso escolar?</p>
+        <button type="button" (click)="abrirModal('escuela')" class="btn-primary large">
+          <span>🏫 Solicitar Propuesta para mi Centro</span>
+        </button>
       </div>
     </section>
 
   </div>
+
+  <!-- MODAL INTERACTIVO POR PASOS (WIZARD) -->
+  <div *ngIf="isModalOpen" class="modal-backdrop" (click)="cerrarModal()">
+    <div class="modal-card glass" (click)="$event.stopPropagation()">
+      
+      <!-- BOTÓN CERRAR -->
+      <button type="button" class="modal-close-btn" (click)="cerrarModal()">✕</button>
+
+      <!-- PASO 1 Y 2: SELECTOR DE TIPO Y PROGRESS BAR -->
+      <div *ngIf="pasoActual < 3" class="modal-header-nav">
+        
+        <!-- PESTAÑAS DE CAMBIO RÁPIDO -->
+        <div class="profile-tabs-mini">
+          <button 
+            type="button" 
+            class="tab-btn" 
+            [class.active]="tipoContacto === 'escuela'"
+            (click)="setTipo('escuela')">
+            🏫 Centro Escolar
+          </button>
+          <button 
+            type="button" 
+            class="tab-btn" 
+            [class.active]="tipoContacto === 'poeta'"
+            (click)="setTipo('poeta')">
+            🎤 Joven Poeta
+          </button>
+        </div>
+
+        <!-- INDICADOR DE PASOS -->
+        <div class="step-indicator">
+          <span class="step-badge">Paso {{ pasoActual }} de 2: {{ pasoActual === 1 ? (tipoContacto === 'escuela' ? 'Detalles del Taller' : 'Tu Perfil') : 'Datos de Contacto' }}</span>
+          <div class="step-progress-bar">
+            <div class="step-progress-fill" [style.width]="pasoActual === 1 ? '50%' : '100%'"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PASO 1: DETALLES DE LA ACTIVIDAD -->
+      <div *ngIf="pasoActual === 1" class="step-content">
+        
+        <!-- DETALLES PARA CENTRO ESCOLAR -->
+        <div *ngIf="tipoContacto === 'escuela'" class="step-fields">
+          <h3 class="step-title">¿Qué tipo de actividad busca tu centro?</h3>
+          
+          <div class="form-group">
+            <label>Nivel Educativo del Alumnado</label>
+            <select [(ngModel)]="nivelEducativo" class="form-select">
+              <option value="ESO (1º a 4º)">ESO (1º a 4º de Secundaria)</option>
+              <option value="Bachillerato">Bachillerato</option>
+              <option value="ESO y Bachillerato">ESO y Bachillerato combinados</option>
+              <option value="Formación Profesional (FP)">Formación Profesional (FP)</option>
+              <option value="Primaria (5º y 6º)">Primaria (5º y 6º)</option>
+              <option value="Varios cursos / Todo el centro">Varios cursos / Todo el centro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Formato Deseado</label>
+            <select [(ngModel)]="formatoDeseado" class="form-select">
+              <option value="Taller Práctico en Aulas (1-2 horas)">Taller Práctico en Aulas (1-2 horas)</option>
+              <option value="Ciclo Formativo + Torneo Escolar">Ciclo Formativo + Torneo Escolar interno</option>
+              <option value="Exhibición / Slam en Salón de Actos">Exhibición / Slam en Salón de Actos</option>
+              <option value="Semana Cultural / Jornadas Literarias">Semana Cultural / Jornadas Literarias</option>
+              <option value="Asesoramiento / No lo tenemos claro aún">Asesoramiento / A convenir</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Municipio / Localidad del Centro</label>
+            <input type="text" [(ngModel)]="localidad" placeholder="Ej: Alicante, Sant Joan, Elche, Alcoi...">
+          </div>
+        </div>
+
+        <!-- DETALLES PARA JOVEN POETA -->
+        <div *ngIf="tipoContacto === 'poeta'" class="step-fields">
+          <h3 class="step-title">Cuéntanos sobre ti</h3>
+
+          <div class="form-group">
+            <label>Tu Edad</label>
+            <input type="text" [(ngModel)]="edad" placeholder="Ej: 17 años">
+          </div>
+
+          <div class="form-group">
+            <label>Experiencia previa con la poesía o la declamación</label>
+            <select [(ngModel)]="experiencia" class="form-select">
+              <option value="Iniciación (Quiero aprender desde cero)">Iniciación (Quiero aprender desde cero)</option>
+              <option value="Escribo versos pero nunca he recitado">Escribo versos pero nunca he recitado en público</option>
+              <option value="He recitado en público alguna vez">He recitado en público alguna vez</option>
+              <option value="Tengo experiencia y busco escenario">Tengo experiencia y busco escenario</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" (click)="siguientePaso()" class="btn-primary large">
+            <span>Siguiente Paso: Datos de Contacto →</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- PASO 2: DATOS DE CONTACTO Y ENVÍO -->
+      <div *ngIf="pasoActual === 2" class="step-content">
+        
+        <!-- CONTACTO ESCUELA -->
+        <form *ngIf="tipoContacto === 'escuela'" (ngSubmit)="enviarFormulario()" class="step-fields">
+          <h3 class="step-title">Datos de Contacto del Centro</h3>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Nombre del Centro Escolar / IES *</label>
+              <input type="text" [(ngModel)]="nombreCentro" name="nombreCentro" placeholder="Ej: IES Jorge Juan" required>
+            </div>
+
+            <div class="form-group">
+              <label>Persona / Dto. de Contacto *</label>
+              <input type="text" [(ngModel)]="personaContacto" name="personaContacto" placeholder="Ej: Dto. Lengua Castellana" required>
+            </div>
+
+            <div class="form-group">
+              <label>Email de Contacto *</label>
+              <input type="email" [(ngModel)]="email" name="email" placeholder="correo@instituto.es" required>
+            </div>
+
+            <div class="form-group">
+              <label>Teléfono (Opcional)</label>
+              <input type="tel" [(ngModel)]="telefono" name="telefono" placeholder="600 000 000">
+            </div>
+
+            <div class="form-group full-width">
+              <label>Observaciones / Fechas estimadas (Opcional)</label>
+              <textarea [(ngModel)]="mensaje" name="mensaje" rows="3" placeholder="Indícanos si tenéis alguna fecha en mente, número aproximado de alumnos o cualquier detalle..."></textarea>
+            </div>
+          </div>
+
+          <div class="modal-actions-split">
+            <button type="button" (click)="anteriorPaso()" class="btn-outline">
+              <span>← Volver</span>
+            </button>
+            <button type="submit" class="btn-primary large submit-btn">
+              <span>✉️ Enviar Solicitud de Taller</span>
+            </button>
+          </div>
+          <p class="direct-email-hint">
+            Se enviará directamente a <strong>poetryslamalicante&#64;gmail.com</strong>
+          </p>
+        </form>
+
+        <!-- CONTACTO POETA -->
+        <form *ngIf="tipoContacto === 'poeta'" (ngSubmit)="enviarFormulario()" class="step-fields">
+          <h3 class="step-title">Tus Datos de Contacto</h3>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Nombre y Apellidos / Artístico *</label>
+              <input type="text" [(ngModel)]="nombrePoeta" name="nombrePoeta" placeholder="Tu nombre" required>
+            </div>
+
+            <div class="form-group">
+              <label>Email de Contacto *</label>
+              <input type="email" [(ngModel)]="emailPoeta" name="emailPoeta" placeholder="tu.email@gmail.com" required>
+            </div>
+
+            <div class="form-group full-width">
+              <label>Teléfono / WhatsApp (Opcional)</label>
+              <input type="tel" [(ngModel)]="telefonoPoeta" name="telefonoPoeta" placeholder="600 000 000">
+            </div>
+
+            <div class="form-group full-width">
+              <label>Mensaje o Motivación (Opcional)</label>
+              <textarea [(ngModel)]="mensajePoeta" name="mensajePoeta" rows="3" placeholder="¿Qué te mueve a subirte al escenario de Poetry Slam?..."></textarea>
+            </div>
+          </div>
+
+          <div class="modal-actions-split">
+            <button type="button" (click)="anteriorPaso()" class="btn-outline">
+              <span>← Volver</span>
+            </button>
+            <button type="submit" class="btn-primary large submit-btn">
+              <span>✉️ Enviar mi Inscripción</span>
+            </button>
+          </div>
+          <p class="direct-email-hint">
+            Se enviará directamente a <strong>poetryslamalicante&#64;gmail.com</strong>
+          </p>
+        </form>
+
+      </div>
+
+      <!-- PASO 3: CONFIRMACIÓN Y ÉXITO -->
+      <div *ngIf="pasoActual === 3" class="success-state">
+        <div class="success-icon">✨</div>
+        <h4>¡Solicitud Preparada con Éxito!</h4>
+        <p class="success-msg">
+          Se ha estructurado tu solicitud para <strong>poetryslamalicante&#64;gmail.com</strong>. Nos pondremos en contacto contigo a la mayor brevedad.
+        </p>
+        <div class="success-actions">
+          <button type="button" (click)="copiarDatos()" class="btn-secondary">
+            <span>{{ copiado ? '✓ ¡Copiado al Portapapeles!' : '📋 Copiar Resumen del Mensaje' }}</span>
+          </button>
+          <button type="button" (click)="cerrarModal()" class="btn-primary">
+            <span>Aceptar y Cerrar</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
