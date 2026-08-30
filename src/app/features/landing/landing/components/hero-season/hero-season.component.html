@@ -1,27 +1,87 @@
-<section class="season-hero">
+<section class="season-hero" [class.season-closed]="!hasUpcomingEvents">
   <div class="hero-overlay">
     <div class="container hero-container">
       <div class="season-flex">
         <!-- Izquierda: Textos -->
         <div class="season-content">
-          <div class="season-badge">{{ edicionTexto }} · Temporada {{ currentYear }}</div>
-          <h1>Poetry Slam Alicante</h1>
-          <p class="season-tagline">Sin filtros, sin artificios. La palabra se hace cuerpo y Alicante elige su voz.</p>
           
-          <div class="hero-actions">
+          <!-- Badge -->
+          <div class="season-badge" *ngIf="hasUpcomingEvents">
+            {{ edicionTexto ? edicionTexto + ' · ' : '' }}Temporada Activa
+          </div>
+          <div class="season-badge closed-badge" *ngIf="!hasUpcomingEvents">
+            Temporada Concluida
+          </div>
+
+          <!-- Título principal -->
+          <h1 *ngIf="hasUpcomingEvents">Poetry Slam Alicante</h1>
+          <h1 *ngIf="!hasUpcomingEvents" class="closed-title">¡Nos vemos en el próximo Slam!</h1>
+
+          <!-- Subtítulo en Cian Eléctrico -->
+          <p class="hero-subtitle">LA PALABRA EN VIVO · EL ESCENARIO DE LA CIUDAD</p>
+
+          <!-- Tagline descriptivo -->
+          <p class="season-tagline" *ngIf="hasUpcomingEvents">
+            Sin filtros, sin artificios. La palabra se hace cuerpo y Alicante elige su voz.
+          </p>
+          <p class="season-tagline" *ngIf="!hasUpcomingEvents">
+            La temporada de Poetry Slam Alicante ha concluido. Gracias a todos los poetas y al público que habéis llenado cada velada de versos y emoción en Alicante.
+          </p>
+          
+          <!-- Acciones cuando la temporada está activa con fechas -->
+          <div class="hero-actions" *ngIf="hasUpcomingEvents">
             <div class="actions-row">
               <button (click)="onScrollClick()" class="btn-primary large pulse-btn">
-                <span>🎟️ Entradas</span>
+                <svg class="svg-icon" style="width:20px;height:20px;stroke:#061014;" viewBox="0 0 24 24">
+                  <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
+                  <line x1="9" y1="12" x2="15" y2="12"/>
+                </svg>
+                <span>Entradas</span>
               </button>
             </div>
-            <p class="hero-subtext">Los jueves a las 20h · El público vota, la ciudad elige</p>
+            <p class="hero-subtext">El público vota, la ciudad elige</p>
           </div>
+
+          <!-- Acciones cuando la temporada está cerrada / fuera de temporada -->
+          <div class="hero-actions closed-actions" *ngIf="!hasUpcomingEvents">
+            <div class="closed-message-box">
+              <p class="closed-message">
+                Volveremos muy pronto con nuevas voces y la misma pasión. ¡Permanece atento a nuestras novedades!
+              </p>
+            </div>
+            <div class="actions-row">
+              <a routerLink="/cantera" class="btn-primary large">
+                <svg class="svg-icon" style="width:20px;height:20px;stroke:#061014;" viewBox="0 0 24 24">
+                  <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/>
+                  <line x1="16" y1="8" x2="2" y2="22"/>
+                </svg>
+                <span>Conoce la Cantera</span>
+              </a>
+              <a routerLink="/normas" class="btn-secondary large">
+                <svg class="svg-icon" style="width:20px;height:20px;" viewBox="0 0 24 24">
+                  <path d="M8 2h8a4 4 0 0 1 4 4v14a2 2 0 0 1-2 2H6a4 4 0 0 1-4-4V6a4 4 0 0 1 4-4h2"/>
+                  <path d="M8 2v18"/>
+                </svg>
+                <span>Normas del Torneo</span>
+              </a>
+              <a href="https://www.instagram.com/poetryslamalicante/" target="_blank" rel="noopener noreferrer" class="btn-outline large">
+                <svg class="svg-icon" style="width:20px;height:20px;stroke:#F4F8FA;" viewBox="0 0 24 24">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                </svg>
+                <span>Instagram</span>
+              </a>
+            </div>
+            <p class="hero-subtext">El público vota, la ciudad elige · Alicante</p>
+          </div>
+
         </div>
 
-        <!-- Derecha: Imagen de Temporada -->
-        <div class="season-visual" *ngIf="fotoTemporada">
+        <!-- Derecha: Imagen de Temporada / Poster Local sin fechas -->
+        <div class="season-visual">
           <div class="poster-container">
-            <img [src]="fotoTemporada" alt="Poster Temporada">
+            <img [src]="(hasUpcomingEvents && fotoTemporada) ? fotoTemporada : 'assets/images/poster-temporada.jpg'" alt="Poetry Slam Alicante - La palabra en vivo">
             <div class="glow"></div>
           </div>
         </div>

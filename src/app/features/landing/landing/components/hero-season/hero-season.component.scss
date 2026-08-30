@@ -3,8 +3,9 @@
   padding: 0;
   background: var(--bg);
   background-image:
-    radial-gradient(circle at 20% 30%, rgba(var(--primary-rgb), 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(var(--primary-rgb), 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 18% 25%, rgba(var(--primary-rgb), 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 82% 70%, rgba(var(--secondary-rgb), 0.09) 0%, transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(var(--primary-rgb), 0.04) 0%, transparent 60%);
   position: relative;
   display: flex;
   align-items: center;
@@ -39,22 +40,78 @@
 
     .season-badge {
       display: inline-block;
-      padding: 0.5rem 1.5rem;
+      padding: 0.4rem 1.4rem;
       border: 1px solid var(--primary);
       color: var(--primary);
-      font-family: 'Merriweather', serif; font-weight: 700;
-      font-size: 1.1rem;
-      border-radius: 4px;
-      margin-bottom: 1rem;
-      letter-spacing: 5px;
+      font-family: var(--font-condensed);
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 9999px;
+      margin-bottom: 1.2rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+
+      &.closed-badge {
+        border-color: var(--secondary);
+        color: var(--secondary);
+        background: rgba(var(--secondary-rgb), 0.08);
+        letter-spacing: 2.5px;
+        font-size: 0.9rem;
+        box-shadow: 0 0 15px rgba(var(--secondary-rgb), 0.2);
+      }
     }
 
-    h1 { font-size: 3.2rem; line-height: 0.9; margin: 0 0 1rem 0; color: #fff; }
-    .season-tagline { font-size: 1.1rem; color: #888; margin-bottom: 2rem; max-width: 450px; }
+    h1 { 
+      font-family: var(--font-display);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 4rem; 
+      line-height: 1.15; 
+      margin: 0 0 1rem 0; 
+      color: #fff;
+      letter-spacing: 2px;
+
+      &.closed-title {
+        font-size: 3.6rem;
+        line-height: 1.18;
+        letter-spacing: 2px;
+        background: linear-gradient(135deg, #ffffff 0%, #d8fced 40%, var(--primary) 70%, var(--secondary) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 35px rgba(var(--primary-rgb), 0.3);
+        margin-bottom: 1.2rem;
+      }
+    }
+
+    .season-tagline { 
+      font-family: var(--font-body);
+      font-size: 1.15rem; 
+      color: #cbd5e1; 
+      line-height: 1.6;
+      margin-bottom: 1.6rem; 
+      max-width: 520px; 
+    }
 
     .hero-actions {
       display: block;
       
+      .closed-message-box {
+        background: rgba(var(--primary-rgb), 0.06);
+        border: 1px solid rgba(var(--primary-rgb), 0.2);
+        border-left: 4px solid var(--primary);
+        border-radius: 0 8px 8px 0;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+        max-width: 520px;
+
+        .closed-message {
+          margin: 0;
+          color: #d1d5db;
+          font-size: 0.95rem;
+          line-height: 1.6;
+        }
+      }
+
       .actions-row {
         display: flex;
         flex-wrap: wrap;
@@ -67,9 +124,11 @@
         }
       }
 
-      .btn-secondary.large {
-        font-size: 1.1rem;
-        padding: 1rem 2.5rem;
+      .btn-primary.large,
+      .btn-secondary.large,
+      .btn-outline.large {
+        font-size: 1.15rem;
+        padding: 0.9rem 2rem;
       }
 
       .season-pass-wrapper {
@@ -82,8 +141,9 @@
           right: -10px;
           background: #ef4444; 
           color: white;
-          font-family: 'Merriweather', serif; font-weight: 700;
-          font-size: 0.9rem;
+          font-family: var(--font-condensed);
+          font-weight: 700;
+          font-size: 0.85rem;
           padding: 0.2rem 0.6rem;
           border-radius: 20px;
           letter-spacing: 1px;
@@ -96,12 +156,10 @@
       }
 
       .pulse-btn {
-        font-size: 1.1rem;
-        padding: 1rem 2.5rem;
-        background: var(--primary);
-        color: var(--bg);
+        background: linear-gradient(135deg, #7AE92B 0%, #12D1AE 100%);
+        color: #061014;
         border: none;
-        box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.4);
+        box-shadow: 0 0 25px rgba(122, 233, 43, 0.45);
         animation: heroPulse 2s infinite;
         
         span { vertical-align: middle; }
@@ -109,11 +167,12 @@
       
       .hero-subtext {
         width: 100%;
-        margin-top: 0.5rem;
-        color: #444;
-        font-size: 0.9rem;
-        font-family: 'Merriweather', serif; font-weight: 700;
-        letter-spacing: 1px;
+        margin-top: 0.75rem;
+        color: #94a3b8;
+        font-size: 0.88rem;
+        font-family: var(--font-body);
+        font-weight: 500;
+        letter-spacing: 0.3px;
       }
     }
     
@@ -121,7 +180,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      h1 { font-size: 2.2rem; }
+      h1 { font-size: 2.3rem; line-height: 1.18; }
+      h1.closed-title { font-size: 2.2rem; line-height: 1.2; }
     }
   }
 
@@ -156,9 +216,9 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: var(--primary);
-        filter: blur(80px);
-        opacity: 0.15;
+        background: radial-gradient(circle at 35% 45%, var(--primary) 0%, var(--secondary) 60%, transparent 80%);
+        filter: blur(75px);
+        opacity: 0.3;
         z-index: -1;
       }
     }

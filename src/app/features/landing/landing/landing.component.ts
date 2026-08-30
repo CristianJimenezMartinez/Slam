@@ -112,19 +112,23 @@ export class LandingComponent implements OnInit {
       this.seo.setPage({
         title: this.evento.nombre,
         description: this.evento.descripcion
-          || `${this.evento.nombre} – Poetry Slam en vivo en Las Cigarreras, Alicante. ¡Reserva tu entrada!`,
+          || `${this.evento.nombre} – Poetry Slam en vivo en Alicante. ¡Reserva tu entrada!`,
         path: '/'
       });
       this.seo.setEventJsonLd(this.evento);
-    } else {
+    } else if (this.proximosCronograma.length > 0) {
       this.seo.setPage({
         title: `Temporada ${this.currentYear}`,
-        description: `Poetry Slam Alicante – Temporada ${this.currentYear}. Encuentro de poesía en vivo en Las Cigarreras. Consulta el calendario y disponibilidad de entradas.`,
+        description: `Poetry Slam Alicante – Temporada ${this.currentYear}. Encuentro de poesía en vivo. Consulta el calendario y disponibilidad de entradas.`,
         path: '/'
       });
-      if (this.proximosCronograma.length > 0) {
-        this.seo.setEventsJsonLd(this.proximosCronograma);
-      }
+      this.seo.setEventsJsonLd(this.proximosCronograma);
+    } else {
+      this.seo.setPage({
+        title: 'Poetry Slam Alicante | ¡Nos vemos en el próximo Slam!',
+        description: 'La temporada de Poetry Slam Alicante ha concluido. Consulta la cantera de poetas, las normas del torneo y el histórico de encuentros en Alicante.',
+        path: '/'
+      });
     }
   }
 }

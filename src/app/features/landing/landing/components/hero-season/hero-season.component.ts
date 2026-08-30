@@ -10,6 +10,7 @@ export class HeroSeasonComponent {
   @Input() currentYear: number = new Date().getFullYear();
   @Input() urlPaseTemporada: string | null = null;
   @Input() fotoTemporada: string | null = null;
+  @Input() hasUpcomingEvents: boolean = false;
 
   @Output() scrollRequest = new EventEmitter<void>();
 
