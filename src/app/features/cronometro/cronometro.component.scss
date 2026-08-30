@@ -70,7 +70,7 @@
   max-width: 920px;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
   margin: 0 auto;
 }
 
@@ -79,6 +79,8 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 // DIAL CARD — Contenedor ancho y equilibrado con altura máxima fijada

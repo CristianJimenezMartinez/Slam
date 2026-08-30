@@ -1,13 +1,17 @@
 :host {
   display: block;
   width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0;
 }
 
 .rules-stage-guide {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  padding: 1.8rem;
+  gap: 1.2rem;
+  padding: 0.8rem 1.6rem;
+  margin: 0;
   background: rgba(14, 18, 23, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 20px;
