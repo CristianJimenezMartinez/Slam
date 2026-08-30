@@ -1,107 +1,276 @@
-<div class="ruleta-container container">
-  <!-- Cabecera del Sorteo -->
-  <header class="ruleta-header">
-    <button class="btn-back" routerLink="/">← Volver al Inicio</button>
-    <h1 class="ruleta-title">Ruleta de Nombres</h1>
-    <p class="ruleta-subtitle">Sorteo oficial del orden de participación de los poetas</p>
-  </header>
+<div class="ruleta-stage" [class.fullscreen-mode]="isFullscreen">
+  <!-- AMBIENTE CINEMATOGRÁFICO DE FONDO -->
+  <div class="stage-ambient-glow"></div>
+  <div class="stage-vignette"></div>
 
-  <!-- Cuerpo Principal en dos columnas -->
-  <div class="ruleta-body">
-    <!-- Columna Izquierda: La Ruleta -->
-    <div class="wheel-section">
-      <div class="canvas-wrapper">
-        <canvas #wheelCanvas></canvas>
-      </div>
-      
-      <button 
-        class="btn-spin" 
-        [disabled]="isSpinning || nombres.length === 0" 
-        (click)="girar()">
-        <span *ngIf="!isSpinning">¡GIRAR LA RUEDA!</span>
-        <span *ngIf="isSpinning">GIRANDO...</span>
-      </button>
-    </div>
-
-    <!-- Columna Derecha: Panel de Control -->
-    <div class="panel-section card">
-      <h3 class="panel-title">Participantes ({{ nombres.length }})</h3>
-
-      <!-- Integración Supabase: Cargar del evento activo -->
-      <div class="supabase-integration" *ngIf="eventoActivo">
-        <div class="event-info">
-          <span class="pulse-indicator"></span>
-          <p><strong>Evento Activo Detectado:</strong><br>{{ eventoActivo.nombre }}</p>
+  <div class="stage-container">
+    <!-- CABECERA DE ESCENARIO -->
+    <header class="stage-header">
+      <div class="header-top-row">
+        <div class="brand-pill">
+          <span class="pulse-live" [class.running]="isSpinning"></span>
+          <span>POETRY SLAM ALICANTE · SORTEO DE ESCENARIO</span>
         </div>
-        <button 
-          class="btn-import" 
-          [disabled]="loadingEvent || isSpinning"
-          (click)="cargarPoetasDelEvento()">
-          <span *ngIf="!loadingEvent">📥 CARGAR POETAS DEL EVENTO</span>
-          <span *ngIf="loadingEvent">CARGANDO...</span>
-        </button>
-      </div>
 
-      <!-- Cuadro de texto para añadir nombres manualmente -->
-      <div class="form-group">
-        <label for="namesTextarea">Edita los nombres (uno por línea):</label>
-        <textarea
-          id="namesTextarea"
-          rows="12"
-          [disabled]="isSpinning"
-          [(ngModel)]="listaTexto"
-          (ngModelChange)="actualizarNombresDesdeTexto()"
-          placeholder="Escribe nombres aquí...&#10;Uno por línea.">
-        </textarea>
-      </div>
+        <div class="quick-toggles">
+          <button 
+            type="button" 
+            class="tool-btn" 
+            [class.muted]="!soundEnabled"
+            (click)="toggleSound()"
+            [title]="soundEnabled ? 'Silenciar ruleta (M)' : 'Activar sonido (M)'">
+            <svg viewBox="0 0 24 24" class="tool-svg" *ngIf="soundEnabled">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+            <svg viewBox="0 0 24 24" class="tool-svg" *ngIf="!soundEnabled">
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            </svg>
+            <span class="tool-label">{{ soundEnabled ? 'Audio ON' : 'Silencio' }}</span>
+          </button>
 
-      <!-- Botones de Acción Rápida -->
-      <div class="panel-actions">
-        <button 
-          class="btn-action btn-shuffle" 
-          [disabled]="isSpinning || nombres.length < 2"
-          (click)="mezclarNombres()">
-          🔀 Mezclar
-        </button>
-        <button 
-          class="btn-action btn-clear" 
-          [disabled]="isSpinning || nombres.length === 0"
-          (click)="limpiarRuleta()">
-          🗑️ Limpiar
-        </button>
-        <button 
-          class="btn-action btn-reset" 
-          [disabled]="isSpinning"
-          (click)="resetearRuleta()">
-          🔄 Reiniciar
-        </button>
-      </div>
+          <button 
+            type="button" 
+            class="tool-btn fullscreen-btn"
+            (click)="toggleFullscreen()"
+            title="Modo Proyector / Pantalla Completa (F)">
+            <svg viewBox="0 0 24 24" class="tool-svg">
+              <path *ngIf="!isFullscreen" d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+              <path *ngIf="isFullscreen" d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+            </svg>
+            <span class="tool-label">{{ isFullscreen ? 'Salir' : 'Proyector' }}</span>
+          </button>
 
-      <!-- Instrucciones de Uso -->
-      <div class="instructions">
-        <p>💡 <strong>¿Cómo funciona?</strong> Escribe o pega los nombres de los poetas a la derecha. Pulsa <strong>¡GIRAR LA RUEDA!</strong>. Al detenerse, podrás eliminar al poeta elegido para que no vuelva a salir.</p>
+          <button 
+            type="button" 
+            class="tool-btn btn-exit"
+            routerLink="/"
+            *ngIf="!isFullscreen"
+            title="Volver a la portada">
+            <svg viewBox="0 0 24 24" class="tool-svg">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            <span class="tool-label">Inicio</span>
+          </button>
+        </div>
       </div>
-    </div>
+    </header>
+
+    <!-- ARENA PRINCIPAL DEL SORTEO -->
+    <main class="stage-arena">
+      <div class="dial-card glass">
+        
+        <!-- CUERPO EN DOS COLUMNAS BALANCEADAS -->
+        <div class="wheel-stage-grid">
+          
+          <!-- COLUMNA IZQUIERDA: EL TAMBOR 3D Y BOTÓN DE GIRO -->
+          <div class="wheel-column">
+            <div class="canvas-wrapper">
+              <canvas #wheelCanvas></canvas>
+            </div>
+            
+            <button 
+              type="button"
+              class="stage-spin-btn" 
+              [disabled]="isSpinning || nombres.length === 0" 
+              (click)="girar()">
+              <svg viewBox="0 0 24 24" class="btn-svg" *ngIf="!isSpinning">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <span *ngIf="!isSpinning">¡GIRAR RULETA!</span>
+              <span *ngIf="isSpinning" class="spinning-text">SORTEANDO POETA...</span>
+            </button>
+          </div>
+
+          <!-- COLUMNA DERECHA: DOCK DE PARTICIPANTES -->
+          <div class="dock-column">
+            
+            <!-- TARJETA SUPABASE: EVENTO ACTIVO -->
+            <div class="supabase-card" *ngIf="eventoActivo">
+              <div class="event-details">
+                <span class="pulse-indicator"></span>
+                <div>
+                  <span class="event-badge">SLAM ACTIVO</span>
+                  <h4 class="event-title">{{ eventoActivo.nombre }}</h4>
+                </div>
+              </div>
+              <button 
+                type="button"
+                class="btn-import-poetas" 
+                [disabled]="loadingEvent || isSpinning"
+                (click)="cargarPoetasDelEvento()">
+                <svg viewBox="0 0 24 24" class="btn-svg-sm">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>{{ loadingEvent ? 'CARGANDO...' : 'CARGAR POETAS DEL SLAM' }}</span>
+              </button>
+            </div>
+
+            <!-- CABECERA DEL DOCK & TOGGLE DE EDICIÓN -->
+            <div class="dock-header">
+              <div class="dock-count">
+                <span class="count-number">{{ nombres.length }}</span>
+                <span class="count-label">Poetas en el bombo</span>
+              </div>
+              
+              <button 
+                type="button" 
+                class="btn-toggle-editor"
+                (click)="toggleTextEditor()"
+                [title]="showTextEditor ? 'Ver lista de chips' : 'Editar lista en bloque'">
+                <svg viewBox="0 0 24 24" class="btn-svg-xs" *ngIf="showTextEditor">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                  <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                </svg>
+                <svg viewBox="0 0 24 24" class="btn-svg-xs" *ngIf="!showTextEditor">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                <span>{{ showTextEditor ? 'Ver Etiquetas' : 'Pegar Lista' }}</span>
+              </button>
+            </div>
+
+            <!-- VISTA 1: CHIPS DE POETAS INTERACTIVOS -->
+            <div class="poets-chips-container" *ngIf="!showTextEditor">
+              <div class="poets-chips-scroll" *ngIf="nombres.length > 0">
+                <div 
+                  class="poet-chip" 
+                  *ngFor="let nombre of nombres; let i = index"
+                  [style.border-color]="getColorPoeta(nombre) + '44'">
+                  <span class="poet-color-dot" [style.background]="getColorPoeta(nombre)"></span>
+                  <span class="poet-chip-name">{{ nombre }}</span>
+                  <button 
+                    type="button" 
+                    class="btn-remove-poet" 
+                    (click)="quitarNombre(i)"
+                    [disabled]="isSpinning"
+                    title="Eliminar este poeta">
+                    <svg viewBox="0 0 24 24" class="chip-remove-svg">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="empty-poets-hint" *ngIf="nombres.length === 0">
+                <p>No hay poetas en la ruleta.</p>
+                <small>Usa "Cargar Poetas" o pulsa "Pegar Lista" para añadir nombres.</small>
+              </div>
+            </div>
+
+            <!-- VISTA 2: EDITOR DE TEXTO EN BLOQUE -->
+            <div class="text-editor-container" *ngIf="showTextEditor">
+              <textarea
+                rows="8"
+                [disabled]="isSpinning"
+                [(ngModel)]="listaTexto"
+                (ngModelChange)="actualizarNombresDesdeTexto()"
+                placeholder="Escribe o pega un nombre por línea...">
+              </textarea>
+            </div>
+
+            <!-- BOTONES DE ACCIÓN RÁPIDA -->
+            <div class="dock-actions-row">
+              <button 
+                type="button"
+                class="btn-dock-action" 
+                [disabled]="isSpinning || nombres.length < 2"
+                (click)="mezclarNombres()"
+                title="Desordenar aleatoriamente">
+                <svg viewBox="0 0 24 24" class="btn-svg-sm">
+                  <polyline points="16 3 21 3 21 8"></polyline>
+                  <line x1="4" y1="20" x2="21" y2="3"></line>
+                  <polyline points="21 16 21 21 16 21"></polyline>
+                  <line x1="15" y1="15" x2="21" y2="21"></line>
+                  <line x1="4" y1="4" x2="9" y2="9"></line>
+                </svg>
+                <span>Mezclar</span>
+              </button>
+              <button 
+                type="button"
+                class="btn-dock-action btn-danger" 
+                [disabled]="isSpinning || nombres.length === 0"
+                (click)="limpiarRuleta()"
+                title="Vaciar todos los nombres">
+                <svg viewBox="0 0 24 24" class="btn-svg-sm">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+                <span>Limpiar</span>
+              </button>
+              <button 
+                type="button"
+                class="btn-dock-action" 
+                [disabled]="isSpinning"
+                (click)="resetearRuleta()"
+                title="Volver a la posición inicial">
+                <svg viewBox="0 0 24 24" class="btn-svg-sm">
+                  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                  <path d="M3 3v5h5"></path>
+                </svg>
+                <span>Reset</span>
+              </button>
+            </div>
+
+            <!-- LEYENDA DE ATAJOS -->
+            <div class="shortcuts-legend">
+              <div class="shortcut-item"><kbd>Espacio</kbd> Girar</div>
+              <div class="shortcut-item"><kbd>R</kbd> Reset</div>
+              <div class="shortcut-item"><kbd>F</kbd> Proyector</div>
+              <div class="shortcut-item"><kbd>M</kbd> Sonido</div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </main>
   </div>
 
-  <!-- Modal de Celebración de Ganador -->
-  <div class="modal-overlay" *ngIf="showWinnerModal">
-    <div class="winner-modal card animated-entrance" [style.border-color]="ganador ? getColorPoeta(ganador) : ''">
-      <div class="modal-glow" [style.background]="ganador ? 'radial-gradient(circle, ' + getColorPoeta(ganador) + '40 0%, transparent 70%)' : ''"></div>
-      <h2 class="winner-label">¡Seleccionado!</h2>
+  <!-- MODAL DE CELEBRACIÓN DE GANADOR (ESCENARIO) -->
+  <div class="modal-backdrop-stage" *ngIf="showWinnerModal">
+    <div class="winner-stage-modal glass animated-pop" [style.border-color]="ganador ? getColorPoeta(ganador) : 'var(--secondary)'">
       
-      <div class="winner-name-box" [style.border-color]="ganador ? getColorPoeta(ganador) + '33' : ''" [style.background]="ganador ? 'linear-gradient(90deg, rgba(26,26,26,0.2) 0%, ' + getColorPoeta(ganador) + '14 50%, rgba(26,26,26,0.2) 100%)' : ''">
-        <h1 class="winner-name" [style.color]="ganador ? getColorPoeta(ganador) : ''" [style.text-shadow]="ganador ? '0 0 15px ' + getColorPoeta(ganador) + '99' : ''">{{ ganador }}</h1>
+      <!-- LUZ CENITAL CELEBRATORIA -->
+      <div class="winner-ambient-spotlight" [style.background]="ganador ? 'radial-gradient(circle, ' + getColorPoeta(ganador) + '35 0%, transparent 70%)' : ''"></div>
+      
+      <div class="winner-badge-pill">
+        <svg viewBox="0 0 24 24" class="winner-star-svg">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        <span>SIGUIENTE POETA EN ESCENARIO</span>
+        <svg viewBox="0 0 24 24" class="winner-star-svg">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+      </div>
+      
+      <div class="winner-box">
+        <h1 class="winner-poet-name" [style.color]="ganador ? getColorPoeta(ganador) : 'var(--secondary)'" [style.text-shadow]="ganador ? '0 0 25px ' + getColorPoeta(ganador) + '80' : ''">
+          {{ ganador }}
+        </h1>
       </div>
 
-      <div class="modal-buttons">
-        <button class="btn-remove" (click)="eliminarGanador()">
-          ❌ QUITAR DE LA RULETA
+      <div class="winner-modal-actions">
+        <button type="button" class="btn-winner-remove" (click)="eliminarGanador()">
+          <svg viewBox="0 0 24 24" class="btn-svg-sm">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          <span>QUITAR DEL BOMBO</span>
         </button>
-        <button class="btn-keep" (click)="cerrarModalGanador()">
-          ✅ MANTENER Y CERRAR
+        <button type="button" class="btn-winner-keep" (click)="cerrarModalGanador()">
+          <svg viewBox="0 0 24 24" class="btn-svg-sm">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>MANTENER Y CERRAR</span>
         </button>
       </div>
     </div>
   </div>
 </div>
+

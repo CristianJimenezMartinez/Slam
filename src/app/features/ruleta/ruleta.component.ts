@@ -18,6 +18,7 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
   
   // Entrada de texto de la lista de participantes (se sincroniza con "nombres")
   listaTexto: string = '';
+  showTextEditor: boolean = false;
 
   // Mapa de colores por poeta (nombre -> color hex) basado en los colores del evento
   coloresPoetas: { [nombre: string]: string } = {};
@@ -26,7 +27,7 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
   isSpinning: boolean = false;
   private angle: number = 0;
   private angularVelocity: number = 0;
-  private friction: number = 0.88; // Desaceleración muy rápida (casi instantánea)
+  private friction: number = 0.982; // Fricción suave y cinematográfica
   private lastSectorIndex: number = -1;
 
   // Ganador actual
@@ -38,8 +39,12 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
   loadingEvent: boolean = false;
   private subEvent: Subscription | null = null;
 
-  // Web Audio API para efectos analógicos
+  // Web Audio API y Sonido
+  soundEnabled: boolean = true;
   private audioCtx: AudioContext | null = null;
+
+  // Modo Proyector / Pantalla Completa
+  isFullscreen: boolean = false;
 
   // Animación del Canvas (Confeti)
   private particles: Array<{
@@ -63,6 +68,7 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.sincronizarTextoDesdeNombres();
+    this.generarPaletaPoetas(this.nombres.map(n => ({ nombre: n })), '#7AE92B', '#12D1AE');
     this.obtenerEventoActivo();
   }
 
@@ -86,6 +92,54 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostListener('window:resize')
   onResize() {
     this.ajustarCanvas();
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    const target = event.target as HTMLElement;
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
+
+    if (event.code === 'Space') {
+      event.preventDefault();
+      if (!this.isSpinning) {
+        this.girar();
+      }
+    } else if (event.key === 'r' || event.key === 'R') {
+      this.resetearRuleta();
+    } else if (event.key === 'f' || event.key === 'F') {
+      this.toggleFullscreen();
+    } else if (event.key === 'm' || event.key === 'M') {
+      this.toggleSound();
+    }
+  }
+
+  @HostListener('document:fullscreenchange')
+  onFullscreenChange(): void {
+    this.isFullscreen = !!document.fullscreenElement;
+    setTimeout(() => this.ajustarCanvas(), 100);
+  }
+
+  toggleFullscreen(): void {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  }
+
+  toggleSound(): void {
+    this.soundEnabled = !this.soundEnabled;
+  }
+
+  toggleTextEditor(): void {
+    this.showTextEditor = !this.showTextEditor;
+  }
+
+  quitarNombre(index: number): void {
+    if (this.isSpinning) return;
+    this.nombres.splice(index, 1);
+    this.sincronizarTextoDesdeNombres();
+    this.resetearRuleta();
   }
 
   private ajustarCanvas(): void {
@@ -209,16 +263,19 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /** Devuelve el color asignado al poeta por su nombre, o un gris por defecto */
   getColorPoeta(nombre: string): string {
-    return this.coloresPoetas[nombre] || '#a0a0a0';
+    return this.coloresPoetas[nombre] || '#12D1AE';
   }
 
   /** Convierte un color HEX a {r, g, b} para usar en rgba() */
   private hexToRgb(hex: string): { r: number; g: number; b: number } {
     hex = hex.replace('#', '');
+    if (hex.length === 3) {
+      hex = hex.split('').map(c => c + c).join('');
+    }
     return {
-      r: parseInt(hex.substring(0, 2), 16),
-      g: parseInt(hex.substring(2, 4), 16),
-      b: parseInt(hex.substring(4, 6), 16)
+      r: parseInt(hex.substring(0, 2), 16) || 18,
+      g: parseInt(hex.substring(2, 4), 16) || 209,
+      b: parseInt(hex.substring(4, 6), 16) || 174
     };
   }
 
@@ -233,6 +290,9 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
       .split('\n')
       .map(n => n.trim())
       .filter(n => n.length > 0);
+    const primario = this.eventoActivo?.color_primario || '#7AE92B';
+    const secundario = this.eventoActivo?.color_secundario || '#12D1AE';
+    this.generarPaletaPoetas(this.nombres.map(n => ({ nombre: n })), primario, secundario);
     this.resetearRuleta();
   }
 
@@ -460,30 +520,26 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
     ctx.clearRect(0, 0, width, height);
 
     // Dimensiones del cilindro central
-    const cylinderWidth = width * 0.76;
+    const cylinderWidth = width * 0.82;
     const cylinderLeft = (width - cylinderWidth) / 2;
-    const cylinderHeight = height * 0.90;
+    const cylinderHeight = height * 0.92;
     const cylinderTop = (height - cylinderHeight) / 2;
-    const radius = cylinderHeight / 2; // Radio de curvatura vertical
+    const radius = cylinderHeight / 2;
 
-    // Si no hay nombres, dibujar panel vacío elegante
     if (this.nombres.length === 0) {
       ctx.save();
-      // Fondo oscuro
-      ctx.fillStyle = '#15171a';
+      ctx.fillStyle = '#0E1217';
       ctx.fillRect(cylinderLeft, cylinderTop, cylinderWidth, cylinderHeight);
       
-      // Borde del slot
-      ctx.strokeStyle = '#2d323a';
-      ctx.lineWidth = 4 * window.devicePixelRatio;
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.lineWidth = 3 * window.devicePixelRatio;
       ctx.strokeRect(cylinderLeft, cylinderTop, cylinderWidth, cylinderHeight);
 
-      // Texto de aviso
-      ctx.fillStyle = '#666';
-      ctx.font = `bold ${1.6 * window.devicePixelRatio}rem 'Bebas Neue', cursive`;
+      ctx.fillStyle = '#64748B';
+      ctx.font = `700 ${1.3 * window.devicePixelRatio}rem 'Oswald', sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText('AÑADE NOMBRES EN EL PANEL', centerX, centerY);
+      ctx.fillText('AÑADE POETAS PARA EL SORTEO', centerX, centerY);
       ctx.restore();
       return;
     }
@@ -493,14 +549,13 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ctx.save();
 
-    // 1. Dibujar el fondo del cilindro (textura metálica oscura)
-    ctx.fillStyle = '#1c1f24';
+    // 1. Fondo del cilindro
+    ctx.fillStyle = '#10141A';
     ctx.fillRect(cylinderLeft, cylinderTop, cylinderWidth, cylinderHeight);
 
-    // 2. Dibujar las líneas divisorias y los nombres proyectados en 3D
-    const halfVisibleRange = 1.45; // Rango visible en radianes
+    const halfVisibleRange = 1.45;
 
-    // Dibujar nombres
+    // 2. Nombres con proyección 3D y tipografía OSWALD
     for (let i = 0; i < numSectors; i++) {
       const nameAngle = i * sectorAngle;
       let phi = (nameAngle + this.angle) % (2 * Math.PI);
@@ -511,49 +566,49 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
       if (phi >= -halfVisibleRange && phi <= halfVisibleRange) {
         const y = centerY + radius * Math.sin(phi);
         const scaleY = Math.cos(phi);
-        const opacity = Math.pow(Math.cos(phi), 1.8);
+        const opacity = Math.pow(Math.cos(phi), 1.6);
 
         ctx.save();
         ctx.translate(centerX, y);
         ctx.scale(1.0, scaleY);
 
         const distanceToCenter = Math.abs(phi);
-        // Color del poeta basado en los colores del evento
         const poetColor = this.getColorPoeta(this.nombres[i]);
         const rgb = this.hexToRgb(poetColor);
         let textColor = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${opacity})`;
+        
         if (distanceToCenter < sectorAngle / 2) {
-          // El seleccionado brilla más intenso (luminosidad aumentada)
-          textColor = `rgba(${Math.min(rgb.r + 40, 255)}, ${Math.min(rgb.g + 40, 255)}, ${Math.min(rgb.b + 40, 255)}, ${Math.min(opacity + 0.2, 1)})`;
+          textColor = `rgba(255, 255, 255, ${Math.min(opacity + 0.3, 1)})`;
+          ctx.shadowColor = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.8)`;
+          ctx.shadowBlur = 15 * window.devicePixelRatio;
+        } else {
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+          ctx.shadowBlur = 4 * window.devicePixelRatio;
         }
 
         ctx.fillStyle = textColor;
 
-        // Tamaño de fuente dinámico según cantidad de nombres
-        let fontSize = 2.4;
-        if (numSectors > 30) fontSize = 1.0;
-        else if (numSectors > 20) fontSize = 1.3;
-        else if (numSectors > 12) fontSize = 1.7;
-        else if (numSectors > 8) fontSize = 2.1;
+        let fontSize = 2.2;
+        if (numSectors > 30) fontSize = 1.1;
+        else if (numSectors > 20) fontSize = 1.35;
+        else if (numSectors > 12) fontSize = 1.65;
+        else if (numSectors > 8) fontSize = 1.95;
 
-        ctx.font = `bold ${fontSize * window.devicePixelRatio}rem 'Bebas Neue', cursive`;
+        ctx.font = `700 ${fontSize * window.devicePixelRatio}rem 'Oswald', sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
 
         let text = this.nombres[i];
-        if (text.length > 18) text = text.substring(0, 16) + '...';
-
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
-        ctx.shadowBlur = 4 * window.devicePixelRatio;
+        if (text.length > 20) text = text.substring(0, 18) + '...';
         
         ctx.fillText(text.toUpperCase(), 0, 0);
         ctx.restore();
       }
     }
 
-    // Dibujar líneas separadoras horizontales para dar el efecto de candado/tambor
-    ctx.strokeStyle = '#24272c';
-    ctx.lineWidth = 2 * window.devicePixelRatio;
+    // Líneas separadoras
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+    ctx.lineWidth = 1.5 * window.devicePixelRatio;
     for (let i = 0; i < numSectors; i++) {
       const lineAngle = (i + 0.5) * sectorAngle;
       let phi = (lineAngle + this.angle) % (2 * Math.PI);
@@ -570,36 +625,34 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
 
-    // 3. Gradiente de sombra 3D (para dar volumen cilíndrico)
+    // 3. Gradiente de sombra 3D
     const shadowGrad = ctx.createLinearGradient(0, cylinderTop, 0, cylinderTop + cylinderHeight);
-    shadowGrad.addColorStop(0, 'rgba(10, 12, 15, 0.95)');
-    shadowGrad.addColorStop(0.18, 'rgba(10, 12, 15, 0.6)');
-    shadowGrad.addColorStop(0.5, 'rgba(10, 12, 15, 0)');
-    shadowGrad.addColorStop(0.82, 'rgba(10, 12, 15, 0.6)');
-    shadowGrad.addColorStop(1, 'rgba(10, 12, 15, 0.95)');
+    shadowGrad.addColorStop(0, 'rgba(7, 9, 13, 0.95)');
+    shadowGrad.addColorStop(0.2, 'rgba(7, 9, 13, 0.5)');
+    shadowGrad.addColorStop(0.5, 'rgba(7, 9, 13, 0)');
+    shadowGrad.addColorStop(0.8, 'rgba(7, 9, 13, 0.5)');
+    shadowGrad.addColorStop(1, 'rgba(7, 9, 13, 0.95)');
 
     ctx.fillStyle = shadowGrad;
     ctx.fillRect(cylinderLeft, cylinderTop, cylinderWidth, cylinderHeight);
 
-    // 4. Dibujar el housing metálico exterior (marcos izquierdo y derecho)
-    // Marco Izquierdo
+    // 4. Housing metálico
     const frameGradL = ctx.createLinearGradient(0, 0, cylinderLeft, 0);
-    frameGradL.addColorStop(0, '#111316');
-    frameGradL.addColorStop(0.7, '#242830');
-    frameGradL.addColorStop(1, '#0e0f11');
+    frameGradL.addColorStop(0, '#090B0E');
+    frameGradL.addColorStop(0.7, '#1A1E26');
+    frameGradL.addColorStop(1, '#0E1217');
     ctx.fillStyle = frameGradL;
     ctx.fillRect(0, 0, cylinderLeft, height);
 
-    // Marco Derecho
     const frameGradR = ctx.createLinearGradient(cylinderLeft + cylinderWidth, 0, width, 0);
-    frameGradR.addColorStop(0, '#0e0f11');
-    frameGradR.addColorStop(0.3, '#242830');
-    frameGradR.addColorStop(1, '#111316');
+    frameGradR.addColorStop(0, '#0E1217');
+    frameGradR.addColorStop(0.3, '#1A1E26');
+    frameGradR.addColorStop(1, '#090B0E');
     ctx.fillStyle = frameGradR;
     ctx.fillRect(cylinderLeft + cylinderWidth, 0, width - (cylinderLeft + cylinderWidth), height);
 
-    // Líneas neón en los bordes del marco
-    ctx.strokeStyle = '#2d323a';
+    // Borde vertical de marco
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
     ctx.lineWidth = 2 * window.devicePixelRatio;
     ctx.beginPath();
     ctx.moveTo(cylinderLeft, 0);
@@ -610,46 +663,47 @@ export class RuletaComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ctx.restore();
 
-    // 5. Indicador de selección horizontal (Línea roja/verde neón del candado en el centro)
+    // 5. Indicador láser de selección central
     ctx.save();
-    const indicatorHeight = 56 * window.devicePixelRatio;
+    const indicatorHeight = 58 * window.devicePixelRatio;
     
-    ctx.fillStyle = 'rgba(146, 211, 66, 0.04)';
+    ctx.fillStyle = 'rgba(18, 209, 174, 0.06)';
     ctx.fillRect(cylinderLeft, centerY - indicatorHeight / 2, cylinderWidth, indicatorHeight);
 
-    ctx.strokeStyle = '#92D342';
+    ctx.strokeStyle = '#12D1AE';
     ctx.lineWidth = 2.5 * window.devicePixelRatio;
-    ctx.shadowColor = '#92D342';
+    ctx.shadowColor = '#12D1AE';
+    ctx.shadowBlur = 12 * window.devicePixelRatio;
+    
+    ctx.beginPath();
+    ctx.moveTo(cylinderLeft - 6, centerY - indicatorHeight / 2);
+    ctx.lineTo(cylinderLeft + cylinderWidth + 6, centerY - indicatorHeight / 2);
+    ctx.moveTo(cylinderLeft - 6, centerY + indicatorHeight / 2);
+    ctx.lineTo(cylinderLeft + cylinderWidth + 6, centerY + indicatorHeight / 2);
+    ctx.stroke();
+
+    // Punteros triangulares en las esquinas
+    ctx.fillStyle = '#7AE92B';
+    ctx.shadowColor = '#7AE92B';
     ctx.shadowBlur = 10 * window.devicePixelRatio;
     
     ctx.beginPath();
-    ctx.moveTo(cylinderLeft - 4, centerY - indicatorHeight / 2);
-    ctx.lineTo(cylinderLeft + cylinderWidth + 4, centerY - indicatorHeight / 2);
-    ctx.moveTo(cylinderLeft - 4, centerY + indicatorHeight / 2);
-    ctx.lineTo(cylinderLeft + cylinderWidth + 4, centerY + indicatorHeight / 2);
-    ctx.stroke();
-
-    // Punteros triangulares en los extremos de la fila seleccionadora
-    ctx.fillStyle = '#92D342';
-    ctx.shadowBlur = 8 * window.devicePixelRatio;
-    
-    ctx.beginPath();
-    ctx.moveTo(cylinderLeft - 10 * window.devicePixelRatio, centerY - 6 * window.devicePixelRatio);
+    ctx.moveTo(cylinderLeft - 12 * window.devicePixelRatio, centerY - 7 * window.devicePixelRatio);
     ctx.lineTo(cylinderLeft - 2 * window.devicePixelRatio, centerY);
-    ctx.lineTo(cylinderLeft - 10 * window.devicePixelRatio, centerY + 6 * window.devicePixelRatio);
+    ctx.lineTo(cylinderLeft - 12 * window.devicePixelRatio, centerY + 7 * window.devicePixelRatio);
     ctx.closePath();
     ctx.fill();
 
     ctx.beginPath();
-    ctx.moveTo(cylinderLeft + cylinderWidth + 10 * window.devicePixelRatio, centerY - 6 * window.devicePixelRatio);
+    ctx.moveTo(cylinderLeft + cylinderWidth + 12 * window.devicePixelRatio, centerY - 7 * window.devicePixelRatio);
     ctx.lineTo(cylinderLeft + cylinderWidth + 2 * window.devicePixelRatio, centerY);
-    ctx.lineTo(cylinderLeft + cylinderWidth + 10 * window.devicePixelRatio, centerY + 6 * window.devicePixelRatio);
+    ctx.lineTo(cylinderLeft + cylinderWidth + 12 * window.devicePixelRatio, centerY + 7 * window.devicePixelRatio);
     ctx.closePath();
     ctx.fill();
 
     ctx.restore();
 
-    // 6. Confeti (si está activo)
+    // 6. Confeti
     if (this.confettiActive && this.particles.length > 0) {
       this.dibujarConfeti(ctx, centerX, centerY);
     }
