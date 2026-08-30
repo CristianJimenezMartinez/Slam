@@ -1,23 +1,47 @@
 <header class="global-header">
   <div class="logo-container" routerLink="/">
     <img src="assets/images/logo.png" alt="Slam Logo" class="brand-logo">
+    <div class="brand-text">
+      <div class="brand-title-row">
+        <span class="brand-title">POETRY SLAM</span>
+      </div>
+      <span class="brand-city">ALICANTE</span>
+    </div>
   </div>
   
-  <button class="mobile-toggle" (click)="toggleMenu()">
-    <span *ngIf="!isMenuOpen">☰</span>
-    <span *ngIf="isMenuOpen">✕</span>
+  <button class="mobile-toggle" (click)="toggleMenu()" aria-label="Abrir menú de navegación">
+    <svg *ngIf="!isMenuOpen" class="svg-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+    <svg *ngIf="isMenuOpen" class="svg-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
   </button>
 
   <nav [class.open]="isMenuOpen">
     <a routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" (click)="closeMenu()">Inicio</a>
     <a routerLink="/calendario" routerLinkActive="active" (click)="closeMenu()">Calendario</a>
-    <a routerLink="/cantera" routerLinkActive="active" (click)="closeMenu()">Cantera</a>
+    <a routerLink="/cantera" routerLinkActive="active" class="nav-cantera" (click)="closeMenu()">
+      Cantera
+    </a>
+    <a routerLink="/normas" routerLinkActive="active" (click)="closeMenu()">Normas</a>
     <a routerLink="/cronometro" routerLinkActive="active" (click)="closeMenu()">Cronómetro</a>
     <a routerLink="/ruleta" routerLinkActive="active" (click)="closeMenu()">Ruleta</a>
-    <a *ngIf="mostrarMenuVotar" routerLink="/votar" routerLinkActive="active" (click)="closeMenu()">Votar</a>
+    <a *ngIf="mostrarMenuVotar" routerLink="/votar" routerLinkActive="active" class="nav-votar" (click)="closeMenu()">
+      <span class="pulse-dot"></span> Votar
+    </a>
     <a *ngIf="mostrarMenuPuntuaciones" routerLink="/puntuaciones" routerLinkActive="active" (click)="closeMenu()">Puntuaciones</a>
-    <a *ngIf="mostrarMenuQr" routerLink="/qr" routerLinkActive="active" (click)="closeMenu()">Código QR</a>
-    <a routerLink="/admin" routerLinkActive="active" (click)="closeMenu()" class="desktop-only">Login</a>
+    <a *ngIf="mostrarMenuQr" routerLink="/qr" routerLinkActive="active" (click)="closeMenu()">QR</a>
+    <a routerLink="/admin" routerLinkActive="active" (click)="closeMenu()" class="nav-admin-btn desktop-only">
+      <svg class="svg-icon" style="width:14px;height:14px;stroke:currentColor;" viewBox="0 0 24 24">
+        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      Login
+    </a>
     <a *ngIf="auth.session$ | async" (click)="logout()" class="btn-logout desktop-only">Salir</a>
   </nav>
 </header>
@@ -27,3 +51,5 @@
 </main>
 
 <app-footer></app-footer>
+
+<app-cookie-banner></app-cookie-banner>

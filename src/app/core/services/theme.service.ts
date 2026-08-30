@@ -85,32 +85,32 @@ export class ThemeService {
 
     if (evento && (isInminent || isEventSpecificPage)) {
       return {
-        primary: evento.color_primario || '#92D342',
-        secondary: evento.color_secundario || '#368475',
-        bg: evento.color_fondo || '#1A1A1A',
-        text: evento.color_texto || '#F2F2F2',
-        header: evento.color_cabecera || '#1A1A1A',
+        primary: evento.color_primario || '#7AE92B',
+        secondary: evento.color_secundario || '#12D1AE',
+        bg: evento.color_fondo || '#0E1217',
+        text: evento.color_texto || '#F4F8FA',
+        header: evento.color_cabecera || '#0E1217',
         isSeason: false
       };
     }
 
     if (season && (season.color_primario || season.color_fondo)) {
       return {
-        primary: season.color_primario || '#92D342',
-        secondary: season.color_secundario || '#368475',
-        bg: season.color_fondo || '#1A1A1A',
-        text: season.color_texto || '#F2F2F2',
-        header: season.color_cabecera || '#1A1A1A',
+        primary: season.color_primario || '#7AE92B',
+        secondary: season.color_secundario || '#12D1AE',
+        bg: season.color_fondo || '#0E1217',
+        text: season.color_texto || '#F4F8FA',
+        header: season.color_cabecera || '#0E1217',
         isSeason: true
       };
     }
 
     return {
-      primary: '#92D342',
-      secondary: '#368475',
-      bg: '#1A1A1A',
-      text: '#F2F2F2',
-      header: 'rgba(26, 26, 26, 0.95)',
+      primary: '#7AE92B',
+      secondary: '#12D1AE',
+      bg: '#0E1217',
+      text: '#F4F8FA',
+      header: 'rgba(14, 18, 23, 0.95)',
       isSeason: true
     };
   }
@@ -122,6 +122,7 @@ export class ThemeService {
       '--primary-rgb': this.hexToRgb(theme.primary),
       '--primary-contrast': this.getContrastColor(theme.primary),
       '--secondary': theme.secondary,
+      '--secondary-rgb': this.hexToRgb(theme.secondary),
       '--header-bg': theme.header,
       '--header-bg-rgb': this.hexToRgb(theme.header),
       '--header-contrast': this.getContrastColor(theme.header),
@@ -130,7 +131,8 @@ export class ThemeService {
       '--bg-rgb': this.hexToRgb(theme.bg),
       '--bg-contrast': this.getContrastColor(theme.bg),
       '--text': theme.text,
-      '--off-white': theme.text
+      '--off-white': theme.text,
+      '--card-bg': '#161C24'
     };
 
     return { ...theme, cssVars };
@@ -142,7 +144,7 @@ export class ThemeService {
     const r = parseInt(hex.substring(0, 2), 16);
     const g = parseInt(hex.substring(2, 4), 16);
     const b = parseInt(hex.substring(4, 6), 16);
-    return isNaN(r) ? '146, 211, 66' : `${r}, ${g}, ${b}`;
+    return isNaN(r) ? '122, 233, 43' : `${r}, ${g}, ${b}`;
   }
 
   private getContrastColor(hexColor: string): string {

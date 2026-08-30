@@ -23,12 +23,21 @@ import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-
 import { PrintQrsComponent } from './features/admin/print-qrs/print-qrs.component';
 import { CronometroComponent } from './features/cronometro/cronometro.component';
 import { RuletaComponent } from './features/ruleta/ruleta.component';
+import { PreviewLoadingComponent } from './features/preview-loading/preview-loading.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
     component: LandingComponent
+  },
+  {
+    path: 'carga',
+    component: PreviewLoadingComponent
+  },
+  {
+    path: 'loading',
+    redirectTo: 'carga'
   },
   {
     path: 'ruleta',
@@ -160,7 +169,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    scrollPositionRestoration: 'top',
+    anchorScrolling: 'enabled',
+    scrollOffset: [0, 80]
+  })],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }

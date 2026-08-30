@@ -34,6 +34,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
+      if (typeof window !== 'undefined') {
+        window.scrollTo(0, 0);
+      }
       this.seo.clearJsonLd();
       let currentRoute = this.route;
       while (currentRoute.firstChild) {
