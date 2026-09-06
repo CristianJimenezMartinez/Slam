@@ -63,7 +63,9 @@ export class SeoService {
     }
 
     const desc = data.description || DEFAULT_DESC;
-    const url = data.path ? `${SITE_URL}${data.path}` : SITE_URL;
+    // Canonicalización limpia: despojar query params y fragments (?s=..., ?utm=...) para evitar duplicados en Google Search Console
+    const cleanPath = data.path ? data.path.split('?')[0].split('#')[0] : '';
+    const url = cleanPath && cleanPath !== '/' ? `${SITE_URL}${cleanPath.startsWith('/') ? cleanPath : '/' + cleanPath}` : SITE_URL;
     const image = data.image || DEFAULT_IMAGE;
 
     // Title
