@@ -1,0 +1,313 @@
+// ----------------------------------------------------
+// BARRA DE CONTROL MOCK SUPERIOR
+// ----------------------------------------------------
+.mock-control-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(10, 14, 18, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+
+  .mock-controls-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .mock-title-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 215, 0, 0.12);
+    border: 1px solid #ffd700;
+    color: #ffd700;
+    padding: 0.35rem 0.8rem;
+    border-radius: 8px;
+    font-family: var(--font-condensed);
+    font-weight: 800;
+    font-size: 0.78rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .control-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    .group-label {
+      font-family: var(--font-condensed);
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      color: #64748b;
+    }
+
+    .btn-toggle-group {
+      display: flex;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 2px;
+      gap: 2px;
+
+      .btn-mock-toggle {
+        background: transparent;
+        border: none;
+        color: #94a3b8;
+        font-family: var(--font-condensed);
+        font-weight: 700;
+        font-size: 0.78rem;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        padding: 0.35rem 0.75rem;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: #ffffff;
+          background: rgba(255, 255, 255, 0.05);
+        }
+
+        &.active {
+          background: var(--secondary);
+          color: #061014;
+          font-weight: 800;
+        }
+      }
+    }
+  }
+
+  .btn-simulate-vote {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: rgba(122, 233, 43, 0.15);
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    font-family: var(--font-condensed);
+    font-weight: 800;
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: var(--primary);
+      color: #061014;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+// ----------------------------------------------------
+// CONTENEDOR TEATRAL DEL PROYECTOR
+// ----------------------------------------------------
+.proyector-wrapper {
+  min-height: calc(100vh - 65px);
+  background-color: #06090D;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(18, 209, 174, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at 50% 100%, rgba(122, 233, 43, 0.08) 0%, transparent 60%);
+  padding: 2.5rem 1.5rem 5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.proyector-canvas {
+  width: 100%;
+  max-width: 1300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+// Cabecera Cinematográfica
+.proyector-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+
+  .event-live-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    padding: 0.2rem 0.8rem;
+    border-radius: 100px;
+    font-family: var(--font-condensed);
+    font-weight: 800;
+    font-size: 0.78rem;
+    letter-spacing: 1.8px;
+    color: #fca5a5;
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
+      animation: livePulse 1.8s infinite;
+    }
+  }
+
+  .main-event-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    color: #ffffff;
+    margin: 0.3rem 0 0;
+    text-transform: uppercase;
+    text-shadow: 0 0 35px rgba(255, 255, 255, 0.15);
+    line-height: 1.1;
+
+    @media (max-width: 768px) {
+      font-size: 1.8rem;
+    }
+  }
+
+  .round-subtitle {
+    font-family: var(--font-condensed);
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 1.5px;
+    color: var(--secondary);
+    text-transform: uppercase;
+    margin: 0;
+  }
+}
+
+// Divisor con Haz Láser
+.section-divider {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 1.5rem 0 0.5rem;
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.15) 50%, transparent 100%);
+  }
+
+  .divider-text {
+    font-family: var(--font-condensed);
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: #64748b;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+}
+
+// Vista Ranking
+.ranking-view {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+// Vista Finalistas
+.finalists-view {
+  width: 100%;
+  max-width: 900px;
+}
+
+// Vista Standby
+.standby-view {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 2rem;
+
+  .mock-standby-card {
+    text-align: center;
+    padding: 3.5rem 2rem;
+    background: rgba(14, 18, 23, 0.85);
+    backdrop-filter: blur(30px);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+
+    .card-laser-beam {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--secondary) 50%, transparent 100%);
+    }
+
+    .standby-icon-badge {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(18, 209, 174, 0.12);
+      border: 2px solid var(--secondary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 30px rgba(18, 209, 174, 0.35);
+      margin-bottom: 1.2rem;
+    }
+
+    .standby-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 2rem;
+      letter-spacing: 1.5px;
+      color: #ffffff;
+      margin: 0 0 0.6rem;
+    }
+
+    .standby-desc {
+      font-size: 1rem;
+      color: #94a3b8;
+      line-height: 1.5;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .quote-box {
+      margin-top: 1.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 0.9rem 1.5rem;
+
+      .quote-text {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--secondary);
+      }
+    }
+  }
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}

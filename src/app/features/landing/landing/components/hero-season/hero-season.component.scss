@@ -1,7 +1,7 @@
 .season-hero {
   min-height: calc(100vh - 80px);
   padding: 0;
-  background: var(--bg);
+  background: transparent;
   background-image:
     radial-gradient(circle at 18% 25%, rgba(var(--primary-rgb), 0.08) 0%, transparent 45%),
     radial-gradient(circle at 82% 70%, rgba(var(--secondary-rgb), 0.09) 0%, transparent 45%),

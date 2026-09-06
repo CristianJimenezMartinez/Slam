@@ -38,6 +38,44 @@
         [fotoTemporada]="fotoTemporada">
       </app-upcoming-slider>
 
+      <!-- FRANJA PERMANENTE: LA CANTERA & TALLERES EDUCATIVOS (Siempre visible para captación de centros y jóvenes) -->
+      <section class="cantera-home-strip">
+        <div class="container">
+          <div class="cantera-strip-card glass">
+            <div class="card-laser-beam"></div>
+            <div class="strip-content">
+              <div class="strip-badge-wrap">
+                <span class="strip-badge">
+                  <span class="badge-dot"></span>
+                  🌱 ESPACIO EDUCATIVO & NUEVAS VOCES
+                </span>
+                <span class="strip-director">Formación con Ágora Reix</span>
+              </div>
+              <h2 class="strip-title">¿ESCRIBES O QUIERES LLEVAR EL SLAM A TU INSTITUTO?</h2>
+              <p class="strip-desc">
+                Descubre <strong>La Cantera</strong> de Poetry Slam Alicante: talleres de oratoria, escritura contemporánea y expresión escénica para centros educativos (ESO, Bachillerato y FP) y programa de mentoría para jóvenes talentos de la provincia de Alicante.
+              </p>
+              <div class="strip-actions">
+                <a routerLink="/cantera" class="btn-primary large strip-btn-cta">
+                  <svg class="svg-icon" style="width:20px;height:20px;stroke:#061014;" viewBox="0 0 24 24">
+                    <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/>
+                    <line x1="16" y1="8" x2="2" y2="22"/>
+                  </svg>
+                  <span>Conoce La Cantera</span>
+                </a>
+                <a routerLink="/cantera" class="btn-secondary large strip-btn-secondary">
+                  <svg class="svg-icon" style="width:20px;height:20px;" viewBox="0 0 24 24">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                  </svg>
+                  <span>🎓 Talleres para IES y Colegios</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- SECCIÓN EXPLORAR FUERA DE TEMPORADA (Cuando no hay evento ni fechas próximas) -->
       <section class="season-closed-explore" *ngIf="!esEventoInminente && proximosCronograma.length === 0">
         <!-- HALOS AMBIENTALES DE ESCENARIO -->
@@ -144,8 +182,8 @@
             <span class="card-link">Ver Normas del Torneo →</span>
           </div>
 
-          <!-- Card 3: Archivo -->
-          <div class="explore-card glass" routerLink="/calendario">
+          <!-- Card 3: Salón del Slam / Archivo -->
+          <div class="explore-card glass" routerLink="/salon">
             <div class="card-laser-beam"></div>
             <div class="icon-frame">
               <svg class="svg-icon" viewBox="0 0 24 24">
@@ -159,9 +197,9 @@
               </svg>
             </div>
             <span class="card-tag">HISTÓRICO</span>
-            <h3>Archivo de Encuentros</h3>
-            <p>Revive los encuentros, carteles y ediciones que han llenado de versos la ciudad de Alicante.</p>
-            <span class="card-link">Ver Histórico →</span>
+            <h3>Salón del Slam</h3>
+            <p>Revive las veladas históricas, carteles, ganadores de honor y voces invitadas que han llenado de versos Alicante.</p>
+            <span class="card-link">Visitar el Salón →</span>
           </div>
         </div>
       </div>

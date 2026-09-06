@@ -13,7 +13,10 @@ import { CalendarComponent } from './features/landing/calendar/calendar.componen
 import { CanteraComponent } from './features/landing/cantera/cantera.component';
 import { NormasComponent } from './features/landing/normas/normas.component';
 import { PreviewLoadingComponent } from './features/preview-loading/preview-loading.component';
+import { PreviewVotarComponent } from './features/preview-votar/preview-votar.component';
+import { PreviewProyectorComponent } from './features/preview-proyector/preview-proyector.component';
 import { CookieBannerComponent } from './shared/components/cookie-banner/cookie-banner.component';
+import { EdicionesComponent } from './features/ediciones/ediciones.component';
 
 
 // Landing Sub-components
@@ -63,7 +66,6 @@ import { ProyectorStandbyComponent } from './features/puntuaciones/components/pr
 
 // Otros
 import { ResultadosComponent } from './features/resultados/resultados.component';
-import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
 import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
@@ -106,7 +108,6 @@ registerLocaleData(localeEs, 'es');
     ProyectorStandbyComponent,
     QrComponent,
     ResultadosComponent,
-    DashboardComponent,
     FooterComponent,
     ModalComponent,
     LoadingSpinnerComponent,
@@ -130,7 +131,10 @@ registerLocaleData(localeEs, 'es');
     CronometroRulesComponent,
     RuletaComponent,
     PreviewLoadingComponent,
-    CookieBannerComponent
+    PreviewVotarComponent,
+    PreviewProyectorComponent,
+    CookieBannerComponent,
+    EdicionesComponent
   ],
   imports: [
     BrowserModule,

@@ -8,8 +8,8 @@
 
   .brand {
     h1 {
-      font-family: 'Merriweather', serif; font-weight: 700;
-      font-size: 1.05rem;
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 1.25rem;
       color: var(--primary);
       margin: 0;
       letter-spacing: 1px;

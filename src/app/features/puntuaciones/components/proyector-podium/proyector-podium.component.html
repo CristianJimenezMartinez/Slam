@@ -1,68 +1,101 @@
-<!-- PODIO / TOP 3 (Tres primeros más grandes colocados: 2º, 1º, 3º) -->
-<div class="podium-section" *ngIf="resultados.length > 0">
-  <!-- 2º clasificado (index 1 si existe) -->
-  <div class="podium-item rank-2" *ngIf="resultados[1]" style="border-color: #c0c0c0; background: rgba(192, 192, 192, 0.03);">
-    <div class="rank-number" style="background: #111; border-color: #c0c0c0; color: #c0c0c0;">2º</div>
-    <div class="avatar" [style.background-image]="'url(' + (resultados[1].foto_url || 'assets/default-avatar.jpg') + ')'"></div>
-    <div class="info">
-      <h3 style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; font-family: 'Merriweather', serif;">{{ resultados[1].participante }}</h3>
-      <div class="vibe-score-wrapper" style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-top: 0.6rem;">
-        <span class="vibe-percentage" style="font-size: 1.6rem; font-weight: bold; color: var(--primary);">{{ resultados[1].puntuacion_media * 10 | number:'1.2-2' }}%</span>
-        <span class="vibe-badge" [class]="
-          resultados[1].puntuacion_media >= 9 ? 'vibe-magia' : 
-          resultados[1].puntuacion_media >= 7 ? 'vibe-fuego' : 
-          resultados[1].puntuacion_media >= 5 ? 'vibe-fuerte' : 
-          resultados[1].puntuacion_media >= 3 ? 'vibe-bien' : 'vibe-suave'" style="font-size: 0.75rem; padding: 0.22rem 0.6rem; letter-spacing: 0.8px;">
-          {{ resultados[1].puntuacion_media >= 9 ? '✨ Magia' : 
-             resultados[1].puntuacion_media >= 7 ? '🔥 Fuego' : 
-             resultados[1].puntuacion_media >= 5 ? '⚡ Fuerte' : 
-             resultados[1].puntuacion_media >= 3 ? '👍 Bien' : '🌱 Suave' }}
-        </span>
+<!-- PODIO ESCÉNICO / TOP 3 (2º Plata - Pluma, 1º Oro - Corona Real Medieval, 3º Bronce - Lira) -->
+<div class="podium-stage-wrapper" *ngIf="resultados.length > 0">
+  
+  <!-- 2º CLASIFICADO (PLATA - PLUMA POÉTICA) -->
+  <div class="podium-pedestal rank-2" *ngIf="resultados[1]">
+    <div class="pedestal-laser-beam silver"></div>
+
+    <div class="medal-tag silver">
+      <!-- Icono Pluma Medieval SVG -->
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L3 11.5V21h9.5z"/>
+        <line x1="16" y1="8" x2="2" y2="22"/>
+        <path d="M17.5 15H9"/>
+      </svg>
+      <span>2º PUESTO • PLUMA DE PLATA</span>
+    </div>
+
+    <div class="poet-avatar-box">
+      <div class="avatar-ring silver">
+        <img [src]="resultados[1].foto_url || 'assets/default-avatar.jpg'" [alt]="resultados[1].participante" class="avatar-img">
       </div>
+    </div>
+
+    <div class="poet-data">
+      <h3 class="poet-name">{{ resultados[1].participante }}</h3>
+      
+      <div class="score-display">
+        <span class="score-number">{{ resultados[1].puntuacion_media | number:'1.2-2' }}</span>
+        <span class="score-suffix">/ 10</span>
+      </div>
+
+      <span class="votes-meta">{{ resultados[1].num_votos }} votos del público</span>
     </div>
   </div>
 
-  <!-- 1º clasificado (index 0 si existe) -->
-  <div class="podium-item rank-1" *ngIf="resultados[0]" style="border-color: #ffd700; background: rgba(255, 215, 0, 0.05);">
-    <div class="rank-number" style="background: #111; border-color: #ffd700; color: #ffd700; font-size: 1.1rem; padding: 0.2rem 1rem;">1º</div>
-    <div class="avatar" [style.background-image]="'url(' + (resultados[0].foto_url || 'assets/default-avatar.jpg') + ')'"></div>
-    <div class="info">
-      <h3 style="font-size: 1.4rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; font-family: 'Merriweather', serif; font-weight: bold; color: #fff;">{{ resultados[0].participante }}</h3>
-      <div class="vibe-score-wrapper" style="display: flex; flex-direction: column; align-items: center; gap: 0.6rem; margin-top: 0.7rem;">
-        <span class="vibe-percentage" style="font-size: 2.1rem; font-weight: bold; color: var(--primary); text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);">{{ resultados[0].puntuacion_media * 10 | number:'1.2-2' }}%</span>
-        <span class="vibe-badge" [class]="
-          resultados[0].puntuacion_media >= 9 ? 'vibe-magia' : 
-          resultados[0].puntuacion_media >= 7 ? 'vibe-fuego' : 
-          resultados[0].puntuacion_media >= 5 ? 'vibe-fuerte' : 
-          resultados[0].puntuacion_media >= 3 ? 'vibe-bien' : 'vibe-suave'" style="font-size: 0.8rem; padding: 0.25rem 0.7rem; letter-spacing: 0.8px;">
-          {{ resultados[0].puntuacion_media >= 9 ? '✨ Magia' : 
-             resultados[0].puntuacion_media >= 7 ? '🔥 Fuego' : 
-             resultados[0].puntuacion_media >= 5 ? '⚡ Fuerte' : 
-             resultados[0].puntuacion_media >= 3 ? '👍 Bien' : '🌱 Suave' }}
-        </span>
+  <!-- 1º CLASIFICADO (ORO - CORONA REAL MEDIEVAL DE BARDO) -->
+  <div class="podium-pedestal rank-1" *ngIf="resultados[0]">
+    <div class="pedestal-laser-beam gold"></div>
+
+    <div class="medal-tag gold">
+      <!-- Icono Corona Real Medieval Flawless SVG -->
+      <svg width="16" height="14" viewBox="0 0 576 512" fill="currentColor">
+        <path d="M576 136c0 22.09-17.91 40-40 40c-.248 0-.4551-.1266-.7031-.1305l-50.52 277.9C482 468.9 468.8 480 453.3 480H122.7c-15.46 0-28.72-11.06-31.48-26.27L40.71 175.9C40.46 175.9 40.25 176 39.1 176c-22.09 0-40-17.91-40-40S17.91 96 39.1 96s40 17.91 40 40c0 8.998-3.521 16.89-8.537 23.57l89.63 71.7c15.91 12.73 36.3 12.73 52.21 0l89.63-71.7C199.5 112.9 196 105 196 96c0-22.09 17.91-40 40-40s40 17.91 40 40c0 8.998-3.521 16.89-8.537 23.57l89.63 71.7c15.91 12.73 36.3 12.73 52.21 0l89.63-71.7C443.5 112.9 440 105 440 96c0-22.09 17.91-40 40-40s40 17.91 40 40c0 8.998-3.521 16.89-8.537 23.57l89.63 71.7c15.91 12.73 36.3 12.73 52.21 0l89.63-71.7C572.5 152.9 576 160.8 576 169.6V136z"/>
+      </svg>
+      <span>1º PUESTO • CORONA DORADA</span>
+    </div>
+
+    <div class="poet-avatar-box">
+      <div class="avatar-ring gold">
+        <img [src]="resultados[0].foto_url || 'assets/default-avatar.jpg'" [alt]="resultados[0].participante" class="avatar-img">
       </div>
+    </div>
+
+    <div class="poet-data">
+      <h3 class="poet-name gold-glow">{{ resultados[0].participante }}</h3>
+      
+      <div class="score-display">
+        <span class="score-number gold-score">{{ resultados[0].puntuacion_media | number:'1.2-2' }}</span>
+        <span class="score-suffix">/ 10</span>
+      </div>
+
+      <span class="votes-meta gold-votes">{{ resultados[0].num_votos }} votos del público</span>
     </div>
   </div>
 
-  <!-- 3º clasificado (index 2 si existe) -->
-  <div class="podium-item rank-3" *ngIf="resultados[2]" style="border-color: #cd7f32; background: rgba(205, 127, 50, 0.03);">
-    <div class="rank-number" style="background: #111; border-color: #cd7f32; color: #cd7f32;">3º</div>
-    <div class="avatar" [style.background-image]="'url(' + (resultados[2].foto_url || 'assets/default-avatar.jpg') + ')'"></div>
-    <div class="info">
-      <h3 style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; font-family: 'Merriweather', serif;">{{ resultados[2].participante }}</h3>
-      <div class="vibe-score-wrapper" style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-top: 0.6rem;">
-        <span class="vibe-percentage" style="font-size: 1.45rem; font-weight: bold; color: var(--primary);">{{ resultados[2].puntuacion_media * 10 | number:'1.2-2' }}%</span>
-        <span class="vibe-badge" [class]="
-          resultados[2].puntuacion_media >= 9 ? 'vibe-magia' : 
-          resultados[2].puntuacion_media >= 7 ? 'vibe-fuego' : 
-          resultados[2].puntuacion_media >= 5 ? 'vibe-fuerte' : 
-          resultados[2].puntuacion_media >= 3 ? 'vibe-bien' : 'vibe-suave'" style="font-size: 0.72rem; padding: 0.22rem 0.6rem; letter-spacing: 0.8px;">
-          {{ resultados[2].puntuacion_media >= 9 ? '✨ Magia' : 
-             resultados[2].puntuacion_media >= 7 ? '🔥 Fuego' : 
-             resultados[2].puntuacion_media >= 5 ? '⚡ Fuerte' : 
-             resultados[2].puntuacion_media >= 3 ? '👍 Bien' : '🌱 Suave' }}
-        </span>
+  <!-- 3º CLASIFICADO (BRONCE - LIRA DE TROVADOR) -->
+  <div class="podium-pedestal rank-3" *ngIf="resultados[2]">
+    <div class="pedestal-laser-beam bronze"></div>
+
+    <div class="medal-tag bronze">
+      <!-- Icono Lira Medieval de Trovador SVG -->
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 3v7a6 6 0 0 0 12 0V3"/>
+        <line x1="6" y1="3" x2="18" y2="3"/>
+        <line x1="10" y1="3" x2="10" y2="15"/>
+        <line x1="14" y1="3" x2="14" y2="15"/>
+        <path d="M9 21h6"/>
+        <path d="M12 16v5"/>
+      </svg>
+      <span>3º PUESTO • LIRA DE BRONCE</span>
+    </div>
+
+    <div class="poet-avatar-box">
+      <div class="avatar-ring bronze">
+        <img [src]="resultados[2].foto_url || 'assets/default-avatar.jpg'" [alt]="resultados[2].participante" class="avatar-img">
       </div>
     </div>
+
+    <div class="poet-data">
+      <h3 class="poet-name">{{ resultados[2].participante }}</h3>
+      
+      <div class="score-display">
+        <span class="score-number">{{ resultados[2].puntuacion_media | number:'1.2-2' }}</span>
+        <span class="score-suffix">/ 10</span>
+      </div>
+
+      <span class="votes-meta">{{ resultados[2].num_votos }} votos del público</span>
+    </div>
   </div>
+
 </div>

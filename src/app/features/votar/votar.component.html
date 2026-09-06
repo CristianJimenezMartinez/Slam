@@ -1,20 +1,35 @@
 <div class="votar-wrapper">
   <div class="votar-container" [ngClass]="{'compact-view': accesoBloqueado || !evento || !evento.votacion_activa || !poetaActivo || yaVotadoAlPoetaActivo}">
     
-    <header class="page-header" *ngIf="evento && !poetaActivo && !accesoBloqueado">
-      <h1>Voto del Público</h1>
-      <p>gozo poético, diversión poética</p>
+    <!-- CABECERA DEL EVENTO -->
+    <header class="event-header-mini" *ngIf="evento && !accesoBloqueado">
+      <div class="live-indicator">
+        <span class="pulse-dot"></span>
+        <span class="live-text">EN DIRECTO</span>
+      </div>
+      <h1 class="event-title">{{ evento.nombre }}</h1>
+      <p class="event-subtitle">
+        {{ (evento.ronda_activa || 1) === 1 ? 'Demostración: La Quema' : 
+           (evento.ronda_activa || 1) === 2 ? 'Ronda Clasificatoria' : 
+           '🏆 Gran Final' }} • {{ evento.ubicacion || 'Poetry Slam Alicante' }}
+      </p>
     </header>
 
-    <div class="error-banner" *ngIf="error">
-      <span>⚠️</span> {{ error }}
+    <!-- BANNER DE ERROR CON SVG -->
+    <div class="error-banner glass" *ngIf="error">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <span>{{ error }}</span>
     </div>
 
     <div class="state-content">
       <!-- Cargando -->
       <app-loading-spinner *ngIf="loading && !evento"></app-loading-spinner>
       
-      <!-- Acceso No Autorizado (QR Obligatorio) -->
+      <!-- Acceso No Autorizado (QR Obligatorio / Sala Sellada) -->
       <app-votar-lock *ngIf="!loading && evento && accesoBloqueado" [evento]="evento"></app-votar-lock>
 
       <!-- Estados pasivos (Standby/Locked/Waiting) -->
@@ -24,18 +39,19 @@
       </app-votar-standby>
 
       <ng-container *ngIf="!loading && evento && !accesoBloqueado && evento.votacion_activa && poetaActivo">
-        <!-- Poeta Activo y NO Votado -->
+        <!-- Poeta Activo y NO Votado (Pizarra Digital 1-10) -->
         <app-votar-form *ngIf="!yaVotadoAlPoetaActivo"
                         [poetaActivo]="poetaActivo"
                         [voteForm]="voteForm"
                         [loading]="loading"
-                        [opcionesVoto]="opcionesVoto"
                         (submitVote)="onSubmit()">
         </app-votar-form>
 
         <!-- Poeta Activo pero YA Votado -->
         <app-votar-success *ngIf="yaVotadoAlPoetaActivo"
-                           [poetaActivo]="poetaActivo">
+                           [poetaActivo]="poetaActivo"
+                           [notaEmitida]="ultimaNotaEmitida"
+                           [ronda]="evento.ronda_activa || 1">
         </app-votar-success>
       </ng-container>
     </div>

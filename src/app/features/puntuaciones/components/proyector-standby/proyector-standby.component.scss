@@ -9,7 +9,7 @@
   box-sizing: border-box;
 
   .glow-text {
-    font-family: 'Merriweather', serif; font-weight: 700;
+    font-family: var(--font-display); font-weight: 700;
     font-size: 2.5rem;
     color: inherit;
     text-shadow: 0 0 20px rgba(var(--primary-rgb), 0.3);

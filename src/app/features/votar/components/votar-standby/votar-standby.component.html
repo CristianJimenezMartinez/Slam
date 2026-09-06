@@ -1,24 +1,72 @@
-<!-- No hay evento -->
-<div class="status-box" *ngIf="!evento">
-  <div class="empty-icon">📢</div>
-  <h2>¡NO HAY MICROS ABIERTOS!</h2>
-  <p>Parece que no hay ningún evento programado actualmente.</p>
-  <button routerLink="/" class="btn-primary">Volver a la Portada</button>
+<!-- No hay evento activo -->
+<div class="standby-card glass" *ngIf="!evento">
+  <div class="card-laser-beam"></div>
+  
+  <div class="standby-icon-badge warning">
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+      <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+      <line x1="12" y1="19" x2="12" y2="23"/>
+      <line x1="8" y1="23" x2="16" y2="23"/>
+    </svg>
+  </div>
+
+  <h2 class="standby-title">SIN ENCUENTRO ACTIVO</h2>
+  <p class="standby-text">No hay ningún evento de Poetry Slam transmitiendo en este momento.</p>
+  
+  <button routerLink="/" class="btn-back-home">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+    Volver a la Portada
+  </button>
 </div>
 
 <!-- Evento existe, pero votaciones cerradas -->
-<div class="status-box locked" *ngIf="evento && !evento.votacion_activa">
-  <div class="empty-icon">⏳</div>
-  <h2 class="purple-glow">{{ evento.nombre }}</h2>
-  <p>Votaciones cerradas. Gracias por participar.</p>
-  <button routerLink="/" class="btn-primary" style="margin-top: 2rem;">Volver a la Portada</button>
+<div class="standby-card glass" *ngIf="evento && !evento.votacion_activa">
+  <div class="card-laser-beam"></div>
+  
+  <div class="standby-icon-badge">
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
+    </svg>
+  </div>
+
+  <h2 class="standby-title">{{ evento.nombre }}</h2>
+  <p class="standby-text">Las votaciones para este encuentro se encuentran temporalmente cerradas o han finalizado.</p>
+  
+  <div class="quote-box">
+    <span class="quote-text">«La poesía no busca la verdad, la crea.»</span>
+  </div>
+
+  <button routerLink="/" class="btn-back-home">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+    Volver a la Portada
+  </button>
 </div>
 
-<!-- Votación activa, pero sin poeta seleccionado (Esperando) -->
-<div class="status-box waiting" *ngIf="evento && evento.votacion_activa && !poetaActivo">
-  <div class="pulse-ring">
-    <div class="icon">🎙️</div>
+<!-- Votación activa, pero esperando al siguiente poeta -->
+<div class="standby-card glass" *ngIf="evento && evento.votacion_activa && !poetaActivo">
+  <div class="card-laser-beam"></div>
+  
+  <div class="standby-icon-badge">
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+      <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+      <line x1="12" y1="19" x2="12" y2="23"/>
+      <line x1="8" y1="23" x2="16" y2="23"/>
+    </svg>
   </div>
-  <h2>Esperando al poeta...</h2>
-  <p>Escucha con atención. Pronto podrás votar.</p>
+
+  <h2 class="standby-title">ESCENARIO EN VIVO</h2>
+  <p class="standby-text">El encuentro está en curso. La votación se activará automáticamente en tu pantalla cuando el próximo poeta comience a recitar.</p>
+  
+  <div class="quote-box">
+    <span class="quote-text">«Escucha con atención. Tu voto decidirá la noche.»</span>
+  </div>
 </div>

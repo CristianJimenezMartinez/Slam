@@ -64,4 +64,8 @@ export class CronogramaService {
       )
       .subscribe();
   }
+
+  unsubscribe(channel: any) {
+    this.supa.removeChannel(channel);
+  }
 }

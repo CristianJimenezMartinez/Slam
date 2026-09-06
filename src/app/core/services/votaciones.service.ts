@@ -64,13 +64,18 @@ export class VotacionesService {
   }
 
   listenToVotaciones(eventoId: string, callback: (payload: any) => void) {
+    const channelName = `votaciones_${eventoId}`;
     return this.supa.client
-      .channel('public:votaciones')
+      .channel(channelName)
       .on(
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'votaciones', filter: `evento_id=eq.${eventoId}` },
         callback
       )
       .subscribe();
+  }
+
+  unsubscribe(channel: any) {
+    this.supa.removeChannel(channel);
   }
 }

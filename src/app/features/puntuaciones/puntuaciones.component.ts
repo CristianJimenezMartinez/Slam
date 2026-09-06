@@ -104,10 +104,10 @@ export class PuntuacionesComponent implements OnInit, OnDestroy {
         // Encontrar la puntuación del N-ésimo participante (o el último si hay menos)
         const limit = this.evento.limite_finalistas || 3;
         const indexCorte = Math.min(limit - 1, resultados.length - 1);
-        const puntuacionCorte = resultados[indexCorte].puntuacion_total;
+        const puntuacionCorte = resultados[indexCorte].puntuacion_media;
         
         // Incluimos a todos los que empaten o superen la puntuación de corte para evitar dejarlos fuera
-        this.finalistas = resultados.filter(r => r.puntuacion_total >= puntuacionCorte) as Resultado[];
+        this.finalistas = resultados.filter(r => r.puntuacion_media >= puntuacionCorte) as Resultado[];
       } else {
         this.finalistas = [];
       }
@@ -132,6 +132,6 @@ export class PuntuacionesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) this.subscription.unsubscribe();
+    if (this.subscription) this.eventosService.unsubscribe(this.subscription);
   }
 }

@@ -46,11 +46,11 @@ export class EventDetailComponent implements OnInit {
       presentador: ['Ágora Reix'],
       artista_invitado: [''],
       poeta_quema: ['Poeta de Demostración', Validators.required],
-      color_primario: ['#92D342', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
-      color_secundario: ['#368475', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
-      color_fondo: ['#1A1A1A', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
-      color_texto: ['#F2F2F2', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
-      color_cabecera: ['#1A1A1A', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
+      color_primario: ['#7AE92B', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
+      color_secundario: ['#12D1AE', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
+      color_fondo: ['#0E1217', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
+      color_texto: ['#F4F8FA', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
+      color_cabecera: ['#0E1217', [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)]],
       limite_finalistas: [3, [Validators.required, Validators.min(1)]],
       participantes: this.fb.array([])
     });

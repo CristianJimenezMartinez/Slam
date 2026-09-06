@@ -2,28 +2,33 @@
   <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 
   <!-- CONFIGURACIÓN GLOBAL DE IMAGEN -->
-  <div class="global-season-config card mb-4">
+  <div class="global-season-config card glass mb-4">
+    <div class="card-laser-beam"></div>
     <div class="config-text">
+      <span class="config-badge">FONDOS GENERALES</span>
       <h3>Imagen de Temporada</h3>
-      <p>Esta imagen se usará como fondo en el calendario y la home para todas las fechas de la temporada.</p>
+      <p>Esta imagen se usará como atmósfera escénica en el calendario y la página principal durante toda la temporada.</p>
     </div>
     <div class="config-upload">
       <label class="season-photo-btn">
         <input type="file" (change)="onSeasonFileSelected($event)" hidden>
-        <img *ngIf="fotoTemporada" [src]="fotoTemporada" class="season-preview">
+        <img *ngIf="fotoTemporada" [src]="fotoTemporada" class="season-preview" alt="Foto Temporada">
         <div class="upload-placeholder" *ngIf="!fotoTemporada">
-          <span>📷</span>
-          Subir Foto Global
+          <svg viewBox="0 0 24 24" class="upload-svg"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+          <span>Subir Foto Global</span>
         </div>
         <div class="hover-overlay">Cambiar Imagen</div>
       </label>
     </div>
   </div>
 
-  <div class="global-season-config card mb-4">
+  <!-- IDENTIDAD VISUAL -->
+  <div class="global-season-config card glass mb-4">
+    <div class="card-laser-beam"></div>
     <div class="config-text">
+      <span class="config-badge">BRANDING</span>
       <h3>Identidad Visual de Temporada</h3>
-      <p>Configura la paleta de colores que tendrá la web durante toda la temporada (cuando no haya un evento inminente).</p>
+      <p>Configura la denominación de la edición y la paleta de colores activa cuando no haya un evento inminente.</p>
     </div>
     <div class="config-inputs">
       <div class="input-group">
@@ -31,7 +36,7 @@
         <input type="text" [(ngModel)]="edicionTexto" placeholder="VII Edición" class="editable-field">
       </div>
       <div class="input-group">
-        <label>URL Pase de Temporada</label>
+        <label>URL Pase de Temporada (Entradium / Ticketing)</label>
         <input type="text" [(ngModel)]="urlPaseTemporada" placeholder="https://entradium.com/..." class="editable-field link">
       </div>
 
@@ -59,15 +64,25 @@
         </div>
       </div>
 
-      <button class="btn-primary small mt-3" (click)="saveGlobalSettings()">Guardar Configuración de Temporada</button>
+      <button class="btn-save-season" (click)="saveGlobalSettings()">
+        <svg viewBox="0 0 24 24" class="btn-svg"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+        <span>Guardar Configuración de Temporada</span>
+      </button>
     </div>
   </div>
 
   <!-- SECCIÓN DE NUEVOS EVENTOS (LOTE) -->
-  <div class="cronograma-section">
+  <div class="cronograma-section glass">
+    <div class="card-laser-beam"></div>
     <div class="section-title">
-      <h2>Añadir Próximos Slams</h2>
-      <button class="btn-row" (click)='addMoreRows()'>+ Añadir otra fila</button>
+      <div>
+        <span class="config-badge">CALENDARIO</span>
+        <h2>Añadir Próximos Slams</h2>
+      </div>
+      <button class="btn-add-row" (click)='addMoreRows()'>
+        <svg viewBox="0 0 24 24" class="btn-svg"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span>Añadir otra fila</span>
+      </button>
     </div>
     
     <div class="bulk-form">
@@ -80,23 +95,30 @@
       </div>
       
       <div class="form-row" *ngFor="let item of newItems; let i = index">
-        <input type="text" [(ngModel)]="item.nombre" placeholder="Ej: Slam Mayo">
+        <input type="text" [(ngModel)]="item.nombre" placeholder="Ej: Slam Octubre">
         <input type="datetime-local" [(ngModel)]="item.fecha">
         <input type="text" [(ngModel)]="item.url_entradas" placeholder="https://entradium.com/...">
         <input type="text" [(ngModel)]="item.ubicacion" placeholder="Ej: Las Cigarreras">
-        <button class="btn-remove" (click)="newItems.splice(i, 1)" *ngIf="newItems.length > 1">✕</button>
+        <button class="btn-remove" (click)="newItems.splice(i, 1)" *ngIf="newItems.length > 1" title="Quitar fila">✕</button>
       </div>
 
-      <div class="bulk-actions" style="margin-top: 2rem;">
-        <button class="btn-primary" (click)="saveNewItems()">Guardar Nuevas Fechas</button>
+      <div class="bulk-actions" style="margin-top: 1.5rem;">
+        <button class="btn-save-bulk" (click)="saveNewItems()">
+          <svg viewBox="0 0 24 24" class="btn-svg"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+          <span>Guardar Nuevas Fechas</span>
+        </button>
       </div>
     </div>
   </div>
 
   <!-- LISTADO EXISTENTE -->
-  <div class="cronograma-section mt-5" *ngIf="items.length > 0">
+  <div class="cronograma-section glass mt-5" *ngIf="items.length > 0">
+    <div class="card-laser-beam"></div>
     <div class="section-title">
-      <h2>Cronograma Actual</h2>
+      <div>
+        <span class="config-badge">FECHAS ACTIVAS</span>
+        <h2>Cronograma Actual</h2>
+      </div>
     </div>
     
     <div class="items-grid">
@@ -112,7 +134,9 @@
           <input type="text" [(ngModel)]="item.ubicacion" (change)="updateItem(item)" placeholder="Ubicación" class="editable-field link">
         </div>
         <div class="item-actions">
-          <button class="btn-danger-icon" (click)="deleteItem(item.id)">🗑️</button>
+          <button class="btn-delete-item" (click)="deleteItem(item.id)" title="Eliminar fecha">
+            <svg viewBox="0 0 24 24" class="del-svg"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </button>
         </div>
       </div>
     </div>

@@ -1,10 +1,35 @@
-<!-- Transición a la Final (Solo si aún no hay votos en la Ronda 3) -->
+<!-- PANTALLA DE REVELACIÓN DE FINALISTAS (Transición a la Gran Final) -->
 <div class="reveal-container" *ngIf="finalistas.length > 0">
-  <h2 class="reveal-title anim-fade-in">¡TENEMOS FINALISTAS!</h2>
+  
+  <div class="reveal-badge anim-fade-in">
+    <!-- Icono Corona Real Medieval de Bardo -->
+    <svg width="18" height="15" viewBox="0 0 576 512" fill="currentColor">
+      <path d="M576 136c0 22.09-17.91 40-40 40c-.248 0-.4551-.1266-.7031-.1305l-50.52 277.9C482 468.9 468.8 480 453.3 480H122.7c-15.46 0-28.72-11.06-31.48-26.27L40.71 175.9C40.46 175.9 40.25 176 39.1 176c-22.09 0-40-17.91-40-40S17.91 96 39.1 96s40 17.91 40 40c0 8.998-3.521 16.89-8.537 23.57l89.63 71.7c15.91 12.73 36.3 12.73 52.21 0l89.63-71.7C199.5 112.9 196 105 196 96c0-22.09 17.91-40 40-40s40 17.91 40 40c0 8.998-3.521 16.89-8.537 23.57l89.63 71.7c15.91 12.73 36.3 12.73 52.21 0l89.63-71.7C443.5 112.9 440 105 440 96c0-22.09 17.91-40 40-40s40 17.91 40 40c0 8.998-3.521 16.89-8.537 23.57l89.63 71.7c15.91 12.73 36.3 12.73 52.21 0l89.63-71.7C572.5 152.9 576 160.8 576 169.6V136z"/>
+    </svg>
+    <span>CLASIFICACIÓN A LA GRAN FINAL</span>
+  </div>
+
+  <h2 class="reveal-title anim-fade-in">¡POETAS FINALISTAS!</h2>
+  <p class="reveal-subtitle anim-fade-in">Los mejores recitados de la noche se disputarán el título en la última ronda</p>
+
   <div class="finalists-reveal-grid">
-    <div class="finalist-card anim-pop-in" *ngFor="let f of finalistas; let i = index" [style.animation-delay]="(i * 0.5) + 's'">
-      <div class="f-avatar" [style.background-image]="'url(' + f.foto_url + ')'"></div>
-      <h3>{{ f.participante }}</h3>
+    <div class="finalist-card glass anim-pop-in" 
+         *ngFor="let f of finalistas; let i = index" 
+         [style.animation-delay]="(i * 0.35) + 's'">
+      
+      <div class="finalist-laser-beam"></div>
+      
+      <div class="finalist-tag">FINALISTA #{{ i + 1 }}</div>
+
+      <div class="f-avatar-box">
+        <div class="f-avatar-ring">
+          <img [src]="f.foto_url || 'assets/default-avatar.jpg'" [alt]="f.participante" class="f-avatar-img">
+        </div>
+      </div>
+
+      <h3 class="f-name">{{ f.participante }}</h3>
+      <span class="f-score-badge">Clasificado con {{ f.puntuacion_media | number:'1.2-2' }} pts</span>
     </div>
   </div>
+
 </div>

@@ -1,9 +1,18 @@
-<div class="status-box unauthorized">
-  <div class="lock-icon">🔒</div>
-  <h2 class="danger-glow">ACCESO RESTRINGIDO</h2>
-  <p>Debes escanear el código QR en la pantalla del proyector para poder votar en este evento.</p>
-  <div class="closed-registration" *ngIf="evento && !evento.registro_pin_abierto">
-    <span class="badge">Admisión Cerrada</span>
-    <p class="small-text">El registro de nuevos votantes ya no está disponible.</p>
+<div class="locked-card glass">
+  <div class="card-laser-beam"></div>
+  
+  <div class="locked-icon-badge">
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </svg>
+  </div>
+
+  <h2 class="locked-title">ACCESO RESTRINGIDO</h2>
+  <p class="locked-text">Debes escanear el código QR oficial en la pantalla del proyector para poder votar en este evento.</p>
+  
+  <div class="admission-closed-pill" *ngIf="evento && !evento.registro_pin_abierto">
+    <span class="pill-dot"></span>
+    <span>ADMISIÓN CERRADA (SALA SELLADA)</span>
   </div>
 </div>

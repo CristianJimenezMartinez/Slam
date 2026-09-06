@@ -3,7 +3,8 @@ import { Evento } from '../../../../core/services/eventos.service';
 
 @Component({
   selector: 'app-votar-lock',
-  templateUrl: './votar-lock.component.html'
+  templateUrl: './votar-lock.component.html',
+  styleUrls: ['./votar-lock.component.scss']
 })
 export class VotarLockComponent {
   @Input() evento!: Evento | null;

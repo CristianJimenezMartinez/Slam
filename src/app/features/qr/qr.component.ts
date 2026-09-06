@@ -67,7 +67,11 @@ export class QrComponent implements OnInit, OnDestroy {
   async generarQR() {
     if (!this.evento) return;
     try {
-      const votingUrl = `${window.location.origin}/votar?access_code=${this.evento.id}`;
+      const origin = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+        ? 'https://poetryslamalicante.com'
+        : window.location.origin;
+
+      const votingUrl = `${origin}/votar?access_code=${this.evento.id}`;
       const url = await QRCode.toDataURL(votingUrl);
       this.ngZone.run(() => {
         this.qrCodeUrl = url;

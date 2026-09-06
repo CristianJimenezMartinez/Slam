@@ -53,8 +53,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
       h2 {
         margin: 0;
-        font-family: 'Merriweather', serif;
-        color: var(--neon-green);
+        font-family: var(--font-display);
+        color: var(--primary);
         font-size: 1.05rem;
         letter-spacing: 1px;
       }

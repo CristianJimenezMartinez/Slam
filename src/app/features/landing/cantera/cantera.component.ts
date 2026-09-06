@@ -56,6 +56,16 @@ export class CanteraComponent implements OnInit {
     document.body.style.overflow = 'hidden';
   }
 
+  abrirModalConFormato(formato: string): void {
+    this.tipoContacto = 'escuela';
+    this.formatoDeseado = formato;
+    this.pasoActual = 1;
+    this.enviado = false;
+    this.copiado = false;
+    this.isModalOpen = true;
+    document.body.style.overflow = 'hidden';
+  }
+
   cerrarModal(): void {
     this.isModalOpen = false;
     document.body.style.overflow = '';
@@ -140,6 +150,39 @@ export class CanteraComponent implements OnInit {
       this.copiado = true;
       setTimeout(() => this.copiado = false, 4000);
     });
+  }
+
+  abrirGmailWeb(): void {
+    const destino = 'poetryslamalicante@gmail.com';
+    let asunto = '';
+    let cuerpo = '';
+
+    if (this.tipoContacto === 'escuela') {
+      asunto = `[CANTERA - CENTRO ESCOLAR] Solicitud de taller: ${this.nombreCentro || 'Centro Educativo'}`;
+      cuerpo = `--- SOLICITUD ESPACIO CANTERA (CENTRO EDUCATIVO) ---\n\n` +
+        `• Centro Escolar / IES: ${this.nombreCentro}\n` +
+        `• Nivel / Cursos: ${this.nivelEducativo}\n` +
+        `• Formato de Actividad: ${this.formatoDeseado}\n` +
+        `• Persona / Dto. de Contacto: ${this.personaContacto}\n` +
+        `• Email de contacto: ${this.email}\n` +
+        `• Teléfono: ${this.telefono || 'No especificado'}\n` +
+        `• Localidad / Municipio: ${this.localidad || 'Alicante'}\n\n` +
+        `• DETALLES / MENSAJE:\n${this.mensaje || 'Solicitud de información sobre talleres.'}\n\n` +
+        `----------------------------------------------------`;
+    } else {
+      asunto = `[CANTERA - JOVEN POETA] Inscripción de: ${this.nombrePoeta || 'Nuevo Creador'}`;
+      cuerpo = `--- SOLICITUD ESPACIO CANTERA (JOVEN POETA / PARTICULAR) ---\n\n` +
+        `• Nombre del Poeta: ${this.nombrePoeta}\n` +
+        `• Edad: ${this.edad || 'No especificada'}\n` +
+        `• Nivel / Experiencia: ${this.experiencia}\n` +
+        `• Email de contacto: ${this.emailPoeta}\n` +
+        `• Teléfono / WhatsApp: ${this.telefonoPoeta || 'No especificado'}\n\n` +
+        `• MOTIVACIÓN / MENSAJE:\n${this.mensajePoeta || 'Interés en formar parte de la Cantera.'}\n\n` +
+        `----------------------------------------------------`;
+    }
+
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(destino)}&su=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+    window.open(gmailUrl, '_blank');
   }
 
   resetForm(): void {

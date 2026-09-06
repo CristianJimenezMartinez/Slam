@@ -131,6 +131,7 @@ export class ThemeService {
       '--bg-rgb': this.hexToRgb(theme.bg),
       '--bg-contrast': this.getContrastColor(theme.bg),
       '--text': theme.text,
+      '--text-rgb': this.hexToRgb(theme.text),
       '--off-white': theme.text,
       '--card-bg': '#161C24'
     };

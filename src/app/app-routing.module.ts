@@ -11,33 +11,74 @@ import { NormasComponent } from './features/landing/normas/normas.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 import { ForgotPasswordComponent } from './features/auth/forgot-password/forgot-password.component';
-import { EventListComponent } from './features/admin/event-list/event-list.component';
-import { EventDetailComponent } from './features/admin/event-detail/event-detail.component';
 import { VotarComponent } from './features/votar/votar.component';
 import { PuntuacionesComponent } from './features/puntuaciones/puntuaciones.component';
 import { QrComponent } from './features/qr/qr.component';
 import { ResultadosComponent } from './features/resultados/resultados.component';
-import { DashboardComponent } from './features/dashboard/dashboard.component';
-import { CronogramaListComponent } from './features/admin/cronograma-list/cronograma-list.component';
 import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-dashboard.component';
 import { PrintQrsComponent } from './features/admin/print-qrs/print-qrs.component';
 import { CronometroComponent } from './features/cronometro/cronometro.component';
 import { RuletaComponent } from './features/ruleta/ruleta.component';
 import { PreviewLoadingComponent } from './features/preview-loading/preview-loading.component';
+import { PreviewVotarComponent } from './features/preview-votar/preview-votar.component';
+import { PreviewProyectorComponent } from './features/preview-proyector/preview-proyector.component';
+import { EdicionesComponent } from './features/ediciones/ediciones.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: LandingComponent
+    component: LandingComponent,
+    data: {
+      seo: {
+        title: 'Poetry Slam Alicante | El Escenario de la Palabra Viva',
+        description: 'Circuito oficial de poesía escénica en Alicante. Veladas mensuales en el Centro Cultural Las Cigarreras, talleres de oratoria y formación en centros educativos con Ágora Reix.'
+      }
+    }
   },
   {
     path: 'carga',
-    component: PreviewLoadingComponent
+    component: PreviewLoadingComponent,
+    data: {
+      seo: {
+        robots: 'noindex, nofollow'
+      }
+    }
   },
   {
     path: 'loading',
     redirectTo: 'carga'
+  },
+  {
+    path: 'test-votar',
+    component: PreviewVotarComponent,
+    data: {
+      seo: {
+        robots: 'noindex, nofollow'
+      }
+    }
+  },
+  {
+    path: 'preview-votar',
+    redirectTo: 'test-votar'
+  },
+  {
+    path: 'test-proyector',
+    component: PreviewProyectorComponent,
+    data: {
+      seo: {
+        robots: 'noindex, nofollow'
+      }
+    }
+  },
+  {
+    path: 'preview-proyector',
+    redirectTo: 'test-proyector'
+  },
+  {
+    path: 'proyector',
+    redirectTo: 'puntuaciones',
+    pathMatch: 'full'
   },
   {
     path: 'ruleta',
@@ -54,19 +95,33 @@ const routes: Routes = [
     component: CanteraComponent,
     data: {
       seo: {
-        title: 'Cantera - Nuevas Voces',
-        description: 'La Cantera es el espacio para nuevas voces del Poetry Slam Alicante. Jóvenes y artistas emergentes suben al escenario por primera vez.'
+        title: 'La Cantera - Talleres Escolares y Nuevas Voces | Poetry Slam Alicante',
+        description: 'Talleres de oratoria, escritura poética y expresión escénica para centros educativos (ESO, Bachillerato, FP) impartidos por Ágora Reix, y cantera de nuevas voces de Poetry Slam Alicante.'
       }
     }
+  },
+  {
+    path: 'escolar',
+    redirectTo: 'cantera',
+    pathMatch: 'full'
+  },
+  {
+    path: 'talleres-escolares',
+    redirectTo: 'cantera',
+    pathMatch: 'full'
+  },
+  {
+    path: 'educacion',
+    redirectTo: 'cantera',
+    pathMatch: 'full'
   },
   {
     path: 'normas',
     component: NormasComponent,
     data: {
       seo: {
-        title: 'Reglamento Oficial',
-        description: 'Consulta las reglas oficiales del Poetry Slam Alicante 2026.',
-        robots: 'noindex, nofollow'
+        title: 'Reglamento Oficial | Poetry Slam Alicante',
+        description: 'Consulta las reglas oficiales del Poetry Slam Alicante 2026. 3 minutos por poema, textos de autoría propia, sin atrezo ni música y jurado popular.'
       }
     }
   },
@@ -85,6 +140,31 @@ const routes: Routes = [
     redirectTo: 'calendario'
   },
   {
+    path: 'salon',
+    component: EdicionesComponent,
+    data: {
+      seo: {
+        title: 'Salón del Slam - Memoria de Ediciones',
+        description: 'Crónica oficial y memoria viva de las veladas de Poetry Slam Alicante. Ganadores del Laurel de Oro, finalistas de honor, voces invitadas y cartelería histórica.'
+      }
+    }
+  },
+  {
+    path: 'salon-del-slam',
+    redirectTo: 'salon',
+    pathMatch: 'full'
+  },
+  {
+    path: 'ediciones',
+    redirectTo: 'salon',
+    pathMatch: 'full'
+  },
+  {
+    path: 'archivo',
+    redirectTo: 'salon',
+    pathMatch: 'full'
+  },
+  {
     path: 'auth',
     canActivate: [GuestGuard],
     children: [
@@ -97,12 +177,22 @@ const routes: Routes = [
   {
     path: 'admin',
     canActivate: [AuthGuard],
-    component: AdminDashboardComponent
+    component: AdminDashboardComponent,
+    data: {
+      seo: {
+        robots: 'noindex, nofollow'
+      }
+    }
   },
   {
     path: 'admin/imprimir-qrs/:eventoId',
     canActivate: [AuthGuard],
-    component: PrintQrsComponent
+    component: PrintQrsComponent,
+    data: {
+      seo: {
+        robots: 'noindex, nofollow'
+      }
+    }
   },
   {
     path: 'votar',
@@ -159,8 +249,8 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    canActivate: [AuthGuard],
-    component: DashboardComponent
+    redirectTo: 'admin',
+    pathMatch: 'full'
   },
   {
     path: '**',

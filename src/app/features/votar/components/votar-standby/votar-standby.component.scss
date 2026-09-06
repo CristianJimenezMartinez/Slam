@@ -1,0 +1,101 @@
+.standby-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem 1.5rem;
+  background: rgba(14, 18, 23, 0.85);
+  backdrop-filter: blur(30px) saturate(180%);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+
+  .card-laser-beam {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--secondary) 35%, var(--primary) 65%, transparent 100%);
+  }
+
+  .standby-icon-badge {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(18, 209, 174, 0.12);
+    border: 2px solid var(--secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 25px rgba(18, 209, 174, 0.3);
+    margin-bottom: 0.4rem;
+
+    &.warning {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: #f59e0b;
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.3);
+    }
+  }
+
+  .standby-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.8rem;
+    letter-spacing: 1.5px;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .standby-text {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    max-width: 340px;
+    margin: 0;
+  }
+
+  .quote-box {
+    margin-top: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 0.8rem 1.4rem;
+
+    .quote-text {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.95rem;
+      letter-spacing: 0.8px;
+      color: var(--secondary);
+    }
+  }
+
+  .btn-back-home {
+    margin-top: 1.2rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-family: var(--font-condensed);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.7rem 1.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+  }
+}

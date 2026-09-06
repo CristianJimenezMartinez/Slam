@@ -1,9 +1,46 @@
-<div class="status-box success" *ngIf="poetaActivo">
-  <div class="icon bounce">✨</div>
-  <h1>¡Voto guardado para {{ poetaActivo.nombre }}!</h1>
-  <p>Tu puntuación ya ha sido enviada al jurado.</p>
-  <div class="wait-next">
-    <div class="spinner-small"></div>
-    <span>Esperando al siguiente poeta...</span>
+<div class="success-card glass" *ngIf="poetaActivo">
+  <div class="card-laser-beam"></div>
+  
+  <div class="success-icon-badge">
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  </div>
+
+  <h2 class="success-title">¡VOTO REGISTRADO!</h2>
+  <p class="success-subtitle">Has otorgado tu calificación oficial a:</p>
+
+  <div class="voted-poet-box">
+    <img [src]="poetaActivo.foto_url" [alt]="poetaActivo.nombre" class="voted-avatar">
+    <div class="voted-info">
+      <span class="voted-name">{{ poetaActivo.nombre }}</span>
+      <span class="voted-round">{{ ronda === 1 ? 'Demostración: La Quema' : ronda === 2 ? 'Ronda Clasificatoria' : '🏆 Gran Final' }}</span>
+    </div>
+    <div class="voted-score-pill" *ngIf="notaEmitida !== null">
+      <span class="pill-number">{{ notaEmitida | number:'1.1-1' }}</span>
+      <span class="pill-max">/ 10</span>
+    </div>
+  </div>
+
+  <div class="waiting-next-box">
+    <div class="mini-spinner"></div>
+    <span>Esperando al siguiente poeta en escena...</span>
+  </div>
+
+  <!-- THE WHISPER CARD: PUENTE A LA CANTERA EN TIEMPO DE ESPERA -->
+  <div class="whisper-cantera-card">
+    <div class="whisper-laser-line"></div>
+    <div class="whisper-header">
+      <span class="whisper-kicker">¿ESCRIBES VERSOS O TIENES ENTRE 14 Y 25 AÑOS?</span>
+    </div>
+    <p class="whisper-text">
+      El próximo en subir al micro de Las Cigarreras puedes ser tú. Impartimos talleres en centros educativos y mentoría para jóvenes creadores con Ágora Reix.
+    </p>
+    <a routerLink="/cantera" class="whisper-link">
+      <span>Descubre La Cantera & Talleres</span>
+      <svg class="whisper-arrow" viewBox="0 0 24 24" width="16" height="16">
+        <path d="M5 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
   </div>
 </div>

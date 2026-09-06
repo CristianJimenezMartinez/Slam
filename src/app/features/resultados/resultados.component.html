@@ -2,7 +2,7 @@
   
   <header class="page-header">
     <div class="badge neon" *ngIf="evento?.votacion_activa">Votación en Directo 🔥</div>
-    <h1>Rankings & Votos</h1>
+    <h1>Rankings & Puntuaciones</h1>
   </header>
 
   <!-- SELECTOR DE EVENTOS -->
@@ -15,6 +15,20 @@
         [class.active]="evento?.id === ev.id"
         class="pill">
         {{ ev.nombre }} ({{ ev.fecha | date:'MMM yy' }})
+      </button>
+    </div>
+  </div>
+
+  <!-- SELECTOR DE RONDAS (Si hay varias rondas con datos) -->
+  <div class="event-selector round-selector" *ngIf="rondasDisponibles.length > 1">
+    <label>Fase de la Velada:</label>
+    <div class="selector-pills">
+      <button 
+        *ngFor="let r of rondasDisponibles" 
+        (click)="cambiarRonda(r.numero)"
+        [class.active]="rondaSeleccionada === r.numero"
+        class="pill">
+        {{ r.nombre }}
       </button>
     </div>
   </div>
@@ -33,7 +47,8 @@
           <div class="avatar" [style.background-image]="'url(' + (res.foto_url || 'assets/default-avatar.jpg') + ')'"></div>
           <div class="info">
             <h3>{{ res.participante }}</h3>
-            <div class="points">{{ res.puntuacion_total }} <small>puntos</small></div>
+            <div class="points">{{ res.puntuacion_media | number:'1.2-2' }} <small>pts / 10</small></div>
+            <div style="font-size: 0.8rem; color: #888; margin-top: 0.2rem;">{{ res.num_votos }} votos • {{ res.puntuacion_total }} pts tot.</div>
           </div>
         </div>
       </div>
@@ -45,16 +60,18 @@
             <tr>
               <th>Pos.</th>
               <th>Poeta</th>
+              <th>Media</th>
               <th>Votos</th>
-              <th>Puntos</th>
+              <th>Total</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let res of resultados.slice(3); let i = index">
               <td>#{{ i + 4 }}</td>
               <td>{{ res.participante }}</td>
+              <td class="highlight">{{ res.puntuacion_media | number:'1.2-2' }}</td>
               <td>{{ res.num_votos }}</td>
-              <td class="highlight">{{ res.puntuacion_total }}</td>
+              <td style="color: #888;">{{ res.puntuacion_total }}</td>
             </tr>
           </tbody>
         </table>
@@ -64,7 +81,7 @@
 
     <!-- No hay resultados aún -->
     <div *ngIf="!loading && resultados.length === 0" class="no-results card">
-      <p>Todavía no hay votos registrados para {{ evento?.nombre }}.</p>
+      <p>Todavía no hay votos registrados para esta fase en {{ evento?.nombre }}.</p>
       <div class="empty-icon">🗳️</div>
     </div>
   </div>

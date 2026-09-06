@@ -178,12 +178,56 @@
       </div>
     </section>
 
-    <!-- PROPUESTA METODOLÓGICA PARA CENTROS EDUCATIVOS -->
-    <section class="educational-program-section glass">
-      <div class="section-badge-center">PROGRAMA EDUCATIVO</div>
+    <!-- SECCIÓN DE AUTORIDAD: DIRECCIÓN PEDAGÓGICA POR ÁGORA REIX -->
+    <section class="mentor-authority-section glass">
+      <div class="card-laser-beam"></div>
+      <div class="mentor-grid">
+        <div class="mentor-avatar-col">
+          <div class="mentor-avatar-frame">
+            <img src="assets/images/avatar-quill.jpg" alt="Ágora Reix - Dirección y Mentoría Poetry Slam Alicante" class="mentor-img">
+            <div class="mentor-badge-float">DIRECTORA & MC</div>
+          </div>
+        </div>
+        <div class="mentor-info-col">
+          <div class="mentor-badge-top">DIRECCIÓN PEDAGÓGICA Y DOCENCIA</div>
+          <h2 class="mentor-name">Ágora Reix <span class="mentor-real-name">(Raquel Polo)</span></h2>
+          <p class="mentor-role">Poeta, Comunicadora, Performer y Fundadora de Poetry Slam Alicante</p>
+          <p class="mentor-bio">
+            Pionera de la poesía escénica en Alicante, fundó el circuito oficial en <strong>2018</strong> y conduce como Maestra de Ceremonias (MC) cada velada en el Centro Cultural Las Cigarreras. Su programa para centros educativos une la oratoria clásica, la pérdida del miedo a hablar en público y el <em>spoken word</em> contemporáneo como herramientas de expresión, autoconfianza y convivencia.
+          </p>
+          <div class="mentor-credentials">
+            <div class="cred-item">
+              <span class="cred-icon">📖</span>
+              <div class="cred-text">
+                <strong>Obra publicada y contrastada:</strong>
+                <span>Autora de <em>El recital de los días</em> (Azur, 2018; versión inglesa traducida por el poeta galardonado Ben Clark) y <em>Apología del vacío</em>.</span>
+              </div>
+            </div>
+            <div class="cred-item">
+              <span class="cred-icon">🏛️</span>
+              <div class="cred-text">
+                <strong>Trayectoria cultural e institucional:</strong>
+                <span>Proyectos seleccionados como <em>Trascendental</em> (ImpulsaCultura Proyecta), festivales Cosmopoética y Voix Vives, y ciclos de la Concejalía de Cultura del Ayuntamiento de Alicante.</span>
+              </div>
+            </div>
+            <div class="cred-item">
+              <span class="cred-icon">🎙️</span>
+              <div class="cred-text">
+                <strong>Puente con el circuito estatal:</strong>
+                <span>Directora de la sede federada en Poetry Slam España, cantera de campeones de referencia nacional y europea como Pablowski.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROPUESTA METODOLÓGICA Y FORMATOS PARA CENTROS EDUCATIVOS -->
+    <section id="talleres-escolares" class="educational-program-section glass">
+      <div class="section-badge-center">PROGRAMA EDUCATIVO PARA CENTROS</div>
       <h3>¿Cómo llevamos el Poetry Slam a tu Centro?</h3>
       <p class="section-lead">
-        Una propuesta formativa estructurada para centros de toda la provincia de Alicante, adaptada al horario lectivo y diseñada para conectar con las inquietudes del alumnado:
+        Una propuesta formativa estructurada para colegios e institutos de toda la provincia de Alicante, adaptada al horario lectivo y diseñada para conectar con las inquietudes del alumnado:
       </p>
 
       <div class="program-steps-grid">
@@ -220,10 +264,79 @@
         </div>
       </div>
 
+      <!-- CATÁLOGO DE LOS 3 FORMATOS DE TALLERES DISPONIBLES -->
+      <div class="workshop-packages-header">
+        <span class="packages-badge">CATÁLOGO DE TALLERES</span>
+        <h4>Formatos Disponibles para Contratación Escolar</h4>
+      </div>
+
+      <div class="workshop-packages-grid">
+        <div class="package-card glass">
+          <div class="pkg-header">
+            <span class="pkg-kicker">FORMATO 01 · AULA MODULAR</span>
+            <h4 class="pkg-title">Taller de Aula Ordinaria</h4>
+            <span class="pkg-duration">50 o 100 minutos por grupo</span>
+          </div>
+          <p class="pkg-desc">
+            Sesión práctica integrada en el horario lectivo de Lengua Castellana, Literatura, Valenciano, Filosofía o Valores.
+          </p>
+          <ul class="pkg-features">
+            <li>✓ Desinhibición y superación del miedo escénico</li>
+            <li>✓ Dicción, modulación vocal y ritmo poético</li>
+            <li>✓ Escritura creativa desde vivencias personales</li>
+            <li>✓ Micro abierto participativo entre compañeros</li>
+          </ul>
+          <button type="button" (click)="abrirModalConFormato('Taller Práctico en Aulas (1-2 horas)')" class="btn-primary pkg-btn">
+            <span>Solicitar Taller de Aula</span>
+          </button>
+        </div>
+
+        <div class="package-card glass highlight-pkg">
+          <div class="pkg-badge-recom">MÁS DEMANDADO</div>
+          <div class="pkg-header">
+            <span class="pkg-kicker">FORMATO 02 · CICLO COMPLETO</span>
+            <h4 class="pkg-title">Ciclo + Torneo en Salón de Actos</h4>
+            <span class="pkg-duration">2 a 3 sesiones + Evento Final</span>
+          </div>
+          <p class="pkg-desc">
+            Itinerario intensivo que culmina en un torneo Poetry Slam real en el salón de actos o teatro del centro escolar.
+          </p>
+          <ul class="pkg-features">
+            <li>✓ Formación progresiva en escritura y declamación</li>
+            <li>✓ Ensayos y calibración escénica ante micrófono</li>
+            <li>✓ Torneo con las 3 reglas del Slam oficial</li>
+            <li>✓ Alumnado como jurado popular democrático</li>
+          </ul>
+          <button type="button" (click)="abrirModalConFormato('Ciclo Formativo + Torneo Escolar')" class="btn-primary pkg-btn">
+            <span>Solicitar Ciclo + Torneo</span>
+          </button>
+        </div>
+
+        <div class="package-card glass">
+          <div class="pkg-header">
+            <span class="pkg-kicker">FORMATO 03 · JORNADA ESPECIAL</span>
+            <h4 class="pkg-title">Semana Cultural & Efemérides</h4>
+            <span class="pkg-duration">Jornada completa o media jornada</span>
+          </div>
+          <p class="pkg-desc">
+            Dinamización de semanas culturales, Día del Libro, Día de la Poesía o jornadas de convivencia intercentros.
+          </p>
+          <ul class="pkg-features">
+            <li>✓ Exhibición en directo de poesía escénica</li>
+            <li>✓ Talleres rotativos para múltiples grupos y niveles</li>
+            <li>✓ Foco especial en empatía y escucha activa</li>
+            <li>✓ Adaptable a los objetivos específicos del claustro</li>
+          </ul>
+          <button type="button" (click)="abrirModalConFormato('Semana Cultural / Jornadas Literarias')" class="btn-secondary pkg-btn">
+            <span>Solicitar Jornada Cultural</span>
+          </button>
+        </div>
+      </div>
+
       <div class="program-footer-cta">
-        <p>¿Interesado en concertar una sesión o ciclo para este curso escolar?</p>
+        <p>¿Interesado en concertar una sesión, ciclo o jornada para este curso escolar?</p>
         <button type="button" (click)="abrirModal('escuela')" class="btn-primary large">
-          <span>🏫 Solicitar Propuesta para mi Centro</span>
+          <span>🏫 Solicitar Propuesta y Disponibilidad para mi Centro</span>
         </button>
       </div>
     </section>
@@ -428,11 +541,17 @@
           Se ha estructurado tu solicitud para <strong>poetryslamalicante&#64;gmail.com</strong>. Nos pondremos en contacto contigo a la mayor brevedad.
         </p>
         <div class="success-actions">
+          <button type="button" (click)="abrirGmailWeb()" class="btn-primary gmail-btn">
+            <svg style="width:18px;height:18px;fill:currentColor;" viewBox="0 0 24 24">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            <span>Abrir en Gmail Web</span>
+          </button>
           <button type="button" (click)="copiarDatos()" class="btn-secondary">
             <span>{{ copiado ? '✓ ¡Copiado al Portapapeles!' : '📋 Copiar Resumen del Mensaje' }}</span>
           </button>
-          <button type="button" (click)="cerrarModal()" class="btn-primary">
-            <span>Aceptar y Cerrar</span>
+          <button type="button" (click)="cerrarModal()" class="btn-outline">
+            <span>Cerrar</span>
           </button>
         </div>
       </div>

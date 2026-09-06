@@ -9,7 +9,7 @@
   min-height: 100vh;
   background: #1a1a1a;
   color: #fff;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
 
   .spinner {
     width: 50px;
@@ -36,7 +36,7 @@
   background: #1a1a1a;
   color: #fff;
   padding: 14px 24px;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -144,7 +144,7 @@
   font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   transition: background 0.2s, transform 0.1s;
 
   &:hover {
@@ -227,7 +227,7 @@
 }
 
 .card-number {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-weight: 800;
   font-size: 11px;
   color: #222;

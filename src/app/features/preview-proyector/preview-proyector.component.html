@@ -1,0 +1,120 @@
+<!-- BARRA DE CONTROL FLOTANTE DEL SIMULADOR -->
+<div class="mock-control-bar">
+  <div class="mock-controls-inner">
+    <div class="mock-title-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+      <span>LABORATORIO PROYECTOR</span>
+    </div>
+
+    <!-- Selector de Modo -->
+    <div class="control-group">
+      <span class="group-label">MODO PANTALLA:</span>
+      <div class="btn-toggle-group">
+        <button type="button" 
+                class="btn-mock-toggle" 
+                [class.active]="modoSimulador === 'ranking'" 
+                (click)="cambiarModo('ranking')">
+          Podio y Clasificación
+        </button>
+        <button type="button" 
+                class="btn-mock-toggle" 
+                [class.active]="modoSimulador === 'finalistas'" 
+                (click)="cambiarModo('finalistas')">
+          Revelación Finalistas
+        </button>
+        <button type="button" 
+                class="btn-mock-toggle" 
+                [class.active]="modoSimulador === 'standby'" 
+                (click)="cambiarModo('standby')">
+          Standby
+        </button>
+      </div>
+    </div>
+
+    <!-- Selector de Ronda -->
+    <div class="control-group" *ngIf="modoSimulador === 'ranking'">
+      <span class="group-label">RONDA:</span>
+      <div class="btn-toggle-group">
+        <button type="button" class="btn-mock-toggle" [class.active]="rondaActual === 1" (click)="cambiarRonda(1)">Ronda 1</button>
+        <button type="button" class="btn-mock-toggle" [class.active]="rondaActual === 2" (click)="cambiarRonda(2)">Ronda 2</button>
+        <button type="button" class="btn-mock-toggle" [class.active]="rondaActual === 3" (click)="cambiarRonda(3)">Gran Final</button>
+      </div>
+    </div>
+
+    <!-- Simular Votos en Vivo -->
+    <div class="control-group">
+      <button type="button" class="btn-simulate-vote" (click)="simularVotoEnVivo()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="23 4 23 10 17 10"/>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+        </svg>
+        Simular +1 Voto en Vivo
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENEDOR PRINCIPAL DEL PROYECTOR -->
+<div class="proyector-wrapper">
+  <div class="proyector-canvas">
+    
+    <!-- CABECERA CINEMATOGRÁFICA DEL PROYECTOR -->
+    <header class="proyector-header" *ngIf="modoSimulador !== 'standby'">
+      <div class="event-live-tag">
+        <span class="pulse-dot"></span>
+        <span>EN VIVO • TEATRO LAS CIGARRERAS</span>
+      </div>
+      <h1 class="main-event-title">{{ eventoMock.nombre }}</h1>
+      <p class="round-subtitle">
+        {{ rondaActual === 1 ? '🔥 Demostración: La Quema • Calibración del Jurado' : 
+           rondaActual === 2 ? '📍 Ronda Clasificatoria • Calificaciones Oficiales' : 
+           '🏆 GRAN FINAL • PUNTUACIONES DEFINITIVAS' }}
+      </p>
+    </header>
+
+    <!-- MODO 1: PODIO + CLASIFICACIÓN (Subcomponentes reales) -->
+    <div class="ranking-view" *ngIf="modoSimulador === 'ranking'">
+      
+      <!-- SUBCOMPONENTE PODIO REAL -->
+      <app-proyector-podium [resultados]="resultadosMock"></app-proyector-podium>
+
+      <!-- SEPARADOR CON HAZ LÁSER -->
+      <div class="section-divider">
+        <div class="divider-line"></div>
+        <span class="divider-text">TABLA COMPLETA DE CLASIFICACIÓN</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <!-- SUBCOMPONENTE LISTA DE CLASIFICADOS (4º EN ADELANTE) -->
+      <app-proyector-vibe-list [resultados]="resultadosMock.slice(3)"></app-proyector-vibe-list>
+    </div>
+
+    <!-- MODO 2: REVELACIÓN DE FINALISTAS -->
+    <div class="finalists-view" *ngIf="modoSimulador === 'finalistas'">
+      <app-proyector-finalists-reveal [finalistas]="finalistasMock"></app-proyector-finalists-reveal>
+    </div>
+
+    <!-- MODO 3: STANDBY -->
+    <div class="standby-view" *ngIf="modoSimulador === 'standby'">
+      <div class="mock-standby-card glass">
+        <div class="card-laser-beam"></div>
+        <div class="standby-icon-badge">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" stroke-width="2">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+        </div>
+        <h2 class="standby-title">{{ eventoMock.nombre }}</h2>
+        <p class="standby-desc">Las calificaciones del jurado popular están siendo computadas en tiempo real.</p>
+        <div class="quote-box">
+          <span class="quote-text">«El silencio de la sala precede a las palabras.»</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

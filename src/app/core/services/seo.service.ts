@@ -31,6 +31,7 @@ export interface PageSeo {
   description?: string;
   path?: string;
   robots?: string;
+  image?: string;
 }
 
 export interface EventSeo {
@@ -54,12 +55,16 @@ export class SeoService {
    * Configura título, descripción, canonical y OpenGraph para una página.
    */
   setPage(data: PageSeo): void {
-    const fullTitle = data.title
-      ? `${data.title} | ${SITE_NAME}`
-      : `${SITE_NAME} | El Escenario de la Palabra Viva`;
+    let fullTitle: string;
+    if (data.title) {
+      fullTitle = data.title.includes(SITE_NAME) ? data.title : `${data.title} | ${SITE_NAME}`;
+    } else {
+      fullTitle = `${SITE_NAME} | El Escenario de la Palabra Viva`;
+    }
 
     const desc = data.description || DEFAULT_DESC;
     const url = data.path ? `${SITE_URL}${data.path}` : SITE_URL;
+    const image = data.image || DEFAULT_IMAGE;
 
     // Title
     this.titleService.setTitle(fullTitle);
@@ -70,7 +75,7 @@ export class SeoService {
     if (data.robots) {
       this.meta.updateTag({ name: 'robots', content: data.robots });
     } else {
-      this.meta.updateTag({ name: 'robots', content: 'index, follow' });
+      this.meta.updateTag({ name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' });
     }
 
     // Canonical
@@ -80,10 +85,12 @@ export class SeoService {
     this.meta.updateTag({ property: 'og:title', content: fullTitle });
     this.meta.updateTag({ property: 'og:description', content: desc });
     this.meta.updateTag({ property: 'og:url', content: url });
+    this.meta.updateTag({ property: 'og:image', content: image });
 
     // Twitter Card
     this.meta.updateTag({ name: 'twitter:title', content: fullTitle });
     this.meta.updateTag({ name: 'twitter:description', content: desc });
+    this.meta.updateTag({ name: 'twitter:image', content: image });
   }
 
   /**
@@ -101,13 +108,15 @@ export class SeoService {
       'location': this.buildLocation(event.ubicacion),
       'organizer': ORGANIZER_SCHEMA,
       'image': DEFAULT_IMAGE,
-      ...(event.url_entradas ? {
-        'offers': {
-          '@type': 'Offer',
-          'url': event.url_entradas,
-          'availability': 'https://schema.org/InStock'
-        }
-      } : {})
+      'isAccessibleForFree': !event.url_entradas,
+      'offers': {
+        '@type': 'Offer',
+        'url': event.url_entradas || `${SITE_URL}/calendario`,
+        'price': '0',
+        'priceCurrency': 'EUR',
+        'validFrom': event.fecha,
+        'availability': 'https://schema.org/InStock'
+      }
     };
     this.setJsonLd(data, 'dynamic-jsonld');
   }
@@ -129,13 +138,15 @@ export class SeoService {
         'location': this.buildLocation(ev.ubicacion),
         'organizer': ORGANIZER_SCHEMA,
         'image': DEFAULT_IMAGE,
-        ...(ev.url_entradas ? {
-          'offers': {
-            '@type': 'Offer',
-            'url': ev.url_entradas,
-            'availability': 'https://schema.org/InStock'
-          }
-        } : {})
+        'isAccessibleForFree': !ev.url_entradas,
+        'offers': {
+          '@type': 'Offer',
+          'url': ev.url_entradas || `${SITE_URL}/calendario`,
+          'price': '0',
+          'priceCurrency': 'EUR',
+          'validFrom': ev.fecha,
+          'availability': 'https://schema.org/InStock'
+        }
       }))
     };
     this.setJsonLd(data, 'events-jsonld');
@@ -150,6 +161,7 @@ export class SeoService {
       '@graph': [
         {
           '@type': 'EducationalOrganization',
+          '@id': `${SITE_URL}/cantera#organization`,
           'name': 'Cantera Poetry Slam Alicante',
           'url': `${SITE_URL}/cantera`,
           'description': 'Programa educativo y formativo de poesía escénica, oratoria y expresión creativa para colegios, institutos (IES) y jóvenes en la provincia de Alicante.',
@@ -164,20 +176,46 @@ export class SeoService {
         },
         {
           '@type': 'Course',
+          '@id': `${SITE_URL}/cantera#course`,
           'name': 'Talleres Escolares de Poesía Escénica y Oratoria',
           'description': 'Talleres prácticos de escritura poética contemporánea, declamación escénica, pérdida del miedo a hablar en público y convivencia para alumnos de ESO, Bachillerato y Formación Profesional en Alicante.',
+          'provider': {
+            '@type': 'EducationalOrganization',
+            'name': 'Poetry Slam Alicante & Ágora Reix',
+            'url': `${SITE_URL}/cantera`
+          },
+          'educationalLevel': ['Educación Secundaria Obligatoria (ESO)', 'Bachillerato', 'Formación Profesional'],
+          'inLanguage': 'es',
+          'isAccessibleForFree': false,
+          'hasCourseInstance': {
+            '@type': 'CourseInstance',
+            'courseMode': 'onsite',
+            'location': {
+              '@type': 'Place',
+              'name': 'Centros Educativos e Institutos de la Provincia de Alicante',
+              'address': {
+                '@type': 'PostalAddress',
+                'streetAddress': 'Calle San Carlos, 78',
+                'addressLocality': 'Alicante',
+                'addressRegion': 'Comunidad Valenciana',
+                'addressCountry': 'ES'
+              }
+            }
+          }
+        },
+        {
+          '@type': 'EducationalOccupationalProgram',
+          '@id': `${SITE_URL}/cantera#program`,
+          'name': 'Programa Cantera de Poesía Escénica y Oratoria Juvenil',
+          'description': 'Itinerario formativo extracurricular y curricular impartido por la formadora y poeta Ágora Reix, conectando la expresión en las aulas con el circuito oficial de Poetry Slam.',
           'provider': {
             '@type': 'Organization',
             'name': 'Poetry Slam Alicante',
             'url': SITE_URL
           },
-          'educationalLevel': ['Educación Secundaria Obligatoria (ESO)', 'Bachillerato', 'Formación Profesional', 'Universidad'],
-          'inLanguage': 'es',
-          'isAccessibleForFree': false,
-          'hasCourseInstance': {
-            '@type': 'CourseInstance',
-            'courseMode': 'In-Person',
-            'location': 'Centros Educativos e Institutos de la Provincia de Alicante'
+          'occupationalCategory': 'Expresión Artística, Oratoria y Comunicación',
+          'hasCourse': {
+            '@id': `${SITE_URL}/cantera#course`
           }
         }
       ]
@@ -203,6 +241,7 @@ export class SeoService {
       'name': name,
       'address': {
         '@type': 'PostalAddress',
+        'streetAddress': 'Calle San Carlos, 78',
         'addressLocality': 'Alicante',
         'postalCode': '03001',
         'addressRegion': 'Comunidad Valenciana',

@@ -1,124 +1,158 @@
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 
 <div class="live-control-panel" *ngIf="!loading && evento && participantes.length > 0">
-  <!-- Status Ronda -->
-  <div class="ronda-status-bar" 
-       [style.background]="rondaActual === 3 ? 'var(--primary)' : rondaActual === 2 ? '#444' : '#d06a66'"
-       [style.color]="rondaActual === 3 ? '#111' : '#fff'">
-    <span class="ronda-label">
-      {{ rondaActual === 1 ? '🔥 Ronda de Demostración: La Quema' : rondaActual === 2 ? '📍 Ronda 1: Clasificatoria' : '🏆 Ronda 2: ¡GRAN FINAL!' }}
-    </span>
-    <!-- Botones de Ronda -->
-    <div style="display: flex; gap: 0.5rem; align-items: center;">
-      <button class="btn-mini-round" *ngIf="rondaActual == 1" (click)="finalizarQuema()">
-        ➔ Comenzar Clasificatoria
+  
+  <!-- BARRA DE ESTADO DE RONDA -->
+  <div class="ronda-status-bar" [ngClass]="{'quema-mode': rondaActual === 1, 'clasificatoria-mode': rondaActual === 2, 'final-mode': rondaActual === 3}">
+    <div class="ronda-info">
+      <span class="ronda-badge">ESTADO DEL ESCENARIO</span>
+      <span class="ronda-label">
+        {{ rondaActual === 1 ? 'Ronda de Demostración: La Quema' : rondaActual === 2 ? 'Ronda 1: Clasificatoria' : 'Ronda 2: ¡GRAN FINAL!' }}
+      </span>
+    </div>
+
+    <!-- BOTONES DE RONDA -->
+    <div class="ronda-nav-btns">
+      <button class="btn-mini-round btn-advance" *ngIf="rondaActual == 1" (click)="finalizarQuema()">
+        <span>Comenzar Clasificatoria</span>
+        <svg viewBox="0 0 24 24" class="btn-svg"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
-      <button class="btn-mini-round" *ngIf="rondaActual == 2" (click)="volverALaQuema()" style="opacity: 0.7;">
-        ↩ Volver a La Quema
+      <button class="btn-mini-round btn-back" *ngIf="rondaActual == 2" (click)="volverALaQuema()">
+        <svg viewBox="0 0 24 24" class="btn-svg"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        <span>Volver a La Quema</span>
       </button>
-      <button class="btn-mini-round" *ngIf="rondaActual == 2" (click)="finalizarRondaClasificatoria()">
-        ➔ Pasar a la Final
+      <button class="btn-mini-round btn-advance" *ngIf="rondaActual == 2" (click)="finalizarRondaClasificatoria()">
+        <span>Pasar a la Final</span>
+        <svg viewBox="0 0 24 24" class="btn-svg"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
-      <button class="btn-mini-round" *ngIf="rondaActual == 3" (click)="volverARondaClasificatoria()" style="opacity: 0.7;">
-        ↩ Volver a Clasificatoria
+      <button class="btn-mini-round btn-back" *ngIf="rondaActual == 3" (click)="volverARondaClasificatoria()">
+        <svg viewBox="0 0 24 24" class="btn-svg"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        <span>Volver a Clasificatoria</span>
       </button>
     </div>
   </div>
 
+  <!-- CABECERA DE CONTROL RÁPIDO DE ESCENARIO -->
   <div class="panel-header">
     <div class="header-actions">
-      <button class="btn-projector" (click)="togglePuntuaciones()" [style.background]="mostrarPuntuaciones ? '#ff4d4f' : '#92d342'" style="color: #111; font-weight: bold;">
-        📊 {{ mostrarPuntuaciones ? 'Ocultar' : 'Publicar' }} Puntuaciones
+      
+      <!-- PUBLICAR PUNTUACIONES -->
+      <button class="btn-stage-action toggle-scores-btn" (click)="togglePuntuaciones()" [class.is-published]="mostrarPuntuaciones">
+        <svg viewBox="0 0 24 24" class="action-svg"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        <span>{{ mostrarPuntuaciones ? 'Ocultar Puntuaciones' : 'Publicar Puntuaciones' }}</span>
       </button>
-      <button class="btn-projector" *ngIf="activoId" (click)="cerrarVotaciones()" style="background: #ff4d4f; color: white;">
-        🚫 Cerrar Votos
+
+      <!-- CERRAR VOTOS RÁPIDOS -->
+      <button class="btn-stage-action btn-close-vote" *ngIf="activoId" (click)="cerrarVotaciones()">
+        <svg viewBox="0 0 24 24" class="action-svg"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+        <span>Cerrar Votos</span>
       </button>
-      <a class="btn-projector" routerLink="/puntuaciones" target="_blank" style="background: #222; color: #fff; border: 1px solid #444; text-decoration: none; display: flex; align-items: center; justify-content: center;">
-        🖥️ Ver Proyector
+
+      <!-- VER PROYECTOR -->
+      <a class="btn-stage-action btn-projector-link" routerLink="/proyector" target="_blank">
+        <svg viewBox="0 0 24 24" class="action-svg"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+        <span>Ver Proyector</span>
       </a>
-      <button class="btn-projector" (click)="toggleRegistroQR()" [style.background]="evento.registro_pin_abierto ? '#ff4d4f' : '#92d342'" style="color: #111; font-weight: bold;">
-        📱 QR: {{ evento.registro_pin_abierto ? 'Bloqueado' : 'Abierto' }}
+
+      <!-- BLOQUEO QR -->
+      <button class="btn-stage-action btn-qr-toggle" (click)="toggleRegistroQR()" [class.qr-closed]="!evento.registro_pin_abierto">
+        <svg viewBox="0 0 24 24" class="action-svg"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><path d="M14 14h3v3h-3z"></path></svg>
+        <span>QR: {{ evento.registro_pin_abierto ? 'Registro Abierto' : 'Registro Bloqueado' }}</span>
       </button>
-      <button class="btn-danger-alt" (click)="solicitarFinalizarVotaciones()">
-        🔒 FINALIZAR EVENTO
+
+      <!-- FINALIZAR EVENTO -->
+      <button class="btn-stage-action btn-finish-event" (click)="solicitarFinalizarVotaciones()">
+        <svg viewBox="0 0 24 24" class="action-svg"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        <span>Finalizar Evento</span>
       </button>
     </div>
   </div>
 
-  <!-- Popup / Modal de Confirmación Premium -->
+  <!-- POPUP DE CONFIRMACIÓN -->
   <app-modal *ngIf="isConfirmModalOpen" title="Finalizar Votaciones" (close)="isConfirmModalOpen = false">
-    <div class="modal-confirm-content" style="color: #eee; text-align: center; padding: 1rem;">
-      <p style="font-size: 1.2rem; margin-bottom: 2rem; line-height: 1.6;">
+    <div class="modal-confirm-content">
+      <p class="confirm-text">
         ¿Estás seguro de que deseas finalizar definitivamente las votaciones de este evento?
         <br><br>
-        <span style="color: #ff4d4f; font-weight: bold;">Se ocultará el acceso al público.</span>
+        <span class="danger-highlight">Se cerrará el acceso al público y se protegerán los resultados.</span>
       </p>
       
-      <div style="display: flex; justify-content: center; gap: 1.5rem;">
-        <button (click)="confirmarFinalizarVotaciones()" style="background: #ff4d4f; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; font-family: 'Merriweather', serif; font-size: 1.3rem; letter-spacing: 1px; cursor: pointer; transition: opacity 0.2s;">
+      <div class="confirm-actions">
+        <button class="btn-confirm-yes" (click)="confirmarFinalizarVotaciones()">
           Sí, Finalizar
         </button>
-        <button (click)="isConfirmModalOpen = false" style="background: #333; color: white; border: 1px solid #555; padding: 0.8rem 1.5rem; border-radius: 8px; font-family: 'Merriweather', serif; font-size: 1.3rem; letter-spacing: 1px; cursor: pointer; transition: background 0.2s;">
+        <button class="btn-confirm-cancel" (click)="isConfirmModalOpen = false">
           Cancelar
         </button>
       </div>
     </div>
   </app-modal>
 
-  <!-- Sección Destacada de La Quema (Ronda 1) -->
-  <div class="quema-control-card" *ngIf="rondaActual === 1 && poetaQuema" style="background: rgba(208, 106, 102, 0.04); border: 1px solid rgba(208, 106, 102, 0.15); padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
-    <h3 style="color: #d06a66; font-family: 'Merriweather', serif; font-size: 1.15rem; margin: 0 0 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
-      🔥 Control de Demostración: La Quema
-    </h3>
-    <p style="color: #999; font-size: 0.85rem; margin: 0 0 1.2rem 0; line-height: 1.5;">
-      El público votará a este poeta de prueba para aprender a usar el sistema. Abre su votación para iniciar la demostración.
-    </p>
+  <!-- SECCIÓN DESTACADA DE LA QUEMA (RONDA 1) -->
+  <div class="quema-control-card glass" *ngIf="rondaActual === 1 && poetaQuema">
+    <div class="card-laser-beam"></div>
+    <div class="quema-header">
+      <span class="quema-badge">CALENTAMIENTO DE PÚBLICO</span>
+      <h3 class="quema-title">Demostración: La Quema</h3>
+      <p class="quema-desc">
+        El público votará a este poeta de prueba para aprender a usar el sistema. Abre su votación para iniciar la demostración.
+      </p>
+    </div>
     
-    <div class="poet-row" [class.active]="activoId === poetaQuema.id" style="background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.04); border-radius: 12px; padding: 1rem; display: flex; align-items: center; justify-content: space-between; transition: all 0.3s;">
-      <div class="poet-info" style="display: flex; align-items: center; gap: 1rem;">
-        <div class="status-indicator" [style.background]="activoId === poetaQuema.id ? '#92d342' : '#555'" style="width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 10px rgba(146, 211, 66, 0.3);"></div>
-        <img [src]="poetaQuema.foto_url" class="poet-avatar" alt="Avatar" style="width: 45px; height: 45px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.1);">
-        <span class="poet-name" style="font-family: 'Merriweather', serif; font-size: 1.05rem; color: #fff; font-weight: bold;">{{ poetaQuema.nombre }}</span>
+    <div class="poet-row quema-poet-row" [class.active]="activoId === poetaQuema.id">
+      <div class="poet-info">
+        <div class="status-indicator" [class.is-active]="activoId === poetaQuema.id"></div>
+        <img [src]="poetaQuema.foto_url" class="poet-avatar" alt="Avatar Poeta">
+        <span class="poet-name">{{ poetaQuema.nombre }}</span>
       </div>
       
       <div class="poet-actions">
-        <button class="btn-live" 
+        <button class="btn-live-trigger" 
                 *ngIf="activoId !== poetaQuema.id" 
-                (click)="abrirVotacion(poetaQuema.id!)"
-                style="background: #d06a66; color: white; border: none; padding: 0.5rem 1.2rem; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.2s;">
-          Abrir Votación de Demostración
+                (click)="abrirVotacion(poetaQuema.id!)">
+          <svg viewBox="0 0 24 24" class="btn-svg"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <span>Abrir Demostración</span>
         </button>
-        <span class="badge-active" *ngIf="activoId === poetaQuema.id" style="background: #92d342; color: #111; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: bold; letter-spacing: 0.5px; box-shadow: 0 0 15px rgba(146, 211, 66, 0.3);">DEMOSTRACIÓN EN CURSO</span>
+        <span class="badge-active-live" *ngIf="activoId === poetaQuema.id">
+          <span class="live-dot"></span>
+          <span>DEMOSTRACIÓN EN CURSO</span>
+        </span>
       </div>
     </div>
   </div>
 
+  <!-- LISTA DE POETAS EN DIRECTO -->
   <div class="poet-list">
-    <div class="poet-row" 
+    <div class="poet-row glass" 
          *ngFor="let p of participantesFiltrados" 
          [class.active]="activoId === p.id">
       
       <div class="poet-info">
-        <div class="status-indicator"></div>
+        <div class="status-indicator" [class.is-active]="activoId === p.id"></div>
         <img [src]="p.foto_url" class="poet-avatar" alt="Avatar">
         <span class="poet-name">{{ p.nombre }}</span>
       </div>
 
       <div class="poet-actions">
-        <button class="btn-live" 
+        <button class="btn-live-trigger" 
                 *ngIf="activoId !== p.id" 
                 (click)="abrirVotacion(p.id!)">
-          Abrir Votación
+          <svg viewBox="0 0 24 24" class="btn-svg"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <span>Abrir Votación</span>
         </button>
-        <span class="badge-active" *ngIf="activoId === p.id">VOTACIÓN ABIERTA</span>
+        <span class="badge-active-live" *ngIf="activoId === p.id">
+          <span class="live-dot"></span>
+          <span>VOTACIÓN EN VIVO</span>
+        </span>
       </div>
     </div>
   </div>
 </div>
 
-<div class="empty-state" *ngIf="!loading && (!evento || !participantes.length)">
-  <div style="text-align: center; padding: 3rem;">
-    <h2 style="color: #666; margin-bottom: 1rem;">Ningún evento en directo</h2>
-    <p>Para ver el panel de control de directo, ve a la pestaña <b>Eventos</b> y haz clic en <b>"Abrir Votos"</b> en el evento correspondiente.</p>
+<div class="empty-state glass" *ngIf="!loading && (!evento || !participantes.length)">
+  <div class="empty-state-inner">
+    <svg viewBox="0 0 24 24" class="empty-svg"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+    <h2>Ningún evento en directo</h2>
+    <p>Para ver el panel de control de directo, ve a la pestaña <b>Eventos</b> y haz clic en <b>"Abrir Votaciones en Vivo"</b> o <b>"Control Directo"</b> en el evento correspondiente.</p>
   </div>
 </div>

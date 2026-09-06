@@ -1,0 +1,406 @@
+<div class="salon-container">
+  <!-- HERO HEADER -->
+  <header class="salon-hero">
+    <div class="hero-laser-beam"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="live-dot"></span>
+        <span>ARCHIVO HISTÓRICO VIVO</span>
+      </div>
+      <h1 class="hero-title">SALÓN DEL SLAM</h1>
+      <p class="hero-subtitle">Memoria, crónicas y cuadro de honor de Poetry Slam Alicante</p>
+      <div class="hero-season-pill">
+        <svg viewBox="0 0 24 24" class="pill-icon">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        <span>VII TEMPORADA (2025–2026) · CAJA NEGRA & CASA DE LA MÚSICA</span>
+      </div>
+      <p class="hero-manifesto">
+        <em>«La poesía no se mide en números; arde en la voz viva de quien se sube al escenario a decir lo que no puede callar.»</em>
+      </p>
+    </div>
+  </header>
+
+  <!-- BARRA DE FILTROS / NAVEGACIÓN ENTRE ENCUENTROS -->
+  <nav class="salon-nav-bar" aria-label="Selección de ediciones">
+    <div class="nav-bar-scroll">
+      <button 
+        type="button" 
+        class="nav-tab-btn" 
+        [class.active]="filtroActivo === 'todas'"
+        (click)="seleccionarFiltro('todas')">
+        <svg viewBox="0 0 24 24" class="tab-icon">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>Todas las Veladas</span>
+      </button>
+
+      <button 
+        *ngFor="let ed of ediciones" 
+        type="button" 
+        class="nav-tab-btn"
+        [class.is-final]="ed.esFinal"
+        [class.active]="filtroActivo === ed.numero"
+        (click)="seleccionarFiltro(ed.numero)">
+        <span *ngIf="ed.esFinal" class="trophy-badge">🏆</span>
+        <span>{{ ed.esFinal ? 'Gran Final' : 'Slam ' + ed.numero }}</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- VISTA EN MODO FICHA INDIVIDUAL (SPOTLIGHT) -->
+  <section *ngIf="filtroActivo !== 'todas' && edicionSeleccionada as ed" class="spotlight-section">
+    <div class="spotlight-controls">
+      <button 
+        type="button" 
+        class="spotlight-nav-btn" 
+        [disabled]="ed.numero === 1"
+        (click)="navegarEdicion('anterior')">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        <span>Encuentro anterior</span>
+      </button>
+
+      <span class="spotlight-counter">Encuentro {{ ed.numero }} de {{ ediciones.length }}</span>
+
+      <button 
+        type="button" 
+        class="spotlight-nav-btn" 
+        [disabled]="ed.numero === ediciones.length"
+        (click)="navegarEdicion('siguiente')">
+        <span>Encuentro siguiente</span>
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+
+    <!-- TARJETA EXTENDIDA DE EDICIÓN -->
+    <article class="slam-card edition-card spotlight-card" [class.final-card]="ed.esFinal">
+      <div class="card-laser-beam" [class.gold-beam]="ed.esFinal"></div>
+
+      <header class="card-header">
+        <div class="header-left">
+          <div class="edition-tag" [class.gold-tag]="ed.esFinal">
+            <span *ngIf="ed.esFinal">👑 CUMBRE POÉTICA</span>
+            <span *ngIf="!ed.esFinal">ENCUENTRO {{ ed.numero }}</span>
+          </div>
+          <h2 class="edition-title">{{ ed.titulo }}</h2>
+          <p class="edition-sub">{{ ed.subtitulo }}</p>
+        </div>
+
+        <div class="header-meta">
+          <div class="meta-item">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span>{{ ed.fechaFormateada }} · {{ ed.hora }}</span>
+          </div>
+          <div class="meta-item venue-pill" [class.venue-casa]="ed.esFinal">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>{{ ed.ubicacion }}</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="card-body">
+        <!-- COLUMNA CARTEL -->
+        <div class="card-poster-col">
+          <div class="poster-frame" (click)="abrirCartelModal(ed.urlCartel, ed.titulo)">
+            <img [src]="ed.urlCartel" [alt]="'Cartel oficial de ' + ed.titulo" class="poster-img" loading="lazy">
+            <div class="poster-overlay">
+              <svg viewBox="0 0 24 24" class="overlay-icon">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <line x1="11" y1="8" x2="11" y2="14"></line>
+                <line x1="8" y1="11" x2="14" y2="11"></line>
+              </svg>
+              <span>Ver Cartel HD</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUMNA HONORES Y VELADA -->
+        <div class="card-details-col">
+          <!-- DISTINCIÓN ESPECIAL DE LA GRAN FINAL -->
+          <div *ngIf="ed.esFinal && ed.podio.distincionEspecial" class="supreme-distinction-banner">
+            <div class="distinction-crown">🏆</div>
+            <div class="distinction-text">
+              <span class="distinction-kicker">RECONOCIMIENTO NACIONAL</span>
+              <h3 class="distinction-title">{{ ed.podio.distincionEspecial }}</h3>
+            </div>
+          </div>
+
+          <!-- CUADRO DE HONOR (SIN PUNTUACIONES) -->
+          <div class="honors-container">
+            <div class="honor-winner-altar" [class.gold-altar]="ed.esFinal">
+              <div class="altar-badge">
+                <span class="altar-laurel">🌿</span>
+                <span class="altar-kicker">{{ ed.esFinal ? 'CAMPEÓN ABSOLUTO' : 'LAUREL DE ORO · GANADOR/A' }}</span>
+              </div>
+              <div class="altar-champion-name">{{ ed.podio.laurelOro }}</div>
+            </div>
+
+            <div class="honor-finalists-row" *ngIf="ed.podio.plumaPlata || ed.podio.liraBronce">
+              <div class="finalist-item" *ngIf="ed.podio.plumaPlata">
+                <span class="finalist-icon">🪶</span>
+                <div class="finalist-meta">
+                  <span class="finalist-label">PLUMA DE PLATA · 2º PUESTO</span>
+                  <span class="finalist-name">{{ ed.podio.plumaPlata }}</span>
+                </div>
+              </div>
+
+              <div class="finalist-item" *ngIf="ed.podio.liraBronce">
+                <span class="finalist-icon">🏛️</span>
+                <div class="finalist-meta">
+                  <span class="finalist-label">LIRA DE BRONCE · 3º PUESTO</span>
+                  <span class="finalist-name">{{ ed.podio.liraBronce }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FICHA DE LA VELADA -->
+          <div class="evening-meta-grid">
+            <div class="evening-block">
+              <div class="evening-block-title">
+                <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                <span>EN EL MICRÓFONO</span>
+              </div>
+              <p class="evening-block-text host-name">{{ ed.presentador }}</p>
+            </div>
+
+            <div class="evening-block" *ngIf="ed.artistaInvitado">
+              <div class="evening-block-title">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <span>VOZ INVITADA DE HONOR</span>
+              </div>
+              <p class="evening-block-text guest-name">{{ ed.artistaInvitado }}</p>
+              <p class="guest-bio" *ngIf="ed.artistaSemblanza">{{ ed.artistaSemblanza }}</p>
+            </div>
+          </div>
+
+          <!-- CONSTELACIÓN DE POETAS EN ESCENA -->
+          <div class="participants-constellation">
+            <div class="constellation-title">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              <span>{{ ed.esFinal ? 'LAS 11 VOCES FINALISTAS EN ESCENA' : 'POETAS EN ESCENA' }} ({{ ed.poetasParticipantes.length }})</span>
+            </div>
+            <div class="poets-chips-wrap">
+              <span 
+                *ngFor="let poeta of ed.poetasParticipantes" 
+                class="poet-chip"
+                [class.is-winner]="poeta.toUpperCase() === ed.podio.laurelOro.toUpperCase()"
+                [class.is-finalist]="poeta.toUpperCase() === ed.podio.plumaPlata?.toUpperCase() || poeta.toUpperCase() === ed.podio.liraBronce?.toUpperCase()">
+                <span *ngIf="poeta.toUpperCase() === ed.podio.laurelOro.toUpperCase()" class="chip-star">🌿</span>
+                {{ poeta }}
+              </span>
+            </div>
+          </div>
+
+          <!-- CRÓNICA CURATORIAL -->
+          <div class="curatorial-chronicle">
+            <div class="chronicle-kicker">CRÓNICA DE LA VELADA</div>
+            <p class="chronicle-body">{{ ed.cronicaCuratorial }}</p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- VISTA LISTADO COMPLETO (TODAS LAS VELADAS) -->
+  <section *ngIf="filtroActivo === 'todas'" class="timeline-section">
+    <div class="timeline-intro">
+      <span class="intro-tag">TRAYECTORIA HISTÓRICA</span>
+      <h2 class="intro-title">Los 6 Encuentros de la VII Temporada</h2>
+      <p class="intro-desc">Desde el primer verso en la Caja Negra hasta la apoteosis final en la Casa de la Música.</p>
+    </div>
+
+    <div class="editions-list">
+      <article 
+        *ngFor="let ed of ediciones; let i = index" 
+        class="slam-card edition-card"
+        [id]="'edicion-' + ed.numero"
+        [class.final-card]="ed.esFinal">
+        <div class="card-laser-beam" [class.gold-beam]="ed.esFinal"></div>
+
+        <header class="card-header">
+          <div class="header-left">
+            <div class="edition-tag" [class.gold-tag]="ed.esFinal">
+              <span *ngIf="ed.esFinal">👑 CUMBRE POÉTICA</span>
+              <span *ngIf="!ed.esFinal">ENCUENTRO {{ ed.numero }}</span>
+            </div>
+            <h3 class="edition-title">{{ ed.titulo }}</h3>
+            <p class="edition-sub">{{ ed.subtitulo }}</p>
+          </div>
+
+          <div class="header-meta">
+            <div class="meta-item">
+              <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              <span>{{ ed.fechaFormateada }} · {{ ed.hora }}</span>
+            </div>
+            <div class="meta-item venue-pill" [class.venue-casa]="ed.esFinal">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>{{ ed.ubicacion }}</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="card-body">
+          <!-- COLUMNA CARTEL -->
+          <div class="card-poster-col">
+            <div class="poster-frame" (click)="abrirCartelModal(ed.urlCartel, ed.titulo)">
+              <img [src]="ed.urlCartel" [alt]="'Cartel de ' + ed.titulo" class="poster-img" loading="lazy">
+              <div class="poster-overlay">
+                <svg viewBox="0 0 24 24" class="overlay-icon">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  <line x1="11" y1="8" x2="11" y2="14"></line>
+                  <line x1="8" y1="11" x2="14" y2="11"></line>
+                </svg>
+                <span>Ver Cartel HD</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMNA HONORES Y VELADA -->
+          <div class="card-details-col">
+            <!-- DISTINCIÓN ESPECIAL DE LA GRAN FINAL -->
+            <div *ngIf="ed.esFinal && ed.podio.distincionEspecial" class="supreme-distinction-banner">
+              <div class="distinction-crown">🏆</div>
+              <div class="distinction-text">
+                <span class="distinction-kicker">RECONOCIMIENTO NACIONAL</span>
+                <h4 class="distinction-title">{{ ed.podio.distincionEspecial }}</h4>
+              </div>
+            </div>
+
+            <!-- CUADRO DE HONOR (SIN PUNTUACIONES) -->
+            <div class="honors-container">
+              <div class="honor-winner-altar" [class.gold-altar]="ed.esFinal">
+                <div class="altar-badge">
+                  <span class="altar-laurel">🌿</span>
+                  <span class="altar-kicker">{{ ed.esFinal ? 'CAMPEÓN DE LA VII TEMPORADA' : 'LAUREL DE ORO · GANADOR/A' }}</span>
+                </div>
+                <div class="altar-champion-name">{{ ed.podio.laurelOro }}</div>
+              </div>
+
+              <div class="honor-finalists-row" *ngIf="ed.podio.plumaPlata || ed.podio.liraBronce">
+                <div class="finalist-item" *ngIf="ed.podio.plumaPlata">
+                  <span class="finalist-icon">🪶</span>
+                  <div class="finalist-meta">
+                    <span class="finalist-label">PLUMA DE PLATA</span>
+                    <span class="finalist-name">{{ ed.podio.plumaPlata }}</span>
+                  </div>
+                </div>
+
+                <div class="finalist-item" *ngIf="ed.podio.liraBronce">
+                  <span class="finalist-icon">🏛️</span>
+                  <div class="finalist-meta">
+                    <span class="finalist-label">LIRA DE BRONCE</span>
+                    <span class="finalist-name">{{ ed.podio.liraBronce }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- FICHA DE LA VELADA -->
+            <div class="evening-meta-grid">
+              <div class="evening-block">
+                <div class="evening-block-title">
+                  <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                  <span>EN EL MICRÓFONO</span>
+                </div>
+                <p class="evening-block-text host-name">{{ ed.presentador }}</p>
+              </div>
+
+              <div class="evening-block" *ngIf="ed.artistaInvitado">
+                <div class="evening-block-title">
+                  <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                  <span>VOZ INVITADA DE HONOR</span>
+                </div>
+                <p class="evening-block-text guest-name">{{ ed.artistaInvitado }}</p>
+              </div>
+            </div>
+
+            <!-- CONSTELACIÓN DE POETAS EN ESCENA -->
+            <div class="participants-constellation">
+              <div class="constellation-title">
+                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <span>POETAS EN ESCENA ({{ ed.poetasParticipantes.length }})</span>
+              </div>
+              <div class="poets-chips-wrap">
+                <span 
+                  *ngFor="let poeta of ed.poetasParticipantes" 
+                  class="poet-chip"
+                  [class.is-winner]="poeta.toUpperCase() === ed.podio.laurelOro.toUpperCase()"
+                  [class.is-finalist]="poeta.toUpperCase() === ed.podio.plumaPlata?.toUpperCase() || poeta.toUpperCase() === ed.podio.liraBronce?.toUpperCase()">
+                  <span *ngIf="poeta.toUpperCase() === ed.podio.laurelOro.toUpperCase()" class="chip-star">🌿</span>
+                  {{ poeta }}
+                </span>
+              </div>
+            </div>
+
+            <!-- CRÓNICA CURATORIAL -->
+            <div class="curatorial-chronicle">
+              <div class="chronicle-kicker">CRÓNICA DE LA VELADA</div>
+              <p class="chronicle-body">{{ ed.cronicaCuratorial }}</p>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- PUENTE GENERACIONAL: DE LAS VELADAS AL AULA / LA CANTERA -->
+  <section class="salon-cantera-bridge container">
+    <div class="bridge-card glass">
+      <div class="card-laser-beam"></div>
+      <div class="bridge-inner">
+        <div class="bridge-meta">
+          <span class="bridge-badge">🌱 EL FUTURO DE LA PALABRA VIVA</span>
+          <h3 class="bridge-title">DE LAS VELADAS DE LAS CIGARRERAS A LAS AULAS</h3>
+          <p class="bridge-desc">
+            Cada campeón que ves en este Salón del Slam empezó con una libreta y un primer paso. A través de <strong>La Cantera</strong>, Ágora Reix y Poetry Slam Alicante llevan la poesía escénica, la oratoria y la convivencia a colegios e institutos (IES) de toda la provincia de Alicante.
+          </p>
+        </div>
+        <div class="bridge-actions">
+          <a routerLink="/cantera" class="btn-primary large bridge-cta">
+            <svg class="svg-icon" style="width:20px;height:20px;stroke:#061014;" viewBox="0 0 24 24">
+              <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/>
+              <line x1="16" y1="8" x2="2" y2="22"/>
+            </svg>
+            <span>Conoce La Cantera</span>
+          </a>
+          <a routerLink="/cantera" fragment="talleres-escolares" class="btn-secondary large bridge-secondary">
+            <span>Talleres para Centros Educativos →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL / LIGHTBOX DE CARTELERÍA HD -->
+  <div *ngIf="cartelModalAbierto" class="poster-modal-backdrop" (click)="cerrarCartelModal()">
+    <div class="poster-modal-dialog" (click)="$event.stopPropagation()">
+      <header class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-kicker">CARTEL OFICIAL</span>
+          <h3 class="modal-title">{{ cartelModalTitulo }}</h3>
+        </div>
+        <button type="button" class="modal-close-btn" (click)="cerrarCartelModal()" aria-label="Cerrar visor de cartel">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </header>
+
+      <div class="modal-image-container">
+        <img [src]="cartelModalUrl" [alt]="cartelModalTitulo" class="modal-full-img">
+      </div>
+
+      <footer class="modal-footer">
+        <a [href]="cartelModalUrl" target="_blank" rel="noopener noreferrer" class="modal-action-btn">
+          <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          <span>Abrir cartel en tamaño original</span>
+        </a>
+        <button type="button" class="modal-dismiss-btn" (click)="cerrarCartelModal()">Cerrar [ESC]</button>
+      </footer>
+    </div>
+  </div>
+</div>

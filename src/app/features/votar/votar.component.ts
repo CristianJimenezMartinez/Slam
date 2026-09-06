@@ -24,18 +24,11 @@ export class VotarComponent implements OnInit, OnDestroy {
   error: string | null = null;
   voterToken: string = '';
   accesoBloqueado: boolean = false;
+  ultimaNotaEmitida: number | null = null;
   
   votosGuardados: string[] = [];
   resultados: any[] = [];
   private eventoSub: Subscription | any = null;
-
-  opcionesVoto = [
-    { valor: 2, texto: 'Suave', emoji: '🌱' },
-    { valor: 4, texto: 'Bien', emoji: '👍' },
-    { valor: 6, texto: 'Fuerte', emoji: '⚡' },
-    { valor: 8, texto: 'Fuego', emoji: '🔥' },
-    { valor: 10, texto: 'Magia', emoji: '✨' }
-  ];
 
   constructor(
     private fb: FormBuilder,
@@ -209,19 +202,37 @@ export class VotarComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit() {
-    if (this.voteForm.invalid || !this.evento || !this.poetaActivo) return;
+    if (this.voteForm.invalid || !this.evento || !this.poetaActivo || this.loading) return;
     this.loading = true;
     this.error = null;
 
     try {
-      // Verificación de ronda "en caliente" antes de enviar
+      // BLINDAJE CONCURRENTE EN CALIENTE:
       const evFresco = await this.eventosService.getEventoActivo().toPromise();
-      const rondaReal = evFresco ? (Number(evFresco.ronda_activa) || 1) : 1;
+      
+      // 1. Validar que el evento sigue activo y con votación abierta
+      if (!evFresco || !evFresco.votacion_activa) {
+        this.error = 'La votación ha sido cerrada por la organización.';
+        this.procesarEstadoEvento();
+        return;
+      }
+
+      // 2. Validar que el poeta en el servidor sigue siendo el mismo al que el usuario ve en pantalla
+      if (evFresco.participante_activo_id !== this.poetaActivo.id) {
+        this.error = 'El tiempo de votación para este poeta ha finalizado.';
+        this.evento = evFresco;
+        this.procesarEstadoEvento();
+        return;
+      }
+
+      const rondaReal = Number(evFresco.ronda_activa) || 1;
+      const notaValor = Number(this.puntuacion.value);
+      this.ultimaNotaEmitida = notaValor;
       
       const vote = [{
         evento_id: this.evento.id,
         participante_id: this.poetaActivo.id!,
-        puntuacion: this.puntuacion.value,
+        puntuacion: notaValor,
         voter_token: this.voterToken,
         ronda: rondaReal
       }];
@@ -230,16 +241,15 @@ export class VotarComponent implements OnInit, OnDestroy {
       
       if (error) {
         if (error.code === '23505') {
-          this.error = 'Ya has votado a este poeta en esta ronda.';
           this.guardarVotoLocal(this.poetaActivo.id!, rondaReal);
         } else {
-          this.error = 'Error al enviar tu voto. Inténtalo de nuevo.';
+          this.error = 'Error al enviar tu voto. Por favor, inténtalo de nuevo.';
         }
       } else {
         this.guardarVotoLocal(this.poetaActivo.id!, rondaReal);
       }
     } catch (e) {
-      this.error = 'Error de conexión. Inténtalo de nuevo.';
+      this.error = 'Error de conexión con la sala. Inténtalo de nuevo.';
     } finally {
       this.loading = false;
     }
@@ -259,7 +269,7 @@ export class VotarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.eventoSub) {
-      this.eventoSub.unsubscribe();
+      this.eventosService.unsubscribe(this.eventoSub);
     }
   }
 }

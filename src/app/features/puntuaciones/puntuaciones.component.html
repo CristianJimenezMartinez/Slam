@@ -5,23 +5,33 @@
 
   <div class="content" *ngIf="!loading && evento">
     
-    <!-- Modo Activo: Mostrar Puntuaciones (Vibe/Sintonía Colectiva) -->
+    <!-- Modo Activo: Mostrar Puntuaciones Oficiales -->
     <div class="live-ranking" *ngIf="mostrarResultados && resultados.length > 0">
+      
       <header class="proyector-header">
-        <h1 class="glow-text">{{ evento.nombre }}</h1>
-        <p class="subtitle" style="margin-bottom: 0.3rem;">
-          {{ rondaActual === 1 ? '🔥 Ronda de Demostración: La Quema' : rondaActual === 2 ? '📍 Ronda 1: Clasificatoria' : '🏆 Ronda 2: ¡GRAN FINAL!' }}
+        <div class="live-pill">
+          <span class="live-dot"></span>
+          <span>POETRY SLAM ALICANTE • EN DIRECTO</span>
+        </div>
+        <h1 class="proyector-title">{{ evento.nombre }}</h1>
+        <p class="proyector-subtitle">
+          {{ rondaActual === 1 ? '🔥 Demostración: La Quema • Calibración del Jurado' : 
+             rondaActual === 2 ? '📍 Ronda Clasificatoria • Calificaciones Oficiales' : 
+             '🏆 GRAN FINAL • PUNTUACIONES DEFINITIVAS' }}
         </p>
-        <p class="vibe-title">Sintonía del Público</p>
       </header>
 
       <!-- Subcomponente Podio (3 primeros) -->
       <app-proyector-podium [resultados]="resultados"></app-proyector-podium>
 
-      <!-- Línea Divisoria Premium -->
-      <div class="divider" *ngIf="resultados.length > 3"></div>
+      <!-- Divisor Editorial con Haz Láser -->
+      <div class="section-divider" *ngIf="resultados.length > 3">
+        <div class="divider-line"></div>
+        <span class="divider-text">TABLA COMPLETA DE CLASIFICACIÓN</span>
+        <div class="divider-line"></div>
+      </div>
 
-      <!-- Subcomponente Resto de Poetas en 3 columnas (recibe del 4º en adelante) -->
+      <!-- Subcomponente Resto de Poetas en 2 columnas fluidas (del 4º en adelante) -->
       <app-proyector-vibe-list [resultados]="resultados.slice(3)"></app-proyector-vibe-list>
     </div>
 

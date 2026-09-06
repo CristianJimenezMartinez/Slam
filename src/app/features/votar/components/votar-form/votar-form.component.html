@@ -1,29 +1,143 @@
 <div class="voting-form-body active-poet" *ngIf="poetaActivo">
-  <div class="poet-card">
-    <div class="poet-header">
-      <div class="poet-avatar-large">
-        <img [src]="poetaActivo.foto_url" alt="Avatar">
+  
+  <!-- TARJETA DEL POETA EN ESCENA -->
+  <div class="poet-stage-card">
+    <div class="poet-avatar-wrapper">
+      <img [src]="poetaActivo.foto_url" [alt]="poetaActivo.nombre" class="poet-avatar">
+      <span class="poet-order-tag">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="23"/>
+          <line x1="8" y1="23" x2="16" y2="23"/>
+        </svg>
+        #{{ poetaActivo.orden }}
+      </span>
+    </div>
+    <div class="poet-info">
+      <div class="reciting-badge">
+        <span class="badge-dot"></span>
+        <span class="reciting-label">RECITANDO AHORA</span>
       </div>
-      <h3>Votando a:</h3>
-      <h2 class="poet-name pulse-text">{{ poetaActivo.nombre }}</h2>
+      <h2 class="poet-name">{{ poetaActivo.nombre }}</h2>
+    </div>
+  </div>
+
+  <!-- PANTALLA OLED: VISOR DE PUNTUACIÓN EN TIEMPO REAL -->
+  <div class="oled-score-display" [style.--glow-color]="colorTermico">
+    <div class="score-label-row">
+      <span class="score-hint">TU CALIFICACIÓN OFICIAL</span>
+      
+      <!-- Badge Calificativo con Iconos Medievales SVG -->
+      <div class="score-qualifier-badge" [style.color]="colorTermico" [style.border-color]="colorTermico">
+        <!-- Corona Real Medieval de Bardo (Magia Escénica) -->
+        <svg *ngIf="etiquetaPuntuacion.icono === 'crown'" width="15" height="13" viewBox="0 0 576 512" fill="currentColor">
+          <path d="M576 136c0 22.09-17.91 40-40 40c-.248 0-.4551-.1266-.7031-.1305l-50.52 277.9C482 468.9 468.8 480 453.3 480H122.7c-15.46 0-28.72-11.06-31.48-26.27L40.71 175.9C40.46 175.9 40.25 176 39.1 176c-22.09 0-40-17.91-40-40S17.91 96 39.1 96s40 17.91 40 40c0 8.998-3.521 16.89-8.537 23.57l89.63 71.7c15.91 12.73 36.3 12.73 52.21 0l89.63-71.7C199.5 112.9 196 105 196 96c0-22.09 17.91-40 40-40s40 17.91 40 40c0 8.998-3.521 16.89-8.537 23.57l89.63 71.7c15.91 12.73 36.3 12.73 52.21 0l89.63-71.7C443.5 112.9 440 105 440 96c0-22.09 17.91-40 40-40s40 17.91 40 40c0 8.998-3.521 16.89-8.537 23.57l89.63 71.7c15.91 12.73 36.3 12.73 52.21 0l89.63-71.7C572.5 152.9 576 160.8 576 169.6V136z"/>
+        </svg>
+        <!-- Pluma Medieval de Escribano (Gran Actuación) -->
+        <svg *ngIf="etiquetaPuntuacion.icono === 'quill'" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L3 11.5V21h9.5z"/>
+          <line x1="16" y1="8" x2="2" y2="22"/>
+          <path d="M17.5 15H9"/>
+        </svg>
+        <!-- Lira de Trovador (Buen Recitado) -->
+        <svg *ngIf="etiquetaPuntuacion.icono === 'lyre'" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 3v7a6 6 0 0 0 12 0V3"/>
+          <line x1="6" y1="3" x2="18" y2="3"/>
+          <line x1="10" y1="3" x2="10" y2="15"/>
+          <line x1="14" y1="3" x2="14" y2="15"/>
+          <path d="M9 21h6"/>
+          <path d="M12 16v5"/>
+        </svg>
+        <!-- Pergamino Poético (Correcto) -->
+        <svg *ngIf="etiquetaPuntuacion.icono === 'scroll'" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 2h10a2 2 0 0 1 2 2v14a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V6a4 4 0 0 1 4-4h2"/>
+          <path d="M18 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2"/>
+          <line x1="8" y1="7" x2="14" y2="7"/>
+          <line x1="8" y1="11" x2="14" y2="11"/>
+        </svg>
+        <!-- Reloj de Arena Medieval (Mejorable) -->
+        <svg *ngIf="etiquetaPuntuacion.icono === 'hourglass'" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 2h14v3l-5 5 5 5v3H5v-3l5-5-5-5V2z"/>
+          <line x1="9" y1="2" x2="15" y2="2"/>
+          <line x1="9" y1="22" x2="15" y2="22"/>
+        </svg>
+        <span>{{ etiquetaPuntuacion.texto }}</span>
+      </div>
     </div>
 
-    <form [formGroup]="voteForm" (ngSubmit)="onSubmit()">
+    <div class="score-main-value">
+      <span class="number-big" [style.color]="puntuacionFinal !== null ? colorTermico : '#475569'">
+        {{ puntuacionFinal !== null ? (puntuacionFinal | number:'1.1-1') : '--.-' }}
+      </span>
+      <span class="max-scale">/ 10</span>
+    </div>
 
-      <div class="word-selector">
-        <button type="button" class="word-btn" *ngFor="let op of opcionesVoto"
-          [class.selected]="puntuacion.value === op.valor" (click)="puntuacion.setValue(op.valor)">
-          <span class="btn-word">{{ op.emoji }} {{ op.texto }}</span>
-          <span class="btn-percentage">{{ op.valor * 10 }}%</span>
-        </button>
+    <!-- Barra de Nivel Térmico -->
+    <div class="score-meter-track">
+      <div class="score-meter-fill" 
+           [style.width.%]="puntuacionFinal !== null ? (puntuacionFinal * 10) : 0"
+           [style.background]="colorTermico">
       </div>
-
-      <div class="form-footer">
-        <button type="submit" class="btn-primary giant-btn"
-          [disabled]="loading || voteForm.invalid || !puntuacion.value">
-          {{ loading ? 'Enviando...' : '¡Enviar mi Voto!' }}
-        </button>
-      </div>
-    </form>
+    </div>
   </div>
+
+  <!-- PIZARRA DIGITAL: TECLADO NUMÉRICO 1 AL 10 -->
+  <div class="digital-keypad">
+    <div class="keypad-label">
+      <span>SELECCIONA NOTA:</span>
+      <span class="keypad-hint">Toca un número para calificar</span>
+    </div>
+    
+    <div class="keypad-grid">
+      <button *ngFor="let n of numeros" 
+              type="button" 
+              class="key-btn"
+              [class.selected]="puntuacionBase === n"
+              [class.key-low]="n <= 3"
+              [class.key-mid]="n >= 4 && n <= 6"
+              [class.key-high]="n >= 7 && n <= 8"
+              [class.key-top]="n >= 9"
+              (click)="seleccionarNumero(n)">
+        <span class="key-number">{{ n }}</span>
+      </button>
+    </div>
+
+    <!-- MODIFICADOR DE MEDIO PUNTO (.5) -->
+    <div class="half-point-row">
+      <button type="button" 
+              class="half-point-btn"
+              [class.active]="tieneDecimal"
+              [disabled]="puntuacionBase === null || puntuacionBase === 10"
+              (click)="toggleDecimal()">
+        <span class="btn-tag">+½</span>
+        <span class="btn-text">{{ tieneDecimal ? 'Medio punto ACTIVADO (+0.5)' : 'Añadir +0.5 puntos' }}</span>
+        <svg *ngIf="tieneDecimal" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- BOTÓN DE CONFIRMACIÓN -->
+  <div class="action-footer">
+    <button type="button" 
+            class="btn-submit-vote"
+            [disabled]="puntuacionFinal === null || loading"
+            (click)="onSubmit()">
+      <span *ngIf="!loading" class="btn-content">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+        {{ puntuacionFinal !== null ? 'CONFIRMAR VOTO (' + (puntuacionFinal | number:'1.1-1') + ' PTS)' : 'SELECCIONA UNA NOTA' }}
+      </span>
+      <span *ngIf="loading" class="submitting-spinner">
+        <span class="spinner-circle"></span>
+        Registrando voto en sala...
+      </span>
+    </button>
+    <p class="vote-disclaimer">Tu voto es único, anónimo e irreversible para esta ronda.</p>
+  </div>
+
 </div>

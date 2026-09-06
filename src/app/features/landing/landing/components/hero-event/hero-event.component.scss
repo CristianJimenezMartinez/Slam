@@ -1,7 +1,7 @@
 .landing-hero {
   position: relative;
   min-height: calc(100vh - 80px);
-  background: var(--bg);
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,7 +84,7 @@
       border: 1px solid var(--primary);
       padding: 0.5rem 1.2rem;
       border-radius: 4px;
-      font-family: 'Merriweather', serif; font-weight: 700;
+      font-family: var(--font-condensed); font-weight: 700;
       font-size: 1rem;
       margin-bottom: 1.5rem;
       text-transform: uppercase;
@@ -138,14 +138,14 @@
       align-items: center;
 
       .value {
-        font-family: 'Merriweather', serif; font-weight: 700;
+        font-family: var(--font-display); font-weight: 700;
         font-size: 2.5rem;
         color: var(--primary);
         line-height: 1;
       }
 
       .label {
-        font-family: 'Merriweather', serif; font-weight: 700;
+        font-family: var(--font-condensed); font-weight: 700;
         color: #888;
         font-size: 0.95rem;
         letter-spacing: 2px;

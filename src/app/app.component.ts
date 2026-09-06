@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone, HostListener } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, takeUntil, take } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { AuthService } from './core/services/auth.service';
 import { SeoService } from './core/services/seo.service';
 import { EventosService } from './core/services/eventos.service';
@@ -14,10 +15,15 @@ import { ThemeService, ThemeColors } from './core/services/theme.service';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'slam';
   isMenuOpen = false;
+  isProfileDropdownOpen = false;
   mostrarMenuVotar = false;
   mostrarMenuPuntuaciones = false;
   mostrarMenuQr = false;
   eventoId: string | null = null;
+  isStageView = false;
+  isVotarView = false;
+  
+  private destroy$ = new Subject<void>();
   private eventoActivoSub: any;
 
   constructor(
@@ -30,14 +36,39 @@ export class AppComponent implements OnInit, OnDestroy {
     private ngZone: NgZone
   ) {}
 
+  @HostListener('document:click')
+  onDocumentClick(): void {
+    if (this.isProfileDropdownOpen) {
+      this.isProfileDropdownOpen = false;
+    }
+  }
+
+  toggleProfileDropdown(event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.isProfileDropdownOpen = !this.isProfileDropdownOpen;
+  }
+
+  closeProfileDropdown(): void {
+    this.isProfileDropdownOpen = false;
+  }
+
   ngOnInit(): void {
     this.router.events.pipe(
-      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      takeUntil(this.destroy$)
     ).subscribe((event: NavigationEnd) => {
       if (typeof window !== 'undefined') {
         window.scrollTo(0, 0);
       }
+      this.closeProfileDropdown();
       this.seo.clearJsonLd();
+
+      const url = event.urlAfterRedirects || event.url;
+      this.isStageView = url.startsWith('/puntuaciones') || url.startsWith('/proyector') || url.startsWith('/test-proyector');
+      this.isVotarView = url.startsWith('/votar') || url.startsWith('/test-votar');
+
       let currentRoute = this.route;
       while (currentRoute.firstChild) {
         currentRoute = currentRoute.firstChild;
@@ -53,7 +84,9 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.themeService.theme$.subscribe(theme => {
+    this.themeService.theme$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(theme => {
       if (theme) {
         this.applyTheme(theme);
       }
@@ -69,7 +102,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   checkVotacionActiva() {
-    this.eventosService.getEventoActivo().subscribe(evento => {
+    this.eventosService.getEventoActivo().pipe(
+      take(1)
+    ).subscribe(evento => {
       if (evento) {
         this.eventoId = evento.id;
         this.mostrarMenuVotar = !!evento.votacion_activa;
@@ -85,6 +120,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
     if (this.eventoActivoSub) {
       this.eventoActivoSub.unsubscribe();
     }
@@ -104,10 +141,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   closeMenu() {
     this.isMenuOpen = false;
+    this.isProfileDropdownOpen = false;
   }
 
   async logout() {
-    await this.auth.signOut();
+    this.closeProfileDropdown();
     this.closeMenu();
+    await this.auth.signOut();
   }
 }

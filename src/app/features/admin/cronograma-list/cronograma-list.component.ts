@@ -16,11 +16,11 @@ export class CronogramaListComponent implements OnInit {
   urlPaseTemporada: string = '';
   
   // Colores de Temporada
-  colorPrimario: string = '#92D342';
-  colorSecundario: string = '#368475';
-  colorCabecera: string = '#1A1A1A';
-  colorFondo: string = '#1A1A1A';
-  colorTexto: string = '#F2F2F2';
+  colorPrimario: string = '#7AE92B';
+  colorSecundario: string = '#12D1AE';
+  colorCabecera: string = '#0E1217';
+  colorFondo: string = '#0E1217';
+  colorTexto: string = '#F4F8FA';
   
   // Para añadir nuevos en lote
   newItems: Partial<Cronograma>[] = [
@@ -47,11 +47,11 @@ export class CronogramaListComponent implements OnInit {
         this.urlPaseTemporada = this.items[0].url_pase_temporada || '';
         
         // Cargar colores
-        this.colorPrimario = this.items[0].color_primario || '#92D342';
-        this.colorSecundario = this.items[0].color_secundario || '#368475';
-        this.colorCabecera = this.items[0].color_cabecera || '#1A1A1A';
-        this.colorFondo = this.items[0].color_fondo || '#1A1A1A';
-        this.colorTexto = this.items[0].color_texto || '#F2F2F2';
+        this.colorPrimario = this.items[0].color_primario || '#7AE92B';
+        this.colorSecundario = this.items[0].color_secundario || '#12D1AE';
+        this.colorCabecera = this.items[0].color_cabecera || '#0E1217';
+        this.colorFondo = this.items[0].color_fondo || '#0E1217';
+        this.colorTexto = this.items[0].color_texto || '#F4F8FA';
       }
       this.loading = false;
     });

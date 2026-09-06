@@ -10,6 +10,7 @@ export interface Evento {
   fecha: string;
   activo: boolean;
   created_at: string;
+  ubicacion?: string;
   url_entradas?: string;
   url_cartel?: string;
   presentador?: string;
@@ -126,6 +127,10 @@ export class EventosService {
         callback
       )
       .subscribe();
+  }
+
+  unsubscribe(channel: any) {
+    this.supa.removeChannel(channel);
   }
 
   async uploadCartel(file: File): Promise<string | null> {

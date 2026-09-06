@@ -72,4 +72,19 @@ export class SupabaseService {
   functions() {
     return this.supabase.functions;
   }
+
+  removeChannel(channel: any) {
+    if (channel && this.supabase) {
+      try {
+        if (typeof channel.unsubscribe === 'function') {
+          channel.unsubscribe();
+        }
+        if (typeof this.supabase.removeChannel === 'function') {
+          this.supabase.removeChannel(channel);
+        }
+      } catch (e) {
+        // Silenciar si ya estaba cerrado
+      }
+    }
+  }
 }

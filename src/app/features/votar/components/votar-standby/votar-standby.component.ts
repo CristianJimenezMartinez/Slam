@@ -4,7 +4,8 @@ import { Participante } from '../../../../core/services/participantes.service';
 
 @Component({
   selector: 'app-votar-standby',
-  templateUrl: './votar-standby.component.html'
+  templateUrl: './votar-standby.component.html',
+  styleUrls: ['./votar-standby.component.scss']
 })
 export class VotarStandbyComponent {
   @Input() evento!: Evento | null;

@@ -107,11 +107,11 @@ export class LiveControlComponent implements OnInit, OnDestroy {
         // Encontrar la puntuación del N-ésimo participante configurado (o el último si hay menos)
         const limit = this.evento.limite_finalistas || 3;
         const indexCorte = Math.min(limit - 1, resultados.length - 1);
-        const puntuacionCorte = resultados[indexCorte].puntuacion_total;
+        const puntuacionCorte = resultados[indexCorte].puntuacion_media;
         
         // Incluimos a todos los que empaten o superen la puntuación de corte para evitar dejarlos fuera
         this.finalistasIds = resultados
-          .filter(r => r.puntuacion_total >= puntuacionCorte)
+          .filter(r => r.puntuacion_media >= puntuacionCorte)
           .map(r => r.participante_id);
       } else {
         this.finalistasIds = [];

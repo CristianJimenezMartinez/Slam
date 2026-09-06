@@ -1,74 +1,51 @@
-# Plan Maestro de Implementación: Poetry Slam Alicante (Roadmap Final)
+# Registro Maestro de Implementación: Poetry Slam Alicante
 
-Este documento es la única fuente de verdad para el desarrollo. Unifica todas las conversaciones previas sobre seguridad, validación secuencial y rediseño del panel administrativo.
-
----
-
-## Fase 1: Infraestructura y Base de Datos
-Antes de construir la interfaz, debemos asegurar que el motor (Supabase) soporte la lógica.
-- [x] **Tabla `eventos`**: Campos `registro_pin_abierto` (Boolean) y `votos_totales_registrados` (Integer) ya operativos.
-- [x] **Tabla `participantes`**: Campo `esta_votando` (Boolean) para identificar quién está en escena.
-- [x] **Servicio de Votaciones**: Método `submitVotaciones` con control de `voter_token`.
+Este documento registra el estado técnico de implementación y arquitectura del proyecto. Todas las fases de infraestructura, seguridad, panel de administración, experiencia del público y sincronización en tiempo real se encuentran **100% completadas y operativas**.
 
 ---
 
-## Fase 2: Seguridad y Selección de Poetas (Uno a Uno)
+## ✅ Fase 1: Infraestructura y Base de Datos (Completada)
+- [x] **Tabla `eventos`**: Campos `registro_pin_abierto` (Boolean), `votos_totales_registrados` (Integer), `participante_activo_id` (UUID), banderas de votación y publicación de notas.
+- [x] **Tabla `participantes`**: Asignación a eventos, orden de recitado, foto de perfil y ronda.
+- [x] **Tabla `votos`**: Registro de votos con restricción de unicidad `(participante_id, voter_token)`.
+- [x] **Servicio de Votaciones**: Emisión protegida con validación de `voter_token`.
 
-### 2.1 Sistema de Validación por Acceso Único (Sellado)
-La seguridad se basa en la validación del dispositivo vinculada al evento:
+---
+
+## ✅ Fase 2: Seguridad y Selección de Poetas (Completada)
 - [x] **Acceso por UUID**: El `id` del evento actúa como llave única en la URL (`access_code`).
-- [x] **Ventana de Validación (SELLADO)**: 
-    - El Admin usa `registro_pin_abierto` para permitir o bloquear la entrada de nuevos dispositivos.
-    - Una vez cerrado, nadie sin un token previo puede entrar, aunque tenga el link.
-- [x] **Persistencia**: El `voter_token` se guarda en `localStorage`, permitiendo votar durante todo el evento sin revalidar.
-- [ ] **Contador de Dispositivos**: (Pendiente) Visualización en tiempo real de cuántos dispositivos han validado su token.
-
-### 2.2 Estado del Participante y Votación
-- [x] **Gestión 1 a 1 de Poeta Activo**: Implementado de forma robusta en la base de datos y la interfaz mediante el campo `evento.participante_activo_id`. Solo un poeta puede estar en escena en cada momento, actuando como la única fuente de verdad y asegurando la unicidad.
+- [x] **Ventana de Validación (Sellado de Sala)**: El organizador controla `registro_pin_abierto` para habilitar o cerrar la entrada de nuevos dispositivos.
+- [x] **Persistencia de Token**: El `voter_token` se almacena en `localStorage`, permitiendo votar de forma ininterrumpida durante toda la velada sin necesidad de revalidar.
+- [x] **Gestión 1 a 1 de Poeta Activo**: Control centralizado mediante `evento.participante_activo_id`. Solo un poeta puede estar activo en cada instante, sincronizándose reactivamente en toda la sala.
 
 ---
 
-## Fase 3: Rediseño y Unificación del Panel Admin (Dashboard)
-
-### 3.1 Interfaz de Pestañas (Tabs)
-- [x] **Navegación Superior**: Un diseño de navegación moderno con pestañas para alternar de forma fluida entre:
-    - **Control Live** (Gestión del PIN de registro, activación de poetas, control de rondas y visualización).
-    - **Eventos** (Slams activos y programados con acciones de edición rápida).
-    - **Anteriores** (Historial de Slams pasados).
-    - **Temporada** (Visualización y edición de la cartelera y cronograma global).
-
-### 3.2 Arquitectura de Modales Reutilizables
-- [x] **Modales independientes**: Implementado. El formulario de creación/edición de eventos (`app-event-detail`) se encapsula dentro del componente reutilizable `<app-modal>`, aislando por completo la lógica para un mantenimiento más limpio.
-
-### 3.3 Aislamiento de Roles
-- [x] **Separación de Vistas**: Implementado. El diseño técnico y la lógica de negocio separan el panel administrativo con cabeceras (`app-admin-header`), pestañas (`app-admin-tabs`) e inicio de sesión seguro, de la experiencia directa del usuario.
+## ✅ Fase 3: Panel de Administración y Control Rápido (Completada)
+- [x] **Navegación por Pestañas**: Pestañas de alto rendimiento con tipografía Barlow Condensed e iconos vectoriales (*Slam Live, Eventos Próximos, Historial, Temporada & Marca*).
+- [x] **Sub-Barra de Control Rápido (`admin-quick-bar`)**: Barra persistente bajo la cabecera para saltar al instante entre Panel, Proyector, Cronómetro, Ruleta, Puntuaciones y QRs.
+- [x] **Menú de Perfil Desplegable**: Avatar oficial de la pluma poética (`avatar-quill.jpg`) con dropdown flotante glassmorphism para gestión de accesos y cierre de sesión.
+- [x] **Arquitectura de Modales**: Formulario de creación y edición (`app-event-detail`) totalmente desacoplado mediante `<app-modal>`.
+- [x] **Gestor de Temporada por Lotes**: Carga de imagen de fondo, selector de paleta de colores y lote de fechas.
 
 ---
 
-## Fase 4: Experiencia del Público (Página /votar)
-Rediseñar la ruta `/votar` para que sea dinámica y reaccione al Admin:
-
-- [x] **Estado 1: Acceso Bloqueado**: Si el dispositivo no tiene token y el registro está cerrado, muestra mensaje de "Acceso por invitación/QR".
-- [x] **Estado 2: Cerrado**: Mensaje indicando que aún no han comenzado las votaciones del evento.
-- [x] **Estado 3: Espera**: Pantalla de "Esperando al siguiente poeta..." con animaciones fluidas.
-- [x] **Estado 4: Formulario de Voto**:
-    - Muestra Foto y Nombre del poeta activo.
-    - Selector de puntos (1-10).
-    - Botón "Enviar Voto".
-- [x] **Estado 5: Voto Registrado**: Tras votar, se muestra la confirmación (`app-votar-success`) y el formulario queda bloqueado de forma no rectificable. En cuanto el Admin activa un nuevo poeta, el cliente detecta el cambio de ID en tiempo real, limpia el estado y vuelve a mostrar el formulario de voto para el nuevo participante de forma automática.
+## ✅ Fase 4: Experiencia del Público (`/votar`) (Completada)
+- [x] **Estado 1: Acceso Bloqueado**: Si el dispositivo no tiene token y el registro está cerrado.
+- [x] **Estado 2: Sin Votación Activa**: Mensaje de espera antes del inicio del evento.
+- [x] **Estado 3: En Espera**: Pantalla reactiva entre actuaciones.
+- [x] **Estado 4: Formulario de Voto**: Foto y nombre del poeta activo, teclado táctil 1-10 y confirmación.
+- [x] **Estado 5: Voto Registrado**: Confirmación inmediata y reseteo automático en cuanto el administrador activa al siguiente participante.
 
 ---
 
-## Fase 5: Sincronización Realtime
-- [x] **Supabase Realtime**: Implementado con éxito. Se suscriben los componentes a los canales de Supabase (`listenToEventoChanges`, `listenToAllEventosChanges`) permitiendo actualizaciones instantáneas del estado del Slam (poeta activo, publicación de puntuaciones, cierre de ronda) en la vista del público sin necesidad de recargar la página.
+## ✅ Fase 5: Sincronización Realtime y Herramientas de Escenario (Completada)
+- [x] **Supabase Realtime**: Suscripciones `postgres_changes` en `listenToEventoChanges()` para cambios de notas, poeta activo y banderas de estado sin recarga.
+- [x] **Cronómetro Oficial (`/cronometro`)**: Tiempo reglamentario de 3:00 min, penalización automática (-0.5 pts cada 10s), aviso de descalificación (3:30 min), Web Audio API y atajos de teclado.
+- [x] **Ruleta de Sorteo (`/ruleta`)**: Canvas 2D interactivo con física de desaceleración realista, sintetizador de audio y lluvia de confetti.
+- [x] **Proyector de Sala (`/proyector` / `/puntuaciones`)**: Pantalla de alta visibilidad para sala con clasificación en directo y podio.
+- [x] **Impresión de Tarjetas QR (`/admin/imprimir-qrs`)**: Generador de tarjetas A4 con tokens de votación únicos listos para imprimir.
 
 ---
 
-## Próximos Pasos sugeridos
-1.  **Aprobación** de este documento definitivo.
-2.  Desarrollo del **Contenedor Principal** del Dashboard con las pestañas.
-3.  Migración del formulario de Eventos a su primera **Modal**.
-4.  Implementación de la lógica **"Control Live"** (PIN + Uno a Uno).
+> ℹ️ **Para la documentación técnica completa del proyecto y el desglose de componentes, consulta el archivo [README.md](README.md).**
 
-> [!CAUTION]
-> Es crítico asegurar que el `voter_token` sea robusto para evitar que refrescar la página permita votar dos veces al mismo poeta.

@@ -1,44 +1,64 @@
 .dashboard-wrapper {
   min-height: calc(100vh - 80px);
-  background: radial-gradient(circle at top right, var(--bg), #000);
-  background-attachment: fixed;
+  background: #07090D;
+  position: relative;
+  overflow: hidden;
   display: flex;
   justify-content: center;
-  padding: 2rem 0;
+  padding: 2.5rem 1.5rem 4rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(var(--secondary-rgb), 0.12) 0%, rgba(var(--primary-rgb), 0.05) 50%, transparent 70%);
+    filter: blur(75px);
+    pointer-events: none;
+    z-index: 0;
+  }
 }
 
 .dashboard-container {
   width: 100%;
   max-width: 1400px;
-  background: rgba(15, 15, 15, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  background: rgba(14, 18, 23, 0.82);
+  backdrop-filter: blur(35px) saturate(180%);
+  -webkit-backdrop-filter: blur(35px) saturate(180%);
+  border: 1.5px solid rgba(255, 255, 255, 0.09);
+  border-radius: 24px;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.8), 0 0 35px rgba(var(--secondary-rgb), 0.08);
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 1;
+  overflow: hidden;
 
-  &::before {
+  &::after {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    backdrop-filter: blur(10px);
-    z-index: -1;
-    border-radius: 20px;
-    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(var(--secondary-rgb), 0.3) 15%, var(--secondary) 45%, var(--primary) 65%, rgba(var(--primary-rgb), 0.3) 90%, transparent 100%);
+    box-shadow: 0 0 12px var(--primary);
   }
 }
 
 .dashboard-content {
   flex: 1;
-  padding: 2rem;
+  padding: 2.5rem;
   position: relative;
   min-height: 500px;
 }
 
 .tab-view {
-  animation: fadeIn 0.4s ease-out;
+  animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .placeholder-view {
@@ -48,18 +68,47 @@
   justify-content: center;
   height: 400px;
   text-align: center;
-  color: #444;
+  color: #64748b;
 
-  h2 { color: #666; margin-bottom: 0.5rem; }
-  p { max-width: 400px; font-size: 0.95rem; }
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #94a3b8;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-family: var(--font-body);
+    max-width: 400px;
+    font-size: 1rem;
+    color: #64748b;
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (max-width: 992px) {
-  .dashboard-wrapper { padding: 0; }
-  .dashboard-container { border-radius: 0; }
+  .dashboard-wrapper {
+    padding: 1rem 0.5rem 2rem;
+  }
+
+  .dashboard-container {
+    border-radius: 16px;
+  }
+
+  .dashboard-content {
+    padding: 1.5rem 1rem;
+  }
 }

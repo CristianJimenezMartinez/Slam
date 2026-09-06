@@ -1,9 +1,5 @@
 <div class="dashboard-wrapper">
   <div class="dashboard-container">
-    <app-admin-header 
-      [userEmail]="(auth.session$ | async)?.user?.email || null" 
-      (logout)="logout()">
-    </app-admin-header>
 
     <app-admin-tabs 
       [activeTab]="activeTab" 

@@ -4,14 +4,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: 'Merriweather', serif;
+  font-family: var(--font-body);
   padding: 4rem 1.5rem;
   box-sizing: border-box;
   color: var(--primary); // Heredamos color base
 
 
   .glow-text {
-    font-family: 'Merriweather', serif; font-weight: 700;
+    font-family: var(--font-display); font-weight: 700;
     font-size: 2.8rem;
     color: inherit;
     text-shadow: 0 0 25px rgba(var(--primary-rgb), 0.4);
@@ -70,7 +70,7 @@
     }
 
     h2 {
-      font-family: 'Merriweather', serif; font-weight: 700;
+      font-family: var(--font-display); font-weight: 700;
       font-size: 1.05rem;
       color: #ff4d4f;
       margin-bottom: 1rem;
