@@ -1,15 +1,2 @@
 User-agent: *
-Allow: /
-Disallow: /admin
-Disallow: /auth
-Disallow: /dashboard
-Disallow: /carga
-Disallow: /loading
-Disallow: /test-votar
-Disallow: /preview-votar
-Disallow: /test-proyector
-Disallow: /preview-proyector
-Disallow: /resultados
-Disallow: /qr
-
-Sitemap: https://poetryslamalicante.com/sitemap.xml
+Disallow: /

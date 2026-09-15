@@ -1,0 +1,1752 @@
+{
+  "titulo": "Poetry Slam Alicante — Base de Datos Completa y Archivo de Ediciones",
+  "extraidoEl": "2026-09-15T11:33:20.933Z",
+  "destinataria": "Ágora Reix (Dirección y Organización Poetry Slam Alicante)",
+  "resumenGlobal": {
+    "totalVotosEmitidos": 2401,
+    "totalCredencialesEmitidas": 636,
+    "totalParticipaciones": 71,
+    "totalPoetasUnicos": 63,
+    "totalEventosOficiales": 9,
+    "totalCartelesHD": 12
+  },
+  "campeonatoTemporada": {
+    "temporada": "VII Temporada (2025–2026)",
+    "campeon": "Guille Lacasito",
+    "subcampeon": "Francisco Cobos",
+    "tercerPuesto": "Alfonso Paso",
+    "sedeGranFinal": "Casa de la Música, Centro Cultural Las Cigarreras",
+    "clasificacionNacional": "Representante oficial de Alicante en el Campeonato Nacional de Poetry Slam España en Cartagena 2026"
+  },
+  "eventosOficiales": [
+    {
+      "id": "199e3a95-be27-404e-b826-e5199bca5ffa",
+      "nombre": "Exhibición Poetry Slam Alicante",
+      "fecha": "2026-03-20T16:59:00+00:00",
+      "ubicacion": "Centro Cultural Las Cigarreras",
+      "presentador": "Ágora Reix",
+      "artista_invitado": "Sin especificar",
+      "url_cartel": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1776100417972.jpeg",
+      "participantesCount": 6,
+      "votosTotales": 210,
+      "credencialesEmitidas": 0,
+      "participantes": [
+        {
+          "orden": 1,
+          "nombre": "Nando Arroyo",
+          "foto_url": null
+        },
+        {
+          "orden": 2,
+          "nombre": "Marina Maciá",
+          "foto_url": null
+        },
+        {
+          "orden": 3,
+          "nombre": "Lucía Ros",
+          "foto_url": null
+        },
+        {
+          "orden": 4,
+          "nombre": "Juan Góngora",
+          "foto_url": null
+        },
+        {
+          "orden": 5,
+          "nombre": "Francisca Ossa",
+          "foto_url": null
+        },
+        {
+          "orden": 6,
+          "nombre": "Alex Carmona",
+          "foto_url": null
+        }
+      ],
+      "ganador": "Alex Carmona",
+      "segundo": "Marina Maciá",
+      "tercero": "Nando Arroyo",
+      "finalistas": [],
+      "rondasDetalle": [
+        {
+          "ronda": 1,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "Alex Carmona",
+              "puntuacion_media": 9.17142857142857,
+              "puntuacion_total": 321,
+              "num_votos": 35
+            },
+            {
+              "posicion": 2,
+              "participante": "Marina Maciá",
+              "puntuacion_media": 6.6571428571428575,
+              "puntuacion_total": 233,
+              "num_votos": 35
+            },
+            {
+              "posicion": 3,
+              "participante": "Nando Arroyo",
+              "puntuacion_media": 6.514285714285714,
+              "puntuacion_total": 228,
+              "num_votos": 35
+            },
+            {
+              "posicion": 4,
+              "participante": "Juan Góngora",
+              "puntuacion_media": 6.285714285714286,
+              "puntuacion_total": 220,
+              "num_votos": 35
+            },
+            {
+              "posicion": 5,
+              "participante": "Lucía Ros",
+              "puntuacion_media": 6.114285714285714,
+              "puntuacion_total": 214,
+              "num_votos": 35
+            },
+            {
+              "posicion": 6,
+              "participante": "Francisca Ossa",
+              "puntuacion_media": 6.085714285714285,
+              "puntuacion_total": 213,
+              "num_votos": 35
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b55a004b-a884-4bd2-99de-17a9e27ba1f1",
+      "nombre": "VII Poetry Slam Alicante",
+      "fecha": "2026-04-29T22:30:00+00:00",
+      "ubicacion": "Centro Cultural Las Cigarreras",
+      "presentador": "Ágora Reix",
+      "artista_invitado": "Francisca Ossa",
+      "url_cartel": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1777236711643.jpeg",
+      "participantesCount": 7,
+      "votosTotales": 232,
+      "credencialesEmitidas": 0,
+      "participantes": [
+        {
+          "orden": 1,
+          "nombre": "Josan Canicio",
+          "foto_url": null
+        },
+        {
+          "orden": 2,
+          "nombre": "María Lidón",
+          "foto_url": null
+        },
+        {
+          "orden": 3,
+          "nombre": "Marina Maciá",
+          "foto_url": null
+        },
+        {
+          "orden": 4,
+          "nombre": "Eliana Ollarve",
+          "foto_url": null
+        },
+        {
+          "orden": 5,
+          "nombre": "Jessika Paola",
+          "foto_url": null
+        },
+        {
+          "orden": 6,
+          "nombre": "Lydia Rico",
+          "foto_url": null
+        },
+        {
+          "orden": 7,
+          "nombre": "Carlos Rodríguez",
+          "foto_url": null
+        }
+      ],
+      "ganador": "Marina Maciá",
+      "segundo": "Lydia Rico",
+      "tercero": "Eliana Ollarve",
+      "finalistas": [],
+      "rondasDetalle": [
+        {
+          "ronda": 1,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "Marina Maciá",
+              "puntuacion_media": 8.4,
+              "puntuacion_total": 294,
+              "num_votos": 35
+            },
+            {
+              "posicion": 2,
+              "participante": "Lydia Rico",
+              "puntuacion_media": 7.828571428571428,
+              "puntuacion_total": 274,
+              "num_votos": 35
+            },
+            {
+              "posicion": 3,
+              "participante": "Eliana Ollarve",
+              "puntuacion_media": 5.611111111111111,
+              "puntuacion_total": 202,
+              "num_votos": 36
+            },
+            {
+              "posicion": 4,
+              "participante": "Josan Canicio",
+              "puntuacion_media": 5.393939393939394,
+              "puntuacion_total": 178,
+              "num_votos": 33
+            },
+            {
+              "posicion": 5,
+              "participante": "Jessika Paola",
+              "puntuacion_media": 6,
+              "puntuacion_total": 168,
+              "num_votos": 28
+            },
+            {
+              "posicion": 6,
+              "participante": "María Lidón",
+              "puntuacion_media": 4.545454545454546,
+              "puntuacion_total": 150,
+              "num_votos": 33
+            },
+            {
+              "posicion": 7,
+              "participante": "Carlos Rodríguez",
+              "puntuacion_media": 4.625,
+              "puntuacion_total": 148,
+              "num_votos": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "d190869f-79fd-48f6-bd6e-0af8061c9e93",
+      "nombre": "VII Poetry Slam Alicante",
+      "fecha": "2026-04-30T18:16:00+00:00",
+      "ubicacion": "Centro Cultural Las Cigarreras",
+      "presentador": "Ágora Reix",
+      "artista_invitado": "Sin especificar",
+      "url_cartel": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1777578437505.jpeg",
+      "participantesCount": 0,
+      "votosTotales": 0,
+      "credencialesEmitidas": 0,
+      "participantes": [],
+      "ganador": null,
+      "segundo": null,
+      "tercero": null,
+      "finalistas": [],
+      "rondasDetalle": []
+    },
+    {
+      "id": "ca6727e4-2533-4797-b4b8-8b67f89dd7b1",
+      "nombre": "VII Poetry Slam Alicante 2",
+      "fecha": "2026-04-30T20:00:00+00:00",
+      "ubicacion": "Centro Cultural Las Cigarreras",
+      "presentador": "Ágora Reix",
+      "artista_invitado": "Francisca Ossa",
+      "url_cartel": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1777236711643.jpeg",
+      "participantesCount": 3,
+      "votosTotales": 107,
+      "credencialesEmitidas": 0,
+      "participantes": [
+        {
+          "orden": 1,
+          "nombre": "Marina Maciá",
+          "foto_url": null
+        },
+        {
+          "orden": 2,
+          "nombre": "Lydia Rico",
+          "foto_url": null
+        },
+        {
+          "orden": 3,
+          "nombre": "Eliana Ollarve",
+          "foto_url": null
+        }
+      ],
+      "ganador": "Marina Maciá",
+      "segundo": "Lydia Rico",
+      "tercero": "Eliana Ollarve",
+      "finalistas": [],
+      "rondasDetalle": [
+        {
+          "ronda": 1,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "Marina Maciá",
+              "puntuacion_media": 7.45945945945946,
+              "puntuacion_total": 276,
+              "num_votos": 37
+            },
+            {
+              "posicion": 2,
+              "participante": "Lydia Rico",
+              "puntuacion_media": 7.085714285714285,
+              "puntuacion_total": 248,
+              "num_votos": 35
+            },
+            {
+              "posicion": 3,
+              "participante": "Eliana Ollarve",
+              "puntuacion_media": 5.542857142857143,
+              "puntuacion_total": 194,
+              "num_votos": 35
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cfcbddf9-d429-441f-b346-5e5e32c9f53c",
+      "nombre": "Poetry Slam Alicante - VII Edición",
+      "fecha": "2026-05-07T18:00:00+00:00",
+      "ubicacion": "Centro Cultural Las Cigarreras",
+      "presentador": "Ágora Reix",
+      "artista_invitado": "José Luis Rico",
+      "url_cartel": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1777578437505.jpeg",
+      "participantesCount": 6,
+      "votosTotales": 180,
+      "credencialesEmitidas": 0,
+      "participantes": [
+        {
+          "orden": 1,
+          "nombre": "Mª Pilar Galdón",
+          "foto_url": null
+        },
+        {
+          "orden": 2,
+          "nombre": "Juan Góngora",
+          "foto_url": null
+        },
+        {
+          "orden": 3,
+          "nombre": "Jordi Más",
+          "foto_url": null
+        },
+        {
+          "orden": 4,
+          "nombre": "Pedro Nso",
+          "foto_url": null
+        },
+        {
+          "orden": 5,
+          "nombre": "Jean Pierre",
+          "foto_url": null
+        },
+        {
+          "orden": 7,
+          "nombre": "Francis Torregrosa",
+          "foto_url": null
+        }
+      ],
+      "ganador": "Juan Góngora",
+      "segundo": "Pedro Nso",
+      "tercero": "Jordi Más",
+      "finalistas": [
+        "Juan Góngora",
+        "Pedro Nso",
+        "Jordi Más"
+      ],
+      "rondasDetalle": [
+        {
+          "ronda": 1,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "Juan Góngora",
+              "puntuacion_media": 6.454545454545454,
+              "puntuacion_total": 142,
+              "num_votos": 22
+            },
+            {
+              "posicion": 2,
+              "participante": "Jordi Más",
+              "puntuacion_media": 6.3,
+              "puntuacion_total": 126,
+              "num_votos": 20
+            },
+            {
+              "posicion": 2,
+              "participante": "Pedro Nso",
+              "puntuacion_media": 5.7272727272727275,
+              "puntuacion_total": 126,
+              "num_votos": 22
+            },
+            {
+              "posicion": 4,
+              "participante": "Jean Pierre",
+              "puntuacion_media": 4.363636363636363,
+              "puntuacion_total": 96,
+              "num_votos": 22
+            },
+            {
+              "posicion": 5,
+              "participante": "Mª Pilar Galdón",
+              "puntuacion_media": 4,
+              "puntuacion_total": 84,
+              "num_votos": 21
+            },
+            {
+              "posicion": 6,
+              "participante": "Francis Torregrosa",
+              "puntuacion_media": 3.5,
+              "puntuacion_total": 70,
+              "num_votos": 20
+            }
+          ]
+        },
+        {
+          "ronda": 2,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "Juan Góngora",
+              "puntuacion_media": 7.7894736842105265,
+              "puntuacion_total": 148,
+              "num_votos": 19
+            },
+            {
+              "posicion": 2,
+              "participante": "Pedro Nso",
+              "puntuacion_media": 6.444444444444445,
+              "puntuacion_total": 116,
+              "num_votos": 18
+            },
+            {
+              "posicion": 2,
+              "participante": "Jordi Más",
+              "puntuacion_media": 7.25,
+              "puntuacion_total": 116,
+              "num_votos": 16
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3dbb2b63-4f2e-4e0e-a7ce-a53e872f2f2b",
+      "nombre": "III Encuentro VII Torneo Poetry Slam Alicante",
+      "fecha": "2026-05-14T18:00:00+00:00",
+      "ubicacion": "Centro Cultural Las Cigarreras",
+      "presentador": "Ágora Reix",
+      "artista_invitado": "Dúo Trascendental",
+      "url_cartel": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1778247986695.jpeg",
+      "participantesCount": 7,
+      "votosTotales": 0,
+      "credencialesEmitidas": 0,
+      "participantes": [
+        {
+          "orden": 1,
+          "nombre": "Antonio Beneite",
+          "foto_url": null
+        },
+        {
+          "orden": 2,
+          "nombre": "Francisco Cobos",
+          "foto_url": null
+        },
+        {
+          "orden": 3,
+          "nombre": "Mar Domenech",
+          "foto_url": null
+        },
+        {
+          "orden": 4,
+          "nombre": "Pablo Ferrando",
+          "foto_url": null
+        },
+        {
+          "orden": 5,
+          "nombre": "Laura Gómez",
+          "foto_url": null
+        },
+        {
+          "orden": 6,
+          "nombre": "Lautaro Marrero",
+          "foto_url": null
+        },
+        {
+          "orden": 7,
+          "nombre": "Alexa Rico",
+          "foto_url": null
+        }
+      ],
+      "ganador": null,
+      "segundo": null,
+      "tercero": null,
+      "finalistas": [],
+      "rondasDetalle": [
+        {
+          "ronda": null,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "Alexa Rico",
+              "puntuacion_media": 0,
+              "puntuacion_total": 0,
+              "num_votos": 0
+            },
+            {
+              "posicion": 1,
+              "participante": "Mar Domenech",
+              "puntuacion_media": 0,
+              "puntuacion_total": 0,
+              "num_votos": 0
+            },
+            {
+              "posicion": 1,
+              "participante": "Antonio Beneite",
+              "puntuacion_media": 0,
+              "puntuacion_total": 0,
+              "num_votos": 0
+            },
+            {
+              "posicion": 1,
+              "participante": "Francisco Cobos",
+              "puntuacion_media": 0,
+              "puntuacion_total": 0,
+              "num_votos": 0
+            },
+            {
+              "posicion": 1,
+              "participante": "Laura Gómez",
+              "puntuacion_media": 0,
+              "puntuacion_total": 0,
+              "num_votos": 0
+            },
+            {
+              "posicion": 1,
+              "participante": "Lautaro Marrero",
+              "puntuacion_media": 0,
+              "puntuacion_total": 0,
+              "num_votos": 0
+            },
+            {
+              "posicion": 1,
+              "participante": "Pablo Ferrando",
+              "puntuacion_media": 0,
+              "puntuacion_total": 0,
+              "num_votos": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "396cb005-87f3-4a8b-ac87-684803246ac3",
+      "nombre": "Poetry Slam Alicante VII Edición",
+      "fecha": "2026-05-21T18:00:00+00:00",
+      "ubicacion": "Centro Cultural Las Cigarreras",
+      "presentador": "Ágora Reix",
+      "artista_invitado": "Troppo Lírica",
+      "url_cartel": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1779294681111.jpeg",
+      "participantesCount": 7,
+      "votosTotales": 160,
+      "credencialesEmitidas": 132,
+      "participantes": [
+        {
+          "orden": 1,
+          "nombre": "Francisco Cremades",
+          "foto_url": null
+        },
+        {
+          "orden": 2,
+          "nombre": "Rosa Estomba",
+          "foto_url": null
+        },
+        {
+          "orden": 3,
+          "nombre": "Isabel Guiu",
+          "foto_url": null
+        },
+        {
+          "orden": 4,
+          "nombre": "Guille Lacasito",
+          "foto_url": null
+        },
+        {
+          "orden": 5,
+          "nombre": "Margo",
+          "foto_url": null
+        },
+        {
+          "orden": 6,
+          "nombre": "Cristina Molina",
+          "foto_url": null
+        },
+        {
+          "orden": 7,
+          "nombre": "Alfonso Paso",
+          "foto_url": null
+        }
+      ],
+      "ganador": "Alfonso Paso",
+      "segundo": "Guille Lacasito",
+      "tercero": "Cristina Molina",
+      "finalistas": [
+        "Alfonso Paso",
+        "Guille Lacasito",
+        "Cristina Molina",
+        "Francisco Cremades"
+      ],
+      "rondasDetalle": [
+        {
+          "ronda": 1,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "Alfonso Paso",
+              "puntuacion_media": 8.117647058823529,
+              "puntuacion_total": 138,
+              "num_votos": 17
+            },
+            {
+              "posicion": 2,
+              "participante": "Guille Lacasito",
+              "puntuacion_media": 7.529411764705882,
+              "puntuacion_total": 128,
+              "num_votos": 17
+            },
+            {
+              "posicion": 3,
+              "participante": "Cristina Molina",
+              "puntuacion_media": 6.9411764705882355,
+              "puntuacion_total": 118,
+              "num_votos": 17
+            },
+            {
+              "posicion": 4,
+              "participante": "Isabel Guiu",
+              "puntuacion_media": 5.176470588235294,
+              "puntuacion_total": 88,
+              "num_votos": 17
+            },
+            {
+              "posicion": 5,
+              "participante": "Rosa Estomba",
+              "puntuacion_media": 6.461538461538462,
+              "puntuacion_total": 84,
+              "num_votos": 13
+            },
+            {
+              "posicion": 6,
+              "participante": "Francisco Cremades",
+              "puntuacion_media": 3.7333333333333334,
+              "puntuacion_total": 56,
+              "num_votos": 15
+            },
+            {
+              "posicion": 7,
+              "participante": "Margo",
+              "puntuacion_media": 4.5,
+              "puntuacion_total": 54,
+              "num_votos": 12
+            }
+          ]
+        },
+        {
+          "ronda": 2,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "Alfonso Paso",
+              "puntuacion_media": 8.375,
+              "puntuacion_total": 134,
+              "num_votos": 16
+            },
+            {
+              "posicion": 2,
+              "participante": "Guille Lacasito",
+              "puntuacion_media": 7.529411764705882,
+              "puntuacion_total": 128,
+              "num_votos": 17
+            },
+            {
+              "posicion": 3,
+              "participante": "Cristina Molina",
+              "puntuacion_media": 6,
+              "puntuacion_total": 102,
+              "num_votos": 17
+            },
+            {
+              "posicion": 4,
+              "participante": "Francisco Cremades",
+              "puntuacion_media": 8,
+              "puntuacion_total": 8,
+              "num_votos": 1
+            }
+          ]
+        },
+        {
+          "ronda": 3,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "Francisco Cremades",
+              "puntuacion_media": 9,
+              "puntuacion_total": 9,
+              "num_votos": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "992f04dd-29e2-446a-b7cd-03b1b1d6b280",
+      "nombre": "Poetry Slam Alicante – VII Edición",
+      "fecha": "2026-05-28T18:00:00+00:00",
+      "ubicacion": "Centro Cultural Las Cigarreras",
+      "presentador": "Ágora Reix",
+      "artista_invitado": "Vera Lu & Claudio H",
+      "url_cartel": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1779973992600.jpeg",
+      "participantesCount": 8,
+      "votosTotales": 294,
+      "credencialesEmitidas": 132,
+      "participantes": [
+        {
+          "orden": 0,
+          "nombre": "Poeta de Demostración",
+          "foto_url": null
+        },
+        {
+          "orden": 1,
+          "nombre": "Nando Arroyo",
+          "foto_url": null
+        },
+        {
+          "orden": 2,
+          "nombre": "Cristian Burgos",
+          "foto_url": null
+        },
+        {
+          "orden": 3,
+          "nombre": "Varinia Casati",
+          "foto_url": null
+        },
+        {
+          "orden": 4,
+          "nombre": "Jose Gutiérrez",
+          "foto_url": null
+        },
+        {
+          "orden": 5,
+          "nombre": "Beatriz G. Alberdi",
+          "foto_url": null
+        },
+        {
+          "orden": 6,
+          "nombre": "Iris Marmol",
+          "foto_url": null
+        },
+        {
+          "orden": 7,
+          "nombre": "Raquel Sánchez",
+          "foto_url": null
+        }
+      ],
+      "ganador": "Beatriz G. Alberdi",
+      "segundo": "Nando Arroyo",
+      "tercero": "Raquel Sánchez",
+      "finalistas": [
+        "Beatriz G. Alberdi",
+        "Nando Arroyo",
+        "Raquel Sánchez",
+        "Varinia Casati",
+        "Cristian Burgos",
+        "Jose Gutiérrez",
+        "Iris Marmol"
+      ],
+      "rondasDetalle": [
+        {
+          "ronda": 1,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "Poeta de Demostración",
+              "puntuacion_media": 7.103448275862069,
+              "puntuacion_total": 206,
+              "num_votos": 29
+            }
+          ]
+        },
+        {
+          "ronda": 2,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "Beatriz G. Alberdi",
+              "puntuacion_media": 9.037037037037036,
+              "puntuacion_total": 244,
+              "num_votos": 27
+            },
+            {
+              "posicion": 2,
+              "participante": "Nando Arroyo",
+              "puntuacion_media": 7.071428571428571,
+              "puntuacion_total": 198,
+              "num_votos": 28
+            },
+            {
+              "posicion": 3,
+              "participante": "Raquel Sánchez",
+              "puntuacion_media": 6.444444444444445,
+              "puntuacion_total": 174,
+              "num_votos": 27
+            },
+            {
+              "posicion": 4,
+              "participante": "Varinia Casati",
+              "puntuacion_media": 5.703703703703703,
+              "puntuacion_total": 154,
+              "num_votos": 27
+            },
+            {
+              "posicion": 5,
+              "participante": "Cristian Burgos",
+              "puntuacion_media": 4.857142857142857,
+              "puntuacion_total": 136,
+              "num_votos": 28
+            },
+            {
+              "posicion": 6,
+              "participante": "Jose Gutiérrez",
+              "puntuacion_media": 4.785714285714286,
+              "puntuacion_total": 134,
+              "num_votos": 28
+            },
+            {
+              "posicion": 7,
+              "participante": "Iris Marmol",
+              "puntuacion_media": 4.444444444444445,
+              "puntuacion_total": 120,
+              "num_votos": 27
+            }
+          ]
+        },
+        {
+          "ronda": 3,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "Beatriz G. Alberdi",
+              "puntuacion_media": 9,
+              "puntuacion_total": 216,
+              "num_votos": 24
+            },
+            {
+              "posicion": 2,
+              "participante": "Nando Arroyo",
+              "puntuacion_media": 7.68,
+              "puntuacion_total": 192,
+              "num_votos": 25
+            },
+            {
+              "posicion": 3,
+              "participante": "Raquel Sánchez",
+              "puntuacion_media": 6,
+              "puntuacion_total": 144,
+              "num_votos": 24
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2b07a417-0c94-4000-abb5-2bbffa717bba",
+      "nombre": "VII FINAL PSA - 26 JUNIO",
+      "fecha": "2026-06-26T18:00:00+00:00",
+      "ubicacion": "Centro Cultural Las Cigarreras",
+      "presentador": "Ágora Reix",
+      "artista_invitado": "Sin especificar",
+      "url_cartel": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1782495887466.png",
+      "participantesCount": 12,
+      "votosTotales": 1203,
+      "credencialesEmitidas": 240,
+      "participantes": [
+        {
+          "orden": 0,
+          "nombre": "Poeta de Demostración",
+          "foto_url": null
+        },
+        {
+          "orden": 1,
+          "nombre": "NANDO ARROYO",
+          "foto_url": null
+        },
+        {
+          "orden": 2,
+          "nombre": "FRANCISCO COBOS",
+          "foto_url": null
+        },
+        {
+          "orden": 3,
+          "nombre": "LAURA GOMEZ",
+          "foto_url": null
+        },
+        {
+          "orden": 4,
+          "nombre": "JUAN GONGORA",
+          "foto_url": null
+        },
+        {
+          "orden": 5,
+          "nombre": "BEATRIZ G. ALBERDI",
+          "foto_url": null
+        },
+        {
+          "orden": 6,
+          "nombre": "GUILLE LACASITO",
+          "foto_url": null
+        },
+        {
+          "orden": 7,
+          "nombre": "MARINA MACIA",
+          "foto_url": null
+        },
+        {
+          "orden": 8,
+          "nombre": "JORDI MAS",
+          "foto_url": null
+        },
+        {
+          "orden": 9,
+          "nombre": "PEDRO NSO",
+          "foto_url": null
+        },
+        {
+          "orden": 10,
+          "nombre": "LYDIA RICO",
+          "foto_url": null
+        },
+        {
+          "orden": 11,
+          "nombre": "ALFONSO PASO",
+          "foto_url": null
+        }
+      ],
+      "ganador": "ALFONSO PASO",
+      "segundo": "GUILLE LACASITO",
+      "tercero": "FRANCISCO COBOS",
+      "finalistas": [
+        "ALFONSO PASO",
+        "GUILLE LACASITO",
+        "FRANCISCO COBOS",
+        "JORDI MAS",
+        "MARINA MACIA",
+        "NANDO ARROYO",
+        "BEATRIZ G. ALBERDI",
+        "LYDIA RICO",
+        "JUAN GONGORA",
+        "LAURA GOMEZ"
+      ],
+      "rondasDetalle": [
+        {
+          "ronda": null,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "PEDRO NSO",
+              "puntuacion_media": 0,
+              "puntuacion_total": 0,
+              "num_votos": 0
+            }
+          ]
+        },
+        {
+          "ronda": 1,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "Poeta de Demostración",
+              "puntuacion_media": 5.162790697674419,
+              "puntuacion_total": 444,
+              "num_votos": 86
+            }
+          ]
+        },
+        {
+          "ronda": 2,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "ALFONSO PASO",
+              "puntuacion_media": 7.0625,
+              "puntuacion_total": 678,
+              "num_votos": 96
+            },
+            {
+              "posicion": 2,
+              "participante": "GUILLE LACASITO",
+              "puntuacion_media": 7.304347826086956,
+              "puntuacion_total": 672,
+              "num_votos": 92
+            },
+            {
+              "posicion": 3,
+              "participante": "FRANCISCO COBOS",
+              "puntuacion_media": 5.852631578947368,
+              "puntuacion_total": 556,
+              "num_votos": 95
+            },
+            {
+              "posicion": 4,
+              "participante": "JORDI MAS",
+              "puntuacion_media": 6.065934065934066,
+              "puntuacion_total": 552,
+              "num_votos": 91
+            },
+            {
+              "posicion": 5,
+              "participante": "MARINA MACIA",
+              "puntuacion_media": 5.638297872340425,
+              "puntuacion_total": 530,
+              "num_votos": 94
+            },
+            {
+              "posicion": 6,
+              "participante": "NANDO ARROYO",
+              "puntuacion_media": 5.714285714285714,
+              "puntuacion_total": 520,
+              "num_votos": 91
+            },
+            {
+              "posicion": 7,
+              "participante": "BEATRIZ G. ALBERDI",
+              "puntuacion_media": 5.6923076923076925,
+              "puntuacion_total": 518,
+              "num_votos": 91
+            },
+            {
+              "posicion": 8,
+              "participante": "LYDIA RICO",
+              "puntuacion_media": 5.543478260869565,
+              "puntuacion_total": 510,
+              "num_votos": 92
+            },
+            {
+              "posicion": 9,
+              "participante": "JUAN GONGORA",
+              "puntuacion_media": 5.274725274725275,
+              "puntuacion_total": 480,
+              "num_votos": 91
+            },
+            {
+              "posicion": 10,
+              "participante": "LAURA GOMEZ",
+              "puntuacion_media": 4.791666666666667,
+              "puntuacion_total": 460,
+              "num_votos": 96
+            }
+          ]
+        },
+        {
+          "ronda": 3,
+          "clasificacion": [
+            {
+              "posicion": 1,
+              "participante": "GUILLE LACASITO",
+              "puntuacion_media": 8.246913580246913,
+              "puntuacion_total": 668,
+              "num_votos": 81
+            },
+            {
+              "posicion": 2,
+              "participante": "FRANCISCO COBOS",
+              "puntuacion_media": 5.2682926829268295,
+              "puntuacion_total": 432,
+              "num_votos": 82
+            },
+            {
+              "posicion": 3,
+              "participante": "ALFONSO PASO",
+              "puntuacion_media": 6.72,
+              "puntuacion_total": 168,
+              "num_votos": 25
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "poetas": [
+    {
+      "nombre": "Marina Maciá",
+      "apariciones": 3,
+      "eventos": [
+        "Exhibición Poetry Slam Alicante",
+        "VII Poetry Slam Alicante",
+        "VII Poetry Slam Alicante 2"
+      ],
+      "victorias": 2,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Poeta de Demostración",
+      "apariciones": 2,
+      "eventos": [
+        "Poetry Slam Alicante – VII Edición",
+        "VII FINAL PSA - 26 JUNIO"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Nando Arroyo",
+      "apariciones": 2,
+      "eventos": [
+        "Exhibición Poetry Slam Alicante",
+        "Poetry Slam Alicante – VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Juan Góngora",
+      "apariciones": 2,
+      "eventos": [
+        "Exhibición Poetry Slam Alicante",
+        "Poetry Slam Alicante - VII Edición"
+      ],
+      "victorias": 1,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Lydia Rico",
+      "apariciones": 2,
+      "eventos": [
+        "VII Poetry Slam Alicante",
+        "VII Poetry Slam Alicante 2"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Eliana Ollarve",
+      "apariciones": 2,
+      "eventos": [
+        "VII Poetry Slam Alicante",
+        "VII Poetry Slam Alicante 2"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Antonio Beneite",
+      "apariciones": 1,
+      "eventos": [
+        "III Encuentro VII Torneo Poetry Slam Alicante"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Mª Pilar Galdón",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante - VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Josan Canicio",
+      "apariciones": 1,
+      "eventos": [
+        "VII Poetry Slam Alicante"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "NANDO ARROYO",
+      "apariciones": 1,
+      "eventos": [
+        "VII FINAL PSA - 26 JUNIO"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Francisco Cremades",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "FRANCISCO COBOS",
+      "apariciones": 1,
+      "eventos": [
+        "VII FINAL PSA - 26 JUNIO"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Rosa Estomba",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "María Lidón",
+      "apariciones": 1,
+      "eventos": [
+        "VII Poetry Slam Alicante"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Cristian Burgos",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante – VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Francisco Cobos",
+      "apariciones": 1,
+      "eventos": [
+        "III Encuentro VII Torneo Poetry Slam Alicante"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Mar Domenech",
+      "apariciones": 1,
+      "eventos": [
+        "III Encuentro VII Torneo Poetry Slam Alicante"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Lucía Ros",
+      "apariciones": 1,
+      "eventos": [
+        "Exhibición Poetry Slam Alicante"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Varinia Casati",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante – VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Jordi Más",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante - VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Isabel Guiu",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "LAURA GOMEZ",
+      "apariciones": 1,
+      "eventos": [
+        "VII FINAL PSA - 26 JUNIO"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Pablo Ferrando",
+      "apariciones": 1,
+      "eventos": [
+        "III Encuentro VII Torneo Poetry Slam Alicante"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Jose Gutiérrez",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante – VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Guille Lacasito",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "JUAN GONGORA",
+      "apariciones": 1,
+      "eventos": [
+        "VII FINAL PSA - 26 JUNIO"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Pedro Nso",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante - VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Margo",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Jessika Paola",
+      "apariciones": 1,
+      "eventos": [
+        "VII Poetry Slam Alicante"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Francisca Ossa",
+      "apariciones": 1,
+      "eventos": [
+        "Exhibición Poetry Slam Alicante"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Jean Pierre",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante - VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "BEATRIZ G. ALBERDI",
+      "apariciones": 1,
+      "eventos": [
+        "VII FINAL PSA - 26 JUNIO"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Laura Gómez",
+      "apariciones": 1,
+      "eventos": [
+        "III Encuentro VII Torneo Poetry Slam Alicante"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Beatriz G. Alberdi",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante – VII Edición"
+      ],
+      "victorias": 1,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Lautaro Marrero",
+      "apariciones": 1,
+      "eventos": [
+        "III Encuentro VII Torneo Poetry Slam Alicante"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Cristina Molina",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Alex Carmona",
+      "apariciones": 1,
+      "eventos": [
+        "Exhibición Poetry Slam Alicante"
+      ],
+      "victorias": 1,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "GUILLE LACASITO",
+      "apariciones": 1,
+      "eventos": [
+        "VII FINAL PSA - 26 JUNIO"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Iris Marmol",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante – VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Carlos Rodríguez",
+      "apariciones": 1,
+      "eventos": [
+        "VII Poetry Slam Alicante"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Raquel Sánchez",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante – VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Alexa Rico",
+      "apariciones": 1,
+      "eventos": [
+        "III Encuentro VII Torneo Poetry Slam Alicante"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "MARINA MACIA",
+      "apariciones": 1,
+      "eventos": [
+        "VII FINAL PSA - 26 JUNIO"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Francis Torregrosa",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante - VII Edición"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Alfonso Paso",
+      "apariciones": 1,
+      "eventos": [
+        "Poetry Slam Alicante VII Edición"
+      ],
+      "victorias": 1,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "JORDI MAS",
+      "apariciones": 1,
+      "eventos": [
+        "VII FINAL PSA - 26 JUNIO"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "PEDRO NSO",
+      "apariciones": 1,
+      "eventos": [
+        "VII FINAL PSA - 26 JUNIO"
+      ],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "LYDIA RICO",
+      "apariciones": 1,
+      "eventos": [
+        "VII FINAL PSA - 26 JUNIO"
+      ],
+      "victorias": 0,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "ALFONSO PASO",
+      "apariciones": 1,
+      "eventos": [
+        "VII FINAL PSA - 26 JUNIO"
+      ],
+      "victorias": 1,
+      "finales": 1,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "qwe",
+      "apariciones": 0,
+      "eventos": [],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "q",
+      "apariciones": 0,
+      "eventos": [],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Poeta de quema",
+      "apariciones": 0,
+      "eventos": [],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Poeta de quema 1",
+      "apariciones": 0,
+      "eventos": [],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "Poeta de quema 2",
+      "apariciones": 0,
+      "eventos": [],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "w",
+      "apariciones": 0,
+      "eventos": [],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "we",
+      "apariciones": 0,
+      "eventos": [],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "er",
+      "apariciones": 0,
+      "eventos": [],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "e",
+      "apariciones": 0,
+      "eventos": [],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "rtty",
+      "apariciones": 0,
+      "eventos": [],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "r",
+      "apariciones": 0,
+      "eventos": [],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "ty",
+      "apariciones": 0,
+      "eventos": [],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "t",
+      "apariciones": 0,
+      "eventos": [],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    },
+    {
+      "nombre": "yu",
+      "apariciones": 0,
+      "eventos": [],
+      "victorias": 0,
+      "finales": 0,
+      "totalVotosRecibidos": 0
+    }
+  ],
+  "cartelesOficiales": [
+    {
+      "nombre": "1776093019285.png",
+      "tamanoBytes": 4233403,
+      "urlPublica": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1776093019285.png"
+    },
+    {
+      "nombre": "1776100417972.jpeg",
+      "tamanoBytes": 133205,
+      "urlPublica": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1776100417972.jpeg"
+    },
+    {
+      "nombre": "1776103391063.png",
+      "tamanoBytes": 4233403,
+      "urlPublica": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1776103391063.png"
+    },
+    {
+      "nombre": "1776103732486.png",
+      "tamanoBytes": 4233403,
+      "urlPublica": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1776103732486.png"
+    },
+    {
+      "nombre": "1777236711643.jpeg",
+      "tamanoBytes": 475571,
+      "urlPublica": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1777236711643.jpeg"
+    },
+    {
+      "nombre": "1777578437505.jpeg",
+      "tamanoBytes": 404964,
+      "urlPublica": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1777578437505.jpeg"
+    },
+    {
+      "nombre": "1778247986695.jpeg",
+      "tamanoBytes": 443370,
+      "urlPublica": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1778247986695.jpeg"
+    },
+    {
+      "nombre": "1779294681111.jpeg",
+      "tamanoBytes": 432647,
+      "urlPublica": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1779294681111.jpeg"
+    },
+    {
+      "nombre": "1779973992600.jpeg",
+      "tamanoBytes": 341201,
+      "urlPublica": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1779973992600.jpeg"
+    },
+    {
+      "nombre": "1782138412119.jpeg",
+      "tamanoBytes": 380868,
+      "urlPublica": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1782138412119.jpeg"
+    },
+    {
+      "nombre": "1782473575249.png",
+      "tamanoBytes": 3440164,
+      "urlPublica": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1782473575249.png"
+    },
+    {
+      "nombre": "1782495887466.png",
+      "tamanoBytes": 3440164,
+      "urlPublica": "https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1782495887466.png"
+    }
+  ]
+}

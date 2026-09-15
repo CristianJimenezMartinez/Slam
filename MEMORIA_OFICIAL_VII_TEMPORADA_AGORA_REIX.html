@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Memoria Oficial VII Temporada — Poetry Slam Alicante</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;500;600;700&family=Oswald:wght@500;600;700&display=swap');
+
+    :root {
+      --primary: #0f172a;
+      --accent: #d97706;
+      --accent-gold: #b45309;
+      --silver: #475569;
+      --bronze: #92400e;
+      --bg-page: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --card-bg: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background-color: var(--bg-page);
+      line-height: 1.5;
+      font-size: 13px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 30px;
+    }
+
+    /* PORTADA */
+    .cover-page {
+      padding: 60px 40px;
+      border: 3px double #cbd5e1;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 50px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      page-break-after: always;
+    }
+
+    .cover-tag {
+      font-family: 'Oswald', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: #b45309;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .cover-title {
+      font-family: 'Cinzel', serif;
+      font-size: 38px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      line-height: 1.15;
+    }
+
+    .cover-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      color: #475569;
+      font-weight: 400;
+      margin-bottom: 30px;
+    }
+
+    .cover-gold-badge {
+      display: inline-block;
+      padding: 12px 28px;
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      border-radius: 50px;
+      color: #92400e;
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      letter-spacing: 1px;
+      margin-bottom: 35px;
+    }
+
+    .cover-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      text-align: left;
+      padding: 24px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .meta-item strong {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .meta-item span {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    /* SECCIONES */
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      color: #0f172a;
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 8px;
+      margin: 40px 0 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-title span {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    /* METRICAS CARDS */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 14px;
+      text-align: center;
+    }
+
+    .metric-number {
+      font-family: 'Oswald', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* CAMPEÓN DESTACADO */
+    .champion-banner {
+      background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
+      border: 2px solid #f59e0b;
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 35px;
+      display: flex;
+      gap: 25px;
+      align-items: center;
+      page-break-inside: avoid;
+    }
+
+    .champion-trophy {
+      font-size: 55px;
+      line-height: 1;
+    }
+
+    .champion-info h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 24px;
+      color: #78350f;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .champion-info .badge-gold {
+      display: inline-block;
+      background: #b45309;
+      color: #ffffff;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .champion-info p {
+      color: #92400e;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* TABLAS */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 25px;
+      font-size: 12px;
+      page-break-inside: avoid;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: #f1f5f9;
+      font-weight: 600;
+      color: #334155;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    tr:nth-child(even) td {
+      background: #fafafa;
+    }
+
+    .badge-laurel {
+      background: #fef3c7;
+      color: #92400e;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .badge-pluma {
+      background: #e2e8f0;
+      color: #334155;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .badge-lira {
+      background: #ffedd5;
+      color: #9a3412;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    /* EDICION CARD */
+    .edition-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      background: #ffffff;
+      page-break-inside: avoid;
+    }
+
+    .edition-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 10px;
+    }
+
+    .edition-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      color: #0f172a;
+      letter-spacing: 0.5px;
+    }
+
+    .edition-date {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .edition-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      font-size: 11px;
+      margin-bottom: 14px;
+      background: #f8fafc;
+      padding: 10px 12px;
+      border-radius: 6px;
+    }
+
+    .edition-meta strong {
+      color: #475569;
+    }
+
+    .podium-box {
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
+      padding: 10px 14px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+
+    .poets-chips {
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .poets-chips strong {
+      color: #334155;
+    }
+
+    /* PIE DE PÁGINA */
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 11px;
+      page-break-inside: avoid;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: #ffffff;
+      }
+      .container {
+        max-width: 100%;
+        padding: 0;
+      }
+      .cover-page {
+        margin-bottom: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- PORTADA -->
+  <div class="cover-page">
+    <div class="cover-tag">Memoria Oficial & Registro Histórico</div>
+    <h1 class="cover-title">POETRY SLAM ALICANTE</h1>
+    <div class="cover-subtitle">Crónica y Datos Oficiales de la VII Temporada (2025–2026)</div>
+    <div class="cover-gold-badge">★ DOCUMENTO DE REGISTRO PARA LA DIRECCIÓN ★</div>
+
+    <div class="cover-meta-grid">
+      <div class="meta-item">
+        <strong>Dirección y Coordinación</strong>
+        <span>Ágora Reix</span>
+      </div>
+      <div class="meta-item">
+        <strong>Fecha de Certificación</strong>
+        <span>15 de Septiembre de 2026</span>
+      </div>
+      <div class="meta-item">
+        <strong>Sedes Oficiales</strong>
+        <span>Caja Negra & Casa de la Música (Las Cigarreras)</span>
+      </div>
+      <div class="meta-item">
+        <strong>Fuente de Verificación</strong>
+        <span>Base de Datos Oficial Supabase (Producción)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 1: BALANCE GLOBAL -->
+  <h2 class="section-title">
+    1. Balance General de la VII Temporada
+    <span>Métricas en Directo</span>
+  </h2>
+
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-number">2401</div>
+      <div class="metric-label">Votos Registrados</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-number">636</div>
+      <div class="metric-label">Pines Expedidos</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-number">63</div>
+      <div class="metric-label">Poetas Únicos</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-number">9</div>
+      <div class="metric-label">Encuentros Oficiales</div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: CAMPEÓN OFICIAL -->
+  <div class="champion-banner">
+    <div class="champion-trophy">🏆</div>
+    <div class="champion-info">
+      <span class="badge-gold">CAMPEÓN DE LA VII TEMPORADA</span>
+      <h3>GUILLE LACASITO</h3>
+      <p>
+        <strong>Representante oficial de Poetry Slam Alicante en el Campeonato Nacional de España (Cartagena 2026).</strong><br>
+        Coronado en la Gran Final del 26 de junio en la Casa de la Música con un <strong>8.25</strong> en la ronda decisiva frente a más de 200 asistentes.
+      </p>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 3: VELADA POR VELADA -->
+  <h2 class="section-title">
+    2. Crónica y Podios Encuentro por Encuentro
+    <span>Resultados Oficiales</span>
+  </h2>
+
+  
+    <div class="edition-card">
+      <div class="edition-header">
+        <div>
+          <div class="edition-title">Exhibición Poetry Slam Alicante</div>
+          <div class="edition-date">viernes, 20 de marzo de 2026</div>
+        </div>
+        <div style="text-align: right; font-size: 11px; color: #475569;"><strong>210</strong> votos en sala</div>
+      </div>
+
+      <div class="edition-meta">
+        <div><strong>Sede:</strong> Centro Cultural Las Cigarreras</div>
+        <div><strong>Presentación:</strong> Ágora Reix</div>
+        <div><strong>Artista Invitado:</strong> Sin especificar</div>
+      </div>
+
+      <div class="podium-box">
+        <strong>Podio de Honor:</strong><br>
+        🥇 <span class="badge-laurel">Laurel de Oro:</span> <strong>Alex Carmona</strong> &nbsp;|&nbsp;
+        🥈 <span class="badge-pluma">Pluma de Plata:</span> Marina Maciá &nbsp;|&nbsp;
+        🥉 <span class="badge-lira">Lira de Bronce:</span> Nando Arroyo
+      </div>
+
+      <div class="poets-chips">
+        <strong>Poetas Participantes (6):</strong> 
+        Nando Arroyo, Marina Maciá, Lucía Ros, Juan Góngora, Francisca Ossa, Alex Carmona
+      </div>
+
+      
+        <div style="margin-top: 10px; font-size: 11px;">
+          <strong>Cartel Oficial:</strong> <a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1776100417972.jpeg" target="_blank" style="color: #2563eb; text-decoration: underline;">Abrir Cartel HD en Cloud Storage</a>
+        </div>
+      
+    </div>
+  
+    <div class="edition-card">
+      <div class="edition-header">
+        <div>
+          <div class="edition-title">VII Poetry Slam Alicante</div>
+          <div class="edition-date">jueves, 30 de abril de 2026</div>
+        </div>
+        <div style="text-align: right; font-size: 11px; color: #475569;"><strong>232</strong> votos en sala</div>
+      </div>
+
+      <div class="edition-meta">
+        <div><strong>Sede:</strong> Centro Cultural Las Cigarreras</div>
+        <div><strong>Presentación:</strong> Ágora Reix</div>
+        <div><strong>Artista Invitado:</strong> Francisca Ossa</div>
+      </div>
+
+      <div class="podium-box">
+        <strong>Podio de Honor:</strong><br>
+        🥇 <span class="badge-laurel">Laurel de Oro:</span> <strong>Marina Maciá</strong> &nbsp;|&nbsp;
+        🥈 <span class="badge-pluma">Pluma de Plata:</span> Lydia Rico &nbsp;|&nbsp;
+        🥉 <span class="badge-lira">Lira de Bronce:</span> Eliana Ollarve
+      </div>
+
+      <div class="poets-chips">
+        <strong>Poetas Participantes (7):</strong> 
+        Josan Canicio, María Lidón, Marina Maciá, Eliana Ollarve, Jessika Paola, Lydia Rico, Carlos Rodríguez
+      </div>
+
+      
+        <div style="margin-top: 10px; font-size: 11px;">
+          <strong>Cartel Oficial:</strong> <a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1777236711643.jpeg" target="_blank" style="color: #2563eb; text-decoration: underline;">Abrir Cartel HD en Cloud Storage</a>
+        </div>
+      
+    </div>
+  
+    <div class="edition-card">
+      <div class="edition-header">
+        <div>
+          <div class="edition-title">VII Poetry Slam Alicante</div>
+          <div class="edition-date">jueves, 30 de abril de 2026</div>
+        </div>
+        
+      </div>
+
+      <div class="edition-meta">
+        <div><strong>Sede:</strong> Centro Cultural Las Cigarreras</div>
+        <div><strong>Presentación:</strong> Ágora Reix</div>
+        <div><strong>Artista Invitado:</strong> Sin especificar</div>
+      </div>
+
+      <div class="podium-box">
+        <strong>Podio de Honor:</strong><br>
+        🥇 <span class="badge-laurel">Laurel de Oro:</span> <strong>Sin ganador registrado</strong> &nbsp;|&nbsp;
+        🥈 <span class="badge-pluma">Pluma de Plata:</span> — &nbsp;|&nbsp;
+        🥉 <span class="badge-lira">Lira de Bronce:</span> —
+      </div>
+
+      <div class="poets-chips">
+        <strong>Poetas Participantes (0):</strong> 
+        
+      </div>
+
+      
+        <div style="margin-top: 10px; font-size: 11px;">
+          <strong>Cartel Oficial:</strong> <a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1777578437505.jpeg" target="_blank" style="color: #2563eb; text-decoration: underline;">Abrir Cartel HD en Cloud Storage</a>
+        </div>
+      
+    </div>
+  
+    <div class="edition-card">
+      <div class="edition-header">
+        <div>
+          <div class="edition-title">VII Poetry Slam Alicante 2</div>
+          <div class="edition-date">jueves, 30 de abril de 2026</div>
+        </div>
+        <div style="text-align: right; font-size: 11px; color: #475569;"><strong>107</strong> votos en sala</div>
+      </div>
+
+      <div class="edition-meta">
+        <div><strong>Sede:</strong> Centro Cultural Las Cigarreras</div>
+        <div><strong>Presentación:</strong> Ágora Reix</div>
+        <div><strong>Artista Invitado:</strong> Francisca Ossa</div>
+      </div>
+
+      <div class="podium-box">
+        <strong>Podio de Honor:</strong><br>
+        🥇 <span class="badge-laurel">Laurel de Oro:</span> <strong>Marina Maciá</strong> &nbsp;|&nbsp;
+        🥈 <span class="badge-pluma">Pluma de Plata:</span> Lydia Rico &nbsp;|&nbsp;
+        🥉 <span class="badge-lira">Lira de Bronce:</span> Eliana Ollarve
+      </div>
+
+      <div class="poets-chips">
+        <strong>Poetas Participantes (3):</strong> 
+        Marina Maciá, Lydia Rico, Eliana Ollarve
+      </div>
+
+      
+        <div style="margin-top: 10px; font-size: 11px;">
+          <strong>Cartel Oficial:</strong> <a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1777236711643.jpeg" target="_blank" style="color: #2563eb; text-decoration: underline;">Abrir Cartel HD en Cloud Storage</a>
+        </div>
+      
+    </div>
+  
+    <div class="edition-card">
+      <div class="edition-header">
+        <div>
+          <div class="edition-title">Poetry Slam Alicante - VII Edición</div>
+          <div class="edition-date">jueves, 7 de mayo de 2026</div>
+        </div>
+        <div style="text-align: right; font-size: 11px; color: #475569;"><strong>180</strong> votos en sala</div>
+      </div>
+
+      <div class="edition-meta">
+        <div><strong>Sede:</strong> Centro Cultural Las Cigarreras</div>
+        <div><strong>Presentación:</strong> Ágora Reix</div>
+        <div><strong>Artista Invitado:</strong> José Luis Rico</div>
+      </div>
+
+      <div class="podium-box">
+        <strong>Podio de Honor:</strong><br>
+        🥇 <span class="badge-laurel">Laurel de Oro:</span> <strong>Juan Góngora</strong> &nbsp;|&nbsp;
+        🥈 <span class="badge-pluma">Pluma de Plata:</span> Pedro Nso &nbsp;|&nbsp;
+        🥉 <span class="badge-lira">Lira de Bronce:</span> Jordi Más
+      </div>
+
+      <div class="poets-chips">
+        <strong>Poetas Participantes (6):</strong> 
+        Mª Pilar Galdón, Juan Góngora, Jordi Más, Pedro Nso, Jean Pierre, Francis Torregrosa
+      </div>
+
+      
+        <div style="margin-top: 10px; font-size: 11px;">
+          <strong>Cartel Oficial:</strong> <a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1777578437505.jpeg" target="_blank" style="color: #2563eb; text-decoration: underline;">Abrir Cartel HD en Cloud Storage</a>
+        </div>
+      
+    </div>
+  
+    <div class="edition-card">
+      <div class="edition-header">
+        <div>
+          <div class="edition-title">III Encuentro VII Torneo Poetry Slam Alicante</div>
+          <div class="edition-date">jueves, 14 de mayo de 2026</div>
+        </div>
+        
+      </div>
+
+      <div class="edition-meta">
+        <div><strong>Sede:</strong> Centro Cultural Las Cigarreras</div>
+        <div><strong>Presentación:</strong> Ágora Reix</div>
+        <div><strong>Artista Invitado:</strong> Dúo Trascendental</div>
+      </div>
+
+      <div class="podium-box">
+        <strong>Podio de Honor:</strong><br>
+        🥇 <span class="badge-laurel">Laurel de Oro:</span> <strong>Sin ganador registrado</strong> &nbsp;|&nbsp;
+        🥈 <span class="badge-pluma">Pluma de Plata:</span> — &nbsp;|&nbsp;
+        🥉 <span class="badge-lira">Lira de Bronce:</span> —
+      </div>
+
+      <div class="poets-chips">
+        <strong>Poetas Participantes (7):</strong> 
+        Antonio Beneite, Francisco Cobos, Mar Domenech, Pablo Ferrando, Laura Gómez, Lautaro Marrero, Alexa Rico
+      </div>
+
+      
+        <div style="margin-top: 10px; font-size: 11px;">
+          <strong>Cartel Oficial:</strong> <a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1778247986695.jpeg" target="_blank" style="color: #2563eb; text-decoration: underline;">Abrir Cartel HD en Cloud Storage</a>
+        </div>
+      
+    </div>
+  
+    <div class="edition-card">
+      <div class="edition-header">
+        <div>
+          <div class="edition-title">Poetry Slam Alicante VII Edición</div>
+          <div class="edition-date">jueves, 21 de mayo de 2026</div>
+        </div>
+        <div style="text-align: right; font-size: 11px; color: #475569;"><strong>160</strong> votos en sala</div>
+      </div>
+
+      <div class="edition-meta">
+        <div><strong>Sede:</strong> Centro Cultural Las Cigarreras</div>
+        <div><strong>Presentación:</strong> Ágora Reix</div>
+        <div><strong>Artista Invitado:</strong> Troppo Lírica</div>
+      </div>
+
+      <div class="podium-box">
+        <strong>Podio de Honor:</strong><br>
+        🥇 <span class="badge-laurel">Laurel de Oro:</span> <strong>Alfonso Paso</strong> &nbsp;|&nbsp;
+        🥈 <span class="badge-pluma">Pluma de Plata:</span> Guille Lacasito &nbsp;|&nbsp;
+        🥉 <span class="badge-lira">Lira de Bronce:</span> Cristina Molina
+      </div>
+
+      <div class="poets-chips">
+        <strong>Poetas Participantes (7):</strong> 
+        Francisco Cremades, Rosa Estomba, Isabel Guiu, Guille Lacasito, Margo, Cristina Molina, Alfonso Paso
+      </div>
+
+      
+        <div style="margin-top: 10px; font-size: 11px;">
+          <strong>Cartel Oficial:</strong> <a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1779294681111.jpeg" target="_blank" style="color: #2563eb; text-decoration: underline;">Abrir Cartel HD en Cloud Storage</a>
+        </div>
+      
+    </div>
+  
+    <div class="edition-card">
+      <div class="edition-header">
+        <div>
+          <div class="edition-title">Poetry Slam Alicante – VII Edición</div>
+          <div class="edition-date">jueves, 28 de mayo de 2026</div>
+        </div>
+        <div style="text-align: right; font-size: 11px; color: #475569;"><strong>294</strong> votos en sala</div>
+      </div>
+
+      <div class="edition-meta">
+        <div><strong>Sede:</strong> Centro Cultural Las Cigarreras</div>
+        <div><strong>Presentación:</strong> Ágora Reix</div>
+        <div><strong>Artista Invitado:</strong> Vera Lu & Claudio H</div>
+      </div>
+
+      <div class="podium-box">
+        <strong>Podio de Honor:</strong><br>
+        🥇 <span class="badge-laurel">Laurel de Oro:</span> <strong>Beatriz G. Alberdi</strong> &nbsp;|&nbsp;
+        🥈 <span class="badge-pluma">Pluma de Plata:</span> Nando Arroyo &nbsp;|&nbsp;
+        🥉 <span class="badge-lira">Lira de Bronce:</span> Raquel Sánchez
+      </div>
+
+      <div class="poets-chips">
+        <strong>Poetas Participantes (8):</strong> 
+        Poeta de Demostración, Nando Arroyo, Cristian Burgos, Varinia Casati, Jose Gutiérrez, Beatriz G. Alberdi, Iris Marmol, Raquel Sánchez
+      </div>
+
+      
+        <div style="margin-top: 10px; font-size: 11px;">
+          <strong>Cartel Oficial:</strong> <a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1779973992600.jpeg" target="_blank" style="color: #2563eb; text-decoration: underline;">Abrir Cartel HD en Cloud Storage</a>
+        </div>
+      
+    </div>
+  
+    <div class="edition-card">
+      <div class="edition-header">
+        <div>
+          <div class="edition-title">VII FINAL PSA - 26 JUNIO</div>
+          <div class="edition-date">viernes, 26 de junio de 2026</div>
+        </div>
+        <div style="text-align: right; font-size: 11px; color: #475569;"><strong>1203</strong> votos en sala</div>
+      </div>
+
+      <div class="edition-meta">
+        <div><strong>Sede:</strong> Centro Cultural Las Cigarreras</div>
+        <div><strong>Presentación:</strong> Ágora Reix</div>
+        <div><strong>Artista Invitado:</strong> Sin especificar</div>
+      </div>
+
+      <div class="podium-box">
+        <strong>Podio de Honor:</strong><br>
+        🥇 <span class="badge-laurel">Laurel de Oro:</span> <strong>ALFONSO PASO</strong> &nbsp;|&nbsp;
+        🥈 <span class="badge-pluma">Pluma de Plata:</span> GUILLE LACASITO &nbsp;|&nbsp;
+        🥉 <span class="badge-lira">Lira de Bronce:</span> FRANCISCO COBOS
+      </div>
+
+      <div class="poets-chips">
+        <strong>Poetas Participantes (12):</strong> 
+        Poeta de Demostración, NANDO ARROYO, FRANCISCO COBOS, LAURA GOMEZ, JUAN GONGORA, BEATRIZ G. ALBERDI, GUILLE LACASITO, MARINA MACIA, JORDI MAS, PEDRO NSO, LYDIA RICO, ALFONSO PASO
+      </div>
+
+      
+        <div style="margin-top: 10px; font-size: 11px;">
+          <strong>Cartel Oficial:</strong> <a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1782495887466.png" target="_blank" style="color: #2563eb; text-decoration: underline;">Abrir Cartel HD en Cloud Storage</a>
+        </div>
+      
+    </div>
+  
+
+  <!-- SECCIÓN 4: PALMARÉS ACUMULADO -->
+  <h2 class="section-title">
+    3. Palmarés Acumulado de la Temporada
+    <span>Registro de Poetas</span>
+  </h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Poeta</th>
+        <th>Encuentros</th>
+        <th>Laureles de Oro</th>
+        <th>Finales Alcanzadas</th>
+        <th>Eventos Disputados</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td><strong>Marina Maciá</strong></td>
+          <td>3</td>
+          <td><span class="badge-laurel">★ 2</span></td>
+          <td>—</td>
+          <td style="color: #64748b; font-size: 11px;">Exhibición Poetry Slam Alicante, VII Poetry Slam Alicante, VII Poetry Slam Alicante 2</td>
+        </tr>
+      
+        <tr>
+          <td><strong>Poeta de Demostración</strong></td>
+          <td>2</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="color: #64748b; font-size: 11px;">Poetry Slam Alicante – VII Edición, VII FINAL PSA - 26 JUNIO</td>
+        </tr>
+      
+        <tr>
+          <td><strong>Nando Arroyo</strong></td>
+          <td>2</td>
+          <td>—</td>
+          <td><span class="badge-pluma">1</span></td>
+          <td style="color: #64748b; font-size: 11px;">Exhibición Poetry Slam Alicante, Poetry Slam Alicante – VII Edición</td>
+        </tr>
+      
+        <tr>
+          <td><strong>Juan Góngora</strong></td>
+          <td>2</td>
+          <td><span class="badge-laurel">★ 1</span></td>
+          <td><span class="badge-pluma">1</span></td>
+          <td style="color: #64748b; font-size: 11px;">Exhibición Poetry Slam Alicante, Poetry Slam Alicante - VII Edición</td>
+        </tr>
+      
+        <tr>
+          <td><strong>Lydia Rico</strong></td>
+          <td>2</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="color: #64748b; font-size: 11px;">VII Poetry Slam Alicante, VII Poetry Slam Alicante 2</td>
+        </tr>
+      
+        <tr>
+          <td><strong>Eliana Ollarve</strong></td>
+          <td>2</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="color: #64748b; font-size: 11px;">VII Poetry Slam Alicante, VII Poetry Slam Alicante 2</td>
+        </tr>
+      
+        <tr>
+          <td><strong>Antonio Beneite</strong></td>
+          <td>1</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="color: #64748b; font-size: 11px;">III Encuentro VII Torneo Poetry Slam Alicante</td>
+        </tr>
+      
+        <tr>
+          <td><strong>Mª Pilar Galdón</strong></td>
+          <td>1</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="color: #64748b; font-size: 11px;">Poetry Slam Alicante - VII Edición</td>
+        </tr>
+      
+        <tr>
+          <td><strong>Josan Canicio</strong></td>
+          <td>1</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="color: #64748b; font-size: 11px;">VII Poetry Slam Alicante</td>
+        </tr>
+      
+        <tr>
+          <td><strong>NANDO ARROYO</strong></td>
+          <td>1</td>
+          <td>—</td>
+          <td><span class="badge-pluma">1</span></td>
+          <td style="color: #64748b; font-size: 11px;">VII FINAL PSA - 26 JUNIO</td>
+        </tr>
+      
+        <tr>
+          <td><strong>Francisco Cremades</strong></td>
+          <td>1</td>
+          <td>—</td>
+          <td><span class="badge-pluma">1</span></td>
+          <td style="color: #64748b; font-size: 11px;">Poetry Slam Alicante VII Edición</td>
+        </tr>
+      
+        <tr>
+          <td><strong>FRANCISCO COBOS</strong></td>
+          <td>1</td>
+          <td>—</td>
+          <td><span class="badge-pluma">1</span></td>
+          <td style="color: #64748b; font-size: 11px;">VII FINAL PSA - 26 JUNIO</td>
+        </tr>
+      
+        <tr>
+          <td><strong>Rosa Estomba</strong></td>
+          <td>1</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="color: #64748b; font-size: 11px;">Poetry Slam Alicante VII Edición</td>
+        </tr>
+      
+        <tr>
+          <td><strong>María Lidón</strong></td>
+          <td>1</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="color: #64748b; font-size: 11px;">VII Poetry Slam Alicante</td>
+        </tr>
+      
+        <tr>
+          <td><strong>Cristian Burgos</strong></td>
+          <td>1</td>
+          <td>—</td>
+          <td><span class="badge-pluma">1</span></td>
+          <td style="color: #64748b; font-size: 11px;">Poetry Slam Alicante – VII Edición</td>
+        </tr>
+      
+        <tr>
+          <td><strong>Francisco Cobos</strong></td>
+          <td>1</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="color: #64748b; font-size: 11px;">III Encuentro VII Torneo Poetry Slam Alicante</td>
+        </tr>
+      
+        <tr>
+          <td><strong>Mar Domenech</strong></td>
+          <td>1</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="color: #64748b; font-size: 11px;">III Encuentro VII Torneo Poetry Slam Alicante</td>
+        </tr>
+      
+        <tr>
+          <td><strong>Lucía Ros</strong></td>
+          <td>1</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="color: #64748b; font-size: 11px;">Exhibición Poetry Slam Alicante</td>
+        </tr>
+      
+    </tbody>
+  </table>
+
+  <!-- SECCIÓN 5: ARCHIVO DE CARTELES -->
+  <h2 class="section-title">
+    4. Archivo Digital de Carteles Originales
+    <span>Cloud Storage</span>
+  </h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Archivo</th>
+        <th>Tamaño</th>
+        <th>Enlace Directo en Supabase</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td><strong>1776093019285.png</strong></td>
+          <td>4.04 MB</td>
+          <td><a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1776093019285.png" target="_blank" style="color: #2563eb; text-decoration: underline;">Descargar Cartel Original</a></td>
+        </tr>
+      
+        <tr>
+          <td><strong>1776100417972.jpeg</strong></td>
+          <td>0.13 MB</td>
+          <td><a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1776100417972.jpeg" target="_blank" style="color: #2563eb; text-decoration: underline;">Descargar Cartel Original</a></td>
+        </tr>
+      
+        <tr>
+          <td><strong>1776103391063.png</strong></td>
+          <td>4.04 MB</td>
+          <td><a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1776103391063.png" target="_blank" style="color: #2563eb; text-decoration: underline;">Descargar Cartel Original</a></td>
+        </tr>
+      
+        <tr>
+          <td><strong>1776103732486.png</strong></td>
+          <td>4.04 MB</td>
+          <td><a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1776103732486.png" target="_blank" style="color: #2563eb; text-decoration: underline;">Descargar Cartel Original</a></td>
+        </tr>
+      
+        <tr>
+          <td><strong>1777236711643.jpeg</strong></td>
+          <td>0.45 MB</td>
+          <td><a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1777236711643.jpeg" target="_blank" style="color: #2563eb; text-decoration: underline;">Descargar Cartel Original</a></td>
+        </tr>
+      
+        <tr>
+          <td><strong>1777578437505.jpeg</strong></td>
+          <td>0.39 MB</td>
+          <td><a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1777578437505.jpeg" target="_blank" style="color: #2563eb; text-decoration: underline;">Descargar Cartel Original</a></td>
+        </tr>
+      
+        <tr>
+          <td><strong>1778247986695.jpeg</strong></td>
+          <td>0.42 MB</td>
+          <td><a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1778247986695.jpeg" target="_blank" style="color: #2563eb; text-decoration: underline;">Descargar Cartel Original</a></td>
+        </tr>
+      
+        <tr>
+          <td><strong>1779294681111.jpeg</strong></td>
+          <td>0.41 MB</td>
+          <td><a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1779294681111.jpeg" target="_blank" style="color: #2563eb; text-decoration: underline;">Descargar Cartel Original</a></td>
+        </tr>
+      
+        <tr>
+          <td><strong>1779973992600.jpeg</strong></td>
+          <td>0.33 MB</td>
+          <td><a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1779973992600.jpeg" target="_blank" style="color: #2563eb; text-decoration: underline;">Descargar Cartel Original</a></td>
+        </tr>
+      
+        <tr>
+          <td><strong>1782138412119.jpeg</strong></td>
+          <td>0.36 MB</td>
+          <td><a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1782138412119.jpeg" target="_blank" style="color: #2563eb; text-decoration: underline;">Descargar Cartel Original</a></td>
+        </tr>
+      
+        <tr>
+          <td><strong>1782473575249.png</strong></td>
+          <td>3.28 MB</td>
+          <td><a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1782473575249.png" target="_blank" style="color: #2563eb; text-decoration: underline;">Descargar Cartel Original</a></td>
+        </tr>
+      
+        <tr>
+          <td><strong>1782495887466.png</strong></td>
+          <td>3.28 MB</td>
+          <td><a href="https://wyrzkczhtwvaylgavjaq.supabase.co/storage/v1/object/public/carteles/1782495887466.png" target="_blank" style="color: #2563eb; text-decoration: underline;">Descargar Cartel Original</a></td>
+        </tr>
+      
+    </tbody>
+  </table>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p><strong>Poetry Slam Alicante</strong> — Certificación de archivo histórico oficial expedida para la Dirección (Ágora Reix).</p>
+    <p>Generado automáticamente desde la infraestructura oficial de Supabase. Todos los derechos reservados.</p>
+  </div>
+
+</div>
+
+</body>
+</html>
