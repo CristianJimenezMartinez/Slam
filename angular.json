@@ -37,8 +37,6 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets",
               "src/_redirects",
               "src/404.html",
               "src/robots.txt",
