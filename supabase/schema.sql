@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS eventos (
   puntuaciones_activas      BOOLEAN DEFAULT FALSE,
   participante_activo_id    UUID,
   ronda_activa              INT DEFAULT 1,
+  pin_sesion                TEXT,
   registro_pin_abierto      BOOLEAN DEFAULT TRUE,
   color_primario            TEXT DEFAULT '#7AE92B',
   color_secundario          TEXT DEFAULT '#12D1AE',
