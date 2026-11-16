@@ -29,7 +29,10 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/slam",
-            "index": "src/index.html",
+            "index": {
+              "input": "src/404.html",
+              "output": "404.html"
+            },
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
@@ -37,8 +40,8 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+              "src/_headers",
               "src/_redirects",
-              "src/404.html",
               "src/robots.txt",
               "src/sitemap.xml"
             ],

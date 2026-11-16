@@ -55,50 +55,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.router.events.pipe(
-      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
-      takeUntil(this.destroy$)
-    ).subscribe((event: NavigationEnd) => {
-      if (typeof window !== 'undefined') {
-        window.scrollTo(0, 0);
-      }
-      this.closeProfileDropdown();
-      this.seo.clearJsonLd();
-
-      const url = event.urlAfterRedirects || event.url;
-      this.isStageView = url.startsWith('/puntuaciones') || url.startsWith('/proyector') || url.startsWith('/test-proyector');
-      this.isVotarView = url.startsWith('/votar') || url.startsWith('/test-votar');
-
-      let currentRoute = this.route;
-      while (currentRoute.firstChild) {
-        currentRoute = currentRoute.firstChild;
-      }
-      const data = currentRoute.snapshot.data;
-      if (data['seo']) {
-        this.seo.setPage({
-          title: data['seo'].title,
-          description: data['seo'].description,
-          robots: data['seo'].robots,
-          path: event.urlAfterRedirects
-        });
-      }
-    });
-
-    this.themeService.theme$.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(theme => {
-      if (theme) {
-        this.applyTheme(theme);
-      }
-    });
-
-    this.checkVotacionActiva();
-
-    this.eventoActivoSub = this.eventosService.listenToAllEventosChanges((payload: any) => {
-      this.ngZone.run(() => {
-        this.checkVotacionActiva();
-      });
-    });
+    // Sitio dado de baja (404 Not Found / noindex).
+    // No se inicializa SEO dinámico ni conexión en vivo a Supabase.
   }
 
   checkVotacionActiva() {

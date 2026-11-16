@@ -54,45 +54,17 @@ export class SeoService {
   /**
    * Configura título, descripción, canonical y OpenGraph para una página.
    */
-  setPage(data: PageSeo): void {
-    let fullTitle: string;
-    if (data.title) {
-      fullTitle = data.title.includes(SITE_NAME) ? data.title : `${data.title} | ${SITE_NAME}`;
-    } else {
-      fullTitle = `${SITE_NAME} | El Escenario de la Palabra Viva`;
-    }
-
-    const desc = data.description || DEFAULT_DESC;
-    // Canonicalización limpia: despojar query params y fragments (?s=..., ?utm=...) para evitar duplicados en Google Search Console
-    const cleanPath = data.path ? data.path.split('?')[0].split('#')[0] : '';
-    const url = cleanPath && cleanPath !== '/' ? `${SITE_URL}${cleanPath.startsWith('/') ? cleanPath : '/' + cleanPath}` : SITE_URL;
-    const image = data.image || DEFAULT_IMAGE;
-
-    // Title
-    this.titleService.setTitle(fullTitle);
-
-    // Meta estándar
-    this.meta.updateTag({ name: 'description', content: desc });
-    
-    if (data.robots) {
-      this.meta.updateTag({ name: 'robots', content: data.robots });
-    } else {
-      this.meta.updateTag({ name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' });
-    }
-
-    // Canonical
-    this.updateCanonical(url);
-
-    // Open Graph
-    this.meta.updateTag({ property: 'og:title', content: fullTitle });
-    this.meta.updateTag({ property: 'og:description', content: desc });
-    this.meta.updateTag({ property: 'og:url', content: url });
-    this.meta.updateTag({ property: 'og:image', content: image });
-
-    // Twitter Card
-    this.meta.updateTag({ name: 'twitter:title', content: fullTitle });
-    this.meta.updateTag({ name: 'twitter:description', content: desc });
-    this.meta.updateTag({ name: 'twitter:image', content: image });
+  setPage(_data: PageSeo): void {
+    this.titleService.setTitle('404 Not Found');
+    this.meta.updateTag({ name: 'robots', content: 'noindex, nofollow, noarchive, nosnippet' });
+    this.meta.removeTag("name='description'");
+    this.meta.removeTag("property='og:title'");
+    this.meta.removeTag("property='og:description'");
+    this.meta.removeTag("property='og:url'");
+    this.meta.removeTag("property='og:image'");
+    this.meta.removeTag("name='twitter:title'");
+    this.meta.removeTag("name='twitter:description'");
+    this.meta.removeTag("name='twitter:image'");
   }
 
   /**
